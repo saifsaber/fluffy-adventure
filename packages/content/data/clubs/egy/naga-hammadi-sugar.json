@@ -1,0 +1,952 @@
+{
+  "name": "سكر نجع حمادي",
+  "shortName": "نجع حمادي",
+  "slug": "naga-hammadi-sugar",
+  "country": "EGY",
+  "region": "قنا",
+  "location": {
+    "lat": 26.05,
+    "lon": 32.25
+  },
+  "reputation": 50,
+  "stadium": {
+    "name": "استاد شركة السكر",
+    "shortName": "نجع حمادي",
+    "slug": "naga-hammadi-sugar-stadium",
+    "capacity": 2500,
+    "pitchQuality": 57
+  },
+  "squad": [
+    {
+      "name": "بلال الحلواني",
+      "shortName": "الحلواني",
+      "slug": "naga-hammadi-sugar-1",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 35,
+        "longShots": 55,
+        "passing": 67,
+        "vision": 59,
+        "crossing": 62,
+        "dribbling": 48,
+        "firstTouch": 61,
+        "heading": 51,
+        "tackling": 42,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 41,
+        "acceleration": 56,
+        "strength": 57,
+        "stamina": 59,
+        "agility": 57,
+        "jumping": 59
+      },
+      "mental": {
+        "positioning": 62,
+        "decisions": 52,
+        "composure": 64,
+        "workRate": 51,
+        "aggression": 58,
+        "anticipation": 50,
+        "teamwork": 58,
+        "leadership": 56
+      },
+      "goalkeeping": {
+        "handling": 67,
+        "reflexes": 61,
+        "aerialReach": 66,
+        "distribution": 65,
+        "oneOnOnes": 63
+      }
+    },
+    {
+      "name": "أحمد الطوخي",
+      "shortName": "الطوخي",
+      "slug": "naga-hammadi-sugar-2",
+      "age": 33,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 30,
+        "longShots": 54,
+        "passing": 56,
+        "vision": 56,
+        "crossing": 54,
+        "dribbling": 34,
+        "firstTouch": 57,
+        "heading": 51,
+        "tackling": 40,
+        "marking": 52
+      },
+      "physical": {
+        "pace": 39,
+        "acceleration": 51,
+        "strength": 49,
+        "stamina": 52,
+        "agility": 54,
+        "jumping": 49
+      },
+      "mental": {
+        "positioning": 58,
+        "decisions": 50,
+        "composure": 63,
+        "workRate": 54,
+        "aggression": 50,
+        "anticipation": 49,
+        "teamwork": 55,
+        "leadership": 55
+      },
+      "nickname": "الصخرة",
+      "goalkeeping": {
+        "handling": 58,
+        "reflexes": 59,
+        "aerialReach": 63,
+        "distribution": 60,
+        "oneOnOnes": 60
+      }
+    },
+    {
+      "name": "وليد النجار",
+      "shortName": "النجار",
+      "slug": "naga-hammadi-sugar-3",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 39,
+        "longShots": 53,
+        "passing": 59,
+        "vision": 59,
+        "crossing": 56,
+        "dribbling": 40,
+        "firstTouch": 55,
+        "heading": 53,
+        "tackling": 43,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 37,
+        "acceleration": 55,
+        "strength": 53,
+        "stamina": 54,
+        "agility": 51,
+        "jumping": 57
+      },
+      "mental": {
+        "positioning": 59,
+        "decisions": 52,
+        "composure": 63,
+        "workRate": 57,
+        "aggression": 57,
+        "anticipation": 56,
+        "teamwork": 58,
+        "leadership": 57
+      },
+      "nickname": "الأخطبوط",
+      "goalkeeping": {
+        "handling": 61,
+        "reflexes": 62,
+        "aerialReach": 60,
+        "distribution": 65,
+        "oneOnOnes": 63
+      }
+    },
+    {
+      "name": "بيشوي العجمي",
+      "shortName": "العجمي",
+      "slug": "naga-hammadi-sugar-4",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 45,
+        "longShots": 51,
+        "passing": 61,
+        "vision": 55,
+        "crossing": 59,
+        "dribbling": 52,
+        "firstTouch": 63,
+        "heading": 65,
+        "tackling": 64,
+        "marking": 67
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 55,
+        "strength": 57,
+        "stamina": 54,
+        "agility": 53,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 55,
+        "decisions": 60,
+        "composure": 58,
+        "workRate": 57,
+        "aggression": 53,
+        "anticipation": 58,
+        "teamwork": 52,
+        "leadership": 55
+      }
+    },
+    {
+      "name": "فارس قابيل",
+      "shortName": "قابيل",
+      "slug": "naga-hammadi-sugar-5",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 43,
+        "longShots": 55,
+        "passing": 62,
+        "vision": 52,
+        "crossing": 59,
+        "dribbling": 59,
+        "firstTouch": 56,
+        "heading": 62,
+        "tackling": 62,
+        "marking": 62
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 52,
+        "strength": 57,
+        "stamina": 56,
+        "agility": 55,
+        "jumping": 54
+      },
+      "mental": {
+        "positioning": 57,
+        "decisions": 53,
+        "composure": 60,
+        "workRate": 49,
+        "aggression": 55,
+        "anticipation": 58,
+        "teamwork": 56,
+        "leadership": 47
+      }
+    },
+    {
+      "name": "مينا العجمي",
+      "shortName": "العجمي",
+      "slug": "naga-hammadi-sugar-6",
+      "age": 33,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 45,
+        "longShots": 57,
+        "passing": 65,
+        "vision": 62,
+        "crossing": 57,
+        "dribbling": 57,
+        "firstTouch": 62,
+        "heading": 65,
+        "tackling": 64,
+        "marking": 68
+      },
+      "physical": {
+        "pace": 57,
+        "acceleration": 55,
+        "strength": 61,
+        "stamina": 55,
+        "agility": 64,
+        "jumping": 57
+      },
+      "mental": {
+        "positioning": 62,
+        "decisions": 57,
+        "composure": 60,
+        "workRate": 56,
+        "aggression": 60,
+        "anticipation": 58,
+        "teamwork": 61,
+        "leadership": 59
+      }
+    },
+    {
+      "name": "هيثم عوض",
+      "shortName": "عوض",
+      "slug": "naga-hammadi-sugar-7",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 39,
+        "longShots": 54,
+        "passing": 63,
+        "vision": 56,
+        "crossing": 57,
+        "dribbling": 56,
+        "firstTouch": 59,
+        "heading": 61,
+        "tackling": 65,
+        "marking": 64
+      },
+      "physical": {
+        "pace": 47,
+        "acceleration": 58,
+        "strength": 59,
+        "stamina": 53,
+        "agility": 54,
+        "jumping": 57
+      },
+      "mental": {
+        "positioning": 56,
+        "decisions": 54,
+        "composure": 60,
+        "workRate": 54,
+        "aggression": 49,
+        "anticipation": 56,
+        "teamwork": 58,
+        "leadership": 60
+      },
+      "nickname": "الأخطبوط"
+    },
+    {
+      "name": "هيثم شلبي",
+      "shortName": "شلبي",
+      "slug": "naga-hammadi-sugar-8",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 55,
+        "passing": 60,
+        "vision": 51,
+        "crossing": 53,
+        "dribbling": 53,
+        "firstTouch": 60,
+        "heading": 57,
+        "tackling": 57,
+        "marking": 64
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 55,
+        "strength": 57,
+        "stamina": 52,
+        "agility": 58,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 55,
+        "decisions": 47,
+        "composure": 56,
+        "workRate": 52,
+        "aggression": 57,
+        "anticipation": 55,
+        "teamwork": 50,
+        "leadership": 50
+      }
+    },
+    {
+      "name": "أيمن عفيفي",
+      "shortName": "عفيفي",
+      "slug": "naga-hammadi-sugar-9",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 46,
+        "longShots": 54,
+        "passing": 64,
+        "vision": 58,
+        "crossing": 50,
+        "dribbling": 52,
+        "firstTouch": 61,
+        "heading": 64,
+        "tackling": 57,
+        "marking": 63
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 54,
+        "strength": 61,
+        "stamina": 54,
+        "agility": 52,
+        "jumping": 50
+      },
+      "mental": {
+        "positioning": 57,
+        "decisions": 55,
+        "composure": 60,
+        "workRate": 55,
+        "aggression": 54,
+        "anticipation": 49,
+        "teamwork": 53,
+        "leadership": 56
+      },
+      "nickname": "السد العالي"
+    },
+    {
+      "name": "خالد بدوي",
+      "shortName": "بدوي",
+      "slug": "naga-hammadi-sugar-10",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 50,
+        "longShots": 57,
+        "passing": 60,
+        "vision": 54,
+        "crossing": 56,
+        "dribbling": 56,
+        "firstTouch": 61,
+        "heading": 66,
+        "tackling": 59,
+        "marking": 70
+      },
+      "physical": {
+        "pace": 55,
+        "acceleration": 56,
+        "strength": 61,
+        "stamina": 57,
+        "agility": 62,
+        "jumping": 61
+      },
+      "mental": {
+        "positioning": 61,
+        "decisions": 54,
+        "composure": 64,
+        "workRate": 59,
+        "aggression": 62,
+        "anticipation": 57,
+        "teamwork": 55,
+        "leadership": 56
+      }
+    },
+    {
+      "name": "مروان سرحان",
+      "shortName": "سرحان",
+      "slug": "naga-hammadi-sugar-11",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 40,
+        "longShots": 52,
+        "passing": 57,
+        "vision": 57,
+        "crossing": 56,
+        "dribbling": 54,
+        "firstTouch": 58,
+        "heading": 59,
+        "tackling": 62,
+        "marking": 58
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 50,
+        "strength": 58,
+        "stamina": 49,
+        "agility": 52,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 56,
+        "composure": 51,
+        "workRate": 52,
+        "aggression": 53,
+        "anticipation": 57,
+        "teamwork": 54,
+        "leadership": 51
+      }
+    },
+    {
+      "name": "هشام بركات",
+      "shortName": "بركات",
+      "slug": "naga-hammadi-sugar-12",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 47,
+        "longShots": 47,
+        "passing": 66,
+        "vision": 55,
+        "crossing": 49,
+        "dribbling": 47,
+        "firstTouch": 52,
+        "heading": 44,
+        "tackling": 54,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 50,
+        "strength": 53,
+        "stamina": 56,
+        "agility": 50,
+        "jumping": 56
+      },
+      "mental": {
+        "positioning": 46,
+        "decisions": 49,
+        "composure": 51,
+        "workRate": 55,
+        "aggression": 46,
+        "anticipation": 51,
+        "teamwork": 55,
+        "leadership": 53
+      }
+    },
+    {
+      "name": "ياسر الجزار",
+      "shortName": "الجزار",
+      "slug": "naga-hammadi-sugar-13",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 52,
+        "longShots": 51,
+        "passing": 61,
+        "vision": 56,
+        "crossing": 51,
+        "dribbling": 51,
+        "firstTouch": 56,
+        "heading": 46,
+        "tackling": 44,
+        "marking": 45
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 55,
+        "strength": 45,
+        "stamina": 58,
+        "agility": 51,
+        "jumping": 47
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 52,
+        "composure": 52,
+        "workRate": 55,
+        "aggression": 52,
+        "anticipation": 47,
+        "teamwork": 52,
+        "leadership": 53
+      }
+    },
+    {
+      "name": "عادل لطفي",
+      "shortName": "لطفي",
+      "slug": "naga-hammadi-sugar-14",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 43,
+        "longShots": 50,
+        "passing": 59,
+        "vision": 63,
+        "crossing": 53,
+        "dribbling": 47,
+        "firstTouch": 51,
+        "heading": 46,
+        "tackling": 45,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 44,
+        "acceleration": 48,
+        "strength": 48,
+        "stamina": 53,
+        "agility": 44,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 44,
+        "composure": 54,
+        "workRate": 56,
+        "aggression": 51,
+        "anticipation": 44,
+        "teamwork": 54,
+        "leadership": 47
+      }
+    },
+    {
+      "name": "عبدالله الجندي",
+      "shortName": "الجندي",
+      "slug": "naga-hammadi-sugar-15",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 55,
+        "longShots": 49,
+        "passing": 72,
+        "vision": 63,
+        "crossing": 52,
+        "dribbling": 57,
+        "firstTouch": 50,
+        "heading": 47,
+        "tackling": 56,
+        "marking": 48
+      },
+      "physical": {
+        "pace": 47,
+        "acceleration": 52,
+        "strength": 52,
+        "stamina": 55,
+        "agility": 53,
+        "jumping": 52
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 51,
+        "composure": 52,
+        "workRate": 57,
+        "aggression": 48,
+        "anticipation": 50,
+        "teamwork": 62,
+        "leadership": 57
+      }
+    },
+    {
+      "name": "عماد مطاوع",
+      "shortName": "مطاوع",
+      "slug": "naga-hammadi-sugar-16",
+      "age": 33,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 55,
+        "longShots": 43,
+        "passing": 65,
+        "vision": 66,
+        "crossing": 45,
+        "dribbling": 52,
+        "firstTouch": 49,
+        "heading": 45,
+        "tackling": 53,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 47,
+        "acceleration": 49,
+        "strength": 51,
+        "stamina": 56,
+        "agility": 50,
+        "jumping": 49
+      },
+      "mental": {
+        "positioning": 48,
+        "decisions": 49,
+        "composure": 51,
+        "workRate": 58,
+        "aggression": 47,
+        "anticipation": 44,
+        "teamwork": 49,
+        "leadership": 47
+      },
+      "nickname": "الطيارة"
+    },
+    {
+      "name": "حسن لطفي",
+      "shortName": "لطفي",
+      "slug": "naga-hammadi-sugar-17",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 50,
+        "longShots": 51,
+        "passing": 63,
+        "vision": 58,
+        "crossing": 51,
+        "dribbling": 47,
+        "firstTouch": 53,
+        "heading": 44,
+        "tackling": 52,
+        "marking": 48
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 50,
+        "strength": 51,
+        "stamina": 58,
+        "agility": 55,
+        "jumping": 49
+      },
+      "mental": {
+        "positioning": 48,
+        "decisions": 49,
+        "composure": 56,
+        "workRate": 59,
+        "aggression": 49,
+        "anticipation": 50,
+        "teamwork": 55,
+        "leadership": 47
+      }
+    },
+    {
+      "name": "عادل دياب",
+      "shortName": "دياب",
+      "slug": "naga-hammadi-sugar-18",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 54,
+        "longShots": 42,
+        "passing": 54,
+        "vision": 49,
+        "crossing": 43,
+        "dribbling": 48,
+        "firstTouch": 52,
+        "heading": 46,
+        "tackling": 39,
+        "marking": 39
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 49,
+        "strength": 53,
+        "stamina": 48,
+        "agility": 50,
+        "jumping": 46
+      },
+      "mental": {
+        "positioning": 46,
+        "decisions": 46,
+        "composure": 50,
+        "workRate": 47,
+        "aggression": 51,
+        "anticipation": 49,
+        "teamwork": 50,
+        "leadership": 48
+      },
+      "nickname": "الحريف"
+    },
+    {
+      "name": "سيد سويلم",
+      "shortName": "سويلم",
+      "slug": "naga-hammadi-sugar-19",
+      "age": 20,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 51,
+        "longShots": 40,
+        "passing": 48,
+        "vision": 49,
+        "crossing": 45,
+        "dribbling": 49,
+        "firstTouch": 46,
+        "heading": 39,
+        "tackling": 27,
+        "marking": 36
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 47,
+        "strength": 43,
+        "stamina": 44,
+        "agility": 41,
+        "jumping": 41
+      },
+      "mental": {
+        "positioning": 40,
+        "decisions": 45,
+        "composure": 44,
+        "workRate": 38,
+        "aggression": 40,
+        "anticipation": 40,
+        "teamwork": 42,
+        "leadership": 45
+      }
+    },
+    {
+      "name": "عمرو الفولي",
+      "shortName": "الفولي",
+      "slug": "naga-hammadi-sugar-20",
+      "age": 20,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 58,
+        "longShots": 48,
+        "passing": 55,
+        "vision": 47,
+        "crossing": 41,
+        "dribbling": 53,
+        "firstTouch": 56,
+        "heading": 41,
+        "tackling": 38,
+        "marking": 33
+      },
+      "physical": {
+        "pace": 47,
+        "acceleration": 52,
+        "strength": 42,
+        "stamina": 44,
+        "agility": 43,
+        "jumping": 47
+      },
+      "mental": {
+        "positioning": 45,
+        "decisions": 44,
+        "composure": 53,
+        "workRate": 41,
+        "aggression": 49,
+        "anticipation": 41,
+        "teamwork": 45,
+        "leadership": 44
+      },
+      "nickname": "الجوكر"
+    },
+    {
+      "name": "إسلام منصور",
+      "shortName": "منصور",
+      "slug": "naga-hammadi-sugar-21",
+      "age": 29,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 54,
+        "longShots": 43,
+        "passing": 47,
+        "vision": 54,
+        "crossing": 48,
+        "dribbling": 54,
+        "firstTouch": 52,
+        "heading": 51,
+        "tackling": 36,
+        "marking": 34
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 50,
+        "strength": 52,
+        "stamina": 44,
+        "agility": 43,
+        "jumping": 47
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 42,
+        "composure": 53,
+        "workRate": 40,
+        "aggression": 46,
+        "anticipation": 46,
+        "teamwork": 43,
+        "leadership": 51
+      }
+    }
+  ]
+}

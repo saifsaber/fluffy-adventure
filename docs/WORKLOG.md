@@ -51,12 +51,18 @@ explaining why, and proceed.
 
 **Step 1 is complete.**
 
-### Step 2 — data and schema
-- [ ] Postgres schema + migrations (careers, seasons, clubs, players, tactics, fixtures, matches, **match_traces**, **decisions**)
-- [ ] **Leagues are data, not code** — a league is a seed file; adding a country never touches code (global-strategy §8.4)
-- [ ] Latin-script `slug` on every club and player alongside the local name (global-strategy §8.3)
-- [ ] Seed the Egyptian fourth division: 20 clubs, ~500 players, ~20 attributes each, full 38-round fixture list
-- [ ] `pnpm db:seed` produces a complete queryable season from empty
+### Step 2 — content and data
+**Order changed by ADR-002: content format first, Postgres last.** A schema derived from real content
+is right; one guessed in advance is migration debt. It also means Steps 3 and 4 — the engine and the
+balance gate, the hardest part of the project — can run against real Egyptian data with **no database
+at all**.
+
+- [x] **Leagues are data, not code** — `@dakka/content`, Zod-validated, `loadLeague()` knows no country (global-strategy §8.4)
+- [x] Latin-script `slug` on every named entity (global-strategy §8.3)
+- [x] The Egyptian fourth division: 20 clubs across 14 real governorates, 420 players, ~24 attributes each
+- [ ] Fixture generation from the league file (round-robin count is a field, not code) → a 38-round schedule
+- [ ] Travel distance from club coordinates, used as a fatigue input
+- [ ] *(deferred to after Step 4)* Postgres schema + migrations + `pnpm db:seed`
 
 ### Step 3 — the engine
 - [ ] Seeded PRNG wrapper; determinism test (same seed ⇒ byte-identical result, 1000 runs)
@@ -91,6 +97,10 @@ explaining why, and proceed.
 ## Log
 
 - **2026-09-07** — Planning complete. Seven agents and two skills built and registered. Step 1 foundation landed: pnpm workspace, TS strict, engine package with a purity guard, CI on push. Autonomous loop armed (every 6h).
+- **2026-09-07** — **Step 2, first slice.** `@dakka/content` landed: Zod content schema, loader, and the Egyptian fourth division as data — 20 clubs across 14 governorates, 420 players. Everything that differs between football cultures (round-robin count, promotion/playoff/relegation slots, points per result) is a **field**; `loadLeague()` contains no country-specific branch, so adding Vietnam is a data change.
+  - Squads come from a deterministic build-time generator whose output is committed as data. ADR-002 §3 sets out why that is authored content and not the fabricated-statistics pattern — and the determinism is covered by a test that regenerates and compares byte-for-byte.
+  - `packages/content/data/clubs` is Prettier-ignored on purpose: the generator owns that formatting, and Prettier fighting it turned the determinism test into a false failure once already.
+  - **Next run:** fixture generation. Read `roundRobin` from the league file — do not hardcode 38. Then travel distance from the stored coordinates.
 - **2026-09-07** — **Step 1 complete.** Domain types landed: branded ids, ~24 player attributes across technical/physical/mental/goalkeeping, `PlayerRole` as an axis separate from `Position`, tactics as a shape (line height, pressing intensity + trigger, tempo, directness, width, compactness) rather than a multiplier, `InMatchDecision` as a discriminated union so every decision is counterfactual-able, shots carrying their own context so xG is derived, `SideStats` documented as counters only, and `CauseTag` + `CAUSE_REGISTRY`.
   - `Record<CauseTag, CauseMeta>` makes an unregistered cause a **build error** — verified by adding one and watching TS2741 fire.
   - `Named` carries a Latin `slug`, so global-strategy §8.3 is already satisfied at the type level.

@@ -1,0 +1,947 @@
+{
+  "name": "زراعة كوم أمبو",
+  "shortName": "كوم أمبو",
+  "slug": "kom-ombo-agriculture",
+  "country": "EGY",
+  "region": "أسوان",
+  "location": {
+    "lat": 24.4764,
+    "lon": 32.945
+  },
+  "reputation": 43,
+  "stadium": {
+    "name": "استاد كوم أمبو",
+    "shortName": "كوم أمبو",
+    "slug": "kom-ombo-agriculture-stadium",
+    "capacity": 1800,
+    "pitchQuality": 49
+  },
+  "squad": [
+    {
+      "name": "هشام لطفي",
+      "shortName": "لطفي",
+      "slug": "kom-ombo-agriculture-1",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 29,
+        "longShots": 46,
+        "passing": 46,
+        "vision": 47,
+        "crossing": 42,
+        "dribbling": 37,
+        "firstTouch": 43,
+        "heading": 45,
+        "tackling": 39,
+        "marking": 47
+      },
+      "physical": {
+        "pace": 40,
+        "acceleration": 53,
+        "strength": 43,
+        "stamina": 43,
+        "agility": 50,
+        "jumping": 46
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 49,
+        "composure": 46,
+        "workRate": 42,
+        "aggression": 47,
+        "anticipation": 45,
+        "teamwork": 48,
+        "leadership": 47
+      },
+      "goalkeeping": {
+        "handling": 59,
+        "reflexes": 51,
+        "aerialReach": 49,
+        "distribution": 54,
+        "oneOnOnes": 56
+      }
+    },
+    {
+      "name": "سامح شلبي",
+      "shortName": "شلبي",
+      "slug": "kom-ombo-agriculture-2",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 30,
+        "longShots": 50,
+        "passing": 52,
+        "vision": 46,
+        "crossing": 52,
+        "dribbling": 33,
+        "firstTouch": 48,
+        "heading": 49,
+        "tackling": 40,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 55,
+        "strength": 47,
+        "stamina": 49,
+        "agility": 44,
+        "jumping": 44
+      },
+      "mental": {
+        "positioning": 61,
+        "decisions": 52,
+        "composure": 60,
+        "workRate": 50,
+        "aggression": 43,
+        "anticipation": 51,
+        "teamwork": 47,
+        "leadership": 49
+      },
+      "goalkeeping": {
+        "handling": 55,
+        "reflexes": 52,
+        "aerialReach": 58,
+        "distribution": 55,
+        "oneOnOnes": 54
+      }
+    },
+    {
+      "name": "تامر العجمي",
+      "shortName": "العجمي",
+      "slug": "kom-ombo-agriculture-3",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 28,
+        "longShots": 46,
+        "passing": 42,
+        "vision": 46,
+        "crossing": 46,
+        "dribbling": 27,
+        "firstTouch": 49,
+        "heading": 45,
+        "tackling": 31,
+        "marking": 44
+      },
+      "physical": {
+        "pace": 38,
+        "acceleration": 51,
+        "strength": 45,
+        "stamina": 50,
+        "agility": 45,
+        "jumping": 47
+      },
+      "mental": {
+        "positioning": 55,
+        "decisions": 42,
+        "composure": 53,
+        "workRate": 41,
+        "aggression": 46,
+        "anticipation": 48,
+        "teamwork": 43,
+        "leadership": 40
+      },
+      "goalkeeping": {
+        "handling": 51,
+        "reflexes": 51,
+        "aerialReach": 53,
+        "distribution": 49,
+        "oneOnOnes": 53
+      }
+    },
+    {
+      "name": "صلاح بركات",
+      "shortName": "بركات",
+      "slug": "kom-ombo-agriculture-4",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 41,
+        "longShots": 46,
+        "passing": 49,
+        "vision": 46,
+        "crossing": 54,
+        "dribbling": 53,
+        "firstTouch": 50,
+        "heading": 56,
+        "tackling": 60,
+        "marking": 60
+      },
+      "physical": {
+        "pace": 58,
+        "acceleration": 54,
+        "strength": 50,
+        "stamina": 49,
+        "agility": 52,
+        "jumping": 44
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 49,
+        "composure": 54,
+        "workRate": 50,
+        "aggression": 48,
+        "anticipation": 59,
+        "teamwork": 52,
+        "leadership": 49
+      },
+      "nickname": "الفنان"
+    },
+    {
+      "name": "هيثم صادق",
+      "shortName": "صادق",
+      "slug": "kom-ombo-agriculture-5",
+      "age": 33,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 40,
+        "longShots": 42,
+        "passing": 51,
+        "vision": 44,
+        "crossing": 46,
+        "dribbling": 43,
+        "firstTouch": 53,
+        "heading": 58,
+        "tackling": 59,
+        "marking": 58
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 51,
+        "strength": 52,
+        "stamina": 53,
+        "agility": 49,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 48,
+        "decisions": 43,
+        "composure": 51,
+        "workRate": 44,
+        "aggression": 50,
+        "anticipation": 50,
+        "teamwork": 46,
+        "leadership": 50
+      }
+    },
+    {
+      "name": "إسلام النجار",
+      "shortName": "النجار",
+      "slug": "kom-ombo-agriculture-6",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 33,
+        "longShots": 45,
+        "passing": 40,
+        "vision": 35,
+        "crossing": 45,
+        "dribbling": 39,
+        "firstTouch": 37,
+        "heading": 53,
+        "tackling": 54,
+        "marking": 56
+      },
+      "physical": {
+        "pace": 54,
+        "acceleration": 52,
+        "strength": 45,
+        "stamina": 49,
+        "agility": 41,
+        "jumping": 42
+      },
+      "mental": {
+        "positioning": 41,
+        "decisions": 42,
+        "composure": 39,
+        "workRate": 41,
+        "aggression": 44,
+        "anticipation": 44,
+        "teamwork": 46,
+        "leadership": 47
+      }
+    },
+    {
+      "name": "عبدالله زهران",
+      "shortName": "زهران",
+      "slug": "kom-ombo-agriculture-7",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 48,
+        "longShots": 50,
+        "passing": 48,
+        "vision": 49,
+        "crossing": 55,
+        "dribbling": 48,
+        "firstTouch": 48,
+        "heading": 55,
+        "tackling": 62,
+        "marking": 64
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 63,
+        "strength": 54,
+        "stamina": 50,
+        "agility": 49,
+        "jumping": 53
+      },
+      "mental": {
+        "positioning": 50,
+        "decisions": 47,
+        "composure": 51,
+        "workRate": 43,
+        "aggression": 45,
+        "anticipation": 55,
+        "teamwork": 50,
+        "leadership": 53
+      }
+    },
+    {
+      "name": "سامح سويلم",
+      "shortName": "سويلم",
+      "slug": "kom-ombo-agriculture-8",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 41,
+        "longShots": 50,
+        "passing": 49,
+        "vision": 37,
+        "crossing": 46,
+        "dribbling": 43,
+        "firstTouch": 44,
+        "heading": 50,
+        "tackling": 58,
+        "marking": 56
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 48,
+        "strength": 56,
+        "stamina": 44,
+        "agility": 43,
+        "jumping": 49
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 41,
+        "composure": 45,
+        "workRate": 45,
+        "aggression": 47,
+        "anticipation": 54,
+        "teamwork": 41,
+        "leadership": 42
+      }
+    },
+    {
+      "name": "عبدالله سليم",
+      "shortName": "سليم",
+      "slug": "kom-ombo-agriculture-9",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 36,
+        "longShots": 41,
+        "passing": 39,
+        "vision": 38,
+        "crossing": 44,
+        "dribbling": 46,
+        "firstTouch": 46,
+        "heading": 46,
+        "tackling": 55,
+        "marking": 55
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 43,
+        "strength": 52,
+        "stamina": 44,
+        "agility": 41,
+        "jumping": 47
+      },
+      "mental": {
+        "positioning": 50,
+        "decisions": 40,
+        "composure": 49,
+        "workRate": 40,
+        "aggression": 48,
+        "anticipation": 50,
+        "teamwork": 40,
+        "leadership": 45
+      }
+    },
+    {
+      "name": "خالد الشربيني",
+      "shortName": "الشربيني",
+      "slug": "kom-ombo-agriculture-10",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 42,
+        "longShots": 47,
+        "passing": 44,
+        "vision": 37,
+        "crossing": 45,
+        "dribbling": 44,
+        "firstTouch": 47,
+        "heading": 56,
+        "tackling": 56,
+        "marking": 55
+      },
+      "physical": {
+        "pace": 56,
+        "acceleration": 56,
+        "strength": 44,
+        "stamina": 46,
+        "agility": 43,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 49,
+        "composure": 45,
+        "workRate": 44,
+        "aggression": 46,
+        "anticipation": 52,
+        "teamwork": 43,
+        "leadership": 43
+      }
+    },
+    {
+      "name": "عماد مطاوع",
+      "shortName": "مطاوع",
+      "slug": "kom-ombo-agriculture-11",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 56,
+        "passing": 51,
+        "vision": 43,
+        "crossing": 50,
+        "dribbling": 53,
+        "firstTouch": 45,
+        "heading": 58,
+        "tackling": 64,
+        "marking": 56
+      },
+      "physical": {
+        "pace": 54,
+        "acceleration": 56,
+        "strength": 55,
+        "stamina": 50,
+        "agility": 48,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 54,
+        "composure": 55,
+        "workRate": 54,
+        "aggression": 46,
+        "anticipation": 55,
+        "teamwork": 50,
+        "leadership": 54
+      }
+    },
+    {
+      "name": "محمد الفولي",
+      "shortName": "الفولي",
+      "slug": "kom-ombo-agriculture-12",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 43,
+        "longShots": 42,
+        "passing": 52,
+        "vision": 45,
+        "crossing": 43,
+        "dribbling": 45,
+        "firstTouch": 41,
+        "heading": 36,
+        "tackling": 41,
+        "marking": 39
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 47,
+        "strength": 37,
+        "stamina": 47,
+        "agility": 40,
+        "jumping": 41
+      },
+      "mental": {
+        "positioning": 44,
+        "decisions": 40,
+        "composure": 40,
+        "workRate": 48,
+        "aggression": 45,
+        "anticipation": 43,
+        "teamwork": 43,
+        "leadership": 41
+      }
+    },
+    {
+      "name": "عمر سرحان",
+      "shortName": "سرحان",
+      "slug": "kom-ombo-agriculture-13",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 48,
+        "longShots": 47,
+        "passing": 53,
+        "vision": 52,
+        "crossing": 39,
+        "dribbling": 46,
+        "firstTouch": 46,
+        "heading": 34,
+        "tackling": 42,
+        "marking": 44
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 43,
+        "strength": 43,
+        "stamina": 53,
+        "agility": 44,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 48,
+        "decisions": 41,
+        "composure": 44,
+        "workRate": 48,
+        "aggression": 39,
+        "anticipation": 48,
+        "teamwork": 50,
+        "leadership": 45
+      }
+    },
+    {
+      "name": "أيمن عثمان",
+      "shortName": "عثمان",
+      "slug": "kom-ombo-agriculture-14",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 47,
+        "longShots": 41,
+        "passing": 54,
+        "vision": 49,
+        "crossing": 46,
+        "dribbling": 38,
+        "firstTouch": 45,
+        "heading": 43,
+        "tackling": 45,
+        "marking": 48
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 55,
+        "strength": 45,
+        "stamina": 49,
+        "agility": 47,
+        "jumping": 42
+      },
+      "mental": {
+        "positioning": 47,
+        "decisions": 50,
+        "composure": 49,
+        "workRate": 50,
+        "aggression": 43,
+        "anticipation": 47,
+        "teamwork": 52,
+        "leadership": 46
+      },
+      "nickname": "الجوكر"
+    },
+    {
+      "name": "أحمد شلبي",
+      "shortName": "شلبي",
+      "slug": "kom-ombo-agriculture-15",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 50,
+        "longShots": 49,
+        "passing": 49,
+        "vision": 49,
+        "crossing": 43,
+        "dribbling": 48,
+        "firstTouch": 45,
+        "heading": 37,
+        "tackling": 45,
+        "marking": 40
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 47,
+        "strength": 42,
+        "stamina": 50,
+        "agility": 42,
+        "jumping": 46
+      },
+      "mental": {
+        "positioning": 39,
+        "decisions": 40,
+        "composure": 46,
+        "workRate": 47,
+        "aggression": 46,
+        "anticipation": 51,
+        "teamwork": 50,
+        "leadership": 43
+      }
+    },
+    {
+      "name": "يوسف فرغلي",
+      "shortName": "فرغلي",
+      "slug": "kom-ombo-agriculture-16",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 50,
+        "longShots": 45,
+        "passing": 48,
+        "vision": 51,
+        "crossing": 46,
+        "dribbling": 46,
+        "firstTouch": 44,
+        "heading": 41,
+        "tackling": 46,
+        "marking": 43
+      },
+      "physical": {
+        "pace": 51,
+        "acceleration": 50,
+        "strength": 47,
+        "stamina": 49,
+        "agility": 48,
+        "jumping": 46
+      },
+      "mental": {
+        "positioning": 46,
+        "decisions": 49,
+        "composure": 44,
+        "workRate": 47,
+        "aggression": 48,
+        "anticipation": 45,
+        "teamwork": 50,
+        "leadership": 47
+      }
+    },
+    {
+      "name": "خالد الطوخي",
+      "shortName": "الطوخي",
+      "slug": "kom-ombo-agriculture-17",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 40,
+        "longShots": 41,
+        "passing": 42,
+        "vision": 46,
+        "crossing": 42,
+        "dribbling": 34,
+        "firstTouch": 43,
+        "heading": 31,
+        "tackling": 45,
+        "marking": 39
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 42,
+        "strength": 41,
+        "stamina": 40,
+        "agility": 34,
+        "jumping": 41
+      },
+      "mental": {
+        "positioning": 37,
+        "decisions": 38,
+        "composure": 42,
+        "workRate": 45,
+        "aggression": 38,
+        "anticipation": 46,
+        "teamwork": 44,
+        "leadership": 37
+      }
+    },
+    {
+      "name": "باسم سرحان",
+      "shortName": "سرحان",
+      "slug": "kom-ombo-agriculture-18",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 55,
+        "longShots": 42,
+        "passing": 42,
+        "vision": 45,
+        "crossing": 37,
+        "dribbling": 47,
+        "firstTouch": 43,
+        "heading": 41,
+        "tackling": 33,
+        "marking": 38
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 55,
+        "strength": 46,
+        "stamina": 44,
+        "agility": 42,
+        "jumping": 37
+      },
+      "mental": {
+        "positioning": 43,
+        "decisions": 38,
+        "composure": 45,
+        "workRate": 41,
+        "aggression": 48,
+        "anticipation": 43,
+        "teamwork": 43,
+        "leadership": 43
+      }
+    },
+    {
+      "name": "سيد الشناوي",
+      "shortName": "الشناوي",
+      "slug": "kom-ombo-agriculture-19",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 59,
+        "longShots": 44,
+        "passing": 36,
+        "vision": 44,
+        "crossing": 38,
+        "dribbling": 46,
+        "firstTouch": 38,
+        "heading": 36,
+        "tackling": 28,
+        "marking": 34
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 53,
+        "strength": 41,
+        "stamina": 46,
+        "agility": 39,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 34,
+        "decisions": 37,
+        "composure": 41,
+        "workRate": 44,
+        "aggression": 37,
+        "anticipation": 44,
+        "teamwork": 42,
+        "leadership": 37
+      }
+    },
+    {
+      "name": "محمود نصار",
+      "shortName": "نصار",
+      "slug": "kom-ombo-agriculture-20",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 48,
+        "longShots": 34,
+        "passing": 41,
+        "vision": 39,
+        "crossing": 33,
+        "dribbling": 45,
+        "firstTouch": 38,
+        "heading": 41,
+        "tackling": 26,
+        "marking": 32
+      },
+      "physical": {
+        "pace": 51,
+        "acceleration": 47,
+        "strength": 39,
+        "stamina": 31,
+        "agility": 38,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 43,
+        "decisions": 37,
+        "composure": 44,
+        "workRate": 36,
+        "aggression": 32,
+        "anticipation": 36,
+        "teamwork": 36,
+        "leadership": 34
+      }
+    },
+    {
+      "name": "حسين رزق",
+      "shortName": "رزق",
+      "slug": "kom-ombo-agriculture-21",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 53,
+        "longShots": 33,
+        "passing": 34,
+        "vision": 42,
+        "crossing": 39,
+        "dribbling": 46,
+        "firstTouch": 40,
+        "heading": 35,
+        "tackling": 30,
+        "marking": 31
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 50,
+        "strength": 35,
+        "stamina": 42,
+        "agility": 37,
+        "jumping": 37
+      },
+      "mental": {
+        "positioning": 40,
+        "decisions": 36,
+        "composure": 45,
+        "workRate": 34,
+        "aggression": 35,
+        "anticipation": 46,
+        "teamwork": 39,
+        "leadership": 42
+      }
+    }
+  ]
+}

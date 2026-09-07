@@ -1,0 +1,946 @@
+{
+  "name": "نادي أرمنت",
+  "shortName": "أرمنت",
+  "slug": "armant-sporting",
+  "country": "EGY",
+  "region": "الأقصر",
+  "location": {
+    "lat": 25.6167,
+    "lon": 32.5333
+  },
+  "reputation": 37,
+  "stadium": {
+    "name": "ملعب أرمنت",
+    "shortName": "أرمنت",
+    "slug": "armant-sporting-stadium",
+    "capacity": 1000,
+    "pitchQuality": 41
+  },
+  "squad": [
+    {
+      "name": "هشام خميس",
+      "shortName": "خميس",
+      "slug": "armant-sporting-1",
+      "age": 33,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 23,
+        "longShots": 41,
+        "passing": 32,
+        "vision": 40,
+        "crossing": 33,
+        "dribbling": 26,
+        "firstTouch": 44,
+        "heading": 43,
+        "tackling": 24,
+        "marking": 35
+      },
+      "physical": {
+        "pace": 30,
+        "acceleration": 38,
+        "strength": 41,
+        "stamina": 33,
+        "agility": 40,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 46,
+        "decisions": 39,
+        "composure": 44,
+        "workRate": 34,
+        "aggression": 37,
+        "anticipation": 40,
+        "teamwork": 46,
+        "leadership": 36
+      },
+      "goalkeeping": {
+        "handling": 43,
+        "reflexes": 51,
+        "aerialReach": 50,
+        "distribution": 47,
+        "oneOnOnes": 49
+      }
+    },
+    {
+      "name": "ياسر سويلم",
+      "shortName": "سويلم",
+      "slug": "armant-sporting-2",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 21,
+        "longShots": 38,
+        "passing": 35,
+        "vision": 40,
+        "crossing": 33,
+        "dribbling": 22,
+        "firstTouch": 38,
+        "heading": 47,
+        "tackling": 28,
+        "marking": 41
+      },
+      "physical": {
+        "pace": 32,
+        "acceleration": 36,
+        "strength": 39,
+        "stamina": 38,
+        "agility": 36,
+        "jumping": 36
+      },
+      "mental": {
+        "positioning": 48,
+        "decisions": 37,
+        "composure": 46,
+        "workRate": 37,
+        "aggression": 33,
+        "anticipation": 33,
+        "teamwork": 38,
+        "leadership": 34
+      },
+      "goalkeeping": {
+        "handling": 42,
+        "reflexes": 45,
+        "aerialReach": 49,
+        "distribution": 41,
+        "oneOnOnes": 47
+      }
+    },
+    {
+      "name": "فتحي سويلم",
+      "shortName": "سويلم",
+      "slug": "armant-sporting-3",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 19,
+        "longShots": 47,
+        "passing": 30,
+        "vision": 39,
+        "crossing": 38,
+        "dribbling": 21,
+        "firstTouch": 42,
+        "heading": 46,
+        "tackling": 29,
+        "marking": 35
+      },
+      "physical": {
+        "pace": 34,
+        "acceleration": 39,
+        "strength": 42,
+        "stamina": 36,
+        "agility": 39,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 48,
+        "decisions": 37,
+        "composure": 38,
+        "workRate": 32,
+        "aggression": 35,
+        "anticipation": 36,
+        "teamwork": 39,
+        "leadership": 36
+      },
+      "nickname": "الجوكر",
+      "goalkeeping": {
+        "handling": 45,
+        "reflexes": 45,
+        "aerialReach": 44,
+        "distribution": 43,
+        "oneOnOnes": 47
+      }
+    },
+    {
+      "name": "إسلام منصور",
+      "shortName": "منصور",
+      "slug": "armant-sporting-4",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 31,
+        "longShots": 42,
+        "passing": 41,
+        "vision": 32,
+        "crossing": 42,
+        "dribbling": 44,
+        "firstTouch": 36,
+        "heading": 53,
+        "tackling": 55,
+        "marking": 46
+      },
+      "physical": {
+        "pace": 42,
+        "acceleration": 39,
+        "strength": 46,
+        "stamina": 40,
+        "agility": 41,
+        "jumping": 39
+      },
+      "mental": {
+        "positioning": 41,
+        "decisions": 41,
+        "composure": 41,
+        "workRate": 38,
+        "aggression": 39,
+        "anticipation": 39,
+        "teamwork": 35,
+        "leadership": 36
+      }
+    },
+    {
+      "name": "وليد قابيل",
+      "shortName": "قابيل",
+      "slug": "armant-sporting-5",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 31,
+        "longShots": 44,
+        "passing": 41,
+        "vision": 41,
+        "crossing": 40,
+        "dribbling": 45,
+        "firstTouch": 38,
+        "heading": 58,
+        "tackling": 53,
+        "marking": 55
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 47,
+        "strength": 52,
+        "stamina": 44,
+        "agility": 39,
+        "jumping": 41
+      },
+      "mental": {
+        "positioning": 45,
+        "decisions": 41,
+        "composure": 41,
+        "workRate": 43,
+        "aggression": 46,
+        "anticipation": 49,
+        "teamwork": 46,
+        "leadership": 43
+      }
+    },
+    {
+      "name": "شريف غنيم",
+      "shortName": "غنيم",
+      "slug": "armant-sporting-6",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 36,
+        "longShots": 46,
+        "passing": 42,
+        "vision": 36,
+        "crossing": 44,
+        "dribbling": 43,
+        "firstTouch": 43,
+        "heading": 51,
+        "tackling": 51,
+        "marking": 49
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 44,
+        "strength": 51,
+        "stamina": 40,
+        "agility": 41,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 47,
+        "decisions": 42,
+        "composure": 40,
+        "workRate": 41,
+        "aggression": 41,
+        "anticipation": 45,
+        "teamwork": 42,
+        "leadership": 43
+      }
+    },
+    {
+      "name": "عمرو غنيم",
+      "shortName": "غنيم",
+      "slug": "armant-sporting-7",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 29,
+        "longShots": 40,
+        "passing": 37,
+        "vision": 31,
+        "crossing": 41,
+        "dribbling": 36,
+        "firstTouch": 33,
+        "heading": 53,
+        "tackling": 47,
+        "marking": 49
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 33,
+        "strength": 42,
+        "stamina": 36,
+        "agility": 36,
+        "jumping": 37
+      },
+      "mental": {
+        "positioning": 39,
+        "decisions": 39,
+        "composure": 38,
+        "workRate": 32,
+        "aggression": 38,
+        "anticipation": 37,
+        "teamwork": 35,
+        "leadership": 42
+      }
+    },
+    {
+      "name": "مروان قابيل",
+      "shortName": "قابيل",
+      "slug": "armant-sporting-8",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 32,
+        "longShots": 47,
+        "passing": 38,
+        "vision": 41,
+        "crossing": 43,
+        "dribbling": 39,
+        "firstTouch": 39,
+        "heading": 57,
+        "tackling": 45,
+        "marking": 49
+      },
+      "physical": {
+        "pace": 47,
+        "acceleration": 47,
+        "strength": 48,
+        "stamina": 41,
+        "agility": 40,
+        "jumping": 37
+      },
+      "mental": {
+        "positioning": 43,
+        "decisions": 40,
+        "composure": 41,
+        "workRate": 44,
+        "aggression": 38,
+        "anticipation": 38,
+        "teamwork": 44,
+        "leadership": 40
+      }
+    },
+    {
+      "name": "عمر الشاذلي",
+      "shortName": "الشاذلي",
+      "slug": "armant-sporting-9",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 27,
+        "longShots": 48,
+        "passing": 41,
+        "vision": 35,
+        "crossing": 42,
+        "dribbling": 39,
+        "firstTouch": 38,
+        "heading": 52,
+        "tackling": 50,
+        "marking": 49
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 45,
+        "strength": 52,
+        "stamina": 42,
+        "agility": 37,
+        "jumping": 41
+      },
+      "mental": {
+        "positioning": 46,
+        "decisions": 42,
+        "composure": 41,
+        "workRate": 40,
+        "aggression": 43,
+        "anticipation": 42,
+        "teamwork": 40,
+        "leadership": 40
+      }
+    },
+    {
+      "name": "عمرو الفولي",
+      "shortName": "الفولي",
+      "slug": "armant-sporting-10",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 24,
+        "longShots": 40,
+        "passing": 41,
+        "vision": 34,
+        "crossing": 37,
+        "dribbling": 36,
+        "firstTouch": 39,
+        "heading": 48,
+        "tackling": 50,
+        "marking": 47
+      },
+      "physical": {
+        "pace": 44,
+        "acceleration": 38,
+        "strength": 47,
+        "stamina": 38,
+        "agility": 44,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 41,
+        "decisions": 37,
+        "composure": 39,
+        "workRate": 36,
+        "aggression": 39,
+        "anticipation": 44,
+        "teamwork": 37,
+        "leadership": 37
+      }
+    },
+    {
+      "name": "حسن عوض",
+      "shortName": "عوض",
+      "slug": "armant-sporting-11",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 33,
+        "longShots": 45,
+        "passing": 39,
+        "vision": 42,
+        "crossing": 45,
+        "dribbling": 39,
+        "firstTouch": 43,
+        "heading": 54,
+        "tackling": 49,
+        "marking": 49
+      },
+      "physical": {
+        "pace": 41,
+        "acceleration": 36,
+        "strength": 54,
+        "stamina": 43,
+        "agility": 46,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 44,
+        "decisions": 44,
+        "composure": 45,
+        "workRate": 41,
+        "aggression": 39,
+        "anticipation": 41,
+        "teamwork": 42,
+        "leadership": 43
+      }
+    },
+    {
+      "name": "فارس عوض",
+      "shortName": "عوض",
+      "slug": "armant-sporting-12",
+      "age": 20,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 43,
+        "longShots": 33,
+        "passing": 39,
+        "vision": 41,
+        "crossing": 40,
+        "dribbling": 36,
+        "firstTouch": 33,
+        "heading": 38,
+        "tackling": 35,
+        "marking": 37
+      },
+      "physical": {
+        "pace": 42,
+        "acceleration": 38,
+        "strength": 42,
+        "stamina": 42,
+        "agility": 40,
+        "jumping": 39
+      },
+      "mental": {
+        "positioning": 34,
+        "decisions": 38,
+        "composure": 36,
+        "workRate": 40,
+        "aggression": 39,
+        "anticipation": 38,
+        "teamwork": 40,
+        "leadership": 36
+      }
+    },
+    {
+      "name": "باسم سويلم",
+      "shortName": "سويلم",
+      "slug": "armant-sporting-13",
+      "age": 27,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 33,
+        "longShots": 38,
+        "passing": 43,
+        "vision": 37,
+        "crossing": 34,
+        "dribbling": 34,
+        "firstTouch": 33,
+        "heading": 32,
+        "tackling": 31,
+        "marking": 33
+      },
+      "physical": {
+        "pace": 34,
+        "acceleration": 31,
+        "strength": 35,
+        "stamina": 38,
+        "agility": 33,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 33,
+        "decisions": 30,
+        "composure": 33,
+        "workRate": 41,
+        "aggression": 34,
+        "anticipation": 29,
+        "teamwork": 37,
+        "leadership": 33
+      }
+    },
+    {
+      "name": "محمود سرحان",
+      "shortName": "سرحان",
+      "slug": "armant-sporting-14",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 39,
+        "longShots": 40,
+        "passing": 41,
+        "vision": 40,
+        "crossing": 34,
+        "dribbling": 32,
+        "firstTouch": 40,
+        "heading": 39,
+        "tackling": 32,
+        "marking": 30
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 32,
+        "strength": 38,
+        "stamina": 41,
+        "agility": 31,
+        "jumping": 37
+      },
+      "mental": {
+        "positioning": 32,
+        "decisions": 37,
+        "composure": 38,
+        "workRate": 44,
+        "aggression": 35,
+        "anticipation": 37,
+        "teamwork": 38,
+        "leadership": 37
+      }
+    },
+    {
+      "name": "حسن خميس",
+      "shortName": "خميس",
+      "slug": "armant-sporting-15",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 35,
+        "longShots": 41,
+        "passing": 46,
+        "vision": 48,
+        "crossing": 41,
+        "dribbling": 38,
+        "firstTouch": 36,
+        "heading": 40,
+        "tackling": 38,
+        "marking": 42
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 41,
+        "strength": 42,
+        "stamina": 43,
+        "agility": 38,
+        "jumping": 44
+      },
+      "mental": {
+        "positioning": 40,
+        "decisions": 42,
+        "composure": 42,
+        "workRate": 40,
+        "aggression": 37,
+        "anticipation": 43,
+        "teamwork": 42,
+        "leadership": 36
+      }
+    },
+    {
+      "name": "عصام منصور",
+      "shortName": "منصور",
+      "slug": "armant-sporting-16",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 37,
+        "longShots": 37,
+        "passing": 41,
+        "vision": 43,
+        "crossing": 35,
+        "dribbling": 36,
+        "firstTouch": 33,
+        "heading": 42,
+        "tackling": 42,
+        "marking": 33
+      },
+      "physical": {
+        "pace": 42,
+        "acceleration": 41,
+        "strength": 42,
+        "stamina": 37,
+        "agility": 37,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 32,
+        "decisions": 35,
+        "composure": 43,
+        "workRate": 45,
+        "aggression": 34,
+        "anticipation": 39,
+        "teamwork": 43,
+        "leadership": 42
+      }
+    },
+    {
+      "name": "فتحي هلال",
+      "shortName": "هلال",
+      "slug": "armant-sporting-17",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 34,
+        "longShots": 44,
+        "passing": 45,
+        "vision": 44,
+        "crossing": 32,
+        "dribbling": 32,
+        "firstTouch": 37,
+        "heading": 36,
+        "tackling": 38,
+        "marking": 37
+      },
+      "physical": {
+        "pace": 42,
+        "acceleration": 42,
+        "strength": 41,
+        "stamina": 45,
+        "agility": 36,
+        "jumping": 37
+      },
+      "mental": {
+        "positioning": 36,
+        "decisions": 39,
+        "composure": 37,
+        "workRate": 41,
+        "aggression": 34,
+        "anticipation": 34,
+        "teamwork": 46,
+        "leadership": 40
+      }
+    },
+    {
+      "name": "ياسر دياب",
+      "shortName": "دياب",
+      "slug": "armant-sporting-18",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 37,
+        "passing": 36,
+        "vision": 33,
+        "crossing": 32,
+        "dribbling": 38,
+        "firstTouch": 36,
+        "heading": 34,
+        "tackling": 27,
+        "marking": 18
+      },
+      "physical": {
+        "pace": 40,
+        "acceleration": 40,
+        "strength": 39,
+        "stamina": 29,
+        "agility": 31,
+        "jumping": 35
+      },
+      "mental": {
+        "positioning": 37,
+        "decisions": 32,
+        "composure": 34,
+        "workRate": 35,
+        "aggression": 36,
+        "anticipation": 36,
+        "teamwork": 32,
+        "leadership": 35
+      }
+    },
+    {
+      "name": "رجب بركات",
+      "shortName": "بركات",
+      "slug": "armant-sporting-19",
+      "age": 33,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 39,
+        "longShots": 36,
+        "passing": 34,
+        "vision": 39,
+        "crossing": 39,
+        "dribbling": 38,
+        "firstTouch": 36,
+        "heading": 38,
+        "tackling": 26,
+        "marking": 23
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 40,
+        "strength": 40,
+        "stamina": 34,
+        "agility": 31,
+        "jumping": 34
+      },
+      "mental": {
+        "positioning": 34,
+        "decisions": 33,
+        "composure": 37,
+        "workRate": 31,
+        "aggression": 35,
+        "anticipation": 34,
+        "teamwork": 36,
+        "leadership": 36
+      }
+    },
+    {
+      "name": "ياسر العجمي",
+      "shortName": "العجمي",
+      "slug": "armant-sporting-20",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 42,
+        "longShots": 34,
+        "passing": 22,
+        "vision": 28,
+        "crossing": 24,
+        "dribbling": 36,
+        "firstTouch": 27,
+        "heading": 31,
+        "tackling": 21,
+        "marking": 19
+      },
+      "physical": {
+        "pace": 34,
+        "acceleration": 29,
+        "strength": 34,
+        "stamina": 31,
+        "agility": 34,
+        "jumping": 29
+      },
+      "mental": {
+        "positioning": 29,
+        "decisions": 31,
+        "composure": 32,
+        "workRate": 27,
+        "aggression": 28,
+        "anticipation": 25,
+        "teamwork": 24,
+        "leadership": 30
+      }
+    },
+    {
+      "name": "رمضان الجزار",
+      "shortName": "الجزار",
+      "slug": "armant-sporting-21",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 52,
+        "longShots": 36,
+        "passing": 34,
+        "vision": 30,
+        "crossing": 33,
+        "dribbling": 39,
+        "firstTouch": 38,
+        "heading": 37,
+        "tackling": 21,
+        "marking": 21
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 42,
+        "strength": 44,
+        "stamina": 29,
+        "agility": 36,
+        "jumping": 36
+      },
+      "mental": {
+        "positioning": 32,
+        "decisions": 39,
+        "composure": 40,
+        "workRate": 30,
+        "aggression": 35,
+        "anticipation": 33,
+        "teamwork": 37,
+        "leadership": 35
+      }
+    }
+  ]
+}

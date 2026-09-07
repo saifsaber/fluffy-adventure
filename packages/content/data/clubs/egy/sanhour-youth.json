@@ -1,0 +1,947 @@
+{
+  "name": "مركز شباب سنهور",
+  "shortName": "سنهور",
+  "slug": "sanhour-youth",
+  "country": "EGY",
+  "region": "الفيوم",
+  "location": {
+    "lat": 29.4667,
+    "lon": 30.7333
+  },
+  "reputation": 35,
+  "stadium": {
+    "name": "ملعب سنهور",
+    "shortName": "سنهور",
+    "slug": "sanhour-youth-stadium",
+    "capacity": 800,
+    "pitchQuality": 40
+  },
+  "squad": [
+    {
+      "name": "مصطفى دياب",
+      "shortName": "دياب",
+      "slug": "sanhour-youth-1",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 21,
+        "longShots": 40,
+        "passing": 45,
+        "vision": 42,
+        "crossing": 36,
+        "dribbling": 23,
+        "firstTouch": 43,
+        "heading": 42,
+        "tackling": 34,
+        "marking": 45
+      },
+      "physical": {
+        "pace": 27,
+        "acceleration": 36,
+        "strength": 45,
+        "stamina": 41,
+        "agility": 38,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 56,
+        "decisions": 40,
+        "composure": 42,
+        "workRate": 44,
+        "aggression": 44,
+        "anticipation": 38,
+        "teamwork": 42,
+        "leadership": 41
+      },
+      "goalkeeping": {
+        "handling": 52,
+        "reflexes": 50,
+        "aerialReach": 47,
+        "distribution": 45,
+        "oneOnOnes": 44
+      }
+    },
+    {
+      "name": "رجب شحاتة",
+      "shortName": "شحاتة",
+      "slug": "sanhour-youth-2",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 17,
+        "longShots": 40,
+        "passing": 39,
+        "vision": 39,
+        "crossing": 40,
+        "dribbling": 21,
+        "firstTouch": 34,
+        "heading": 38,
+        "tackling": 36,
+        "marking": 46
+      },
+      "physical": {
+        "pace": 24,
+        "acceleration": 42,
+        "strength": 38,
+        "stamina": 34,
+        "agility": 46,
+        "jumping": 43
+      },
+      "mental": {
+        "positioning": 50,
+        "decisions": 33,
+        "composure": 50,
+        "workRate": 40,
+        "aggression": 43,
+        "anticipation": 41,
+        "teamwork": 39,
+        "leadership": 44
+      },
+      "goalkeeping": {
+        "handling": 48,
+        "reflexes": 48,
+        "aerialReach": 47,
+        "distribution": 45,
+        "oneOnOnes": 45
+      }
+    },
+    {
+      "name": "رجب مطاوع",
+      "shortName": "مطاوع",
+      "slug": "sanhour-youth-3",
+      "age": 33,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 18,
+        "longShots": 35,
+        "passing": 34,
+        "vision": 39,
+        "crossing": 35,
+        "dribbling": 25,
+        "firstTouch": 33,
+        "heading": 42,
+        "tackling": 31,
+        "marking": 43
+      },
+      "physical": {
+        "pace": 23,
+        "acceleration": 38,
+        "strength": 40,
+        "stamina": 39,
+        "agility": 38,
+        "jumping": 34
+      },
+      "mental": {
+        "positioning": 50,
+        "decisions": 40,
+        "composure": 48,
+        "workRate": 42,
+        "aggression": 38,
+        "anticipation": 39,
+        "teamwork": 37,
+        "leadership": 36
+      },
+      "goalkeeping": {
+        "handling": 49,
+        "reflexes": 46,
+        "aerialReach": 50,
+        "distribution": 46,
+        "oneOnOnes": 45
+      }
+    },
+    {
+      "name": "رجب عبدالعال",
+      "shortName": "عبدالعال",
+      "slug": "sanhour-youth-4",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 34,
+        "longShots": 48,
+        "passing": 40,
+        "vision": 38,
+        "crossing": 39,
+        "dribbling": 40,
+        "firstTouch": 43,
+        "heading": 45,
+        "tackling": 61,
+        "marking": 59
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 43,
+        "strength": 46,
+        "stamina": 42,
+        "agility": 42,
+        "jumping": 41
+      },
+      "mental": {
+        "positioning": 48,
+        "decisions": 47,
+        "composure": 38,
+        "workRate": 44,
+        "aggression": 47,
+        "anticipation": 41,
+        "teamwork": 40,
+        "leadership": 39
+      }
+    },
+    {
+      "name": "عمر شحاتة",
+      "shortName": "شحاتة",
+      "slug": "sanhour-youth-5",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 32,
+        "longShots": 43,
+        "passing": 38,
+        "vision": 40,
+        "crossing": 37,
+        "dribbling": 35,
+        "firstTouch": 41,
+        "heading": 53,
+        "tackling": 58,
+        "marking": 60
+      },
+      "physical": {
+        "pace": 37,
+        "acceleration": 42,
+        "strength": 45,
+        "stamina": 42,
+        "agility": 38,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 42,
+        "composure": 47,
+        "workRate": 35,
+        "aggression": 45,
+        "anticipation": 42,
+        "teamwork": 40,
+        "leadership": 45
+      }
+    },
+    {
+      "name": "شادي الطوخي",
+      "shortName": "الطوخي",
+      "slug": "sanhour-youth-6",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 22,
+        "longShots": 36,
+        "passing": 40,
+        "vision": 31,
+        "crossing": 38,
+        "dribbling": 38,
+        "firstTouch": 40,
+        "heading": 42,
+        "tackling": 50,
+        "marking": 52
+      },
+      "physical": {
+        "pace": 40,
+        "acceleration": 42,
+        "strength": 43,
+        "stamina": 35,
+        "agility": 38,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 47,
+        "decisions": 38,
+        "composure": 40,
+        "workRate": 32,
+        "aggression": 44,
+        "anticipation": 41,
+        "teamwork": 35,
+        "leadership": 38
+      }
+    },
+    {
+      "name": "كريم عثمان",
+      "shortName": "عثمان",
+      "slug": "sanhour-youth-7",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 28,
+        "longShots": 40,
+        "passing": 41,
+        "vision": 36,
+        "crossing": 35,
+        "dribbling": 36,
+        "firstTouch": 40,
+        "heading": 50,
+        "tackling": 52,
+        "marking": 56
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 43,
+        "strength": 47,
+        "stamina": 47,
+        "agility": 39,
+        "jumping": 41
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 42,
+        "composure": 39,
+        "workRate": 43,
+        "aggression": 43,
+        "anticipation": 46,
+        "teamwork": 43,
+        "leadership": 42
+      }
+    },
+    {
+      "name": "فتحي فرغلي",
+      "shortName": "فرغلي",
+      "slug": "sanhour-youth-8",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 31,
+        "longShots": 35,
+        "passing": 40,
+        "vision": 33,
+        "crossing": 36,
+        "dribbling": 34,
+        "firstTouch": 35,
+        "heading": 38,
+        "tackling": 54,
+        "marking": 58
+      },
+      "physical": {
+        "pace": 35,
+        "acceleration": 42,
+        "strength": 47,
+        "stamina": 39,
+        "agility": 33,
+        "jumping": 39
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 37,
+        "composure": 40,
+        "workRate": 38,
+        "aggression": 37,
+        "anticipation": 41,
+        "teamwork": 43,
+        "leadership": 37
+      }
+    },
+    {
+      "name": "هيثم الطوخي",
+      "shortName": "الطوخي",
+      "slug": "sanhour-youth-9",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 31,
+        "longShots": 37,
+        "passing": 41,
+        "vision": 36,
+        "crossing": 37,
+        "dribbling": 31,
+        "firstTouch": 34,
+        "heading": 46,
+        "tackling": 57,
+        "marking": 52
+      },
+      "physical": {
+        "pace": 33,
+        "acceleration": 41,
+        "strength": 47,
+        "stamina": 40,
+        "agility": 39,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 43,
+        "decisions": 40,
+        "composure": 33,
+        "workRate": 32,
+        "aggression": 40,
+        "anticipation": 43,
+        "teamwork": 39,
+        "leadership": 39
+      },
+      "nickname": "الطيارة"
+    },
+    {
+      "name": "سامح بدوي",
+      "shortName": "بدوي",
+      "slug": "sanhour-youth-10",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 23,
+        "longShots": 39,
+        "passing": 40,
+        "vision": 29,
+        "crossing": 38,
+        "dribbling": 35,
+        "firstTouch": 36,
+        "heading": 42,
+        "tackling": 52,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 33,
+        "acceleration": 40,
+        "strength": 37,
+        "stamina": 33,
+        "agility": 38,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 34,
+        "composure": 37,
+        "workRate": 35,
+        "aggression": 44,
+        "anticipation": 34,
+        "teamwork": 32,
+        "leadership": 34
+      }
+    },
+    {
+      "name": "عماد عوض",
+      "shortName": "عوض",
+      "slug": "sanhour-youth-11",
+      "age": 33,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 22,
+        "longShots": 36,
+        "passing": 44,
+        "vision": 32,
+        "crossing": 39,
+        "dribbling": 39,
+        "firstTouch": 43,
+        "heading": 45,
+        "tackling": 55,
+        "marking": 57
+      },
+      "physical": {
+        "pace": 36,
+        "acceleration": 41,
+        "strength": 39,
+        "stamina": 37,
+        "agility": 38,
+        "jumping": 43
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 38,
+        "composure": 38,
+        "workRate": 41,
+        "aggression": 40,
+        "anticipation": 39,
+        "teamwork": 35,
+        "leadership": 41
+      }
+    },
+    {
+      "name": "فتحي بدوي",
+      "shortName": "بدوي",
+      "slug": "sanhour-youth-12",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 38,
+        "longShots": 35,
+        "passing": 40,
+        "vision": 41,
+        "crossing": 35,
+        "dribbling": 27,
+        "firstTouch": 32,
+        "heading": 36,
+        "tackling": 43,
+        "marking": 39
+      },
+      "physical": {
+        "pace": 34,
+        "acceleration": 38,
+        "strength": 33,
+        "stamina": 42,
+        "agility": 34,
+        "jumping": 34
+      },
+      "mental": {
+        "positioning": 37,
+        "decisions": 32,
+        "composure": 39,
+        "workRate": 46,
+        "aggression": 44,
+        "anticipation": 36,
+        "teamwork": 41,
+        "leadership": 40
+      }
+    },
+    {
+      "name": "مروان حمدي",
+      "shortName": "حمدي",
+      "slug": "sanhour-youth-13",
+      "age": 31,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 36,
+        "longShots": 36,
+        "passing": 51,
+        "vision": 42,
+        "crossing": 38,
+        "dribbling": 38,
+        "firstTouch": 37,
+        "heading": 40,
+        "tackling": 38,
+        "marking": 44
+      },
+      "physical": {
+        "pace": 37,
+        "acceleration": 42,
+        "strength": 37,
+        "stamina": 47,
+        "agility": 41,
+        "jumping": 32
+      },
+      "mental": {
+        "positioning": 44,
+        "decisions": 43,
+        "composure": 41,
+        "workRate": 47,
+        "aggression": 41,
+        "anticipation": 38,
+        "teamwork": 46,
+        "leadership": 42
+      }
+    },
+    {
+      "name": "وليد شلبي",
+      "shortName": "شلبي",
+      "slug": "sanhour-youth-14",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 36,
+        "longShots": 34,
+        "passing": 45,
+        "vision": 37,
+        "crossing": 32,
+        "dribbling": 31,
+        "firstTouch": 31,
+        "heading": 27,
+        "tackling": 37,
+        "marking": 44
+      },
+      "physical": {
+        "pace": 36,
+        "acceleration": 39,
+        "strength": 38,
+        "stamina": 44,
+        "agility": 37,
+        "jumping": 35
+      },
+      "mental": {
+        "positioning": 38,
+        "decisions": 33,
+        "composure": 39,
+        "workRate": 37,
+        "aggression": 43,
+        "anticipation": 37,
+        "teamwork": 42,
+        "leadership": 34
+      }
+    },
+    {
+      "name": "أحمد العجمي",
+      "shortName": "العجمي",
+      "slug": "sanhour-youth-15",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 31,
+        "longShots": 29,
+        "passing": 35,
+        "vision": 39,
+        "crossing": 29,
+        "dribbling": 27,
+        "firstTouch": 29,
+        "heading": 23,
+        "tackling": 32,
+        "marking": 42
+      },
+      "physical": {
+        "pace": 33,
+        "acceleration": 32,
+        "strength": 37,
+        "stamina": 42,
+        "agility": 38,
+        "jumping": 36
+      },
+      "mental": {
+        "positioning": 38,
+        "decisions": 31,
+        "composure": 34,
+        "workRate": 34,
+        "aggression": 34,
+        "anticipation": 33,
+        "teamwork": 36,
+        "leadership": 25
+      }
+    },
+    {
+      "name": "كريم قنديل",
+      "shortName": "قنديل",
+      "slug": "sanhour-youth-16",
+      "age": 24,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 35,
+        "longShots": 34,
+        "passing": 49,
+        "vision": 42,
+        "crossing": 38,
+        "dribbling": 31,
+        "firstTouch": 37,
+        "heading": 29,
+        "tackling": 40,
+        "marking": 46
+      },
+      "physical": {
+        "pace": 33,
+        "acceleration": 39,
+        "strength": 35,
+        "stamina": 41,
+        "agility": 41,
+        "jumping": 31
+      },
+      "mental": {
+        "positioning": 40,
+        "decisions": 36,
+        "composure": 40,
+        "workRate": 44,
+        "aggression": 34,
+        "anticipation": 32,
+        "teamwork": 43,
+        "leadership": 41
+      }
+    },
+    {
+      "name": "صلاح سليم",
+      "shortName": "سليم",
+      "slug": "sanhour-youth-17",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 38,
+        "longShots": 36,
+        "passing": 46,
+        "vision": 46,
+        "crossing": 33,
+        "dribbling": 36,
+        "firstTouch": 39,
+        "heading": 27,
+        "tackling": 41,
+        "marking": 40
+      },
+      "physical": {
+        "pace": 39,
+        "acceleration": 40,
+        "strength": 38,
+        "stamina": 44,
+        "agility": 30,
+        "jumping": 35
+      },
+      "mental": {
+        "positioning": 43,
+        "decisions": 38,
+        "composure": 39,
+        "workRate": 41,
+        "aggression": 40,
+        "anticipation": 36,
+        "teamwork": 40,
+        "leadership": 33
+      }
+    },
+    {
+      "name": "محمود العجمي",
+      "shortName": "العجمي",
+      "slug": "sanhour-youth-18",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 49,
+        "longShots": 30,
+        "passing": 36,
+        "vision": 28,
+        "crossing": 28,
+        "dribbling": 32,
+        "firstTouch": 34,
+        "heading": 38,
+        "tackling": 31,
+        "marking": 25
+      },
+      "physical": {
+        "pace": 39,
+        "acceleration": 37,
+        "strength": 32,
+        "stamina": 40,
+        "agility": 32,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 40,
+        "decisions": 30,
+        "composure": 41,
+        "workRate": 33,
+        "aggression": 36,
+        "anticipation": 31,
+        "teamwork": 35,
+        "leadership": 36
+      }
+    },
+    {
+      "name": "عبدالله الجندي",
+      "shortName": "الجندي",
+      "slug": "sanhour-youth-19",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 42,
+        "longShots": 32,
+        "passing": 31,
+        "vision": 36,
+        "crossing": 33,
+        "dribbling": 32,
+        "firstTouch": 31,
+        "heading": 29,
+        "tackling": 27,
+        "marking": 26
+      },
+      "physical": {
+        "pace": 38,
+        "acceleration": 38,
+        "strength": 27,
+        "stamina": 26,
+        "agility": 29,
+        "jumping": 32
+      },
+      "mental": {
+        "positioning": 39,
+        "decisions": 30,
+        "composure": 32,
+        "workRate": 31,
+        "aggression": 32,
+        "anticipation": 27,
+        "teamwork": 34,
+        "leadership": 32
+      },
+      "nickname": "البلدوزر"
+    },
+    {
+      "name": "زياد مطاوع",
+      "shortName": "مطاوع",
+      "slug": "sanhour-youth-20",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 37,
+        "longShots": 32,
+        "passing": 27,
+        "vision": 31,
+        "crossing": 27,
+        "dribbling": 37,
+        "firstTouch": 24,
+        "heading": 29,
+        "tackling": 26,
+        "marking": 28
+      },
+      "physical": {
+        "pace": 31,
+        "acceleration": 36,
+        "strength": 33,
+        "stamina": 28,
+        "agility": 28,
+        "jumping": 28
+      },
+      "mental": {
+        "positioning": 33,
+        "decisions": 24,
+        "composure": 37,
+        "workRate": 28,
+        "aggression": 33,
+        "anticipation": 26,
+        "teamwork": 32,
+        "leadership": 27
+      }
+    },
+    {
+      "name": "محمد الحلواني",
+      "shortName": "الحلواني",
+      "slug": "sanhour-youth-21",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 37,
+        "longShots": 25,
+        "passing": 28,
+        "vision": 28,
+        "crossing": 22,
+        "dribbling": 33,
+        "firstTouch": 32,
+        "heading": 28,
+        "tackling": 24,
+        "marking": 23
+      },
+      "physical": {
+        "pace": 30,
+        "acceleration": 31,
+        "strength": 25,
+        "stamina": 22,
+        "agility": 31,
+        "jumping": 25
+      },
+      "mental": {
+        "positioning": 29,
+        "decisions": 29,
+        "composure": 33,
+        "workRate": 32,
+        "aggression": 28,
+        "anticipation": 30,
+        "teamwork": 31,
+        "leadership": 28
+      }
+    }
+  ]
+}

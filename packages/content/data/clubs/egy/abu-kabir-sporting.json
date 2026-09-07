@@ -1,0 +1,949 @@
+{
+  "name": "نادي أبو كبير الرياضي",
+  "shortName": "أبو كبير",
+  "slug": "abu-kabir-sporting",
+  "country": "EGY",
+  "region": "الشرقية",
+  "location": {
+    "lat": 30.7286,
+    "lon": 31.6706
+  },
+  "reputation": 47,
+  "stadium": {
+    "name": "استاد أبو كبير",
+    "shortName": "أبو كبير",
+    "slug": "abu-kabir-sporting-stadium",
+    "capacity": 2000,
+    "pitchQuality": 55
+  },
+  "squad": [
+    {
+      "name": "محمد خميس",
+      "shortName": "خميس",
+      "slug": "abu-kabir-sporting-1",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 34,
+        "longShots": 59,
+        "passing": 55,
+        "vision": 52,
+        "crossing": 53,
+        "dribbling": 40,
+        "firstTouch": 57,
+        "heading": 50,
+        "tackling": 47,
+        "marking": 54
+      },
+      "physical": {
+        "pace": 42,
+        "acceleration": 53,
+        "strength": 55,
+        "stamina": 55,
+        "agility": 53,
+        "jumping": 54
+      },
+      "mental": {
+        "positioning": 61,
+        "decisions": 53,
+        "composure": 59,
+        "workRate": 57,
+        "aggression": 53,
+        "anticipation": 53,
+        "teamwork": 59,
+        "leadership": 59
+      },
+      "goalkeeping": {
+        "handling": 60,
+        "reflexes": 61,
+        "aerialReach": 60,
+        "distribution": 61,
+        "oneOnOnes": 58
+      }
+    },
+    {
+      "name": "عمر قابيل",
+      "shortName": "قابيل",
+      "slug": "abu-kabir-sporting-2",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 28,
+        "longShots": 50,
+        "passing": 46,
+        "vision": 50,
+        "crossing": 53,
+        "dribbling": 33,
+        "firstTouch": 45,
+        "heading": 46,
+        "tackling": 42,
+        "marking": 52
+      },
+      "physical": {
+        "pace": 40,
+        "acceleration": 48,
+        "strength": 51,
+        "stamina": 53,
+        "agility": 45,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 52,
+        "composure": 56,
+        "workRate": 44,
+        "aggression": 51,
+        "anticipation": 46,
+        "teamwork": 45,
+        "leadership": 53
+      },
+      "goalkeeping": {
+        "handling": 57,
+        "reflexes": 57,
+        "aerialReach": 54,
+        "distribution": 59,
+        "oneOnOnes": 55
+      }
+    },
+    {
+      "name": "مصطفى فرغلي",
+      "shortName": "فرغلي",
+      "slug": "abu-kabir-sporting-3",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 30,
+        "longShots": 49,
+        "passing": 53,
+        "vision": 51,
+        "crossing": 50,
+        "dribbling": 38,
+        "firstTouch": 50,
+        "heading": 47,
+        "tackling": 36,
+        "marking": 49
+      },
+      "physical": {
+        "pace": 40,
+        "acceleration": 51,
+        "strength": 46,
+        "stamina": 48,
+        "agility": 52,
+        "jumping": 46
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 48,
+        "composure": 57,
+        "workRate": 56,
+        "aggression": 54,
+        "anticipation": 55,
+        "teamwork": 52,
+        "leadership": 52
+      },
+      "goalkeeping": {
+        "handling": 56,
+        "reflexes": 57,
+        "aerialReach": 55,
+        "distribution": 61,
+        "oneOnOnes": 61
+      }
+    },
+    {
+      "name": "عصام عوض",
+      "shortName": "عوض",
+      "slug": "abu-kabir-sporting-4",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 36,
+        "longShots": 42,
+        "passing": 52,
+        "vision": 45,
+        "crossing": 44,
+        "dribbling": 51,
+        "firstTouch": 51,
+        "heading": 53,
+        "tackling": 58,
+        "marking": 64
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 49,
+        "strength": 57,
+        "stamina": 48,
+        "agility": 46,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 51,
+        "composure": 54,
+        "workRate": 50,
+        "aggression": 48,
+        "anticipation": 48,
+        "teamwork": 47,
+        "leadership": 44
+      }
+    },
+    {
+      "name": "وليد نصار",
+      "shortName": "نصار",
+      "slug": "abu-kabir-sporting-5",
+      "age": 29,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 38,
+        "longShots": 53,
+        "passing": 51,
+        "vision": 47,
+        "crossing": 52,
+        "dribbling": 55,
+        "firstTouch": 51,
+        "heading": 54,
+        "tackling": 65,
+        "marking": 61
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 51,
+        "strength": 60,
+        "stamina": 50,
+        "agility": 52,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 50,
+        "composure": 50,
+        "workRate": 53,
+        "aggression": 52,
+        "anticipation": 53,
+        "teamwork": 54,
+        "leadership": 59
+      },
+      "nickname": "البلدوزر"
+    },
+    {
+      "name": "باسم هلال",
+      "shortName": "هلال",
+      "slug": "abu-kabir-sporting-6",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 55,
+        "passing": 51,
+        "vision": 44,
+        "crossing": 47,
+        "dribbling": 52,
+        "firstTouch": 51,
+        "heading": 57,
+        "tackling": 60,
+        "marking": 63
+      },
+      "physical": {
+        "pace": 51,
+        "acceleration": 48,
+        "strength": 55,
+        "stamina": 51,
+        "agility": 49,
+        "jumping": 53
+      },
+      "mental": {
+        "positioning": 61,
+        "decisions": 47,
+        "composure": 50,
+        "workRate": 51,
+        "aggression": 48,
+        "anticipation": 46,
+        "teamwork": 55,
+        "leadership": 54
+      }
+    },
+    {
+      "name": "عادل الجندي",
+      "shortName": "الجندي",
+      "slug": "abu-kabir-sporting-7",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 41,
+        "longShots": 47,
+        "passing": 47,
+        "vision": 45,
+        "crossing": 44,
+        "dribbling": 46,
+        "firstTouch": 51,
+        "heading": 56,
+        "tackling": 56,
+        "marking": 62
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 50,
+        "strength": 55,
+        "stamina": 43,
+        "agility": 44,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 55,
+        "decisions": 46,
+        "composure": 45,
+        "workRate": 44,
+        "aggression": 49,
+        "anticipation": 45,
+        "teamwork": 51,
+        "leadership": 48
+      }
+    },
+    {
+      "name": "عمرو فرغلي",
+      "shortName": "فرغلي",
+      "slug": "abu-kabir-sporting-8",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 42,
+        "longShots": 48,
+        "passing": 46,
+        "vision": 44,
+        "crossing": 49,
+        "dribbling": 47,
+        "firstTouch": 43,
+        "heading": 54,
+        "tackling": 62,
+        "marking": 61
+      },
+      "physical": {
+        "pace": 54,
+        "acceleration": 45,
+        "strength": 52,
+        "stamina": 50,
+        "agility": 52,
+        "jumping": 53
+      },
+      "mental": {
+        "positioning": 52,
+        "decisions": 46,
+        "composure": 48,
+        "workRate": 53,
+        "aggression": 52,
+        "anticipation": 46,
+        "teamwork": 45,
+        "leadership": 49
+      },
+      "nickname": "الحاوي"
+    },
+    {
+      "name": "وليد الشربيني",
+      "shortName": "الشربيني",
+      "slug": "abu-kabir-sporting-9",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 40,
+        "longShots": 49,
+        "passing": 51,
+        "vision": 48,
+        "crossing": 46,
+        "dribbling": 54,
+        "firstTouch": 51,
+        "heading": 61,
+        "tackling": 61,
+        "marking": 58
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 51,
+        "strength": 58,
+        "stamina": 54,
+        "agility": 47,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 55,
+        "decisions": 45,
+        "composure": 53,
+        "workRate": 52,
+        "aggression": 49,
+        "anticipation": 51,
+        "teamwork": 51,
+        "leadership": 54
+      }
+    },
+    {
+      "name": "محمد زهران",
+      "shortName": "زهران",
+      "slug": "abu-kabir-sporting-10",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 34,
+        "longShots": 49,
+        "passing": 53,
+        "vision": 48,
+        "crossing": 46,
+        "dribbling": 47,
+        "firstTouch": 45,
+        "heading": 50,
+        "tackling": 55,
+        "marking": 55
+      },
+      "physical": {
+        "pace": 47,
+        "acceleration": 43,
+        "strength": 54,
+        "stamina": 47,
+        "agility": 41,
+        "jumping": 46
+      },
+      "mental": {
+        "positioning": 57,
+        "decisions": 48,
+        "composure": 48,
+        "workRate": 47,
+        "aggression": 49,
+        "anticipation": 51,
+        "teamwork": 49,
+        "leadership": 48
+      }
+    },
+    {
+      "name": "باسم عوض",
+      "shortName": "عوض",
+      "slug": "abu-kabir-sporting-11",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 39,
+        "longShots": 48,
+        "passing": 46,
+        "vision": 43,
+        "crossing": 54,
+        "dribbling": 52,
+        "firstTouch": 51,
+        "heading": 56,
+        "tackling": 61,
+        "marking": 58
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 43,
+        "strength": 57,
+        "stamina": 47,
+        "agility": 56,
+        "jumping": 52
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 51,
+        "composure": 47,
+        "workRate": 50,
+        "aggression": 46,
+        "anticipation": 48,
+        "teamwork": 49,
+        "leadership": 52
+      }
+    },
+    {
+      "name": "تامر عوض",
+      "shortName": "عوض",
+      "slug": "abu-kabir-sporting-12",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 49,
+        "passing": 46,
+        "vision": 50,
+        "crossing": 43,
+        "dribbling": 48,
+        "firstTouch": 46,
+        "heading": 39,
+        "tackling": 46,
+        "marking": 42
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 46,
+        "strength": 48,
+        "stamina": 51,
+        "agility": 49,
+        "jumping": 42
+      },
+      "mental": {
+        "positioning": 43,
+        "decisions": 44,
+        "composure": 41,
+        "workRate": 49,
+        "aggression": 45,
+        "anticipation": 41,
+        "teamwork": 50,
+        "leadership": 45
+      }
+    },
+    {
+      "name": "طارق عبدربه",
+      "shortName": "عبدربه",
+      "slug": "abu-kabir-sporting-13",
+      "age": 20,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 53,
+        "longShots": 50,
+        "passing": 56,
+        "vision": 56,
+        "crossing": 50,
+        "dribbling": 48,
+        "firstTouch": 52,
+        "heading": 44,
+        "tackling": 51,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 53,
+        "strength": 47,
+        "stamina": 54,
+        "agility": 50,
+        "jumping": 52
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 54,
+        "composure": 49,
+        "workRate": 59,
+        "aggression": 47,
+        "anticipation": 47,
+        "teamwork": 56,
+        "leadership": 46
+      },
+      "nickname": "الحاوي"
+    },
+    {
+      "name": "هشام قنديل",
+      "shortName": "قنديل",
+      "slug": "abu-kabir-sporting-14",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 51,
+        "longShots": 52,
+        "passing": 60,
+        "vision": 58,
+        "crossing": 44,
+        "dribbling": 51,
+        "firstTouch": 54,
+        "heading": 42,
+        "tackling": 48,
+        "marking": 48
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 48,
+        "strength": 46,
+        "stamina": 56,
+        "agility": 48,
+        "jumping": 46
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 47,
+        "composure": 50,
+        "workRate": 55,
+        "aggression": 49,
+        "anticipation": 52,
+        "teamwork": 55,
+        "leadership": 47
+      }
+    },
+    {
+      "name": "أحمد مرسي",
+      "shortName": "مرسي",
+      "slug": "abu-kabir-sporting-15",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 42,
+        "longShots": 40,
+        "passing": 51,
+        "vision": 48,
+        "crossing": 43,
+        "dribbling": 48,
+        "firstTouch": 41,
+        "heading": 42,
+        "tackling": 44,
+        "marking": 43
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 43,
+        "strength": 42,
+        "stamina": 56,
+        "agility": 43,
+        "jumping": 44
+      },
+      "mental": {
+        "positioning": 41,
+        "decisions": 46,
+        "composure": 47,
+        "workRate": 44,
+        "aggression": 43,
+        "anticipation": 44,
+        "teamwork": 52,
+        "leadership": 44
+      }
+    },
+    {
+      "name": "بلال منصور",
+      "shortName": "منصور",
+      "slug": "abu-kabir-sporting-16",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 53,
+        "longShots": 47,
+        "passing": 57,
+        "vision": 53,
+        "crossing": 53,
+        "dribbling": 46,
+        "firstTouch": 47,
+        "heading": 49,
+        "tackling": 50,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 47,
+        "strength": 49,
+        "stamina": 48,
+        "agility": 46,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 48,
+        "decisions": 44,
+        "composure": 45,
+        "workRate": 48,
+        "aggression": 45,
+        "anticipation": 48,
+        "teamwork": 50,
+        "leadership": 47
+      }
+    },
+    {
+      "name": "إسلام قنديل",
+      "shortName": "قنديل",
+      "slug": "abu-kabir-sporting-17",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 51,
+        "longShots": 44,
+        "passing": 62,
+        "vision": 52,
+        "crossing": 48,
+        "dribbling": 45,
+        "firstTouch": 50,
+        "heading": 41,
+        "tackling": 53,
+        "marking": 49
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 50,
+        "strength": 48,
+        "stamina": 56,
+        "agility": 46,
+        "jumping": 53
+      },
+      "mental": {
+        "positioning": 47,
+        "decisions": 49,
+        "composure": 48,
+        "workRate": 55,
+        "aggression": 49,
+        "anticipation": 49,
+        "teamwork": 54,
+        "leadership": 55
+      }
+    },
+    {
+      "name": "سيد مرسي",
+      "shortName": "مرسي",
+      "slug": "abu-kabir-sporting-18",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 58,
+        "longShots": 46,
+        "passing": 47,
+        "vision": 52,
+        "crossing": 53,
+        "dribbling": 53,
+        "firstTouch": 52,
+        "heading": 49,
+        "tackling": 45,
+        "marking": 35
+      },
+      "physical": {
+        "pace": 57,
+        "acceleration": 61,
+        "strength": 46,
+        "stamina": 45,
+        "agility": 52,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 51,
+        "composure": 52,
+        "workRate": 48,
+        "aggression": 52,
+        "anticipation": 48,
+        "teamwork": 52,
+        "leadership": 47
+      }
+    },
+    {
+      "name": "أنس الشاذلي",
+      "shortName": "الشاذلي",
+      "slug": "abu-kabir-sporting-19",
+      "age": 24,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 52,
+        "longShots": 40,
+        "passing": 40,
+        "vision": 41,
+        "crossing": 41,
+        "dribbling": 43,
+        "firstTouch": 37,
+        "heading": 40,
+        "tackling": 33,
+        "marking": 34
+      },
+      "physical": {
+        "pace": 42,
+        "acceleration": 47,
+        "strength": 40,
+        "stamina": 37,
+        "agility": 40,
+        "jumping": 43
+      },
+      "mental": {
+        "positioning": 44,
+        "decisions": 37,
+        "composure": 46,
+        "workRate": 42,
+        "aggression": 41,
+        "anticipation": 41,
+        "teamwork": 40,
+        "leadership": 38
+      },
+      "nickname": "الفراشة"
+    },
+    {
+      "name": "طارق الجزار",
+      "shortName": "الجزار",
+      "slug": "abu-kabir-sporting-20",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 47,
+        "longShots": 40,
+        "passing": 41,
+        "vision": 42,
+        "crossing": 43,
+        "dribbling": 44,
+        "firstTouch": 42,
+        "heading": 41,
+        "tackling": 29,
+        "marking": 28
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 47,
+        "strength": 38,
+        "stamina": 37,
+        "agility": 42,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 42,
+        "decisions": 39,
+        "composure": 46,
+        "workRate": 41,
+        "aggression": 46,
+        "anticipation": 39,
+        "teamwork": 42,
+        "leadership": 40
+      }
+    },
+    {
+      "name": "مينا الجزار",
+      "shortName": "الجزار",
+      "slug": "abu-kabir-sporting-21",
+      "age": 20,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 50,
+        "longShots": 44,
+        "passing": 47,
+        "vision": 41,
+        "crossing": 46,
+        "dribbling": 54,
+        "firstTouch": 47,
+        "heading": 41,
+        "tackling": 34,
+        "marking": 37
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 45,
+        "strength": 42,
+        "stamina": 39,
+        "agility": 43,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 42,
+        "decisions": 47,
+        "composure": 49,
+        "workRate": 48,
+        "aggression": 42,
+        "anticipation": 47,
+        "teamwork": 42,
+        "leadership": 46
+      }
+    }
+  ]
+}

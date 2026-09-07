@@ -1,0 +1,947 @@
+{
+  "name": "نادي بني مزار",
+  "shortName": "بني مزار",
+  "slug": "beni-mazar-sporting",
+  "country": "EGY",
+  "region": "المنيا",
+  "location": {
+    "lat": 28.5053,
+    "lon": 30.8006
+  },
+  "reputation": 42,
+  "stadium": {
+    "name": "استاد بني مزار",
+    "shortName": "بني مزار",
+    "slug": "beni-mazar-sporting-stadium",
+    "capacity": 1600,
+    "pitchQuality": 47
+  },
+  "squad": [
+    {
+      "name": "رمضان العجمي",
+      "shortName": "العجمي",
+      "slug": "beni-mazar-sporting-1",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 25,
+        "longShots": 50,
+        "passing": 44,
+        "vision": 50,
+        "crossing": 50,
+        "dribbling": 30,
+        "firstTouch": 51,
+        "heading": 52,
+        "tackling": 34,
+        "marking": 43
+      },
+      "physical": {
+        "pace": 37,
+        "acceleration": 45,
+        "strength": 51,
+        "stamina": 43,
+        "agility": 48,
+        "jumping": 41
+      },
+      "mental": {
+        "positioning": 55,
+        "decisions": 54,
+        "composure": 56,
+        "workRate": 47,
+        "aggression": 46,
+        "anticipation": 44,
+        "teamwork": 48,
+        "leadership": 48
+      },
+      "goalkeeping": {
+        "handling": 57,
+        "reflexes": 58,
+        "aerialReach": 54,
+        "distribution": 54,
+        "oneOnOnes": 58
+      }
+    },
+    {
+      "name": "سيد سويلم",
+      "shortName": "سويلم",
+      "slug": "beni-mazar-sporting-2",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 24,
+        "longShots": 41,
+        "passing": 45,
+        "vision": 44,
+        "crossing": 48,
+        "dribbling": 30,
+        "firstTouch": 40,
+        "heading": 47,
+        "tackling": 41,
+        "marking": 45
+      },
+      "physical": {
+        "pace": 33,
+        "acceleration": 47,
+        "strength": 43,
+        "stamina": 50,
+        "agility": 47,
+        "jumping": 46
+      },
+      "mental": {
+        "positioning": 44,
+        "decisions": 43,
+        "composure": 45,
+        "workRate": 46,
+        "aggression": 46,
+        "anticipation": 44,
+        "teamwork": 40,
+        "leadership": 48
+      },
+      "goalkeeping": {
+        "handling": 53,
+        "reflexes": 51,
+        "aerialReach": 55,
+        "distribution": 53,
+        "oneOnOnes": 57
+      }
+    },
+    {
+      "name": "أنس فرغلي",
+      "shortName": "فرغلي",
+      "slug": "beni-mazar-sporting-3",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 30,
+        "longShots": 53,
+        "passing": 38,
+        "vision": 44,
+        "crossing": 47,
+        "dribbling": 34,
+        "firstTouch": 47,
+        "heading": 53,
+        "tackling": 38,
+        "marking": 45
+      },
+      "physical": {
+        "pace": 40,
+        "acceleration": 49,
+        "strength": 48,
+        "stamina": 52,
+        "agility": 44,
+        "jumping": 46
+      },
+      "mental": {
+        "positioning": 52,
+        "decisions": 48,
+        "composure": 49,
+        "workRate": 46,
+        "aggression": 48,
+        "anticipation": 44,
+        "teamwork": 41,
+        "leadership": 49
+      },
+      "goalkeeping": {
+        "handling": 55,
+        "reflexes": 55,
+        "aerialReach": 55,
+        "distribution": 57,
+        "oneOnOnes": 55
+      }
+    },
+    {
+      "name": "إسلام عفيفي",
+      "shortName": "عفيفي",
+      "slug": "beni-mazar-sporting-4",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 36,
+        "longShots": 49,
+        "passing": 44,
+        "vision": 46,
+        "crossing": 48,
+        "dribbling": 44,
+        "firstTouch": 46,
+        "heading": 59,
+        "tackling": 52,
+        "marking": 53
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 47,
+        "strength": 55,
+        "stamina": 50,
+        "agility": 46,
+        "jumping": 49
+      },
+      "mental": {
+        "positioning": 57,
+        "decisions": 52,
+        "composure": 49,
+        "workRate": 52,
+        "aggression": 44,
+        "anticipation": 43,
+        "teamwork": 48,
+        "leadership": 47
+      }
+    },
+    {
+      "name": "مروان سويلم",
+      "shortName": "سويلم",
+      "slug": "beni-mazar-sporting-5",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 35,
+        "longShots": 49,
+        "passing": 43,
+        "vision": 38,
+        "crossing": 44,
+        "dribbling": 45,
+        "firstTouch": 47,
+        "heading": 59,
+        "tackling": 51,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 45,
+        "strength": 60,
+        "stamina": 47,
+        "agility": 44,
+        "jumping": 43
+      },
+      "mental": {
+        "positioning": 55,
+        "decisions": 42,
+        "composure": 43,
+        "workRate": 51,
+        "aggression": 46,
+        "anticipation": 45,
+        "teamwork": 43,
+        "leadership": 48
+      }
+    },
+    {
+      "name": "أنس الشاذلي",
+      "shortName": "الشاذلي",
+      "slug": "beni-mazar-sporting-6",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 32,
+        "longShots": 47,
+        "passing": 42,
+        "vision": 43,
+        "crossing": 41,
+        "dribbling": 46,
+        "firstTouch": 44,
+        "heading": 54,
+        "tackling": 54,
+        "marking": 48
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 46,
+        "strength": 58,
+        "stamina": 43,
+        "agility": 42,
+        "jumping": 39
+      },
+      "mental": {
+        "positioning": 55,
+        "decisions": 43,
+        "composure": 44,
+        "workRate": 47,
+        "aggression": 49,
+        "anticipation": 43,
+        "teamwork": 48,
+        "leadership": 49
+      }
+    },
+    {
+      "name": "أيمن العجمي",
+      "shortName": "العجمي",
+      "slug": "beni-mazar-sporting-7",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 33,
+        "longShots": 49,
+        "passing": 39,
+        "vision": 38,
+        "crossing": 44,
+        "dribbling": 44,
+        "firstTouch": 50,
+        "heading": 56,
+        "tackling": 53,
+        "marking": 55
+      },
+      "physical": {
+        "pace": 51,
+        "acceleration": 47,
+        "strength": 56,
+        "stamina": 42,
+        "agility": 41,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 45,
+        "decisions": 47,
+        "composure": 48,
+        "workRate": 44,
+        "aggression": 49,
+        "anticipation": 41,
+        "teamwork": 46,
+        "leadership": 41
+      }
+    },
+    {
+      "name": "شادي العجمي",
+      "shortName": "العجمي",
+      "slug": "beni-mazar-sporting-8",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 37,
+        "longShots": 55,
+        "passing": 43,
+        "vision": 38,
+        "crossing": 53,
+        "dribbling": 49,
+        "firstTouch": 47,
+        "heading": 62,
+        "tackling": 57,
+        "marking": 55
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 50,
+        "strength": 54,
+        "stamina": 44,
+        "agility": 46,
+        "jumping": 54
+      },
+      "mental": {
+        "positioning": 57,
+        "decisions": 46,
+        "composure": 53,
+        "workRate": 46,
+        "aggression": 43,
+        "anticipation": 44,
+        "teamwork": 48,
+        "leadership": 44
+      }
+    },
+    {
+      "name": "عادل النجار",
+      "shortName": "النجار",
+      "slug": "beni-mazar-sporting-9",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 39,
+        "longShots": 49,
+        "passing": 46,
+        "vision": 42,
+        "crossing": 46,
+        "dribbling": 48,
+        "firstTouch": 43,
+        "heading": 54,
+        "tackling": 56,
+        "marking": 61
+      },
+      "physical": {
+        "pace": 56,
+        "acceleration": 50,
+        "strength": 56,
+        "stamina": 50,
+        "agility": 43,
+        "jumping": 49
+      },
+      "mental": {
+        "positioning": 55,
+        "decisions": 50,
+        "composure": 49,
+        "workRate": 50,
+        "aggression": 49,
+        "anticipation": 48,
+        "teamwork": 47,
+        "leadership": 47
+      }
+    },
+    {
+      "name": "محمد فرغلي",
+      "shortName": "فرغلي",
+      "slug": "beni-mazar-sporting-10",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 29,
+        "longShots": 39,
+        "passing": 40,
+        "vision": 42,
+        "crossing": 41,
+        "dribbling": 36,
+        "firstTouch": 44,
+        "heading": 52,
+        "tackling": 47,
+        "marking": 49
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 47,
+        "strength": 51,
+        "stamina": 45,
+        "agility": 43,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 50,
+        "decisions": 37,
+        "composure": 43,
+        "workRate": 44,
+        "aggression": 40,
+        "anticipation": 41,
+        "teamwork": 36,
+        "leadership": 42
+      }
+    },
+    {
+      "name": "أحمد غنيم",
+      "shortName": "غنيم",
+      "slug": "beni-mazar-sporting-11",
+      "age": 29,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 40,
+        "longShots": 44,
+        "passing": 45,
+        "vision": 43,
+        "crossing": 44,
+        "dribbling": 46,
+        "firstTouch": 47,
+        "heading": 56,
+        "tackling": 50,
+        "marking": 55
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 43,
+        "strength": 53,
+        "stamina": 41,
+        "agility": 46,
+        "jumping": 46
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 44,
+        "composure": 49,
+        "workRate": 51,
+        "aggression": 50,
+        "anticipation": 48,
+        "teamwork": 44,
+        "leadership": 45
+      },
+      "nickname": "الصخرة"
+    },
+    {
+      "name": "هيثم عبدربه",
+      "shortName": "عبدربه",
+      "slug": "beni-mazar-sporting-12",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 42,
+        "longShots": 43,
+        "passing": 54,
+        "vision": 51,
+        "crossing": 43,
+        "dribbling": 42,
+        "firstTouch": 49,
+        "heading": 47,
+        "tackling": 42,
+        "marking": 44
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 43,
+        "strength": 46,
+        "stamina": 51,
+        "agility": 44,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 46,
+        "decisions": 44,
+        "composure": 42,
+        "workRate": 53,
+        "aggression": 43,
+        "anticipation": 46,
+        "teamwork": 53,
+        "leadership": 44
+      }
+    },
+    {
+      "name": "عصام دياب",
+      "shortName": "دياب",
+      "slug": "beni-mazar-sporting-13",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 40,
+        "longShots": 47,
+        "passing": 44,
+        "vision": 45,
+        "crossing": 42,
+        "dribbling": 39,
+        "firstTouch": 45,
+        "heading": 38,
+        "tackling": 41,
+        "marking": 46
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 43,
+        "strength": 48,
+        "stamina": 45,
+        "agility": 40,
+        "jumping": 44
+      },
+      "mental": {
+        "positioning": 40,
+        "decisions": 41,
+        "composure": 39,
+        "workRate": 47,
+        "aggression": 42,
+        "anticipation": 43,
+        "teamwork": 49,
+        "leadership": 44
+      }
+    },
+    {
+      "name": "عبدالله النجار",
+      "shortName": "النجار",
+      "slug": "beni-mazar-sporting-14",
+      "age": 31,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 40,
+        "longShots": 38,
+        "passing": 49,
+        "vision": 50,
+        "crossing": 46,
+        "dribbling": 44,
+        "firstTouch": 43,
+        "heading": 40,
+        "tackling": 45,
+        "marking": 41
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 39,
+        "strength": 46,
+        "stamina": 44,
+        "agility": 44,
+        "jumping": 43
+      },
+      "mental": {
+        "positioning": 40,
+        "decisions": 42,
+        "composure": 39,
+        "workRate": 50,
+        "aggression": 40,
+        "anticipation": 43,
+        "teamwork": 48,
+        "leadership": 37
+      }
+    },
+    {
+      "name": "يوسف بركات",
+      "shortName": "بركات",
+      "slug": "beni-mazar-sporting-15",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 38,
+        "longShots": 44,
+        "passing": 49,
+        "vision": 52,
+        "crossing": 41,
+        "dribbling": 43,
+        "firstTouch": 43,
+        "heading": 46,
+        "tackling": 42,
+        "marking": 38
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 39,
+        "strength": 39,
+        "stamina": 44,
+        "agility": 39,
+        "jumping": 41
+      },
+      "mental": {
+        "positioning": 42,
+        "decisions": 40,
+        "composure": 40,
+        "workRate": 49,
+        "aggression": 41,
+        "anticipation": 39,
+        "teamwork": 51,
+        "leadership": 43
+      }
+    },
+    {
+      "name": "هشام عبدربه",
+      "shortName": "عبدربه",
+      "slug": "beni-mazar-sporting-16",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 42,
+        "longShots": 47,
+        "passing": 47,
+        "vision": 50,
+        "crossing": 37,
+        "dribbling": 42,
+        "firstTouch": 38,
+        "heading": 36,
+        "tackling": 36,
+        "marking": 38
+      },
+      "physical": {
+        "pace": 41,
+        "acceleration": 32,
+        "strength": 43,
+        "stamina": 40,
+        "agility": 39,
+        "jumping": 43
+      },
+      "mental": {
+        "positioning": 39,
+        "decisions": 40,
+        "composure": 41,
+        "workRate": 45,
+        "aggression": 39,
+        "anticipation": 38,
+        "teamwork": 46,
+        "leadership": 41
+      },
+      "nickname": "الفنان"
+    },
+    {
+      "name": "هيثم صادق",
+      "shortName": "صادق",
+      "slug": "beni-mazar-sporting-17",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 42,
+        "longShots": 44,
+        "passing": 46,
+        "vision": 46,
+        "crossing": 45,
+        "dribbling": 39,
+        "firstTouch": 43,
+        "heading": 42,
+        "tackling": 40,
+        "marking": 42
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 38,
+        "strength": 48,
+        "stamina": 47,
+        "agility": 45,
+        "jumping": 42
+      },
+      "mental": {
+        "positioning": 43,
+        "decisions": 36,
+        "composure": 42,
+        "workRate": 48,
+        "aggression": 43,
+        "anticipation": 41,
+        "teamwork": 44,
+        "leadership": 45
+      }
+    },
+    {
+      "name": "عمرو دياب",
+      "shortName": "دياب",
+      "slug": "beni-mazar-sporting-18",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 48,
+        "longShots": 46,
+        "passing": 38,
+        "vision": 37,
+        "crossing": 41,
+        "dribbling": 48,
+        "firstTouch": 36,
+        "heading": 40,
+        "tackling": 24,
+        "marking": 28
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 45,
+        "strength": 37,
+        "stamina": 38,
+        "agility": 36,
+        "jumping": 36
+      },
+      "mental": {
+        "positioning": 43,
+        "decisions": 37,
+        "composure": 36,
+        "workRate": 37,
+        "aggression": 41,
+        "anticipation": 38,
+        "teamwork": 39,
+        "leadership": 38
+      }
+    },
+    {
+      "name": "رمضان الطوخي",
+      "shortName": "الطوخي",
+      "slug": "beni-mazar-sporting-19",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 40,
+        "passing": 31,
+        "vision": 36,
+        "crossing": 42,
+        "dribbling": 42,
+        "firstTouch": 38,
+        "heading": 44,
+        "tackling": 29,
+        "marking": 30
+      },
+      "physical": {
+        "pace": 54,
+        "acceleration": 45,
+        "strength": 47,
+        "stamina": 42,
+        "agility": 39,
+        "jumping": 39
+      },
+      "mental": {
+        "positioning": 37,
+        "decisions": 39,
+        "composure": 45,
+        "workRate": 34,
+        "aggression": 42,
+        "anticipation": 39,
+        "teamwork": 35,
+        "leadership": 40
+      }
+    },
+    {
+      "name": "عمر سليم",
+      "shortName": "سليم",
+      "slug": "beni-mazar-sporting-20",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 52,
+        "longShots": 47,
+        "passing": 38,
+        "vision": 41,
+        "crossing": 36,
+        "dribbling": 44,
+        "firstTouch": 45,
+        "heading": 44,
+        "tackling": 31,
+        "marking": 30
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 44,
+        "strength": 49,
+        "stamina": 41,
+        "agility": 43,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 39,
+        "decisions": 37,
+        "composure": 44,
+        "workRate": 41,
+        "aggression": 40,
+        "anticipation": 35,
+        "teamwork": 38,
+        "leadership": 42
+      }
+    },
+    {
+      "name": "سيد رزق",
+      "shortName": "رزق",
+      "slug": "beni-mazar-sporting-21",
+      "age": 31,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 51,
+        "longShots": 46,
+        "passing": 39,
+        "vision": 38,
+        "crossing": 42,
+        "dribbling": 50,
+        "firstTouch": 35,
+        "heading": 44,
+        "tackling": 28,
+        "marking": 28
+      },
+      "physical": {
+        "pace": 54,
+        "acceleration": 52,
+        "strength": 45,
+        "stamina": 38,
+        "agility": 40,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 42,
+        "decisions": 35,
+        "composure": 49,
+        "workRate": 37,
+        "aggression": 35,
+        "anticipation": 35,
+        "teamwork": 39,
+        "leadership": 37
+      }
+    }
+  ]
+}

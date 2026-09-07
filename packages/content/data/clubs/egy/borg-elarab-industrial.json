@@ -1,0 +1,949 @@
+{
+  "name": "صناعة برج العرب",
+  "shortName": "برج العرب",
+  "slug": "borg-elarab-industrial",
+  "country": "EGY",
+  "region": "الإسكندرية",
+  "location": {
+    "lat": 30.9167,
+    "lon": 29.5333
+  },
+  "reputation": 52,
+  "stadium": {
+    "name": "الملعب الصناعي",
+    "shortName": "برج العرب",
+    "slug": "borg-elarab-industrial-stadium",
+    "capacity": 2600,
+    "pitchQuality": 62
+  },
+  "squad": [
+    {
+      "name": "هشام النجار",
+      "shortName": "النجار",
+      "slug": "borg-elarab-industrial-1",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 33,
+        "longShots": 55,
+        "passing": 65,
+        "vision": 62,
+        "crossing": 61,
+        "dribbling": 43,
+        "firstTouch": 57,
+        "heading": 55,
+        "tackling": 39,
+        "marking": 58
+      },
+      "physical": {
+        "pace": 39,
+        "acceleration": 54,
+        "strength": 54,
+        "stamina": 62,
+        "agility": 51,
+        "jumping": 57
+      },
+      "mental": {
+        "positioning": 67,
+        "decisions": 55,
+        "composure": 64,
+        "workRate": 58,
+        "aggression": 51,
+        "anticipation": 56,
+        "teamwork": 56,
+        "leadership": 51
+      },
+      "goalkeeping": {
+        "handling": 63,
+        "reflexes": 69,
+        "aerialReach": 65,
+        "distribution": 61,
+        "oneOnOnes": 62
+      }
+    },
+    {
+      "name": "شريف سرحان",
+      "shortName": "سرحان",
+      "slug": "borg-elarab-industrial-2",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 31,
+        "longShots": 54,
+        "passing": 61,
+        "vision": 58,
+        "crossing": 54,
+        "dribbling": 37,
+        "firstTouch": 59,
+        "heading": 50,
+        "tackling": 47,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 42,
+        "acceleration": 51,
+        "strength": 51,
+        "stamina": 52,
+        "agility": 52,
+        "jumping": 54
+      },
+      "mental": {
+        "positioning": 64,
+        "decisions": 52,
+        "composure": 58,
+        "workRate": 53,
+        "aggression": 55,
+        "anticipation": 48,
+        "teamwork": 56,
+        "leadership": 57
+      },
+      "goalkeeping": {
+        "handling": 62,
+        "reflexes": 61,
+        "aerialReach": 61,
+        "distribution": 62,
+        "oneOnOnes": 62
+      }
+    },
+    {
+      "name": "زياد شلبي",
+      "shortName": "شلبي",
+      "slug": "borg-elarab-industrial-3",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 37,
+        "longShots": 57,
+        "passing": 62,
+        "vision": 60,
+        "crossing": 58,
+        "dribbling": 47,
+        "firstTouch": 63,
+        "heading": 54,
+        "tackling": 52,
+        "marking": 61
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 60,
+        "strength": 59,
+        "stamina": 57,
+        "agility": 54,
+        "jumping": 56
+      },
+      "mental": {
+        "positioning": 62,
+        "decisions": 60,
+        "composure": 65,
+        "workRate": 60,
+        "aggression": 60,
+        "anticipation": 60,
+        "teamwork": 57,
+        "leadership": 59
+      },
+      "goalkeeping": {
+        "handling": 70,
+        "reflexes": 69,
+        "aerialReach": 65,
+        "distribution": 70,
+        "oneOnOnes": 66
+      }
+    },
+    {
+      "name": "حسن الشناوي",
+      "shortName": "الشناوي",
+      "slug": "borg-elarab-industrial-4",
+      "age": 24,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 46,
+        "longShots": 57,
+        "passing": 65,
+        "vision": 54,
+        "crossing": 59,
+        "dribbling": 59,
+        "firstTouch": 64,
+        "heading": 65,
+        "tackling": 68,
+        "marking": 69
+      },
+      "physical": {
+        "pace": 61,
+        "acceleration": 62,
+        "strength": 67,
+        "stamina": 56,
+        "agility": 57,
+        "jumping": 62
+      },
+      "mental": {
+        "positioning": 58,
+        "decisions": 61,
+        "composure": 65,
+        "workRate": 58,
+        "aggression": 53,
+        "anticipation": 57,
+        "teamwork": 54,
+        "leadership": 59
+      }
+    },
+    {
+      "name": "حسن سرحان",
+      "shortName": "سرحان",
+      "slug": "borg-elarab-industrial-5",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 55,
+        "passing": 60,
+        "vision": 53,
+        "crossing": 54,
+        "dribbling": 56,
+        "firstTouch": 55,
+        "heading": 60,
+        "tackling": 64,
+        "marking": 69
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 56,
+        "strength": 61,
+        "stamina": 56,
+        "agility": 53,
+        "jumping": 50
+      },
+      "mental": {
+        "positioning": 57,
+        "decisions": 53,
+        "composure": 62,
+        "workRate": 57,
+        "aggression": 60,
+        "anticipation": 49,
+        "teamwork": 57,
+        "leadership": 52
+      }
+    },
+    {
+      "name": "ياسر النجار",
+      "shortName": "النجار",
+      "slug": "borg-elarab-industrial-6",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 45,
+        "longShots": 50,
+        "passing": 61,
+        "vision": 57,
+        "crossing": 59,
+        "dribbling": 52,
+        "firstTouch": 65,
+        "heading": 67,
+        "tackling": 62,
+        "marking": 64
+      },
+      "physical": {
+        "pace": 55,
+        "acceleration": 63,
+        "strength": 58,
+        "stamina": 56,
+        "agility": 56,
+        "jumping": 62
+      },
+      "mental": {
+        "positioning": 63,
+        "decisions": 55,
+        "composure": 59,
+        "workRate": 53,
+        "aggression": 55,
+        "anticipation": 55,
+        "teamwork": 55,
+        "leadership": 53
+      }
+    },
+    {
+      "name": "عصام مطاوع",
+      "shortName": "مطاوع",
+      "slug": "borg-elarab-industrial-7",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 46,
+        "longShots": 64,
+        "passing": 68,
+        "vision": 59,
+        "crossing": 58,
+        "dribbling": 59,
+        "firstTouch": 61,
+        "heading": 70,
+        "tackling": 72,
+        "marking": 69
+      },
+      "physical": {
+        "pace": 56,
+        "acceleration": 58,
+        "strength": 65,
+        "stamina": 64,
+        "agility": 60,
+        "jumping": 64
+      },
+      "mental": {
+        "positioning": 68,
+        "decisions": 61,
+        "composure": 58,
+        "workRate": 65,
+        "aggression": 59,
+        "anticipation": 59,
+        "teamwork": 65,
+        "leadership": 59
+      }
+    },
+    {
+      "name": "وليد سويلم",
+      "shortName": "سويلم",
+      "slug": "borg-elarab-industrial-8",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 47,
+        "longShots": 59,
+        "passing": 70,
+        "vision": 59,
+        "crossing": 61,
+        "dribbling": 55,
+        "firstTouch": 65,
+        "heading": 64,
+        "tackling": 65,
+        "marking": 70
+      },
+      "physical": {
+        "pace": 54,
+        "acceleration": 53,
+        "strength": 64,
+        "stamina": 57,
+        "agility": 53,
+        "jumping": 57
+      },
+      "mental": {
+        "positioning": 62,
+        "decisions": 54,
+        "composure": 53,
+        "workRate": 57,
+        "aggression": 56,
+        "anticipation": 60,
+        "teamwork": 58,
+        "leadership": 61
+      }
+    },
+    {
+      "name": "خالد الجزار",
+      "shortName": "الجزار",
+      "slug": "borg-elarab-industrial-9",
+      "age": 27,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 47,
+        "longShots": 55,
+        "passing": 63,
+        "vision": 55,
+        "crossing": 56,
+        "dribbling": 55,
+        "firstTouch": 58,
+        "heading": 69,
+        "tackling": 62,
+        "marking": 65
+      },
+      "physical": {
+        "pace": 57,
+        "acceleration": 59,
+        "strength": 63,
+        "stamina": 62,
+        "agility": 57,
+        "jumping": 57
+      },
+      "mental": {
+        "positioning": 61,
+        "decisions": 60,
+        "composure": 63,
+        "workRate": 59,
+        "aggression": 56,
+        "anticipation": 54,
+        "teamwork": 60,
+        "leadership": 58
+      }
+    },
+    {
+      "name": "شريف زهران",
+      "shortName": "زهران",
+      "slug": "borg-elarab-industrial-10",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 51,
+        "longShots": 60,
+        "passing": 64,
+        "vision": 52,
+        "crossing": 58,
+        "dribbling": 58,
+        "firstTouch": 59,
+        "heading": 62,
+        "tackling": 69,
+        "marking": 68
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 61,
+        "strength": 59,
+        "stamina": 55,
+        "agility": 54,
+        "jumping": 63
+      },
+      "mental": {
+        "positioning": 65,
+        "decisions": 57,
+        "composure": 64,
+        "workRate": 52,
+        "aggression": 58,
+        "anticipation": 59,
+        "teamwork": 54,
+        "leadership": 58
+      }
+    },
+    {
+      "name": "نادر عفيفي",
+      "shortName": "عفيفي",
+      "slug": "borg-elarab-industrial-11",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 47,
+        "longShots": 57,
+        "passing": 60,
+        "vision": 58,
+        "crossing": 58,
+        "dribbling": 55,
+        "firstTouch": 59,
+        "heading": 61,
+        "tackling": 61,
+        "marking": 66
+      },
+      "physical": {
+        "pace": 57,
+        "acceleration": 60,
+        "strength": 56,
+        "stamina": 52,
+        "agility": 57,
+        "jumping": 55
+      },
+      "mental": {
+        "positioning": 57,
+        "decisions": 53,
+        "composure": 55,
+        "workRate": 56,
+        "aggression": 51,
+        "anticipation": 54,
+        "teamwork": 55,
+        "leadership": 53
+      }
+    },
+    {
+      "name": "حسن مطاوع",
+      "shortName": "مطاوع",
+      "slug": "borg-elarab-industrial-12",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 52,
+        "longShots": 45,
+        "passing": 61,
+        "vision": 62,
+        "crossing": 51,
+        "dribbling": 50,
+        "firstTouch": 59,
+        "heading": 48,
+        "tackling": 50,
+        "marking": 48
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 54,
+        "strength": 50,
+        "stamina": 60,
+        "agility": 56,
+        "jumping": 52
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 52,
+        "composure": 54,
+        "workRate": 60,
+        "aggression": 53,
+        "anticipation": 48,
+        "teamwork": 55,
+        "leadership": 50
+      }
+    },
+    {
+      "name": "سامح بدوي",
+      "shortName": "بدوي",
+      "slug": "borg-elarab-industrial-13",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 49,
+        "longShots": 51,
+        "passing": 63,
+        "vision": 67,
+        "crossing": 45,
+        "dribbling": 58,
+        "firstTouch": 53,
+        "heading": 43,
+        "tackling": 49,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 52,
+        "strength": 54,
+        "stamina": 59,
+        "agility": 52,
+        "jumping": 49
+      },
+      "mental": {
+        "positioning": 52,
+        "decisions": 49,
+        "composure": 56,
+        "workRate": 60,
+        "aggression": 46,
+        "anticipation": 51,
+        "teamwork": 58,
+        "leadership": 53
+      },
+      "nickname": "السد العالي"
+    },
+    {
+      "name": "عمرو خميس",
+      "shortName": "خميس",
+      "slug": "borg-elarab-industrial-14",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 51,
+        "longShots": 51,
+        "passing": 67,
+        "vision": 58,
+        "crossing": 53,
+        "dribbling": 49,
+        "firstTouch": 54,
+        "heading": 46,
+        "tackling": 49,
+        "marking": 47
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 51,
+        "strength": 53,
+        "stamina": 55,
+        "agility": 49,
+        "jumping": 50
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 49,
+        "composure": 57,
+        "workRate": 62,
+        "aggression": 50,
+        "anticipation": 51,
+        "teamwork": 60,
+        "leadership": 52
+      }
+    },
+    {
+      "name": "عماد قنديل",
+      "shortName": "قنديل",
+      "slug": "borg-elarab-industrial-15",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 55,
+        "longShots": 54,
+        "passing": 67,
+        "vision": 67,
+        "crossing": 56,
+        "dribbling": 52,
+        "firstTouch": 54,
+        "heading": 49,
+        "tackling": 50,
+        "marking": 55
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 53,
+        "strength": 53,
+        "stamina": 60,
+        "agility": 55,
+        "jumping": 50
+      },
+      "mental": {
+        "positioning": 59,
+        "decisions": 52,
+        "composure": 56,
+        "workRate": 60,
+        "aggression": 49,
+        "anticipation": 56,
+        "teamwork": 57,
+        "leadership": 52
+      }
+    },
+    {
+      "name": "مينا عوض",
+      "shortName": "عوض",
+      "slug": "borg-elarab-industrial-16",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 54,
+        "longShots": 50,
+        "passing": 66,
+        "vision": 64,
+        "crossing": 50,
+        "dribbling": 50,
+        "firstTouch": 55,
+        "heading": 46,
+        "tackling": 56,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 47,
+        "acceleration": 50,
+        "strength": 54,
+        "stamina": 60,
+        "agility": 47,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 51,
+        "composure": 57,
+        "workRate": 56,
+        "aggression": 57,
+        "anticipation": 51,
+        "teamwork": 53,
+        "leadership": 49
+      }
+    },
+    {
+      "name": "عصام العجمي",
+      "shortName": "العجمي",
+      "slug": "borg-elarab-industrial-17",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 53,
+        "longShots": 52,
+        "passing": 64,
+        "vision": 66,
+        "crossing": 54,
+        "dribbling": 48,
+        "firstTouch": 57,
+        "heading": 48,
+        "tackling": 50,
+        "marking": 52
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 50,
+        "strength": 48,
+        "stamina": 55,
+        "agility": 50,
+        "jumping": 47
+      },
+      "mental": {
+        "positioning": 57,
+        "decisions": 56,
+        "composure": 51,
+        "workRate": 61,
+        "aggression": 52,
+        "anticipation": 53,
+        "teamwork": 60,
+        "leadership": 56
+      },
+      "nickname": "الأخطبوط"
+    },
+    {
+      "name": "عادل بدوي",
+      "shortName": "بدوي",
+      "slug": "borg-elarab-industrial-18",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 60,
+        "longShots": 51,
+        "passing": 60,
+        "vision": 61,
+        "crossing": 52,
+        "dribbling": 64,
+        "firstTouch": 49,
+        "heading": 50,
+        "tackling": 37,
+        "marking": 38
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 54,
+        "strength": 54,
+        "stamina": 58,
+        "agility": 50,
+        "jumping": 50
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 51,
+        "composure": 63,
+        "workRate": 52,
+        "aggression": 54,
+        "anticipation": 54,
+        "teamwork": 52,
+        "leadership": 45
+      }
+    },
+    {
+      "name": "شادي فرغلي",
+      "shortName": "فرغلي",
+      "slug": "borg-elarab-industrial-19",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 53,
+        "longShots": 51,
+        "passing": 51,
+        "vision": 46,
+        "crossing": 44,
+        "dribbling": 51,
+        "firstTouch": 45,
+        "heading": 45,
+        "tackling": 36,
+        "marking": 34
+      },
+      "physical": {
+        "pace": 47,
+        "acceleration": 47,
+        "strength": 43,
+        "stamina": 39,
+        "agility": 47,
+        "jumping": 47
+      },
+      "mental": {
+        "positioning": 45,
+        "decisions": 43,
+        "composure": 52,
+        "workRate": 46,
+        "aggression": 47,
+        "anticipation": 50,
+        "teamwork": 42,
+        "leadership": 46
+      },
+      "nickname": "الفنان"
+    },
+    {
+      "name": "إسلام شحاتة",
+      "shortName": "شحاتة",
+      "slug": "borg-elarab-industrial-20",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 60,
+        "longShots": 45,
+        "passing": 56,
+        "vision": 48,
+        "crossing": 51,
+        "dribbling": 52,
+        "firstTouch": 52,
+        "heading": 48,
+        "tackling": 33,
+        "marking": 41
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 56,
+        "strength": 48,
+        "stamina": 55,
+        "agility": 48,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 43,
+        "decisions": 44,
+        "composure": 54,
+        "workRate": 47,
+        "aggression": 44,
+        "anticipation": 46,
+        "teamwork": 49,
+        "leadership": 49
+      },
+      "nickname": "القناص"
+    },
+    {
+      "name": "باسم الحلواني",
+      "shortName": "الحلواني",
+      "slug": "borg-elarab-industrial-21",
+      "age": 20,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 56,
+        "longShots": 45,
+        "passing": 49,
+        "vision": 51,
+        "crossing": 49,
+        "dribbling": 58,
+        "firstTouch": 53,
+        "heading": 42,
+        "tackling": 37,
+        "marking": 34
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 52,
+        "strength": 45,
+        "stamina": 50,
+        "agility": 42,
+        "jumping": 46
+      },
+      "mental": {
+        "positioning": 48,
+        "decisions": 44,
+        "composure": 56,
+        "workRate": 49,
+        "aggression": 44,
+        "anticipation": 46,
+        "teamwork": 48,
+        "leadership": 45
+      }
+    }
+  ]
+}

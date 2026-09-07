@@ -1,0 +1,950 @@
+{
+  "name": "غزل كفر الدوار",
+  "shortName": "كفر الدوار",
+  "slug": "kafr-eldawar-textile",
+  "country": "EGY",
+  "region": "البحيرة",
+  "location": {
+    "lat": 31.1342,
+    "lon": 30.1289
+  },
+  "reputation": 53,
+  "stadium": {
+    "name": "استاد الغزل",
+    "shortName": "كفر الدوار",
+    "slug": "kafr-eldawar-textile-stadium",
+    "capacity": 3500,
+    "pitchQuality": 58
+  },
+  "squad": [
+    {
+      "name": "هشام عوض",
+      "shortName": "عوض",
+      "slug": "kafr-eldawar-textile-1",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 39,
+        "longShots": 55,
+        "passing": 56,
+        "vision": 57,
+        "crossing": 55,
+        "dribbling": 47,
+        "firstTouch": 63,
+        "heading": 55,
+        "tackling": 46,
+        "marking": 64
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 56,
+        "strength": 60,
+        "stamina": 62,
+        "agility": 56,
+        "jumping": 55
+      },
+      "mental": {
+        "positioning": 62,
+        "decisions": 62,
+        "composure": 62,
+        "workRate": 61,
+        "aggression": 58,
+        "anticipation": 54,
+        "teamwork": 57,
+        "leadership": 56
+      },
+      "goalkeeping": {
+        "handling": 72,
+        "reflexes": 66,
+        "aerialReach": 69,
+        "distribution": 66,
+        "oneOnOnes": 66
+      }
+    },
+    {
+      "name": "عصام سويلم",
+      "shortName": "سويلم",
+      "slug": "kafr-eldawar-textile-2",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 39,
+        "longShots": 60,
+        "passing": 59,
+        "vision": 56,
+        "crossing": 54,
+        "dribbling": 49,
+        "firstTouch": 55,
+        "heading": 62,
+        "tackling": 51,
+        "marking": 55
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 60,
+        "strength": 59,
+        "stamina": 59,
+        "agility": 58,
+        "jumping": 64
+      },
+      "mental": {
+        "positioning": 67,
+        "decisions": 58,
+        "composure": 63,
+        "workRate": 64,
+        "aggression": 59,
+        "anticipation": 56,
+        "teamwork": 60,
+        "leadership": 64
+      },
+      "goalkeeping": {
+        "handling": 68,
+        "reflexes": 68,
+        "aerialReach": 63,
+        "distribution": 63,
+        "oneOnOnes": 71
+      }
+    },
+    {
+      "name": "رمضان الفولي",
+      "shortName": "الفولي",
+      "slug": "kafr-eldawar-textile-3",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 38,
+        "longShots": 55,
+        "passing": 57,
+        "vision": 55,
+        "crossing": 53,
+        "dribbling": 42,
+        "firstTouch": 52,
+        "heading": 54,
+        "tackling": 44,
+        "marking": 55
+      },
+      "physical": {
+        "pace": 36,
+        "acceleration": 55,
+        "strength": 56,
+        "stamina": 55,
+        "agility": 54,
+        "jumping": 53
+      },
+      "mental": {
+        "positioning": 55,
+        "decisions": 50,
+        "composure": 65,
+        "workRate": 53,
+        "aggression": 51,
+        "anticipation": 51,
+        "teamwork": 53,
+        "leadership": 58
+      },
+      "goalkeeping": {
+        "handling": 63,
+        "reflexes": 61,
+        "aerialReach": 68,
+        "distribution": 61,
+        "oneOnOnes": 66
+      }
+    },
+    {
+      "name": "باسم منصور",
+      "shortName": "منصور",
+      "slug": "kafr-eldawar-textile-4",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 43,
+        "longShots": 62,
+        "passing": 58,
+        "vision": 58,
+        "crossing": 59,
+        "dribbling": 58,
+        "firstTouch": 60,
+        "heading": 62,
+        "tackling": 70,
+        "marking": 66
+      },
+      "physical": {
+        "pace": 64,
+        "acceleration": 58,
+        "strength": 61,
+        "stamina": 56,
+        "agility": 53,
+        "jumping": 56
+      },
+      "mental": {
+        "positioning": 62,
+        "decisions": 58,
+        "composure": 59,
+        "workRate": 62,
+        "aggression": 59,
+        "anticipation": 58,
+        "teamwork": 51,
+        "leadership": 57
+      }
+    },
+    {
+      "name": "عصام الفولي",
+      "shortName": "الفولي",
+      "slug": "kafr-eldawar-textile-5",
+      "age": 24,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 49,
+        "longShots": 60,
+        "passing": 59,
+        "vision": 53,
+        "crossing": 62,
+        "dribbling": 56,
+        "firstTouch": 57,
+        "heading": 64,
+        "tackling": 67,
+        "marking": 67
+      },
+      "physical": {
+        "pace": 58,
+        "acceleration": 53,
+        "strength": 64,
+        "stamina": 53,
+        "agility": 57,
+        "jumping": 52
+      },
+      "mental": {
+        "positioning": 62,
+        "decisions": 56,
+        "composure": 55,
+        "workRate": 55,
+        "aggression": 53,
+        "anticipation": 53,
+        "teamwork": 57,
+        "leadership": 55
+      },
+      "nickname": "الصخرة"
+    },
+    {
+      "name": "فتحي نصار",
+      "shortName": "نصار",
+      "slug": "kafr-eldawar-textile-6",
+      "age": 20,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 49,
+        "longShots": 54,
+        "passing": 59,
+        "vision": 53,
+        "crossing": 54,
+        "dribbling": 57,
+        "firstTouch": 54,
+        "heading": 64,
+        "tackling": 59,
+        "marking": 64
+      },
+      "physical": {
+        "pace": 55,
+        "acceleration": 54,
+        "strength": 58,
+        "stamina": 56,
+        "agility": 51,
+        "jumping": 52
+      },
+      "mental": {
+        "positioning": 61,
+        "decisions": 51,
+        "composure": 57,
+        "workRate": 51,
+        "aggression": 55,
+        "anticipation": 55,
+        "teamwork": 51,
+        "leadership": 61
+      }
+    },
+    {
+      "name": "سيد الفولي",
+      "shortName": "الفولي",
+      "slug": "kafr-eldawar-textile-7",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 52,
+        "passing": 55,
+        "vision": 47,
+        "crossing": 51,
+        "dribbling": 59,
+        "firstTouch": 55,
+        "heading": 63,
+        "tackling": 65,
+        "marking": 59
+      },
+      "physical": {
+        "pace": 59,
+        "acceleration": 56,
+        "strength": 61,
+        "stamina": 57,
+        "agility": 53,
+        "jumping": 55
+      },
+      "mental": {
+        "positioning": 58,
+        "decisions": 56,
+        "composure": 56,
+        "workRate": 60,
+        "aggression": 51,
+        "anticipation": 56,
+        "teamwork": 58,
+        "leadership": 53
+      }
+    },
+    {
+      "name": "أيمن الحلواني",
+      "shortName": "الحلواني",
+      "slug": "kafr-eldawar-textile-8",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 43,
+        "longShots": 55,
+        "passing": 51,
+        "vision": 48,
+        "crossing": 52,
+        "dribbling": 55,
+        "firstTouch": 57,
+        "heading": 63,
+        "tackling": 67,
+        "marking": 57
+      },
+      "physical": {
+        "pace": 56,
+        "acceleration": 57,
+        "strength": 58,
+        "stamina": 54,
+        "agility": 55,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 55,
+        "decisions": 52,
+        "composure": 48,
+        "workRate": 52,
+        "aggression": 54,
+        "anticipation": 54,
+        "teamwork": 50,
+        "leadership": 55
+      }
+    },
+    {
+      "name": "هيثم الشاذلي",
+      "shortName": "الشاذلي",
+      "slug": "kafr-eldawar-textile-9",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 63,
+        "passing": 61,
+        "vision": 56,
+        "crossing": 64,
+        "dribbling": 61,
+        "firstTouch": 62,
+        "heading": 63,
+        "tackling": 75,
+        "marking": 74
+      },
+      "physical": {
+        "pace": 60,
+        "acceleration": 54,
+        "strength": 60,
+        "stamina": 61,
+        "agility": 64,
+        "jumping": 61
+      },
+      "mental": {
+        "positioning": 65,
+        "decisions": 61,
+        "composure": 59,
+        "workRate": 60,
+        "aggression": 58,
+        "anticipation": 61,
+        "teamwork": 63,
+        "leadership": 60
+      }
+    },
+    {
+      "name": "عمرو عبدالعال",
+      "shortName": "عبدالعال",
+      "slug": "kafr-eldawar-textile-10",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 48,
+        "longShots": 61,
+        "passing": 59,
+        "vision": 56,
+        "crossing": 62,
+        "dribbling": 60,
+        "firstTouch": 62,
+        "heading": 67,
+        "tackling": 65,
+        "marking": 68
+      },
+      "physical": {
+        "pace": 64,
+        "acceleration": 61,
+        "strength": 64,
+        "stamina": 62,
+        "agility": 61,
+        "jumping": 60
+      },
+      "mental": {
+        "positioning": 64,
+        "decisions": 61,
+        "composure": 66,
+        "workRate": 65,
+        "aggression": 61,
+        "anticipation": 60,
+        "teamwork": 59,
+        "leadership": 59
+      },
+      "nickname": "الحاوي"
+    },
+    {
+      "name": "عمرو بدوي",
+      "shortName": "بدوي",
+      "slug": "kafr-eldawar-textile-11",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 49,
+        "longShots": 58,
+        "passing": 55,
+        "vision": 53,
+        "crossing": 56,
+        "dribbling": 55,
+        "firstTouch": 55,
+        "heading": 57,
+        "tackling": 64,
+        "marking": 63
+      },
+      "physical": {
+        "pace": 58,
+        "acceleration": 55,
+        "strength": 62,
+        "stamina": 59,
+        "agility": 57,
+        "jumping": 53
+      },
+      "mental": {
+        "positioning": 58,
+        "decisions": 56,
+        "composure": 52,
+        "workRate": 58,
+        "aggression": 59,
+        "anticipation": 56,
+        "teamwork": 60,
+        "leadership": 51
+      }
+    },
+    {
+      "name": "هشام شحاتة",
+      "shortName": "شحاتة",
+      "slug": "kafr-eldawar-textile-12",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 53,
+        "longShots": 50,
+        "passing": 56,
+        "vision": 56,
+        "crossing": 53,
+        "dribbling": 53,
+        "firstTouch": 59,
+        "heading": 51,
+        "tackling": 54,
+        "marking": 53
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 57,
+        "strength": 52,
+        "stamina": 54,
+        "agility": 54,
+        "jumping": 55
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 52,
+        "composure": 54,
+        "workRate": 56,
+        "aggression": 50,
+        "anticipation": 54,
+        "teamwork": 58,
+        "leadership": 50
+      },
+      "nickname": "القناص"
+    },
+    {
+      "name": "أيمن سرحان",
+      "shortName": "سرحان",
+      "slug": "kafr-eldawar-textile-13",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 55,
+        "longShots": 54,
+        "passing": 59,
+        "vision": 57,
+        "crossing": 54,
+        "dribbling": 48,
+        "firstTouch": 55,
+        "heading": 48,
+        "tackling": 52,
+        "marking": 56
+      },
+      "physical": {
+        "pace": 55,
+        "acceleration": 50,
+        "strength": 51,
+        "stamina": 54,
+        "agility": 56,
+        "jumping": 47
+      },
+      "mental": {
+        "positioning": 50,
+        "decisions": 58,
+        "composure": 54,
+        "workRate": 56,
+        "aggression": 51,
+        "anticipation": 53,
+        "teamwork": 58,
+        "leadership": 53
+      },
+      "nickname": "الفنان"
+    },
+    {
+      "name": "عمر حمدي",
+      "shortName": "حمدي",
+      "slug": "kafr-eldawar-textile-14",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 52,
+        "longShots": 52,
+        "passing": 60,
+        "vision": 55,
+        "crossing": 53,
+        "dribbling": 56,
+        "firstTouch": 51,
+        "heading": 51,
+        "tackling": 55,
+        "marking": 55
+      },
+      "physical": {
+        "pace": 56,
+        "acceleration": 56,
+        "strength": 58,
+        "stamina": 62,
+        "agility": 50,
+        "jumping": 52
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 55,
+        "composure": 50,
+        "workRate": 58,
+        "aggression": 54,
+        "anticipation": 47,
+        "teamwork": 54,
+        "leadership": 47
+      }
+    },
+    {
+      "name": "محمود لطفي",
+      "shortName": "لطفي",
+      "slug": "kafr-eldawar-textile-15",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 51,
+        "longShots": 52,
+        "passing": 64,
+        "vision": 66,
+        "crossing": 56,
+        "dribbling": 56,
+        "firstTouch": 54,
+        "heading": 52,
+        "tackling": 55,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 56,
+        "strength": 53,
+        "stamina": 61,
+        "agility": 48,
+        "jumping": 56
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 56,
+        "composure": 54,
+        "workRate": 62,
+        "aggression": 55,
+        "anticipation": 51,
+        "teamwork": 58,
+        "leadership": 57
+      }
+    },
+    {
+      "name": "طارق الشربيني",
+      "shortName": "الشربيني",
+      "slug": "kafr-eldawar-textile-16",
+      "age": 24,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 52,
+        "longShots": 50,
+        "passing": 64,
+        "vision": 61,
+        "crossing": 53,
+        "dribbling": 48,
+        "firstTouch": 52,
+        "heading": 48,
+        "tackling": 48,
+        "marking": 44
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 47,
+        "strength": 56,
+        "stamina": 53,
+        "agility": 50,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 51,
+        "composure": 51,
+        "workRate": 57,
+        "aggression": 47,
+        "anticipation": 45,
+        "teamwork": 61,
+        "leadership": 55
+      }
+    },
+    {
+      "name": "إسلام الشناوي",
+      "shortName": "الشناوي",
+      "slug": "kafr-eldawar-textile-17",
+      "age": 24,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 59,
+        "longShots": 49,
+        "passing": 61,
+        "vision": 56,
+        "crossing": 49,
+        "dribbling": 54,
+        "firstTouch": 56,
+        "heading": 46,
+        "tackling": 56,
+        "marking": 54
+      },
+      "physical": {
+        "pace": 59,
+        "acceleration": 52,
+        "strength": 55,
+        "stamina": 57,
+        "agility": 60,
+        "jumping": 49
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 49,
+        "composure": 57,
+        "workRate": 61,
+        "aggression": 57,
+        "anticipation": 60,
+        "teamwork": 55,
+        "leadership": 49
+      }
+    },
+    {
+      "name": "محمد سرحان",
+      "shortName": "سرحان",
+      "slug": "kafr-eldawar-textile-18",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 63,
+        "longShots": 52,
+        "passing": 51,
+        "vision": 51,
+        "crossing": 54,
+        "dribbling": 61,
+        "firstTouch": 56,
+        "heading": 53,
+        "tackling": 40,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 60,
+        "acceleration": 58,
+        "strength": 58,
+        "stamina": 57,
+        "agility": 57,
+        "jumping": 52
+      },
+      "mental": {
+        "positioning": 60,
+        "decisions": 54,
+        "composure": 54,
+        "workRate": 56,
+        "aggression": 59,
+        "anticipation": 57,
+        "teamwork": 55,
+        "leadership": 58
+      }
+    },
+    {
+      "name": "باسم الشاذلي",
+      "shortName": "الشاذلي",
+      "slug": "kafr-eldawar-textile-19",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 58,
+        "longShots": 45,
+        "passing": 48,
+        "vision": 46,
+        "crossing": 43,
+        "dribbling": 58,
+        "firstTouch": 50,
+        "heading": 50,
+        "tackling": 36,
+        "marking": 38
+      },
+      "physical": {
+        "pace": 54,
+        "acceleration": 50,
+        "strength": 51,
+        "stamina": 45,
+        "agility": 49,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 47,
+        "decisions": 43,
+        "composure": 55,
+        "workRate": 47,
+        "aggression": 42,
+        "anticipation": 46,
+        "teamwork": 48,
+        "leadership": 51
+      }
+    },
+    {
+      "name": "حسين عبدالعال",
+      "shortName": "عبدالعال",
+      "slug": "kafr-eldawar-textile-20",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 59,
+        "longShots": 48,
+        "passing": 46,
+        "vision": 47,
+        "crossing": 51,
+        "dribbling": 58,
+        "firstTouch": 50,
+        "heading": 46,
+        "tackling": 40,
+        "marking": 37
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 56,
+        "strength": 46,
+        "stamina": 44,
+        "agility": 49,
+        "jumping": 47
+      },
+      "mental": {
+        "positioning": 45,
+        "decisions": 46,
+        "composure": 51,
+        "workRate": 45,
+        "aggression": 51,
+        "anticipation": 46,
+        "teamwork": 48,
+        "leadership": 52
+      }
+    },
+    {
+      "name": "فارس شحاتة",
+      "shortName": "شحاتة",
+      "slug": "kafr-eldawar-textile-21",
+      "age": 24,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 57,
+        "longShots": 49,
+        "passing": 51,
+        "vision": 49,
+        "crossing": 51,
+        "dribbling": 53,
+        "firstTouch": 48,
+        "heading": 46,
+        "tackling": 38,
+        "marking": 37
+      },
+      "physical": {
+        "pace": 60,
+        "acceleration": 59,
+        "strength": 45,
+        "stamina": 47,
+        "agility": 48,
+        "jumping": 50
+      },
+      "mental": {
+        "positioning": 55,
+        "decisions": 44,
+        "composure": 50,
+        "workRate": 42,
+        "aggression": 48,
+        "anticipation": 48,
+        "teamwork": 49,
+        "leadership": 50
+      },
+      "nickname": "الحاوي"
+    }
+  ]
+}

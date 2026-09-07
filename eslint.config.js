@@ -14,6 +14,12 @@ export default tseslint.config(
     },
   },
   {
+    // Build-time authoring tools run under Node and are expected to report what they wrote.
+    files: ['packages/*/scripts/**/*.mjs'],
+    languageOptions: { globals: { console: 'readonly', process: 'readonly' } },
+    rules: { 'no-console': 'off' },
+  },
+  {
     // The engine is a pure package. These are contract violations, not preferences.
     files: ['packages/engine/src/**/*.ts'],
     rules: {

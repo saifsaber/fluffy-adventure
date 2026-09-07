@@ -1,0 +1,948 @@
+{
+  "name": "نجم ههيا",
+  "shortName": "ههيا",
+  "slug": "hehia-star",
+  "country": "EGY",
+  "region": "الشرقية",
+  "location": {
+    "lat": 30.6667,
+    "lon": 31.6167
+  },
+  "reputation": 37,
+  "stadium": {
+    "name": "ملعب ههيا البلدي",
+    "shortName": "ههيا",
+    "slug": "hehia-star-stadium",
+    "capacity": 900,
+    "pitchQuality": 42
+  },
+  "squad": [
+    {
+      "name": "عبدالله صادق",
+      "shortName": "صادق",
+      "slug": "hehia-star-1",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 23,
+        "longShots": 47,
+        "passing": 41,
+        "vision": 38,
+        "crossing": 37,
+        "dribbling": 31,
+        "firstTouch": 45,
+        "heading": 44,
+        "tackling": 29,
+        "marking": 46
+      },
+      "physical": {
+        "pace": 34,
+        "acceleration": 48,
+        "strength": 43,
+        "stamina": 45,
+        "agility": 39,
+        "jumping": 42
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 42,
+        "composure": 48,
+        "workRate": 41,
+        "aggression": 47,
+        "anticipation": 50,
+        "teamwork": 45,
+        "leadership": 44
+      },
+      "nickname": "القناص",
+      "goalkeeping": {
+        "handling": 55,
+        "reflexes": 49,
+        "aerialReach": 50,
+        "distribution": 50,
+        "oneOnOnes": 48
+      }
+    },
+    {
+      "name": "سيد الحلواني",
+      "shortName": "الحلواني",
+      "slug": "hehia-star-2",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 26,
+        "longShots": 41,
+        "passing": 35,
+        "vision": 37,
+        "crossing": 41,
+        "dribbling": 22,
+        "firstTouch": 42,
+        "heading": 40,
+        "tackling": 31,
+        "marking": 37
+      },
+      "physical": {
+        "pace": 38,
+        "acceleration": 46,
+        "strength": 40,
+        "stamina": 39,
+        "agility": 42,
+        "jumping": 34
+      },
+      "mental": {
+        "positioning": 46,
+        "decisions": 38,
+        "composure": 45,
+        "workRate": 42,
+        "aggression": 43,
+        "anticipation": 47,
+        "teamwork": 45,
+        "leadership": 44
+      },
+      "goalkeeping": {
+        "handling": 50,
+        "reflexes": 49,
+        "aerialReach": 53,
+        "distribution": 50,
+        "oneOnOnes": 47
+      }
+    },
+    {
+      "name": "أنس قابيل",
+      "shortName": "قابيل",
+      "slug": "hehia-star-3",
+      "age": 24,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 23,
+        "longShots": 40,
+        "passing": 41,
+        "vision": 47,
+        "crossing": 37,
+        "dribbling": 30,
+        "firstTouch": 46,
+        "heading": 38,
+        "tackling": 30,
+        "marking": 46
+      },
+      "physical": {
+        "pace": 41,
+        "acceleration": 47,
+        "strength": 43,
+        "stamina": 43,
+        "agility": 43,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 42,
+        "decisions": 43,
+        "composure": 49,
+        "workRate": 41,
+        "aggression": 40,
+        "anticipation": 41,
+        "teamwork": 45,
+        "leadership": 36
+      },
+      "nickname": "الصخرة",
+      "goalkeeping": {
+        "handling": 49,
+        "reflexes": 55,
+        "aerialReach": 53,
+        "distribution": 48,
+        "oneOnOnes": 52
+      }
+    },
+    {
+      "name": "حسين الشربيني",
+      "shortName": "الشربيني",
+      "slug": "hehia-star-4",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 33,
+        "longShots": 44,
+        "passing": 39,
+        "vision": 32,
+        "crossing": 36,
+        "dribbling": 41,
+        "firstTouch": 39,
+        "heading": 46,
+        "tackling": 50,
+        "marking": 52
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 47,
+        "strength": 47,
+        "stamina": 43,
+        "agility": 43,
+        "jumping": 41
+      },
+      "mental": {
+        "positioning": 47,
+        "decisions": 36,
+        "composure": 40,
+        "workRate": 43,
+        "aggression": 41,
+        "anticipation": 43,
+        "teamwork": 38,
+        "leadership": 39
+      }
+    },
+    {
+      "name": "عمرو الحلواني",
+      "shortName": "الحلواني",
+      "slug": "hehia-star-5",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 37,
+        "longShots": 41,
+        "passing": 41,
+        "vision": 35,
+        "crossing": 43,
+        "dribbling": 43,
+        "firstTouch": 38,
+        "heading": 49,
+        "tackling": 50,
+        "marking": 55
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 51,
+        "strength": 44,
+        "stamina": 39,
+        "agility": 42,
+        "jumping": 43
+      },
+      "mental": {
+        "positioning": 47,
+        "decisions": 39,
+        "composure": 43,
+        "workRate": 41,
+        "aggression": 40,
+        "anticipation": 50,
+        "teamwork": 38,
+        "leadership": 46
+      },
+      "nickname": "الطيارة"
+    },
+    {
+      "name": "ياسر الشربيني",
+      "shortName": "الشربيني",
+      "slug": "hehia-star-6",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 34,
+        "longShots": 40,
+        "passing": 48,
+        "vision": 39,
+        "crossing": 44,
+        "dribbling": 37,
+        "firstTouch": 42,
+        "heading": 48,
+        "tackling": 49,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 43,
+        "strength": 48,
+        "stamina": 41,
+        "agility": 45,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 41,
+        "decisions": 37,
+        "composure": 43,
+        "workRate": 37,
+        "aggression": 43,
+        "anticipation": 45,
+        "teamwork": 39,
+        "leadership": 39
+      }
+    },
+    {
+      "name": "خالد سرحان",
+      "shortName": "سرحان",
+      "slug": "hehia-star-7",
+      "age": 20,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 35,
+        "longShots": 37,
+        "passing": 41,
+        "vision": 38,
+        "crossing": 43,
+        "dribbling": 41,
+        "firstTouch": 42,
+        "heading": 41,
+        "tackling": 53,
+        "marking": 54
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 46,
+        "strength": 42,
+        "stamina": 43,
+        "agility": 42,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 42,
+        "decisions": 39,
+        "composure": 36,
+        "workRate": 38,
+        "aggression": 38,
+        "anticipation": 46,
+        "teamwork": 43,
+        "leadership": 42
+      }
+    },
+    {
+      "name": "بيشوي حمدي",
+      "shortName": "حمدي",
+      "slug": "hehia-star-8",
+      "age": 20,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 31,
+        "longShots": 38,
+        "passing": 41,
+        "vision": 38,
+        "crossing": 44,
+        "dribbling": 45,
+        "firstTouch": 36,
+        "heading": 47,
+        "tackling": 52,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 44,
+        "strength": 44,
+        "stamina": 42,
+        "agility": 42,
+        "jumping": 44
+      },
+      "mental": {
+        "positioning": 45,
+        "decisions": 40,
+        "composure": 38,
+        "workRate": 39,
+        "aggression": 42,
+        "anticipation": 51,
+        "teamwork": 41,
+        "leadership": 44
+      }
+    },
+    {
+      "name": "طارق شحاتة",
+      "shortName": "شحاتة",
+      "slug": "hehia-star-9",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 35,
+        "longShots": 46,
+        "passing": 42,
+        "vision": 38,
+        "crossing": 44,
+        "dribbling": 41,
+        "firstTouch": 45,
+        "heading": 50,
+        "tackling": 53,
+        "marking": 54
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 54,
+        "strength": 51,
+        "stamina": 45,
+        "agility": 39,
+        "jumping": 43
+      },
+      "mental": {
+        "positioning": 44,
+        "decisions": 44,
+        "composure": 42,
+        "workRate": 36,
+        "aggression": 39,
+        "anticipation": 53,
+        "teamwork": 38,
+        "leadership": 39
+      }
+    },
+    {
+      "name": "مروان عبدالعال",
+      "shortName": "عبدالعال",
+      "slug": "hehia-star-10",
+      "age": 20,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 36,
+        "longShots": 34,
+        "passing": 43,
+        "vision": 33,
+        "crossing": 39,
+        "dribbling": 45,
+        "firstTouch": 40,
+        "heading": 45,
+        "tackling": 54,
+        "marking": 46
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 44,
+        "strength": 49,
+        "stamina": 36,
+        "agility": 36,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 48,
+        "decisions": 46,
+        "composure": 37,
+        "workRate": 40,
+        "aggression": 44,
+        "anticipation": 44,
+        "teamwork": 39,
+        "leadership": 42
+      }
+    },
+    {
+      "name": "فارس عوض",
+      "shortName": "عوض",
+      "slug": "hehia-star-11",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 35,
+        "longShots": 45,
+        "passing": 46,
+        "vision": 39,
+        "crossing": 40,
+        "dribbling": 45,
+        "firstTouch": 40,
+        "heading": 49,
+        "tackling": 51,
+        "marking": 48
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 46,
+        "strength": 49,
+        "stamina": 41,
+        "agility": 43,
+        "jumping": 43
+      },
+      "mental": {
+        "positioning": 43,
+        "decisions": 35,
+        "composure": 45,
+        "workRate": 36,
+        "aggression": 40,
+        "anticipation": 47,
+        "teamwork": 37,
+        "leadership": 44
+      }
+    },
+    {
+      "name": "كريم دياب",
+      "shortName": "دياب",
+      "slug": "hehia-star-12",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 36,
+        "longShots": 33,
+        "passing": 38,
+        "vision": 40,
+        "crossing": 34,
+        "dribbling": 38,
+        "firstTouch": 34,
+        "heading": 32,
+        "tackling": 37,
+        "marking": 40
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 39,
+        "strength": 30,
+        "stamina": 42,
+        "agility": 39,
+        "jumping": 35
+      },
+      "mental": {
+        "positioning": 37,
+        "decisions": 34,
+        "composure": 38,
+        "workRate": 40,
+        "aggression": 35,
+        "anticipation": 42,
+        "teamwork": 40,
+        "leadership": 36
+      }
+    },
+    {
+      "name": "محمد قابيل",
+      "shortName": "قابيل",
+      "slug": "hehia-star-13",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 35,
+        "longShots": 40,
+        "passing": 49,
+        "vision": 49,
+        "crossing": 43,
+        "dribbling": 36,
+        "firstTouch": 36,
+        "heading": 31,
+        "tackling": 36,
+        "marking": 39
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 44,
+        "strength": 40,
+        "stamina": 48,
+        "agility": 38,
+        "jumping": 37
+      },
+      "mental": {
+        "positioning": 45,
+        "decisions": 40,
+        "composure": 36,
+        "workRate": 44,
+        "aggression": 36,
+        "anticipation": 40,
+        "teamwork": 40,
+        "leadership": 38
+      }
+    },
+    {
+      "name": "صلاح دياب",
+      "shortName": "دياب",
+      "slug": "hehia-star-14",
+      "age": 29,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 45,
+        "longShots": 33,
+        "passing": 45,
+        "vision": 41,
+        "crossing": 35,
+        "dribbling": 34,
+        "firstTouch": 33,
+        "heading": 32,
+        "tackling": 40,
+        "marking": 33
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 45,
+        "strength": 34,
+        "stamina": 46,
+        "agility": 35,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 34,
+        "decisions": 37,
+        "composure": 36,
+        "workRate": 42,
+        "aggression": 41,
+        "anticipation": 36,
+        "teamwork": 46,
+        "leadership": 35
+      }
+    },
+    {
+      "name": "تامر عثمان",
+      "shortName": "عثمان",
+      "slug": "hehia-star-15",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 34,
+        "longShots": 32,
+        "passing": 41,
+        "vision": 38,
+        "crossing": 36,
+        "dribbling": 38,
+        "firstTouch": 34,
+        "heading": 33,
+        "tackling": 28,
+        "marking": 39
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 39,
+        "strength": 30,
+        "stamina": 38,
+        "agility": 37,
+        "jumping": 29
+      },
+      "mental": {
+        "positioning": 29,
+        "decisions": 34,
+        "composure": 31,
+        "workRate": 40,
+        "aggression": 35,
+        "anticipation": 32,
+        "teamwork": 41,
+        "leadership": 35
+      }
+    },
+    {
+      "name": "رجب السقا",
+      "shortName": "السقا",
+      "slug": "hehia-star-16",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 40,
+        "longShots": 37,
+        "passing": 45,
+        "vision": 40,
+        "crossing": 33,
+        "dribbling": 36,
+        "firstTouch": 35,
+        "heading": 32,
+        "tackling": 36,
+        "marking": 34
+      },
+      "physical": {
+        "pace": 47,
+        "acceleration": 41,
+        "strength": 40,
+        "stamina": 43,
+        "agility": 38,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 38,
+        "decisions": 41,
+        "composure": 41,
+        "workRate": 37,
+        "aggression": 36,
+        "anticipation": 39,
+        "teamwork": 43,
+        "leadership": 32
+      }
+    },
+    {
+      "name": "بلال غنيم",
+      "shortName": "غنيم",
+      "slug": "hehia-star-17",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 45,
+        "longShots": 41,
+        "passing": 50,
+        "vision": 42,
+        "crossing": 43,
+        "dribbling": 38,
+        "firstTouch": 46,
+        "heading": 37,
+        "tackling": 36,
+        "marking": 34
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 48,
+        "strength": 38,
+        "stamina": 45,
+        "agility": 37,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 43,
+        "decisions": 39,
+        "composure": 39,
+        "workRate": 45,
+        "aggression": 45,
+        "anticipation": 45,
+        "teamwork": 49,
+        "leadership": 44
+      }
+    },
+    {
+      "name": "عبدالله بركات",
+      "shortName": "بركات",
+      "slug": "hehia-star-18",
+      "age": 31,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 43,
+        "longShots": 34,
+        "passing": 39,
+        "vision": 33,
+        "crossing": 28,
+        "dribbling": 44,
+        "firstTouch": 32,
+        "heading": 29,
+        "tackling": 22,
+        "marking": 26
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 46,
+        "strength": 33,
+        "stamina": 38,
+        "agility": 35,
+        "jumping": 35
+      },
+      "mental": {
+        "positioning": 30,
+        "decisions": 32,
+        "composure": 35,
+        "workRate": 37,
+        "aggression": 32,
+        "anticipation": 43,
+        "teamwork": 31,
+        "leadership": 31
+      }
+    },
+    {
+      "name": "إسلام زهران",
+      "shortName": "زهران",
+      "slug": "hehia-star-19",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 49,
+        "longShots": 34,
+        "passing": 37,
+        "vision": 33,
+        "crossing": 28,
+        "dribbling": 40,
+        "firstTouch": 34,
+        "heading": 37,
+        "tackling": 24,
+        "marking": 23
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 44,
+        "strength": 36,
+        "stamina": 35,
+        "agility": 34,
+        "jumping": 28
+      },
+      "mental": {
+        "positioning": 29,
+        "decisions": 30,
+        "composure": 39,
+        "workRate": 31,
+        "aggression": 31,
+        "anticipation": 33,
+        "teamwork": 35,
+        "leadership": 35
+      }
+    },
+    {
+      "name": "بلال غنيم",
+      "shortName": "غنيم",
+      "slug": "hehia-star-20",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 48,
+        "longShots": 29,
+        "passing": 27,
+        "vision": 26,
+        "crossing": 27,
+        "dribbling": 33,
+        "firstTouch": 25,
+        "heading": 33,
+        "tackling": 14,
+        "marking": 21
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 43,
+        "strength": 31,
+        "stamina": 29,
+        "agility": 27,
+        "jumping": 27
+      },
+      "mental": {
+        "positioning": 24,
+        "decisions": 32,
+        "composure": 37,
+        "workRate": 25,
+        "aggression": 26,
+        "anticipation": 34,
+        "teamwork": 33,
+        "leadership": 31
+      }
+    },
+    {
+      "name": "تامر عبدالعال",
+      "shortName": "عبدالعال",
+      "slug": "hehia-star-21",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 49,
+        "longShots": 31,
+        "passing": 30,
+        "vision": 24,
+        "crossing": 27,
+        "dribbling": 38,
+        "firstTouch": 29,
+        "heading": 34,
+        "tackling": 19,
+        "marking": 16
+      },
+      "physical": {
+        "pace": 44,
+        "acceleration": 46,
+        "strength": 28,
+        "stamina": 33,
+        "agility": 30,
+        "jumping": 29
+      },
+      "mental": {
+        "positioning": 30,
+        "decisions": 28,
+        "composure": 33,
+        "workRate": 28,
+        "aggression": 29,
+        "anticipation": 35,
+        "teamwork": 30,
+        "leadership": 35
+      }
+    }
+  ]
+}

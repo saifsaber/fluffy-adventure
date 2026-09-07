@@ -3,3 +3,6 @@ node_modules
 pnpm-lock.yaml
 # Prose is hand-formatted; Prettier reflows tables and lists in ways that hurt review diffs.
 docs
+# Generated content. The squad generator owns this formatting — Prettier must not fight it,
+# or the determinism test becomes a false failure. See docs/decisions/ADR-002 §3.
+packages/content/data/clubs

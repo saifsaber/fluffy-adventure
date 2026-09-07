@@ -1,0 +1,949 @@
+{
+  "name": "ميناء دمياط الجديدة",
+  "shortName": "دمياط الجديدة",
+  "slug": "new-damietta-port",
+  "country": "EGY",
+  "region": "دمياط",
+  "location": {
+    "lat": 31.4444,
+    "lon": 31.6544
+  },
+  "reputation": 46,
+  "stadium": {
+    "name": "استاد الميناء",
+    "shortName": "دمياط الجديدة",
+    "slug": "new-damietta-port-stadium",
+    "capacity": 2100,
+    "pitchQuality": 53
+  },
+  "squad": [
+    {
+      "name": "شادي الحلواني",
+      "shortName": "الحلواني",
+      "slug": "new-damietta-port-1",
+      "age": 29,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 26,
+        "longShots": 55,
+        "passing": 53,
+        "vision": 52,
+        "crossing": 55,
+        "dribbling": 38,
+        "firstTouch": 49,
+        "heading": 53,
+        "tackling": 42,
+        "marking": 45
+      },
+      "physical": {
+        "pace": 40,
+        "acceleration": 56,
+        "strength": 50,
+        "stamina": 56,
+        "agility": 54,
+        "jumping": 54
+      },
+      "mental": {
+        "positioning": 57,
+        "decisions": 52,
+        "composure": 57,
+        "workRate": 50,
+        "aggression": 49,
+        "anticipation": 51,
+        "teamwork": 47,
+        "leadership": 52
+      },
+      "goalkeeping": {
+        "handling": 58,
+        "reflexes": 61,
+        "aerialReach": 55,
+        "distribution": 62,
+        "oneOnOnes": 61
+      }
+    },
+    {
+      "name": "سامح سويلم",
+      "shortName": "سويلم",
+      "slug": "new-damietta-port-2",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 31,
+        "longShots": 51,
+        "passing": 52,
+        "vision": 55,
+        "crossing": 50,
+        "dribbling": 40,
+        "firstTouch": 53,
+        "heading": 49,
+        "tackling": 39,
+        "marking": 53
+      },
+      "physical": {
+        "pace": 37,
+        "acceleration": 48,
+        "strength": 51,
+        "stamina": 48,
+        "agility": 46,
+        "jumping": 50
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 57,
+        "composure": 60,
+        "workRate": 54,
+        "aggression": 50,
+        "anticipation": 51,
+        "teamwork": 51,
+        "leadership": 51
+      },
+      "goalkeeping": {
+        "handling": 58,
+        "reflexes": 63,
+        "aerialReach": 58,
+        "distribution": 61,
+        "oneOnOnes": 56
+      }
+    },
+    {
+      "name": "زياد الحلواني",
+      "shortName": "الحلواني",
+      "slug": "new-damietta-port-3",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 21,
+        "longShots": 51,
+        "passing": 45,
+        "vision": 46,
+        "crossing": 48,
+        "dribbling": 30,
+        "firstTouch": 45,
+        "heading": 45,
+        "tackling": 37,
+        "marking": 46
+      },
+      "physical": {
+        "pace": 38,
+        "acceleration": 47,
+        "strength": 47,
+        "stamina": 46,
+        "agility": 51,
+        "jumping": 44
+      },
+      "mental": {
+        "positioning": 50,
+        "decisions": 44,
+        "composure": 48,
+        "workRate": 48,
+        "aggression": 50,
+        "anticipation": 46,
+        "teamwork": 47,
+        "leadership": 48
+      },
+      "goalkeeping": {
+        "handling": 55,
+        "reflexes": 51,
+        "aerialReach": 56,
+        "distribution": 55,
+        "oneOnOnes": 55
+      }
+    },
+    {
+      "name": "عمر الشناوي",
+      "shortName": "الشناوي",
+      "slug": "new-damietta-port-4",
+      "age": 27,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 38,
+        "longShots": 52,
+        "passing": 55,
+        "vision": 46,
+        "crossing": 50,
+        "dribbling": 47,
+        "firstTouch": 52,
+        "heading": 56,
+        "tackling": 55,
+        "marking": 63
+      },
+      "physical": {
+        "pace": 55,
+        "acceleration": 52,
+        "strength": 49,
+        "stamina": 46,
+        "agility": 52,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 55,
+        "decisions": 51,
+        "composure": 55,
+        "workRate": 51,
+        "aggression": 54,
+        "anticipation": 55,
+        "teamwork": 51,
+        "leadership": 50
+      }
+    },
+    {
+      "name": "عمرو زهران",
+      "shortName": "زهران",
+      "slug": "new-damietta-port-5",
+      "age": 33,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 37,
+        "longShots": 56,
+        "passing": 48,
+        "vision": 55,
+        "crossing": 56,
+        "dribbling": 52,
+        "firstTouch": 54,
+        "heading": 55,
+        "tackling": 62,
+        "marking": 68
+      },
+      "physical": {
+        "pace": 54,
+        "acceleration": 53,
+        "strength": 61,
+        "stamina": 56,
+        "agility": 51,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 56,
+        "decisions": 53,
+        "composure": 58,
+        "workRate": 58,
+        "aggression": 51,
+        "anticipation": 58,
+        "teamwork": 53,
+        "leadership": 52
+      }
+    },
+    {
+      "name": "صلاح منصور",
+      "shortName": "منصور",
+      "slug": "new-damietta-port-6",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 41,
+        "longShots": 54,
+        "passing": 48,
+        "vision": 49,
+        "crossing": 48,
+        "dribbling": 53,
+        "firstTouch": 51,
+        "heading": 54,
+        "tackling": 56,
+        "marking": 56
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 46,
+        "strength": 57,
+        "stamina": 54,
+        "agility": 52,
+        "jumping": 53
+      },
+      "mental": {
+        "positioning": 50,
+        "decisions": 53,
+        "composure": 47,
+        "workRate": 52,
+        "aggression": 45,
+        "anticipation": 53,
+        "teamwork": 45,
+        "leadership": 50
+      }
+    },
+    {
+      "name": "شادي غنيم",
+      "shortName": "غنيم",
+      "slug": "new-damietta-port-7",
+      "age": 20,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 43,
+        "longShots": 55,
+        "passing": 55,
+        "vision": 46,
+        "crossing": 53,
+        "dribbling": 57,
+        "firstTouch": 57,
+        "heading": 56,
+        "tackling": 58,
+        "marking": 54
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 49,
+        "strength": 60,
+        "stamina": 50,
+        "agility": 53,
+        "jumping": 52
+      },
+      "mental": {
+        "positioning": 59,
+        "decisions": 56,
+        "composure": 50,
+        "workRate": 50,
+        "aggression": 50,
+        "anticipation": 51,
+        "teamwork": 49,
+        "leadership": 46
+      }
+    },
+    {
+      "name": "شادي الجزار",
+      "shortName": "الجزار",
+      "slug": "new-damietta-port-8",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 39,
+        "longShots": 52,
+        "passing": 57,
+        "vision": 56,
+        "crossing": 54,
+        "dribbling": 51,
+        "firstTouch": 57,
+        "heading": 66,
+        "tackling": 60,
+        "marking": 66
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 57,
+        "strength": 56,
+        "stamina": 57,
+        "agility": 50,
+        "jumping": 54
+      },
+      "mental": {
+        "positioning": 60,
+        "decisions": 57,
+        "composure": 58,
+        "workRate": 56,
+        "aggression": 55,
+        "anticipation": 58,
+        "teamwork": 54,
+        "leadership": 57
+      },
+      "nickname": "الحريف"
+    },
+    {
+      "name": "نادر الحلواني",
+      "shortName": "الحلواني",
+      "slug": "new-damietta-port-9",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 40,
+        "longShots": 50,
+        "passing": 46,
+        "vision": 43,
+        "crossing": 48,
+        "dribbling": 49,
+        "firstTouch": 50,
+        "heading": 56,
+        "tackling": 56,
+        "marking": 59
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 47,
+        "strength": 54,
+        "stamina": 50,
+        "agility": 46,
+        "jumping": 50
+      },
+      "mental": {
+        "positioning": 47,
+        "decisions": 51,
+        "composure": 47,
+        "workRate": 44,
+        "aggression": 49,
+        "anticipation": 50,
+        "teamwork": 50,
+        "leadership": 48
+      }
+    },
+    {
+      "name": "شريف فرغلي",
+      "shortName": "فرغلي",
+      "slug": "new-damietta-port-10",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 46,
+        "longShots": 49,
+        "passing": 51,
+        "vision": 46,
+        "crossing": 54,
+        "dribbling": 54,
+        "firstTouch": 55,
+        "heading": 59,
+        "tackling": 63,
+        "marking": 64
+      },
+      "physical": {
+        "pace": 56,
+        "acceleration": 48,
+        "strength": 59,
+        "stamina": 52,
+        "agility": 48,
+        "jumping": 54
+      },
+      "mental": {
+        "positioning": 56,
+        "decisions": 52,
+        "composure": 47,
+        "workRate": 52,
+        "aggression": 51,
+        "anticipation": 57,
+        "teamwork": 57,
+        "leadership": 53
+      },
+      "nickname": "الصخرة"
+    },
+    {
+      "name": "محمود الطوخي",
+      "shortName": "الطوخي",
+      "slug": "new-damietta-port-11",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 42,
+        "longShots": 51,
+        "passing": 47,
+        "vision": 47,
+        "crossing": 53,
+        "dribbling": 53,
+        "firstTouch": 50,
+        "heading": 53,
+        "tackling": 57,
+        "marking": 63
+      },
+      "physical": {
+        "pace": 57,
+        "acceleration": 51,
+        "strength": 57,
+        "stamina": 55,
+        "agility": 49,
+        "jumping": 56
+      },
+      "mental": {
+        "positioning": 57,
+        "decisions": 56,
+        "composure": 58,
+        "workRate": 51,
+        "aggression": 47,
+        "anticipation": 53,
+        "teamwork": 51,
+        "leadership": 47
+      }
+    },
+    {
+      "name": "عبدالله نصار",
+      "shortName": "نصار",
+      "slug": "new-damietta-port-12",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 42,
+        "longShots": 42,
+        "passing": 48,
+        "vision": 51,
+        "crossing": 49,
+        "dribbling": 40,
+        "firstTouch": 49,
+        "heading": 39,
+        "tackling": 40,
+        "marking": 52
+      },
+      "physical": {
+        "pace": 44,
+        "acceleration": 42,
+        "strength": 50,
+        "stamina": 48,
+        "agility": 44,
+        "jumping": 42
+      },
+      "mental": {
+        "positioning": 43,
+        "decisions": 43,
+        "composure": 47,
+        "workRate": 49,
+        "aggression": 45,
+        "anticipation": 49,
+        "teamwork": 55,
+        "leadership": 42
+      },
+      "nickname": "السد العالي"
+    },
+    {
+      "name": "يوسف النجار",
+      "shortName": "النجار",
+      "slug": "new-damietta-port-13",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 48,
+        "longShots": 41,
+        "passing": 55,
+        "vision": 55,
+        "crossing": 45,
+        "dribbling": 48,
+        "firstTouch": 48,
+        "heading": 41,
+        "tackling": 44,
+        "marking": 49
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 48,
+        "strength": 49,
+        "stamina": 50,
+        "agility": 45,
+        "jumping": 47
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 52,
+        "composure": 50,
+        "workRate": 51,
+        "aggression": 45,
+        "anticipation": 47,
+        "teamwork": 56,
+        "leadership": 52
+      }
+    },
+    {
+      "name": "رجب قنديل",
+      "shortName": "قنديل",
+      "slug": "new-damietta-port-14",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 37,
+        "longShots": 45,
+        "passing": 55,
+        "vision": 52,
+        "crossing": 48,
+        "dribbling": 37,
+        "firstTouch": 46,
+        "heading": 42,
+        "tackling": 44,
+        "marking": 45
+      },
+      "physical": {
+        "pace": 44,
+        "acceleration": 49,
+        "strength": 46,
+        "stamina": 48,
+        "agility": 42,
+        "jumping": 39
+      },
+      "mental": {
+        "positioning": 44,
+        "decisions": 41,
+        "composure": 41,
+        "workRate": 45,
+        "aggression": 41,
+        "anticipation": 47,
+        "teamwork": 44,
+        "leadership": 41
+      }
+    },
+    {
+      "name": "رجب سويلم",
+      "shortName": "سويلم",
+      "slug": "new-damietta-port-15",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 46,
+        "longShots": 43,
+        "passing": 55,
+        "vision": 54,
+        "crossing": 49,
+        "dribbling": 46,
+        "firstTouch": 46,
+        "heading": 40,
+        "tackling": 45,
+        "marking": 48
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 48,
+        "strength": 48,
+        "stamina": 54,
+        "agility": 47,
+        "jumping": 46
+      },
+      "mental": {
+        "positioning": 45,
+        "decisions": 45,
+        "composure": 48,
+        "workRate": 46,
+        "aggression": 51,
+        "anticipation": 43,
+        "teamwork": 57,
+        "leadership": 43
+      }
+    },
+    {
+      "name": "هشام الطوخي",
+      "shortName": "الطوخي",
+      "slug": "new-damietta-port-16",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 41,
+        "longShots": 52,
+        "passing": 52,
+        "vision": 52,
+        "crossing": 41,
+        "dribbling": 46,
+        "firstTouch": 45,
+        "heading": 38,
+        "tackling": 39,
+        "marking": 41
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 45,
+        "strength": 45,
+        "stamina": 53,
+        "agility": 46,
+        "jumping": 49
+      },
+      "mental": {
+        "positioning": 43,
+        "decisions": 49,
+        "composure": 44,
+        "workRate": 54,
+        "aggression": 45,
+        "anticipation": 43,
+        "teamwork": 56,
+        "leadership": 48
+      }
+    },
+    {
+      "name": "محمد الديب",
+      "shortName": "الديب",
+      "slug": "new-damietta-port-17",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 41,
+        "longShots": 47,
+        "passing": 57,
+        "vision": 51,
+        "crossing": 47,
+        "dribbling": 46,
+        "firstTouch": 41,
+        "heading": 38,
+        "tackling": 42,
+        "marking": 47
+      },
+      "physical": {
+        "pace": 47,
+        "acceleration": 47,
+        "strength": 48,
+        "stamina": 51,
+        "agility": 43,
+        "jumping": 49
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 47,
+        "composure": 49,
+        "workRate": 46,
+        "aggression": 51,
+        "anticipation": 43,
+        "teamwork": 52,
+        "leadership": 47
+      }
+    },
+    {
+      "name": "رجب مرسي",
+      "shortName": "مرسي",
+      "slug": "new-damietta-port-18",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 62,
+        "longShots": 49,
+        "passing": 48,
+        "vision": 52,
+        "crossing": 54,
+        "dribbling": 53,
+        "firstTouch": 53,
+        "heading": 46,
+        "tackling": 37,
+        "marking": 42
+      },
+      "physical": {
+        "pace": 54,
+        "acceleration": 53,
+        "strength": 50,
+        "stamina": 51,
+        "agility": 48,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 47,
+        "composure": 52,
+        "workRate": 51,
+        "aggression": 47,
+        "anticipation": 52,
+        "teamwork": 49,
+        "leadership": 53
+      }
+    },
+    {
+      "name": "أيمن عوض",
+      "shortName": "عوض",
+      "slug": "new-damietta-port-19",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 54,
+        "longShots": 47,
+        "passing": 44,
+        "vision": 46,
+        "crossing": 41,
+        "dribbling": 55,
+        "firstTouch": 39,
+        "heading": 47,
+        "tackling": 31,
+        "marking": 31
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 46,
+        "strength": 41,
+        "stamina": 38,
+        "agility": 47,
+        "jumping": 37
+      },
+      "mental": {
+        "positioning": 44,
+        "decisions": 46,
+        "composure": 48,
+        "workRate": 47,
+        "aggression": 43,
+        "anticipation": 41,
+        "teamwork": 37,
+        "leadership": 39
+      }
+    },
+    {
+      "name": "أيمن الشربيني",
+      "shortName": "الشربيني",
+      "slug": "new-damietta-port-20",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 52,
+        "longShots": 43,
+        "passing": 37,
+        "vision": 44,
+        "crossing": 46,
+        "dribbling": 51,
+        "firstTouch": 41,
+        "heading": 44,
+        "tackling": 30,
+        "marking": 30
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 46,
+        "strength": 36,
+        "stamina": 40,
+        "agility": 42,
+        "jumping": 44
+      },
+      "mental": {
+        "positioning": 38,
+        "decisions": 42,
+        "composure": 45,
+        "workRate": 37,
+        "aggression": 41,
+        "anticipation": 40,
+        "teamwork": 35,
+        "leadership": 41
+      }
+    },
+    {
+      "name": "تامر شحاتة",
+      "shortName": "شحاتة",
+      "slug": "new-damietta-port-21",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 54,
+        "longShots": 40,
+        "passing": 43,
+        "vision": 38,
+        "crossing": 38,
+        "dribbling": 45,
+        "firstTouch": 39,
+        "heading": 41,
+        "tackling": 31,
+        "marking": 28
+      },
+      "physical": {
+        "pace": 41,
+        "acceleration": 43,
+        "strength": 40,
+        "stamina": 41,
+        "agility": 40,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 38,
+        "decisions": 41,
+        "composure": 44,
+        "workRate": 37,
+        "aggression": 45,
+        "anticipation": 45,
+        "teamwork": 41,
+        "leadership": 39
+      },
+      "nickname": "المايسترو"
+    }
+  ]
+}

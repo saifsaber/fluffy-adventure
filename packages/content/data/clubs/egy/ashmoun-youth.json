@@ -1,0 +1,949 @@
+{
+  "name": "مركز شباب أشمون",
+  "shortName": "أشمون",
+  "slug": "ashmoun-youth",
+  "country": "EGY",
+  "region": "المنوفية",
+  "location": {
+    "lat": 30.2986,
+    "lon": 30.9761
+  },
+  "reputation": 44,
+  "stadium": {
+    "name": "ملعب أشمون الرياضي",
+    "shortName": "أشمون",
+    "slug": "ashmoun-youth-stadium",
+    "capacity": 1200,
+    "pitchQuality": 52
+  },
+  "squad": [
+    {
+      "name": "طارق بركات",
+      "shortName": "بركات",
+      "slug": "ashmoun-youth-1",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 23,
+        "longShots": 47,
+        "passing": 55,
+        "vision": 52,
+        "crossing": 43,
+        "dribbling": 33,
+        "firstTouch": 53,
+        "heading": 46,
+        "tackling": 38,
+        "marking": 49
+      },
+      "physical": {
+        "pace": 36,
+        "acceleration": 47,
+        "strength": 42,
+        "stamina": 50,
+        "agility": 47,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 41,
+        "composure": 57,
+        "workRate": 49,
+        "aggression": 43,
+        "anticipation": 48,
+        "teamwork": 48,
+        "leadership": 42
+      },
+      "nickname": "الدينامو",
+      "goalkeeping": {
+        "handling": 58,
+        "reflexes": 57,
+        "aerialReach": 55,
+        "distribution": 50,
+        "oneOnOnes": 53
+      }
+    },
+    {
+      "name": "خالد مطاوع",
+      "shortName": "مطاوع",
+      "slug": "ashmoun-youth-2",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 28,
+        "longShots": 43,
+        "passing": 53,
+        "vision": 53,
+        "crossing": 49,
+        "dribbling": 37,
+        "firstTouch": 50,
+        "heading": 45,
+        "tackling": 34,
+        "marking": 49
+      },
+      "physical": {
+        "pace": 29,
+        "acceleration": 47,
+        "strength": 50,
+        "stamina": 47,
+        "agility": 48,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 50,
+        "composure": 60,
+        "workRate": 44,
+        "aggression": 43,
+        "anticipation": 46,
+        "teamwork": 46,
+        "leadership": 46
+      },
+      "nickname": "الجدار",
+      "goalkeeping": {
+        "handling": 56,
+        "reflexes": 54,
+        "aerialReach": 52,
+        "distribution": 53,
+        "oneOnOnes": 56
+      }
+    },
+    {
+      "name": "عمرو دياب",
+      "shortName": "دياب",
+      "slug": "ashmoun-youth-3",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 27,
+        "longShots": 50,
+        "passing": 51,
+        "vision": 57,
+        "crossing": 45,
+        "dribbling": 35,
+        "firstTouch": 52,
+        "heading": 48,
+        "tackling": 36,
+        "marking": 47
+      },
+      "physical": {
+        "pace": 37,
+        "acceleration": 46,
+        "strength": 46,
+        "stamina": 51,
+        "agility": 44,
+        "jumping": 47
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 51,
+        "composure": 57,
+        "workRate": 45,
+        "aggression": 50,
+        "anticipation": 48,
+        "teamwork": 44,
+        "leadership": 46
+      },
+      "goalkeeping": {
+        "handling": 55,
+        "reflexes": 53,
+        "aerialReach": 55,
+        "distribution": 56,
+        "oneOnOnes": 56
+      }
+    },
+    {
+      "name": "عمرو خميس",
+      "shortName": "خميس",
+      "slug": "ashmoun-youth-4",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 38,
+        "longShots": 50,
+        "passing": 49,
+        "vision": 46,
+        "crossing": 47,
+        "dribbling": 51,
+        "firstTouch": 48,
+        "heading": 55,
+        "tackling": 55,
+        "marking": 53
+      },
+      "physical": {
+        "pace": 40,
+        "acceleration": 51,
+        "strength": 57,
+        "stamina": 49,
+        "agility": 49,
+        "jumping": 52
+      },
+      "mental": {
+        "positioning": 48,
+        "decisions": 51,
+        "composure": 47,
+        "workRate": 45,
+        "aggression": 42,
+        "anticipation": 50,
+        "teamwork": 51,
+        "leadership": 52
+      }
+    },
+    {
+      "name": "عمر الشناوي",
+      "shortName": "الشناوي",
+      "slug": "ashmoun-youth-5",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 41,
+        "longShots": 45,
+        "passing": 51,
+        "vision": 48,
+        "crossing": 47,
+        "dribbling": 42,
+        "firstTouch": 49,
+        "heading": 48,
+        "tackling": 57,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 42,
+        "acceleration": 50,
+        "strength": 50,
+        "stamina": 48,
+        "agility": 45,
+        "jumping": 41
+      },
+      "mental": {
+        "positioning": 56,
+        "decisions": 43,
+        "composure": 49,
+        "workRate": 47,
+        "aggression": 48,
+        "anticipation": 45,
+        "teamwork": 47,
+        "leadership": 49
+      }
+    },
+    {
+      "name": "هيثم العجمي",
+      "shortName": "العجمي",
+      "slug": "ashmoun-youth-6",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 30,
+        "longShots": 48,
+        "passing": 52,
+        "vision": 45,
+        "crossing": 44,
+        "dribbling": 45,
+        "firstTouch": 49,
+        "heading": 49,
+        "tackling": 55,
+        "marking": 52
+      },
+      "physical": {
+        "pace": 42,
+        "acceleration": 46,
+        "strength": 50,
+        "stamina": 43,
+        "agility": 42,
+        "jumping": 42
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 47,
+        "composure": 53,
+        "workRate": 51,
+        "aggression": 48,
+        "anticipation": 52,
+        "teamwork": 43,
+        "leadership": 44
+      }
+    },
+    {
+      "name": "محمود سويلم",
+      "shortName": "سويلم",
+      "slug": "ashmoun-youth-7",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 36,
+        "longShots": 52,
+        "passing": 54,
+        "vision": 53,
+        "crossing": 47,
+        "dribbling": 44,
+        "firstTouch": 49,
+        "heading": 57,
+        "tackling": 58,
+        "marking": 60
+      },
+      "physical": {
+        "pace": 51,
+        "acceleration": 47,
+        "strength": 49,
+        "stamina": 52,
+        "agility": 52,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 51,
+        "composure": 52,
+        "workRate": 52,
+        "aggression": 50,
+        "anticipation": 51,
+        "teamwork": 47,
+        "leadership": 48
+      },
+      "nickname": "الحريف"
+    },
+    {
+      "name": "فارس عثمان",
+      "shortName": "عثمان",
+      "slug": "ashmoun-youth-8",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 34,
+        "longShots": 52,
+        "passing": 50,
+        "vision": 47,
+        "crossing": 51,
+        "dribbling": 54,
+        "firstTouch": 53,
+        "heading": 60,
+        "tackling": 56,
+        "marking": 61
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 49,
+        "strength": 53,
+        "stamina": 48,
+        "agility": 47,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 50,
+        "composure": 49,
+        "workRate": 48,
+        "aggression": 46,
+        "anticipation": 48,
+        "teamwork": 49,
+        "leadership": 49
+      }
+    },
+    {
+      "name": "وليد زهران",
+      "shortName": "زهران",
+      "slug": "ashmoun-youth-9",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 40,
+        "longShots": 49,
+        "passing": 59,
+        "vision": 57,
+        "crossing": 53,
+        "dribbling": 51,
+        "firstTouch": 60,
+        "heading": 58,
+        "tackling": 57,
+        "marking": 59
+      },
+      "physical": {
+        "pace": 51,
+        "acceleration": 52,
+        "strength": 56,
+        "stamina": 50,
+        "agility": 48,
+        "jumping": 52
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 53,
+        "composure": 59,
+        "workRate": 54,
+        "aggression": 53,
+        "anticipation": 52,
+        "teamwork": 49,
+        "leadership": 48
+      }
+    },
+    {
+      "name": "طارق سويلم",
+      "shortName": "سويلم",
+      "slug": "ashmoun-youth-10",
+      "age": 24,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 39,
+        "longShots": 48,
+        "passing": 55,
+        "vision": 48,
+        "crossing": 45,
+        "dribbling": 44,
+        "firstTouch": 48,
+        "heading": 54,
+        "tackling": 56,
+        "marking": 57
+      },
+      "physical": {
+        "pace": 44,
+        "acceleration": 44,
+        "strength": 50,
+        "stamina": 42,
+        "agility": 52,
+        "jumping": 46
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 44,
+        "composure": 47,
+        "workRate": 48,
+        "aggression": 50,
+        "anticipation": 46,
+        "teamwork": 49,
+        "leadership": 44
+      }
+    },
+    {
+      "name": "عمر منصور",
+      "shortName": "منصور",
+      "slug": "ashmoun-youth-11",
+      "age": 31,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 39,
+        "longShots": 43,
+        "passing": 47,
+        "vision": 52,
+        "crossing": 44,
+        "dribbling": 47,
+        "firstTouch": 50,
+        "heading": 58,
+        "tackling": 55,
+        "marking": 52
+      },
+      "physical": {
+        "pace": 42,
+        "acceleration": 50,
+        "strength": 52,
+        "stamina": 46,
+        "agility": 49,
+        "jumping": 49
+      },
+      "mental": {
+        "positioning": 55,
+        "decisions": 48,
+        "composure": 54,
+        "workRate": 45,
+        "aggression": 47,
+        "anticipation": 44,
+        "teamwork": 47,
+        "leadership": 49
+      }
+    },
+    {
+      "name": "عصام الشاذلي",
+      "shortName": "الشاذلي",
+      "slug": "ashmoun-youth-12",
+      "age": 24,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 41,
+        "longShots": 39,
+        "passing": 61,
+        "vision": 50,
+        "crossing": 44,
+        "dribbling": 37,
+        "firstTouch": 43,
+        "heading": 38,
+        "tackling": 47,
+        "marking": 44
+      },
+      "physical": {
+        "pace": 39,
+        "acceleration": 42,
+        "strength": 46,
+        "stamina": 47,
+        "agility": 43,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 44,
+        "decisions": 38,
+        "composure": 43,
+        "workRate": 50,
+        "aggression": 42,
+        "anticipation": 39,
+        "teamwork": 41,
+        "leadership": 41
+      }
+    },
+    {
+      "name": "فارس عفيفي",
+      "shortName": "عفيفي",
+      "slug": "ashmoun-youth-13",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 37,
+        "longShots": 38,
+        "passing": 54,
+        "vision": 51,
+        "crossing": 38,
+        "dribbling": 42,
+        "firstTouch": 48,
+        "heading": 40,
+        "tackling": 39,
+        "marking": 40
+      },
+      "physical": {
+        "pace": 37,
+        "acceleration": 40,
+        "strength": 42,
+        "stamina": 48,
+        "agility": 43,
+        "jumping": 42
+      },
+      "mental": {
+        "positioning": 44,
+        "decisions": 38,
+        "composure": 41,
+        "workRate": 51,
+        "aggression": 37,
+        "anticipation": 38,
+        "teamwork": 46,
+        "leadership": 38
+      }
+    },
+    {
+      "name": "يوسف النجار",
+      "shortName": "النجار",
+      "slug": "ashmoun-youth-14",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 48,
+        "longShots": 49,
+        "passing": 57,
+        "vision": 61,
+        "crossing": 51,
+        "dribbling": 49,
+        "firstTouch": 46,
+        "heading": 45,
+        "tackling": 53,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 51,
+        "strength": 46,
+        "stamina": 50,
+        "agility": 53,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 44,
+        "composure": 49,
+        "workRate": 50,
+        "aggression": 46,
+        "anticipation": 47,
+        "teamwork": 54,
+        "leadership": 44
+      }
+    },
+    {
+      "name": "بيشوي دياب",
+      "shortName": "دياب",
+      "slug": "ashmoun-youth-15",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 46,
+        "longShots": 44,
+        "passing": 63,
+        "vision": 57,
+        "crossing": 50,
+        "dribbling": 48,
+        "firstTouch": 51,
+        "heading": 40,
+        "tackling": 43,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 47,
+        "acceleration": 46,
+        "strength": 46,
+        "stamina": 50,
+        "agility": 49,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 47,
+        "decisions": 47,
+        "composure": 46,
+        "workRate": 49,
+        "aggression": 43,
+        "anticipation": 44,
+        "teamwork": 53,
+        "leadership": 51
+      },
+      "nickname": "الحريف"
+    },
+    {
+      "name": "عمر صادق",
+      "shortName": "صادق",
+      "slug": "ashmoun-youth-16",
+      "age": 29,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 49,
+        "longShots": 50,
+        "passing": 68,
+        "vision": 62,
+        "crossing": 44,
+        "dribbling": 49,
+        "firstTouch": 52,
+        "heading": 42,
+        "tackling": 48,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 54,
+        "strength": 46,
+        "stamina": 56,
+        "agility": 46,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 50,
+        "composure": 49,
+        "workRate": 53,
+        "aggression": 47,
+        "anticipation": 43,
+        "teamwork": 53,
+        "leadership": 46
+      }
+    },
+    {
+      "name": "صلاح الديب",
+      "shortName": "الديب",
+      "slug": "ashmoun-youth-17",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 43,
+        "longShots": 45,
+        "passing": 61,
+        "vision": 51,
+        "crossing": 41,
+        "dribbling": 42,
+        "firstTouch": 48,
+        "heading": 36,
+        "tackling": 47,
+        "marking": 40
+      },
+      "physical": {
+        "pace": 39,
+        "acceleration": 41,
+        "strength": 40,
+        "stamina": 53,
+        "agility": 45,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 46,
+        "decisions": 45,
+        "composure": 41,
+        "workRate": 50,
+        "aggression": 48,
+        "anticipation": 39,
+        "teamwork": 52,
+        "leadership": 47
+      }
+    },
+    {
+      "name": "كريم الحلواني",
+      "shortName": "الحلواني",
+      "slug": "ashmoun-youth-18",
+      "age": 31,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 58,
+        "longShots": 47,
+        "passing": 58,
+        "vision": 53,
+        "crossing": 52,
+        "dribbling": 54,
+        "firstTouch": 52,
+        "heading": 42,
+        "tackling": 31,
+        "marking": 40
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 52,
+        "strength": 51,
+        "stamina": 43,
+        "agility": 52,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 50,
+        "decisions": 50,
+        "composure": 55,
+        "workRate": 46,
+        "aggression": 44,
+        "anticipation": 50,
+        "teamwork": 52,
+        "leadership": 46
+      }
+    },
+    {
+      "name": "ياسر منصور",
+      "shortName": "منصور",
+      "slug": "ashmoun-youth-19",
+      "age": 24,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 50,
+        "longShots": 38,
+        "passing": 43,
+        "vision": 40,
+        "crossing": 40,
+        "dribbling": 47,
+        "firstTouch": 43,
+        "heading": 38,
+        "tackling": 28,
+        "marking": 26
+      },
+      "physical": {
+        "pace": 41,
+        "acceleration": 47,
+        "strength": 35,
+        "stamina": 41,
+        "agility": 37,
+        "jumping": 43
+      },
+      "mental": {
+        "positioning": 38,
+        "decisions": 40,
+        "composure": 50,
+        "workRate": 37,
+        "aggression": 36,
+        "anticipation": 36,
+        "teamwork": 43,
+        "leadership": 41
+      }
+    },
+    {
+      "name": "نادر عبدربه",
+      "shortName": "عبدربه",
+      "slug": "ashmoun-youth-20",
+      "age": 20,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 45,
+        "longShots": 37,
+        "passing": 49,
+        "vision": 46,
+        "crossing": 41,
+        "dribbling": 50,
+        "firstTouch": 39,
+        "heading": 38,
+        "tackling": 29,
+        "marking": 34
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 44,
+        "strength": 38,
+        "stamina": 42,
+        "agility": 45,
+        "jumping": 41
+      },
+      "mental": {
+        "positioning": 38,
+        "decisions": 40,
+        "composure": 47,
+        "workRate": 42,
+        "aggression": 38,
+        "anticipation": 42,
+        "teamwork": 45,
+        "leadership": 42
+      }
+    },
+    {
+      "name": "خالد قنديل",
+      "shortName": "قنديل",
+      "slug": "ashmoun-youth-21",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 46,
+        "longShots": 34,
+        "passing": 45,
+        "vision": 40,
+        "crossing": 40,
+        "dribbling": 40,
+        "firstTouch": 41,
+        "heading": 38,
+        "tackling": 32,
+        "marking": 28
+      },
+      "physical": {
+        "pace": 40,
+        "acceleration": 44,
+        "strength": 34,
+        "stamina": 37,
+        "agility": 32,
+        "jumping": 37
+      },
+      "mental": {
+        "positioning": 37,
+        "decisions": 34,
+        "composure": 42,
+        "workRate": 39,
+        "aggression": 37,
+        "anticipation": 35,
+        "teamwork": 38,
+        "leadership": 37
+      }
+    }
+  ]
+}

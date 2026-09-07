@@ -1,0 +1,947 @@
+{
+  "name": "نادي طهطا الرياضي",
+  "shortName": "طهطا",
+  "slug": "tahta-sporting",
+  "country": "EGY",
+  "region": "سوهاج",
+  "location": {
+    "lat": 26.7686,
+    "lon": 31.5017
+  },
+  "reputation": 40,
+  "stadium": {
+    "name": "استاد طهطا",
+    "shortName": "طهطا",
+    "slug": "tahta-sporting-stadium",
+    "capacity": 1400,
+    "pitchQuality": 45
+  },
+  "squad": [
+    {
+      "name": "رجب الديب",
+      "shortName": "الديب",
+      "slug": "tahta-sporting-1",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 24,
+        "longShots": 42,
+        "passing": 46,
+        "vision": 38,
+        "crossing": 42,
+        "dribbling": 33,
+        "firstTouch": 38,
+        "heading": 40,
+        "tackling": 34,
+        "marking": 43
+      },
+      "physical": {
+        "pace": 26,
+        "acceleration": 45,
+        "strength": 41,
+        "stamina": 41,
+        "agility": 37,
+        "jumping": 42
+      },
+      "mental": {
+        "positioning": 50,
+        "decisions": 44,
+        "composure": 52,
+        "workRate": 40,
+        "aggression": 42,
+        "anticipation": 40,
+        "teamwork": 44,
+        "leadership": 41
+      },
+      "goalkeeping": {
+        "handling": 55,
+        "reflexes": 53,
+        "aerialReach": 53,
+        "distribution": 51,
+        "oneOnOnes": 49
+      }
+    },
+    {
+      "name": "عصام نصار",
+      "shortName": "نصار",
+      "slug": "tahta-sporting-2",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 22,
+        "longShots": 43,
+        "passing": 45,
+        "vision": 44,
+        "crossing": 44,
+        "dribbling": 29,
+        "firstTouch": 49,
+        "heading": 44,
+        "tackling": 36,
+        "marking": 45
+      },
+      "physical": {
+        "pace": 36,
+        "acceleration": 50,
+        "strength": 39,
+        "stamina": 47,
+        "agility": 47,
+        "jumping": 39
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 48,
+        "composure": 44,
+        "workRate": 47,
+        "aggression": 42,
+        "anticipation": 41,
+        "teamwork": 48,
+        "leadership": 41
+      },
+      "goalkeeping": {
+        "handling": 53,
+        "reflexes": 49,
+        "aerialReach": 47,
+        "distribution": 51,
+        "oneOnOnes": 53
+      }
+    },
+    {
+      "name": "سيد الفولي",
+      "shortName": "الفولي",
+      "slug": "tahta-sporting-3",
+      "age": 31,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 22,
+        "longShots": 41,
+        "passing": 40,
+        "vision": 39,
+        "crossing": 43,
+        "dribbling": 23,
+        "firstTouch": 42,
+        "heading": 33,
+        "tackling": 29,
+        "marking": 40
+      },
+      "physical": {
+        "pace": 27,
+        "acceleration": 41,
+        "strength": 38,
+        "stamina": 37,
+        "agility": 38,
+        "jumping": 39
+      },
+      "mental": {
+        "positioning": 46,
+        "decisions": 42,
+        "composure": 48,
+        "workRate": 39,
+        "aggression": 36,
+        "anticipation": 35,
+        "teamwork": 37,
+        "leadership": 38
+      },
+      "goalkeeping": {
+        "handling": 44,
+        "reflexes": 43,
+        "aerialReach": 49,
+        "distribution": 45,
+        "oneOnOnes": 47
+      }
+    },
+    {
+      "name": "إسلام قابيل",
+      "shortName": "قابيل",
+      "slug": "tahta-sporting-4",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 40,
+        "longShots": 45,
+        "passing": 47,
+        "vision": 42,
+        "crossing": 47,
+        "dribbling": 43,
+        "firstTouch": 49,
+        "heading": 58,
+        "tackling": 52,
+        "marking": 52
+      },
+      "physical": {
+        "pace": 47,
+        "acceleration": 51,
+        "strength": 56,
+        "stamina": 45,
+        "agility": 41,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 50,
+        "decisions": 46,
+        "composure": 51,
+        "workRate": 48,
+        "aggression": 50,
+        "anticipation": 48,
+        "teamwork": 42,
+        "leadership": 46
+      }
+    },
+    {
+      "name": "أنس الديب",
+      "shortName": "الديب",
+      "slug": "tahta-sporting-5",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 34,
+        "longShots": 42,
+        "passing": 41,
+        "vision": 40,
+        "crossing": 44,
+        "dribbling": 38,
+        "firstTouch": 46,
+        "heading": 50,
+        "tackling": 53,
+        "marking": 55
+      },
+      "physical": {
+        "pace": 41,
+        "acceleration": 39,
+        "strength": 44,
+        "stamina": 43,
+        "agility": 39,
+        "jumping": 42
+      },
+      "mental": {
+        "positioning": 47,
+        "decisions": 41,
+        "composure": 39,
+        "workRate": 43,
+        "aggression": 43,
+        "anticipation": 40,
+        "teamwork": 41,
+        "leadership": 40
+      }
+    },
+    {
+      "name": "محمد الشاذلي",
+      "shortName": "الشاذلي",
+      "slug": "tahta-sporting-6",
+      "age": 27,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 38,
+        "longShots": 41,
+        "passing": 46,
+        "vision": 44,
+        "crossing": 43,
+        "dribbling": 43,
+        "firstTouch": 44,
+        "heading": 50,
+        "tackling": 55,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 39,
+        "acceleration": 46,
+        "strength": 46,
+        "stamina": 46,
+        "agility": 45,
+        "jumping": 47
+      },
+      "mental": {
+        "positioning": 46,
+        "decisions": 43,
+        "composure": 44,
+        "workRate": 42,
+        "aggression": 39,
+        "anticipation": 37,
+        "teamwork": 48,
+        "leadership": 40
+      }
+    },
+    {
+      "name": "حسين الشربيني",
+      "shortName": "الشربيني",
+      "slug": "tahta-sporting-7",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 36,
+        "longShots": 46,
+        "passing": 44,
+        "vision": 45,
+        "crossing": 42,
+        "dribbling": 43,
+        "firstTouch": 46,
+        "heading": 50,
+        "tackling": 50,
+        "marking": 52
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 50,
+        "strength": 52,
+        "stamina": 46,
+        "agility": 44,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 49,
+        "composure": 45,
+        "workRate": 47,
+        "aggression": 41,
+        "anticipation": 44,
+        "teamwork": 46,
+        "leadership": 46
+      }
+    },
+    {
+      "name": "سامح النجار",
+      "shortName": "النجار",
+      "slug": "tahta-sporting-8",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 30,
+        "longShots": 44,
+        "passing": 37,
+        "vision": 42,
+        "crossing": 40,
+        "dribbling": 45,
+        "firstTouch": 48,
+        "heading": 51,
+        "tackling": 57,
+        "marking": 56
+      },
+      "physical": {
+        "pace": 41,
+        "acceleration": 44,
+        "strength": 53,
+        "stamina": 42,
+        "agility": 42,
+        "jumping": 43
+      },
+      "mental": {
+        "positioning": 52,
+        "decisions": 37,
+        "composure": 39,
+        "workRate": 42,
+        "aggression": 45,
+        "anticipation": 46,
+        "teamwork": 40,
+        "leadership": 37
+      }
+    },
+    {
+      "name": "حسين سويلم",
+      "shortName": "سويلم",
+      "slug": "tahta-sporting-9",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 31,
+        "longShots": 48,
+        "passing": 45,
+        "vision": 42,
+        "crossing": 50,
+        "dribbling": 44,
+        "firstTouch": 44,
+        "heading": 52,
+        "tackling": 52,
+        "marking": 58
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 41,
+        "strength": 49,
+        "stamina": 44,
+        "agility": 52,
+        "jumping": 47
+      },
+      "mental": {
+        "positioning": 52,
+        "decisions": 49,
+        "composure": 46,
+        "workRate": 45,
+        "aggression": 47,
+        "anticipation": 43,
+        "teamwork": 41,
+        "leadership": 46
+      }
+    },
+    {
+      "name": "يوسف قنديل",
+      "shortName": "قنديل",
+      "slug": "tahta-sporting-10",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 34,
+        "longShots": 42,
+        "passing": 46,
+        "vision": 41,
+        "crossing": 40,
+        "dribbling": 41,
+        "firstTouch": 46,
+        "heading": 47,
+        "tackling": 50,
+        "marking": 53
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 42,
+        "strength": 49,
+        "stamina": 41,
+        "agility": 46,
+        "jumping": 44
+      },
+      "mental": {
+        "positioning": 52,
+        "decisions": 43,
+        "composure": 45,
+        "workRate": 48,
+        "aggression": 43,
+        "anticipation": 46,
+        "teamwork": 43,
+        "leadership": 46
+      }
+    },
+    {
+      "name": "تامر النجار",
+      "shortName": "النجار",
+      "slug": "tahta-sporting-11",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 36,
+        "longShots": 44,
+        "passing": 45,
+        "vision": 42,
+        "crossing": 36,
+        "dribbling": 46,
+        "firstTouch": 43,
+        "heading": 52,
+        "tackling": 51,
+        "marking": 46
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 38,
+        "strength": 46,
+        "stamina": 41,
+        "agility": 42,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 41,
+        "decisions": 44,
+        "composure": 43,
+        "workRate": 46,
+        "aggression": 46,
+        "anticipation": 44,
+        "teamwork": 37,
+        "leadership": 44
+      }
+    },
+    {
+      "name": "يوسف الجزار",
+      "shortName": "الجزار",
+      "slug": "tahta-sporting-12",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 37,
+        "passing": 44,
+        "vision": 45,
+        "crossing": 39,
+        "dribbling": 40,
+        "firstTouch": 41,
+        "heading": 35,
+        "tackling": 42,
+        "marking": 37
+      },
+      "physical": {
+        "pace": 41,
+        "acceleration": 39,
+        "strength": 40,
+        "stamina": 44,
+        "agility": 42,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 42,
+        "decisions": 43,
+        "composure": 35,
+        "workRate": 44,
+        "aggression": 40,
+        "anticipation": 45,
+        "teamwork": 45,
+        "leadership": 37
+      }
+    },
+    {
+      "name": "زياد لطفي",
+      "shortName": "لطفي",
+      "slug": "tahta-sporting-13",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 42,
+        "longShots": 44,
+        "passing": 48,
+        "vision": 49,
+        "crossing": 40,
+        "dribbling": 38,
+        "firstTouch": 39,
+        "heading": 38,
+        "tackling": 44,
+        "marking": 41
+      },
+      "physical": {
+        "pace": 39,
+        "acceleration": 38,
+        "strength": 36,
+        "stamina": 46,
+        "agility": 43,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 47,
+        "decisions": 39,
+        "composure": 42,
+        "workRate": 51,
+        "aggression": 42,
+        "anticipation": 41,
+        "teamwork": 46,
+        "leadership": 42
+      },
+      "nickname": "الفراشة"
+    },
+    {
+      "name": "عادل النجار",
+      "shortName": "النجار",
+      "slug": "tahta-sporting-14",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 33,
+        "longShots": 36,
+        "passing": 45,
+        "vision": 43,
+        "crossing": 37,
+        "dribbling": 39,
+        "firstTouch": 39,
+        "heading": 30,
+        "tackling": 33,
+        "marking": 36
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 43,
+        "strength": 32,
+        "stamina": 42,
+        "agility": 35,
+        "jumping": 34
+      },
+      "mental": {
+        "positioning": 39,
+        "decisions": 36,
+        "composure": 33,
+        "workRate": 47,
+        "aggression": 40,
+        "anticipation": 42,
+        "teamwork": 42,
+        "leadership": 37
+      }
+    },
+    {
+      "name": "وليد منصور",
+      "shortName": "منصور",
+      "slug": "tahta-sporting-15",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 39,
+        "passing": 47,
+        "vision": 47,
+        "crossing": 46,
+        "dribbling": 38,
+        "firstTouch": 46,
+        "heading": 33,
+        "tackling": 41,
+        "marking": 47
+      },
+      "physical": {
+        "pace": 41,
+        "acceleration": 41,
+        "strength": 42,
+        "stamina": 49,
+        "agility": 46,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 40,
+        "decisions": 40,
+        "composure": 42,
+        "workRate": 48,
+        "aggression": 36,
+        "anticipation": 44,
+        "teamwork": 43,
+        "leadership": 41
+      }
+    },
+    {
+      "name": "سيد هلال",
+      "shortName": "هلال",
+      "slug": "tahta-sporting-16",
+      "age": 27,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 39,
+        "longShots": 40,
+        "passing": 40,
+        "vision": 43,
+        "crossing": 36,
+        "dribbling": 39,
+        "firstTouch": 36,
+        "heading": 35,
+        "tackling": 39,
+        "marking": 42
+      },
+      "physical": {
+        "pace": 33,
+        "acceleration": 39,
+        "strength": 37,
+        "stamina": 49,
+        "agility": 37,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 40,
+        "decisions": 35,
+        "composure": 37,
+        "workRate": 44,
+        "aggression": 36,
+        "anticipation": 39,
+        "teamwork": 40,
+        "leadership": 39
+      },
+      "nickname": "الصاروخ"
+    },
+    {
+      "name": "رمضان بركات",
+      "shortName": "بركات",
+      "slug": "tahta-sporting-17",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 35,
+        "longShots": 36,
+        "passing": 48,
+        "vision": 44,
+        "crossing": 38,
+        "dribbling": 39,
+        "firstTouch": 33,
+        "heading": 34,
+        "tackling": 37,
+        "marking": 37
+      },
+      "physical": {
+        "pace": 34,
+        "acceleration": 34,
+        "strength": 38,
+        "stamina": 40,
+        "agility": 31,
+        "jumping": 41
+      },
+      "mental": {
+        "positioning": 39,
+        "decisions": 32,
+        "composure": 41,
+        "workRate": 49,
+        "aggression": 41,
+        "anticipation": 32,
+        "teamwork": 38,
+        "leadership": 36
+      }
+    },
+    {
+      "name": "خالد زهران",
+      "shortName": "زهران",
+      "slug": "tahta-sporting-18",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 47,
+        "longShots": 35,
+        "passing": 38,
+        "vision": 36,
+        "crossing": 42,
+        "dribbling": 50,
+        "firstTouch": 40,
+        "heading": 38,
+        "tackling": 27,
+        "marking": 33
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 41,
+        "strength": 41,
+        "stamina": 43,
+        "agility": 41,
+        "jumping": 43
+      },
+      "mental": {
+        "positioning": 44,
+        "decisions": 38,
+        "composure": 42,
+        "workRate": 40,
+        "aggression": 39,
+        "anticipation": 38,
+        "teamwork": 36,
+        "leadership": 44
+      }
+    },
+    {
+      "name": "رجب بركات",
+      "shortName": "بركات",
+      "slug": "tahta-sporting-19",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 51,
+        "longShots": 30,
+        "passing": 40,
+        "vision": 38,
+        "crossing": 34,
+        "dribbling": 41,
+        "firstTouch": 36,
+        "heading": 30,
+        "tackling": 27,
+        "marking": 28
+      },
+      "physical": {
+        "pace": 39,
+        "acceleration": 47,
+        "strength": 41,
+        "stamina": 39,
+        "agility": 37,
+        "jumping": 32
+      },
+      "mental": {
+        "positioning": 41,
+        "decisions": 33,
+        "composure": 40,
+        "workRate": 35,
+        "aggression": 38,
+        "anticipation": 37,
+        "teamwork": 34,
+        "leadership": 36
+      }
+    },
+    {
+      "name": "عادل حمدي",
+      "shortName": "حمدي",
+      "slug": "tahta-sporting-20",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 47,
+        "longShots": 43,
+        "passing": 36,
+        "vision": 40,
+        "crossing": 35,
+        "dribbling": 44,
+        "firstTouch": 38,
+        "heading": 40,
+        "tackling": 26,
+        "marking": 31
+      },
+      "physical": {
+        "pace": 42,
+        "acceleration": 44,
+        "strength": 43,
+        "stamina": 40,
+        "agility": 36,
+        "jumping": 36
+      },
+      "mental": {
+        "positioning": 41,
+        "decisions": 43,
+        "composure": 44,
+        "workRate": 38,
+        "aggression": 39,
+        "anticipation": 39,
+        "teamwork": 42,
+        "leadership": 37
+      }
+    },
+    {
+      "name": "طارق مطاوع",
+      "shortName": "مطاوع",
+      "slug": "tahta-sporting-21",
+      "age": 24,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 43,
+        "longShots": 33,
+        "passing": 33,
+        "vision": 40,
+        "crossing": 35,
+        "dribbling": 37,
+        "firstTouch": 28,
+        "heading": 30,
+        "tackling": 24,
+        "marking": 23
+      },
+      "physical": {
+        "pace": 33,
+        "acceleration": 41,
+        "strength": 31,
+        "stamina": 39,
+        "agility": 34,
+        "jumping": 27
+      },
+      "mental": {
+        "positioning": 31,
+        "decisions": 34,
+        "composure": 38,
+        "workRate": 35,
+        "aggression": 34,
+        "anticipation": 32,
+        "teamwork": 33,
+        "leadership": 37
+      }
+    }
+  ]
+}

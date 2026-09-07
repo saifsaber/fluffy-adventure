@@ -1,0 +1,949 @@
+{
+  "name": "أسمنت مغاغة",
+  "shortName": "مغاغة",
+  "slug": "maghagha-cement",
+  "country": "EGY",
+  "region": "المنيا",
+  "location": {
+    "lat": 28.6461,
+    "lon": 30.8433
+  },
+  "reputation": 49,
+  "stadium": {
+    "name": "استاد المصنع",
+    "shortName": "مغاغة",
+    "slug": "maghagha-cement-stadium",
+    "capacity": 2200,
+    "pitchQuality": 56
+  },
+  "squad": [
+    {
+      "name": "عصام بدوي",
+      "shortName": "بدوي",
+      "slug": "maghagha-cement-1",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 36,
+        "longShots": 62,
+        "passing": 60,
+        "vision": 60,
+        "crossing": 52,
+        "dribbling": 40,
+        "firstTouch": 57,
+        "heading": 56,
+        "tackling": 46,
+        "marking": 54
+      },
+      "physical": {
+        "pace": 41,
+        "acceleration": 61,
+        "strength": 58,
+        "stamina": 57,
+        "agility": 62,
+        "jumping": 57
+      },
+      "mental": {
+        "positioning": 62,
+        "decisions": 61,
+        "composure": 56,
+        "workRate": 55,
+        "aggression": 57,
+        "anticipation": 58,
+        "teamwork": 53,
+        "leadership": 55
+      },
+      "goalkeeping": {
+        "handling": 65,
+        "reflexes": 69,
+        "aerialReach": 59,
+        "distribution": 62,
+        "oneOnOnes": 67
+      }
+    },
+    {
+      "name": "عادل الجزار",
+      "shortName": "الجزار",
+      "slug": "maghagha-cement-2",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 35,
+        "longShots": 49,
+        "passing": 55,
+        "vision": 55,
+        "crossing": 53,
+        "dribbling": 40,
+        "firstTouch": 55,
+        "heading": 53,
+        "tackling": 43,
+        "marking": 54
+      },
+      "physical": {
+        "pace": 41,
+        "acceleration": 55,
+        "strength": 54,
+        "stamina": 57,
+        "agility": 52,
+        "jumping": 53
+      },
+      "mental": {
+        "positioning": 59,
+        "decisions": 49,
+        "composure": 60,
+        "workRate": 54,
+        "aggression": 53,
+        "anticipation": 56,
+        "teamwork": 54,
+        "leadership": 48
+      },
+      "goalkeeping": {
+        "handling": 60,
+        "reflexes": 58,
+        "aerialReach": 59,
+        "distribution": 61,
+        "oneOnOnes": 58
+      }
+    },
+    {
+      "name": "إسلام عوض",
+      "shortName": "عوض",
+      "slug": "maghagha-cement-3",
+      "age": 24,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 38,
+        "longShots": 48,
+        "passing": 51,
+        "vision": 55,
+        "crossing": 55,
+        "dribbling": 42,
+        "firstTouch": 54,
+        "heading": 54,
+        "tackling": 40,
+        "marking": 52
+      },
+      "physical": {
+        "pace": 38,
+        "acceleration": 50,
+        "strength": 49,
+        "stamina": 50,
+        "agility": 49,
+        "jumping": 47
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 50,
+        "composure": 60,
+        "workRate": 48,
+        "aggression": 50,
+        "anticipation": 50,
+        "teamwork": 55,
+        "leadership": 45
+      },
+      "goalkeeping": {
+        "handling": 62,
+        "reflexes": 62,
+        "aerialReach": 59,
+        "distribution": 57,
+        "oneOnOnes": 60
+      }
+    },
+    {
+      "name": "طارق عفيفي",
+      "shortName": "عفيفي",
+      "slug": "maghagha-cement-4",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 52,
+        "longShots": 59,
+        "passing": 55,
+        "vision": 49,
+        "crossing": 63,
+        "dribbling": 59,
+        "firstTouch": 57,
+        "heading": 67,
+        "tackling": 66,
+        "marking": 68
+      },
+      "physical": {
+        "pace": 55,
+        "acceleration": 62,
+        "strength": 64,
+        "stamina": 53,
+        "agility": 55,
+        "jumping": 57
+      },
+      "mental": {
+        "positioning": 63,
+        "decisions": 52,
+        "composure": 57,
+        "workRate": 59,
+        "aggression": 62,
+        "anticipation": 54,
+        "teamwork": 56,
+        "leadership": 56
+      }
+    },
+    {
+      "name": "طارق حمدي",
+      "shortName": "حمدي",
+      "slug": "maghagha-cement-5",
+      "age": 24,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 41,
+        "longShots": 47,
+        "passing": 48,
+        "vision": 46,
+        "crossing": 50,
+        "dribbling": 53,
+        "firstTouch": 55,
+        "heading": 55,
+        "tackling": 62,
+        "marking": 61
+      },
+      "physical": {
+        "pace": 47,
+        "acceleration": 53,
+        "strength": 56,
+        "stamina": 49,
+        "agility": 55,
+        "jumping": 50
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 50,
+        "composure": 55,
+        "workRate": 53,
+        "aggression": 51,
+        "anticipation": 49,
+        "teamwork": 48,
+        "leadership": 49
+      }
+    },
+    {
+      "name": "فتحي شحاتة",
+      "shortName": "شحاتة",
+      "slug": "maghagha-cement-6",
+      "age": 20,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 47,
+        "longShots": 56,
+        "passing": 55,
+        "vision": 46,
+        "crossing": 56,
+        "dribbling": 51,
+        "firstTouch": 51,
+        "heading": 64,
+        "tackling": 67,
+        "marking": 66
+      },
+      "physical": {
+        "pace": 58,
+        "acceleration": 54,
+        "strength": 58,
+        "stamina": 58,
+        "agility": 54,
+        "jumping": 61
+      },
+      "mental": {
+        "positioning": 59,
+        "decisions": 57,
+        "composure": 60,
+        "workRate": 51,
+        "aggression": 56,
+        "anticipation": 57,
+        "teamwork": 55,
+        "leadership": 54
+      }
+    },
+    {
+      "name": "عماد عثمان",
+      "shortName": "عثمان",
+      "slug": "maghagha-cement-7",
+      "age": 20,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 41,
+        "longShots": 52,
+        "passing": 50,
+        "vision": 44,
+        "crossing": 47,
+        "dribbling": 52,
+        "firstTouch": 50,
+        "heading": 58,
+        "tackling": 61,
+        "marking": 60
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 51,
+        "strength": 57,
+        "stamina": 51,
+        "agility": 49,
+        "jumping": 54
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 53,
+        "composure": 48,
+        "workRate": 52,
+        "aggression": 51,
+        "anticipation": 54,
+        "teamwork": 48,
+        "leadership": 53
+      }
+    },
+    {
+      "name": "خالد الديب",
+      "shortName": "الديب",
+      "slug": "maghagha-cement-8",
+      "age": 29,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 49,
+        "longShots": 52,
+        "passing": 55,
+        "vision": 54,
+        "crossing": 54,
+        "dribbling": 57,
+        "firstTouch": 53,
+        "heading": 58,
+        "tackling": 59,
+        "marking": 59
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 58,
+        "strength": 57,
+        "stamina": 49,
+        "agility": 53,
+        "jumping": 53
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 50,
+        "composure": 49,
+        "workRate": 47,
+        "aggression": 48,
+        "anticipation": 55,
+        "teamwork": 52,
+        "leadership": 49
+      }
+    },
+    {
+      "name": "خالد فرغلي",
+      "shortName": "فرغلي",
+      "slug": "maghagha-cement-9",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 40,
+        "longShots": 53,
+        "passing": 56,
+        "vision": 43,
+        "crossing": 60,
+        "dribbling": 50,
+        "firstTouch": 51,
+        "heading": 61,
+        "tackling": 59,
+        "marking": 58
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 52,
+        "strength": 57,
+        "stamina": 56,
+        "agility": 57,
+        "jumping": 55
+      },
+      "mental": {
+        "positioning": 60,
+        "decisions": 57,
+        "composure": 52,
+        "workRate": 51,
+        "aggression": 57,
+        "anticipation": 49,
+        "teamwork": 49,
+        "leadership": 51
+      }
+    },
+    {
+      "name": "عمر الجندي",
+      "shortName": "الجندي",
+      "slug": "maghagha-cement-10",
+      "age": 29,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 46,
+        "longShots": 58,
+        "passing": 53,
+        "vision": 51,
+        "crossing": 61,
+        "dribbling": 54,
+        "firstTouch": 55,
+        "heading": 64,
+        "tackling": 70,
+        "marking": 60
+      },
+      "physical": {
+        "pace": 58,
+        "acceleration": 53,
+        "strength": 63,
+        "stamina": 51,
+        "agility": 58,
+        "jumping": 57
+      },
+      "mental": {
+        "positioning": 61,
+        "decisions": 57,
+        "composure": 57,
+        "workRate": 50,
+        "aggression": 53,
+        "anticipation": 57,
+        "teamwork": 59,
+        "leadership": 61
+      }
+    },
+    {
+      "name": "أيمن سليم",
+      "shortName": "سليم",
+      "slug": "maghagha-cement-11",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 40,
+        "longShots": 53,
+        "passing": 54,
+        "vision": 52,
+        "crossing": 51,
+        "dribbling": 55,
+        "firstTouch": 54,
+        "heading": 61,
+        "tackling": 59,
+        "marking": 62
+      },
+      "physical": {
+        "pace": 54,
+        "acceleration": 54,
+        "strength": 54,
+        "stamina": 55,
+        "agility": 49,
+        "jumping": 53
+      },
+      "mental": {
+        "positioning": 57,
+        "decisions": 58,
+        "composure": 51,
+        "workRate": 57,
+        "aggression": 51,
+        "anticipation": 51,
+        "teamwork": 59,
+        "leadership": 57
+      },
+      "nickname": "السد العالي"
+    },
+    {
+      "name": "محمد الفولي",
+      "shortName": "الفولي",
+      "slug": "maghagha-cement-12",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 43,
+        "longShots": 52,
+        "passing": 51,
+        "vision": 56,
+        "crossing": 45,
+        "dribbling": 44,
+        "firstTouch": 52,
+        "heading": 39,
+        "tackling": 46,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 41,
+        "acceleration": 53,
+        "strength": 44,
+        "stamina": 54,
+        "agility": 48,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 43,
+        "decisions": 45,
+        "composure": 48,
+        "workRate": 52,
+        "aggression": 46,
+        "anticipation": 50,
+        "teamwork": 53,
+        "leadership": 46
+      }
+    },
+    {
+      "name": "يوسف بدوي",
+      "shortName": "بدوي",
+      "slug": "maghagha-cement-13",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 46,
+        "longShots": 48,
+        "passing": 65,
+        "vision": 57,
+        "crossing": 48,
+        "dribbling": 50,
+        "firstTouch": 51,
+        "heading": 50,
+        "tackling": 53,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 56,
+        "acceleration": 49,
+        "strength": 54,
+        "stamina": 58,
+        "agility": 51,
+        "jumping": 52
+      },
+      "mental": {
+        "positioning": 50,
+        "decisions": 53,
+        "composure": 56,
+        "workRate": 59,
+        "aggression": 49,
+        "anticipation": 51,
+        "teamwork": 57,
+        "leadership": 51
+      }
+    },
+    {
+      "name": "طارق الحلواني",
+      "shortName": "الحلواني",
+      "slug": "maghagha-cement-14",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 47,
+        "longShots": 46,
+        "passing": 59,
+        "vision": 54,
+        "crossing": 50,
+        "dribbling": 46,
+        "firstTouch": 55,
+        "heading": 45,
+        "tackling": 52,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 47,
+        "strength": 45,
+        "stamina": 51,
+        "agility": 49,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 44,
+        "decisions": 46,
+        "composure": 49,
+        "workRate": 59,
+        "aggression": 43,
+        "anticipation": 45,
+        "teamwork": 53,
+        "leadership": 45
+      }
+    },
+    {
+      "name": "باسم شلبي",
+      "shortName": "شلبي",
+      "slug": "maghagha-cement-15",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 47,
+        "longShots": 47,
+        "passing": 49,
+        "vision": 49,
+        "crossing": 42,
+        "dribbling": 51,
+        "firstTouch": 49,
+        "heading": 44,
+        "tackling": 46,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 44,
+        "strength": 48,
+        "stamina": 52,
+        "agility": 49,
+        "jumping": 49
+      },
+      "mental": {
+        "positioning": 50,
+        "decisions": 48,
+        "composure": 42,
+        "workRate": 50,
+        "aggression": 49,
+        "anticipation": 51,
+        "teamwork": 51,
+        "leadership": 46
+      }
+    },
+    {
+      "name": "محمد زهران",
+      "shortName": "زهران",
+      "slug": "maghagha-cement-16",
+      "age": 29,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 54,
+        "longShots": 55,
+        "passing": 56,
+        "vision": 60,
+        "crossing": 52,
+        "dribbling": 59,
+        "firstTouch": 50,
+        "heading": 52,
+        "tackling": 53,
+        "marking": 58
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 56,
+        "strength": 58,
+        "stamina": 64,
+        "agility": 56,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 56,
+        "decisions": 52,
+        "composure": 53,
+        "workRate": 59,
+        "aggression": 48,
+        "anticipation": 52,
+        "teamwork": 61,
+        "leadership": 58
+      },
+      "nickname": "الطيارة"
+    },
+    {
+      "name": "شادي سرحان",
+      "shortName": "سرحان",
+      "slug": "maghagha-cement-17",
+      "age": 27,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 45,
+        "passing": 57,
+        "vision": 54,
+        "crossing": 42,
+        "dribbling": 51,
+        "firstTouch": 47,
+        "heading": 46,
+        "tackling": 53,
+        "marking": 41
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 47,
+        "strength": 45,
+        "stamina": 52,
+        "agility": 44,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 46,
+        "decisions": 46,
+        "composure": 46,
+        "workRate": 49,
+        "aggression": 47,
+        "anticipation": 45,
+        "teamwork": 48,
+        "leadership": 51
+      }
+    },
+    {
+      "name": "عادل النجار",
+      "shortName": "النجار",
+      "slug": "maghagha-cement-18",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 62,
+        "longShots": 48,
+        "passing": 55,
+        "vision": 52,
+        "crossing": 52,
+        "dribbling": 55,
+        "firstTouch": 51,
+        "heading": 57,
+        "tackling": 41,
+        "marking": 47
+      },
+      "physical": {
+        "pace": 57,
+        "acceleration": 59,
+        "strength": 51,
+        "stamina": 55,
+        "agility": 53,
+        "jumping": 57
+      },
+      "mental": {
+        "positioning": 56,
+        "decisions": 57,
+        "composure": 58,
+        "workRate": 54,
+        "aggression": 56,
+        "anticipation": 52,
+        "teamwork": 56,
+        "leadership": 52
+      },
+      "nickname": "الصاروخ"
+    },
+    {
+      "name": "باسم عبدالعال",
+      "shortName": "عبدالعال",
+      "slug": "maghagha-cement-19",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 49,
+        "longShots": 40,
+        "passing": 44,
+        "vision": 44,
+        "crossing": 45,
+        "dribbling": 46,
+        "firstTouch": 43,
+        "heading": 42,
+        "tackling": 31,
+        "marking": 29
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 52,
+        "strength": 44,
+        "stamina": 45,
+        "agility": 44,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 45,
+        "decisions": 43,
+        "composure": 50,
+        "workRate": 39,
+        "aggression": 44,
+        "anticipation": 42,
+        "teamwork": 43,
+        "leadership": 44
+      },
+      "nickname": "الحاوي"
+    },
+    {
+      "name": "شريف حمدي",
+      "shortName": "حمدي",
+      "slug": "maghagha-cement-20",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 53,
+        "longShots": 44,
+        "passing": 37,
+        "vision": 47,
+        "crossing": 39,
+        "dribbling": 44,
+        "firstTouch": 48,
+        "heading": 43,
+        "tackling": 32,
+        "marking": 31
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 46,
+        "strength": 46,
+        "stamina": 48,
+        "agility": 39,
+        "jumping": 44
+      },
+      "mental": {
+        "positioning": 47,
+        "decisions": 47,
+        "composure": 48,
+        "workRate": 41,
+        "aggression": 44,
+        "anticipation": 40,
+        "teamwork": 46,
+        "leadership": 40
+      }
+    },
+    {
+      "name": "سيد دياب",
+      "shortName": "دياب",
+      "slug": "maghagha-cement-21",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 53,
+        "longShots": 40,
+        "passing": 42,
+        "vision": 44,
+        "crossing": 44,
+        "dribbling": 48,
+        "firstTouch": 38,
+        "heading": 37,
+        "tackling": 31,
+        "marking": 35
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 49,
+        "strength": 43,
+        "stamina": 38,
+        "agility": 42,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 45,
+        "decisions": 44,
+        "composure": 46,
+        "workRate": 44,
+        "aggression": 41,
+        "anticipation": 35,
+        "teamwork": 36,
+        "leadership": 39
+      }
+    }
+  ]
+}

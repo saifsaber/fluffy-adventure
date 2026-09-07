@@ -1,0 +1,33 @@
+{
+  "name": "دوري الدرجة الرابعة المصري",
+  "shortName": "الدرجة الرابعة",
+  "slug": "egy-d4",
+  "country": "EGY",
+  "tier": 4,
+  "roundRobin": 2,
+  "promotion": { "automatic": 2, "playoff": 2 },
+  "relegation": { "automatic": 2 },
+  "points": { "win": 3, "draw": 1, "loss": 0 },
+  "clubs": [
+    "matoubas-sporting",
+    "ashmoun-youth",
+    "tokh-union",
+    "abu-kabir-sporting",
+    "hehia-star",
+    "sidi-salem-sporting",
+    "shibin-elkom-workers",
+    "kafr-eldawar-textile",
+    "edku-coast",
+    "sanhour-youth",
+    "beni-mazar-sporting",
+    "maghagha-cement",
+    "biba-union",
+    "sohag-railway",
+    "tahta-sporting",
+    "naga-hammadi-sugar",
+    "armant-sporting",
+    "kom-ombo-agriculture",
+    "borg-elarab-industrial",
+    "new-damietta-port"
+  ]
+}

@@ -1,0 +1,948 @@
+{
+  "name": "عمال شبين الكوم",
+  "shortName": "شبين",
+  "slug": "shibin-elkom-workers",
+  "country": "EGY",
+  "region": "المنوفية",
+  "location": {
+    "lat": 30.5525,
+    "lon": 31.0094
+  },
+  "reputation": 51,
+  "stadium": {
+    "name": "استاد شبين الكوم",
+    "shortName": "شبين",
+    "slug": "shibin-elkom-workers-stadium",
+    "capacity": 3000,
+    "pitchQuality": 60
+  },
+  "squad": [
+    {
+      "name": "أيمن نصار",
+      "shortName": "نصار",
+      "slug": "shibin-elkom-workers-1",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 31,
+        "longShots": 62,
+        "passing": 56,
+        "vision": 63,
+        "crossing": 55,
+        "dribbling": 41,
+        "firstTouch": 62,
+        "heading": 58,
+        "tackling": 47,
+        "marking": 55
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 59,
+        "strength": 55,
+        "stamina": 54,
+        "agility": 56,
+        "jumping": 61
+      },
+      "mental": {
+        "positioning": 66,
+        "decisions": 58,
+        "composure": 61,
+        "workRate": 59,
+        "aggression": 51,
+        "anticipation": 55,
+        "teamwork": 50,
+        "leadership": 55
+      },
+      "goalkeeping": {
+        "handling": 66,
+        "reflexes": 66,
+        "aerialReach": 64,
+        "distribution": 64,
+        "oneOnOnes": 64
+      }
+    },
+    {
+      "name": "خالد زهران",
+      "shortName": "زهران",
+      "slug": "shibin-elkom-workers-2",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 36,
+        "longShots": 62,
+        "passing": 68,
+        "vision": 65,
+        "crossing": 56,
+        "dribbling": 46,
+        "firstTouch": 59,
+        "heading": 57,
+        "tackling": 47,
+        "marking": 57
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 66,
+        "strength": 61,
+        "stamina": 63,
+        "agility": 57,
+        "jumping": 55
+      },
+      "mental": {
+        "positioning": 70,
+        "decisions": 61,
+        "composure": 63,
+        "workRate": 61,
+        "aggression": 59,
+        "anticipation": 57,
+        "teamwork": 55,
+        "leadership": 54
+      },
+      "goalkeeping": {
+        "handling": 72,
+        "reflexes": 68,
+        "aerialReach": 67,
+        "distribution": 67,
+        "oneOnOnes": 64
+      }
+    },
+    {
+      "name": "فارس عفيفي",
+      "shortName": "عفيفي",
+      "slug": "shibin-elkom-workers-3",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 32,
+        "longShots": 55,
+        "passing": 60,
+        "vision": 62,
+        "crossing": 53,
+        "dribbling": 38,
+        "firstTouch": 54,
+        "heading": 59,
+        "tackling": 44,
+        "marking": 58
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 56,
+        "strength": 53,
+        "stamina": 51,
+        "agility": 56,
+        "jumping": 58
+      },
+      "mental": {
+        "positioning": 63,
+        "decisions": 58,
+        "composure": 59,
+        "workRate": 53,
+        "aggression": 52,
+        "anticipation": 58,
+        "teamwork": 52,
+        "leadership": 53
+      },
+      "goalkeeping": {
+        "handling": 62,
+        "reflexes": 67,
+        "aerialReach": 60,
+        "distribution": 66,
+        "oneOnOnes": 63
+      }
+    },
+    {
+      "name": "ياسر الطوخي",
+      "shortName": "الطوخي",
+      "slug": "shibin-elkom-workers-4",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 41,
+        "longShots": 54,
+        "passing": 55,
+        "vision": 53,
+        "crossing": 51,
+        "dribbling": 55,
+        "firstTouch": 59,
+        "heading": 52,
+        "tackling": 62,
+        "marking": 59
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 48,
+        "strength": 57,
+        "stamina": 49,
+        "agility": 50,
+        "jumping": 56
+      },
+      "mental": {
+        "positioning": 57,
+        "decisions": 55,
+        "composure": 50,
+        "workRate": 49,
+        "aggression": 52,
+        "anticipation": 48,
+        "teamwork": 47,
+        "leadership": 54
+      },
+      "nickname": "الحاوي"
+    },
+    {
+      "name": "طارق السقا",
+      "shortName": "السقا",
+      "slug": "shibin-elkom-workers-5",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 43,
+        "longShots": 55,
+        "passing": 59,
+        "vision": 58,
+        "crossing": 51,
+        "dribbling": 59,
+        "firstTouch": 53,
+        "heading": 61,
+        "tackling": 61,
+        "marking": 59
+      },
+      "physical": {
+        "pace": 47,
+        "acceleration": 52,
+        "strength": 62,
+        "stamina": 55,
+        "agility": 51,
+        "jumping": 52
+      },
+      "mental": {
+        "positioning": 56,
+        "decisions": 57,
+        "composure": 58,
+        "workRate": 55,
+        "aggression": 53,
+        "anticipation": 57,
+        "teamwork": 52,
+        "leadership": 53
+      }
+    },
+    {
+      "name": "يوسف السقا",
+      "shortName": "السقا",
+      "slug": "shibin-elkom-workers-6",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 56,
+        "passing": 60,
+        "vision": 55,
+        "crossing": 49,
+        "dribbling": 57,
+        "firstTouch": 57,
+        "heading": 62,
+        "tackling": 59,
+        "marking": 65
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 59,
+        "strength": 54,
+        "stamina": 56,
+        "agility": 52,
+        "jumping": 58
+      },
+      "mental": {
+        "positioning": 58,
+        "decisions": 52,
+        "composure": 63,
+        "workRate": 57,
+        "aggression": 59,
+        "anticipation": 54,
+        "teamwork": 53,
+        "leadership": 53
+      },
+      "nickname": "الحاوي"
+    },
+    {
+      "name": "هشام خميس",
+      "shortName": "خميس",
+      "slug": "shibin-elkom-workers-7",
+      "age": 33,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 49,
+        "longShots": 52,
+        "passing": 62,
+        "vision": 53,
+        "crossing": 54,
+        "dribbling": 51,
+        "firstTouch": 58,
+        "heading": 58,
+        "tackling": 61,
+        "marking": 64
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 57,
+        "strength": 60,
+        "stamina": 59,
+        "agility": 52,
+        "jumping": 56
+      },
+      "mental": {
+        "positioning": 58,
+        "decisions": 54,
+        "composure": 53,
+        "workRate": 51,
+        "aggression": 50,
+        "anticipation": 54,
+        "teamwork": 53,
+        "leadership": 53
+      }
+    },
+    {
+      "name": "عمرو الجندي",
+      "shortName": "الجندي",
+      "slug": "shibin-elkom-workers-8",
+      "age": 31,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 45,
+        "longShots": 54,
+        "passing": 62,
+        "vision": 60,
+        "crossing": 56,
+        "dribbling": 56,
+        "firstTouch": 59,
+        "heading": 55,
+        "tackling": 63,
+        "marking": 62
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 50,
+        "strength": 57,
+        "stamina": 52,
+        "agility": 50,
+        "jumping": 55
+      },
+      "mental": {
+        "positioning": 61,
+        "decisions": 57,
+        "composure": 53,
+        "workRate": 57,
+        "aggression": 55,
+        "anticipation": 56,
+        "teamwork": 53,
+        "leadership": 57
+      }
+    },
+    {
+      "name": "سامح زهران",
+      "shortName": "زهران",
+      "slug": "shibin-elkom-workers-9",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 42,
+        "longShots": 46,
+        "passing": 56,
+        "vision": 47,
+        "crossing": 51,
+        "dribbling": 52,
+        "firstTouch": 56,
+        "heading": 52,
+        "tackling": 67,
+        "marking": 60
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 53,
+        "strength": 55,
+        "stamina": 57,
+        "agility": 53,
+        "jumping": 52
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 50,
+        "composure": 54,
+        "workRate": 50,
+        "aggression": 52,
+        "anticipation": 53,
+        "teamwork": 55,
+        "leadership": 55
+      }
+    },
+    {
+      "name": "يوسف الجزار",
+      "shortName": "الجزار",
+      "slug": "shibin-elkom-workers-10",
+      "age": 27,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 50,
+        "passing": 63,
+        "vision": 51,
+        "crossing": 57,
+        "dribbling": 55,
+        "firstTouch": 53,
+        "heading": 61,
+        "tackling": 66,
+        "marking": 69
+      },
+      "physical": {
+        "pace": 55,
+        "acceleration": 53,
+        "strength": 56,
+        "stamina": 52,
+        "agility": 54,
+        "jumping": 54
+      },
+      "mental": {
+        "positioning": 60,
+        "decisions": 60,
+        "composure": 54,
+        "workRate": 50,
+        "aggression": 53,
+        "anticipation": 54,
+        "teamwork": 52,
+        "leadership": 57
+      }
+    },
+    {
+      "name": "زياد الديب",
+      "shortName": "الديب",
+      "slug": "shibin-elkom-workers-11",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 40,
+        "longShots": 54,
+        "passing": 57,
+        "vision": 54,
+        "crossing": 54,
+        "dribbling": 52,
+        "firstTouch": 59,
+        "heading": 64,
+        "tackling": 64,
+        "marking": 62
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 56,
+        "strength": 60,
+        "stamina": 54,
+        "agility": 56,
+        "jumping": 55
+      },
+      "mental": {
+        "positioning": 57,
+        "decisions": 56,
+        "composure": 54,
+        "workRate": 53,
+        "aggression": 53,
+        "anticipation": 53,
+        "teamwork": 47,
+        "leadership": 55
+      }
+    },
+    {
+      "name": "خالد حمدي",
+      "shortName": "حمدي",
+      "slug": "shibin-elkom-workers-12",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 51,
+        "longShots": 50,
+        "passing": 66,
+        "vision": 63,
+        "crossing": 53,
+        "dribbling": 44,
+        "firstTouch": 58,
+        "heading": 44,
+        "tackling": 49,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 47,
+        "strength": 50,
+        "stamina": 54,
+        "agility": 43,
+        "jumping": 53
+      },
+      "mental": {
+        "positioning": 46,
+        "decisions": 52,
+        "composure": 53,
+        "workRate": 56,
+        "aggression": 52,
+        "anticipation": 47,
+        "teamwork": 58,
+        "leadership": 49
+      }
+    },
+    {
+      "name": "عادل عبدربه",
+      "shortName": "عبدربه",
+      "slug": "shibin-elkom-workers-13",
+      "age": 24,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 58,
+        "longShots": 58,
+        "passing": 68,
+        "vision": 65,
+        "crossing": 53,
+        "dribbling": 58,
+        "firstTouch": 56,
+        "heading": 45,
+        "tackling": 60,
+        "marking": 57
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 56,
+        "strength": 55,
+        "stamina": 63,
+        "agility": 55,
+        "jumping": 58
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 52,
+        "composure": 60,
+        "workRate": 58,
+        "aggression": 60,
+        "anticipation": 57,
+        "teamwork": 59,
+        "leadership": 54
+      }
+    },
+    {
+      "name": "صلاح الشربيني",
+      "shortName": "الشربيني",
+      "slug": "shibin-elkom-workers-14",
+      "age": 31,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 48,
+        "longShots": 48,
+        "passing": 60,
+        "vision": 57,
+        "crossing": 50,
+        "dribbling": 47,
+        "firstTouch": 51,
+        "heading": 46,
+        "tackling": 49,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 45,
+        "strength": 46,
+        "stamina": 55,
+        "agility": 49,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 51,
+        "composure": 50,
+        "workRate": 50,
+        "aggression": 47,
+        "anticipation": 48,
+        "teamwork": 55,
+        "leadership": 46
+      }
+    },
+    {
+      "name": "عادل لطفي",
+      "shortName": "لطفي",
+      "slug": "shibin-elkom-workers-15",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 50,
+        "longShots": 50,
+        "passing": 57,
+        "vision": 65,
+        "crossing": 49,
+        "dribbling": 50,
+        "firstTouch": 57,
+        "heading": 44,
+        "tackling": 51,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 50,
+        "strength": 49,
+        "stamina": 51,
+        "agility": 43,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 46,
+        "decisions": 50,
+        "composure": 47,
+        "workRate": 56,
+        "aggression": 43,
+        "anticipation": 44,
+        "teamwork": 54,
+        "leadership": 53
+      }
+    },
+    {
+      "name": "عماد عفيفي",
+      "shortName": "عفيفي",
+      "slug": "shibin-elkom-workers-16",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 52,
+        "longShots": 47,
+        "passing": 63,
+        "vision": 68,
+        "crossing": 50,
+        "dribbling": 55,
+        "firstTouch": 52,
+        "heading": 46,
+        "tackling": 51,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 53,
+        "strength": 49,
+        "stamina": 58,
+        "agility": 49,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 52,
+        "decisions": 48,
+        "composure": 58,
+        "workRate": 60,
+        "aggression": 51,
+        "anticipation": 52,
+        "teamwork": 60,
+        "leadership": 49
+      }
+    },
+    {
+      "name": "فارس حمدي",
+      "shortName": "حمدي",
+      "slug": "shibin-elkom-workers-17",
+      "age": 20,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 57,
+        "longShots": 49,
+        "passing": 68,
+        "vision": 64,
+        "crossing": 55,
+        "dribbling": 48,
+        "firstTouch": 57,
+        "heading": 49,
+        "tackling": 52,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 55,
+        "strength": 53,
+        "stamina": 59,
+        "agility": 57,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 55,
+        "composure": 54,
+        "workRate": 61,
+        "aggression": 51,
+        "anticipation": 54,
+        "teamwork": 57,
+        "leadership": 52
+      }
+    },
+    {
+      "name": "يوسف سرحان",
+      "shortName": "سرحان",
+      "slug": "shibin-elkom-workers-18",
+      "age": 20,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 62,
+        "longShots": 54,
+        "passing": 62,
+        "vision": 54,
+        "crossing": 51,
+        "dribbling": 57,
+        "firstTouch": 57,
+        "heading": 52,
+        "tackling": 43,
+        "marking": 44
+      },
+      "physical": {
+        "pace": 60,
+        "acceleration": 60,
+        "strength": 49,
+        "stamina": 54,
+        "agility": 55,
+        "jumping": 49
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 56,
+        "composure": 64,
+        "workRate": 51,
+        "aggression": 55,
+        "anticipation": 50,
+        "teamwork": 53,
+        "leadership": 49
+      },
+      "nickname": "الجوكر"
+    },
+    {
+      "name": "عمرو رزق",
+      "shortName": "رزق",
+      "slug": "shibin-elkom-workers-19",
+      "age": 31,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 55,
+        "longShots": 45,
+        "passing": 58,
+        "vision": 50,
+        "crossing": 46,
+        "dribbling": 51,
+        "firstTouch": 48,
+        "heading": 48,
+        "tackling": 42,
+        "marking": 35
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 50,
+        "strength": 48,
+        "stamina": 46,
+        "agility": 49,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 48,
+        "decisions": 45,
+        "composure": 52,
+        "workRate": 45,
+        "aggression": 48,
+        "anticipation": 43,
+        "teamwork": 44,
+        "leadership": 46
+      }
+    },
+    {
+      "name": "نادر مطاوع",
+      "shortName": "مطاوع",
+      "slug": "shibin-elkom-workers-20",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 57,
+        "longShots": 49,
+        "passing": 54,
+        "vision": 47,
+        "crossing": 41,
+        "dribbling": 56,
+        "firstTouch": 53,
+        "heading": 46,
+        "tackling": 38,
+        "marking": 31
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 56,
+        "strength": 41,
+        "stamina": 49,
+        "agility": 39,
+        "jumping": 44
+      },
+      "mental": {
+        "positioning": 42,
+        "decisions": 48,
+        "composure": 50,
+        "workRate": 50,
+        "aggression": 45,
+        "anticipation": 43,
+        "teamwork": 45,
+        "leadership": 43
+      }
+    },
+    {
+      "name": "يوسف قنديل",
+      "shortName": "قنديل",
+      "slug": "shibin-elkom-workers-21",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 57,
+        "longShots": 43,
+        "passing": 47,
+        "vision": 51,
+        "crossing": 43,
+        "dribbling": 50,
+        "firstTouch": 51,
+        "heading": 44,
+        "tackling": 41,
+        "marking": 34
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 47,
+        "strength": 43,
+        "stamina": 48,
+        "agility": 48,
+        "jumping": 43
+      },
+      "mental": {
+        "positioning": 45,
+        "decisions": 48,
+        "composure": 51,
+        "workRate": 43,
+        "aggression": 44,
+        "anticipation": 45,
+        "teamwork": 50,
+        "leadership": 43
+      }
+    }
+  ]
+}

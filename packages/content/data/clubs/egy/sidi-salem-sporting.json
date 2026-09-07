@@ -1,0 +1,949 @@
+{
+  "name": "نادي سيدي سالم",
+  "shortName": "سيدي سالم",
+  "slug": "sidi-salem-sporting",
+  "country": "EGY",
+  "region": "كفر الشيخ",
+  "location": {
+    "lat": 31.2667,
+    "lon": 30.7833
+  },
+  "reputation": 40,
+  "stadium": {
+    "name": "استاد سيدي سالم",
+    "shortName": "سيدي سالم",
+    "slug": "sidi-salem-sporting-stadium",
+    "capacity": 1100,
+    "pitchQuality": 46
+  },
+  "squad": [
+    {
+      "name": "طارق خميس",
+      "shortName": "خميس",
+      "slug": "sidi-salem-sporting-1",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 27,
+        "longShots": 45,
+        "passing": 42,
+        "vision": 48,
+        "crossing": 43,
+        "dribbling": 31,
+        "firstTouch": 46,
+        "heading": 51,
+        "tackling": 35,
+        "marking": 43
+      },
+      "physical": {
+        "pace": 38,
+        "acceleration": 43,
+        "strength": 45,
+        "stamina": 43,
+        "agility": 44,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 41,
+        "composure": 55,
+        "workRate": 46,
+        "aggression": 48,
+        "anticipation": 41,
+        "teamwork": 48,
+        "leadership": 45
+      },
+      "nickname": "الطيارة",
+      "goalkeeping": {
+        "handling": 56,
+        "reflexes": 54,
+        "aerialReach": 52,
+        "distribution": 53,
+        "oneOnOnes": 53
+      }
+    },
+    {
+      "name": "عادل السقا",
+      "shortName": "السقا",
+      "slug": "sidi-salem-sporting-2",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 21,
+        "longShots": 42,
+        "passing": 37,
+        "vision": 42,
+        "crossing": 44,
+        "dribbling": 27,
+        "firstTouch": 41,
+        "heading": 51,
+        "tackling": 27,
+        "marking": 47
+      },
+      "physical": {
+        "pace": 31,
+        "acceleration": 37,
+        "strength": 46,
+        "stamina": 43,
+        "agility": 43,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 41,
+        "decisions": 39,
+        "composure": 41,
+        "workRate": 41,
+        "aggression": 38,
+        "anticipation": 43,
+        "teamwork": 47,
+        "leadership": 38
+      },
+      "goalkeeping": {
+        "handling": 49,
+        "reflexes": 47,
+        "aerialReach": 48,
+        "distribution": 45,
+        "oneOnOnes": 44
+      }
+    },
+    {
+      "name": "أحمد الشناوي",
+      "shortName": "الشناوي",
+      "slug": "sidi-salem-sporting-3",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 22,
+        "longShots": 49,
+        "passing": 39,
+        "vision": 44,
+        "crossing": 41,
+        "dribbling": 30,
+        "firstTouch": 40,
+        "heading": 45,
+        "tackling": 33,
+        "marking": 42
+      },
+      "physical": {
+        "pace": 34,
+        "acceleration": 40,
+        "strength": 46,
+        "stamina": 43,
+        "agility": 41,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 44,
+        "composure": 51,
+        "workRate": 41,
+        "aggression": 40,
+        "anticipation": 41,
+        "teamwork": 40,
+        "leadership": 44
+      },
+      "goalkeeping": {
+        "handling": 53,
+        "reflexes": 48,
+        "aerialReach": 46,
+        "distribution": 53,
+        "oneOnOnes": 49
+      }
+    },
+    {
+      "name": "هيثم الحلواني",
+      "shortName": "الحلواني",
+      "slug": "sidi-salem-sporting-4",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 35,
+        "longShots": 49,
+        "passing": 38,
+        "vision": 41,
+        "crossing": 44,
+        "dribbling": 44,
+        "firstTouch": 46,
+        "heading": 56,
+        "tackling": 53,
+        "marking": 52
+      },
+      "physical": {
+        "pace": 55,
+        "acceleration": 50,
+        "strength": 51,
+        "stamina": 41,
+        "agility": 50,
+        "jumping": 46
+      },
+      "mental": {
+        "positioning": 50,
+        "decisions": 41,
+        "composure": 45,
+        "workRate": 43,
+        "aggression": 44,
+        "anticipation": 47,
+        "teamwork": 49,
+        "leadership": 43
+      }
+    },
+    {
+      "name": "كريم عثمان",
+      "shortName": "عثمان",
+      "slug": "sidi-salem-sporting-5",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 26,
+        "longShots": 45,
+        "passing": 37,
+        "vision": 38,
+        "crossing": 42,
+        "dribbling": 43,
+        "firstTouch": 45,
+        "heading": 52,
+        "tackling": 51,
+        "marking": 53
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 40,
+        "strength": 53,
+        "stamina": 37,
+        "agility": 41,
+        "jumping": 42
+      },
+      "mental": {
+        "positioning": 48,
+        "decisions": 44,
+        "composure": 38,
+        "workRate": 44,
+        "aggression": 45,
+        "anticipation": 46,
+        "teamwork": 37,
+        "leadership": 38
+      }
+    },
+    {
+      "name": "تامر عفيفي",
+      "shortName": "عفيفي",
+      "slug": "sidi-salem-sporting-6",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 36,
+        "longShots": 50,
+        "passing": 37,
+        "vision": 43,
+        "crossing": 43,
+        "dribbling": 44,
+        "firstTouch": 46,
+        "heading": 58,
+        "tackling": 53,
+        "marking": 54
+      },
+      "physical": {
+        "pace": 55,
+        "acceleration": 47,
+        "strength": 56,
+        "stamina": 47,
+        "agility": 46,
+        "jumping": 46
+      },
+      "mental": {
+        "positioning": 52,
+        "decisions": 42,
+        "composure": 44,
+        "workRate": 44,
+        "aggression": 48,
+        "anticipation": 48,
+        "teamwork": 45,
+        "leadership": 42
+      }
+    },
+    {
+      "name": "رجب لطفي",
+      "shortName": "لطفي",
+      "slug": "sidi-salem-sporting-7",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 33,
+        "longShots": 44,
+        "passing": 42,
+        "vision": 39,
+        "crossing": 47,
+        "dribbling": 47,
+        "firstTouch": 40,
+        "heading": 54,
+        "tackling": 57,
+        "marking": 55
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 39,
+        "strength": 57,
+        "stamina": 47,
+        "agility": 44,
+        "jumping": 49
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 43,
+        "composure": 43,
+        "workRate": 43,
+        "aggression": 47,
+        "anticipation": 45,
+        "teamwork": 44,
+        "leadership": 48
+      },
+      "nickname": "البلدوزر"
+    },
+    {
+      "name": "أحمد الفولي",
+      "shortName": "الفولي",
+      "slug": "sidi-salem-sporting-8",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 30,
+        "longShots": 46,
+        "passing": 40,
+        "vision": 37,
+        "crossing": 44,
+        "dribbling": 38,
+        "firstTouch": 41,
+        "heading": 48,
+        "tackling": 56,
+        "marking": 53
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 41,
+        "strength": 56,
+        "stamina": 44,
+        "agility": 45,
+        "jumping": 39
+      },
+      "mental": {
+        "positioning": 42,
+        "decisions": 42,
+        "composure": 40,
+        "workRate": 41,
+        "aggression": 41,
+        "anticipation": 45,
+        "teamwork": 42,
+        "leadership": 42
+      }
+    },
+    {
+      "name": "سامح عفيفي",
+      "shortName": "عفيفي",
+      "slug": "sidi-salem-sporting-9",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 34,
+        "longShots": 46,
+        "passing": 42,
+        "vision": 33,
+        "crossing": 43,
+        "dribbling": 43,
+        "firstTouch": 45,
+        "heading": 59,
+        "tackling": 56,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 47,
+        "acceleration": 42,
+        "strength": 50,
+        "stamina": 37,
+        "agility": 44,
+        "jumping": 44
+      },
+      "mental": {
+        "positioning": 48,
+        "decisions": 41,
+        "composure": 45,
+        "workRate": 40,
+        "aggression": 37,
+        "anticipation": 38,
+        "teamwork": 41,
+        "leadership": 46
+      }
+    },
+    {
+      "name": "كريم عبدالعال",
+      "shortName": "عبدالعال",
+      "slug": "sidi-salem-sporting-10",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 33,
+        "longShots": 43,
+        "passing": 39,
+        "vision": 33,
+        "crossing": 39,
+        "dribbling": 43,
+        "firstTouch": 42,
+        "heading": 49,
+        "tackling": 49,
+        "marking": 48
+      },
+      "physical": {
+        "pace": 44,
+        "acceleration": 41,
+        "strength": 50,
+        "stamina": 42,
+        "agility": 40,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 41,
+        "composure": 47,
+        "workRate": 43,
+        "aggression": 40,
+        "anticipation": 40,
+        "teamwork": 40,
+        "leadership": 41
+      }
+    },
+    {
+      "name": "هشام منصور",
+      "shortName": "منصور",
+      "slug": "sidi-salem-sporting-11",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 33,
+        "longShots": 50,
+        "passing": 37,
+        "vision": 45,
+        "crossing": 46,
+        "dribbling": 48,
+        "firstTouch": 49,
+        "heading": 56,
+        "tackling": 51,
+        "marking": 48
+      },
+      "physical": {
+        "pace": 51,
+        "acceleration": 47,
+        "strength": 51,
+        "stamina": 43,
+        "agility": 42,
+        "jumping": 46
+      },
+      "mental": {
+        "positioning": 50,
+        "decisions": 43,
+        "composure": 49,
+        "workRate": 44,
+        "aggression": 44,
+        "anticipation": 49,
+        "teamwork": 47,
+        "leadership": 38
+      }
+    },
+    {
+      "name": "حسن الجزار",
+      "shortName": "الجزار",
+      "slug": "sidi-salem-sporting-12",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 38,
+        "longShots": 42,
+        "passing": 44,
+        "vision": 47,
+        "crossing": 40,
+        "dribbling": 40,
+        "firstTouch": 37,
+        "heading": 39,
+        "tackling": 41,
+        "marking": 39
+      },
+      "physical": {
+        "pace": 41,
+        "acceleration": 42,
+        "strength": 41,
+        "stamina": 45,
+        "agility": 41,
+        "jumping": 39
+      },
+      "mental": {
+        "positioning": 36,
+        "decisions": 35,
+        "composure": 36,
+        "workRate": 43,
+        "aggression": 39,
+        "anticipation": 41,
+        "teamwork": 46,
+        "leadership": 43
+      }
+    },
+    {
+      "name": "هشام الديب",
+      "shortName": "الديب",
+      "slug": "sidi-salem-sporting-13",
+      "age": 29,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 35,
+        "longShots": 43,
+        "passing": 41,
+        "vision": 48,
+        "crossing": 39,
+        "dribbling": 34,
+        "firstTouch": 37,
+        "heading": 41,
+        "tackling": 40,
+        "marking": 40
+      },
+      "physical": {
+        "pace": 42,
+        "acceleration": 39,
+        "strength": 44,
+        "stamina": 46,
+        "agility": 38,
+        "jumping": 36
+      },
+      "mental": {
+        "positioning": 40,
+        "decisions": 41,
+        "composure": 43,
+        "workRate": 40,
+        "aggression": 38,
+        "anticipation": 40,
+        "teamwork": 44,
+        "leadership": 41
+      }
+    },
+    {
+      "name": "عصام مطاوع",
+      "shortName": "مطاوع",
+      "slug": "sidi-salem-sporting-14",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 38,
+        "longShots": 42,
+        "passing": 45,
+        "vision": 49,
+        "crossing": 43,
+        "dribbling": 47,
+        "firstTouch": 43,
+        "heading": 40,
+        "tackling": 37,
+        "marking": 43
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 40,
+        "strength": 47,
+        "stamina": 49,
+        "agility": 47,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 42,
+        "decisions": 43,
+        "composure": 38,
+        "workRate": 49,
+        "aggression": 41,
+        "anticipation": 40,
+        "teamwork": 45,
+        "leadership": 44
+      }
+    },
+    {
+      "name": "عادل نصار",
+      "shortName": "نصار",
+      "slug": "sidi-salem-sporting-15",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 48,
+        "longShots": 46,
+        "passing": 44,
+        "vision": 45,
+        "crossing": 42,
+        "dribbling": 38,
+        "firstTouch": 43,
+        "heading": 41,
+        "tackling": 39,
+        "marking": 42
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 39,
+        "strength": 49,
+        "stamina": 48,
+        "agility": 44,
+        "jumping": 46
+      },
+      "mental": {
+        "positioning": 44,
+        "decisions": 45,
+        "composure": 43,
+        "workRate": 52,
+        "aggression": 41,
+        "anticipation": 45,
+        "teamwork": 49,
+        "leadership": 42
+      }
+    },
+    {
+      "name": "أنس منصور",
+      "shortName": "منصور",
+      "slug": "sidi-salem-sporting-16",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 34,
+        "longShots": 40,
+        "passing": 42,
+        "vision": 37,
+        "crossing": 32,
+        "dribbling": 40,
+        "firstTouch": 40,
+        "heading": 37,
+        "tackling": 38,
+        "marking": 37
+      },
+      "physical": {
+        "pace": 40,
+        "acceleration": 37,
+        "strength": 40,
+        "stamina": 45,
+        "agility": 37,
+        "jumping": 36
+      },
+      "mental": {
+        "positioning": 36,
+        "decisions": 38,
+        "composure": 37,
+        "workRate": 38,
+        "aggression": 38,
+        "anticipation": 43,
+        "teamwork": 42,
+        "leadership": 32
+      }
+    },
+    {
+      "name": "نادر بركات",
+      "shortName": "بركات",
+      "slug": "sidi-salem-sporting-17",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 49,
+        "passing": 51,
+        "vision": 53,
+        "crossing": 40,
+        "dribbling": 46,
+        "firstTouch": 48,
+        "heading": 44,
+        "tackling": 49,
+        "marking": 43
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 43,
+        "strength": 49,
+        "stamina": 46,
+        "agility": 42,
+        "jumping": 39
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 42,
+        "composure": 42,
+        "workRate": 49,
+        "aggression": 43,
+        "anticipation": 40,
+        "teamwork": 48,
+        "leadership": 49
+      },
+      "nickname": "البلدوزر"
+    },
+    {
+      "name": "كريم سويلم",
+      "shortName": "سويلم",
+      "slug": "sidi-salem-sporting-18",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 41,
+        "passing": 35,
+        "vision": 43,
+        "crossing": 32,
+        "dribbling": 47,
+        "firstTouch": 38,
+        "heading": 35,
+        "tackling": 25,
+        "marking": 26
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 46,
+        "strength": 37,
+        "stamina": 33,
+        "agility": 36,
+        "jumping": 42
+      },
+      "mental": {
+        "positioning": 36,
+        "decisions": 36,
+        "composure": 45,
+        "workRate": 38,
+        "aggression": 36,
+        "anticipation": 32,
+        "teamwork": 40,
+        "leadership": 40
+      }
+    },
+    {
+      "name": "شريف قنديل",
+      "shortName": "قنديل",
+      "slug": "sidi-salem-sporting-19",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 43,
+        "passing": 33,
+        "vision": 32,
+        "crossing": 32,
+        "dribbling": 44,
+        "firstTouch": 39,
+        "heading": 42,
+        "tackling": 27,
+        "marking": 24
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 36,
+        "strength": 35,
+        "stamina": 36,
+        "agility": 36,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 37,
+        "decisions": 39,
+        "composure": 41,
+        "workRate": 40,
+        "aggression": 35,
+        "anticipation": 36,
+        "teamwork": 33,
+        "leadership": 33
+      }
+    },
+    {
+      "name": "حسين عفيفي",
+      "shortName": "عفيفي",
+      "slug": "sidi-salem-sporting-20",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 45,
+        "longShots": 33,
+        "passing": 29,
+        "vision": 36,
+        "crossing": 33,
+        "dribbling": 40,
+        "firstTouch": 30,
+        "heading": 41,
+        "tackling": 18,
+        "marking": 21
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 40,
+        "strength": 37,
+        "stamina": 33,
+        "agility": 29,
+        "jumping": 36
+      },
+      "mental": {
+        "positioning": 29,
+        "decisions": 32,
+        "composure": 32,
+        "workRate": 36,
+        "aggression": 38,
+        "anticipation": 31,
+        "teamwork": 28,
+        "leadership": 33
+      },
+      "nickname": "المايسترو"
+    },
+    {
+      "name": "محمود عثمان",
+      "shortName": "عثمان",
+      "slug": "sidi-salem-sporting-21",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 47,
+        "longShots": 41,
+        "passing": 31,
+        "vision": 33,
+        "crossing": 36,
+        "dribbling": 36,
+        "firstTouch": 33,
+        "heading": 37,
+        "tackling": 19,
+        "marking": 27
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 43,
+        "strength": 37,
+        "stamina": 39,
+        "agility": 37,
+        "jumping": 37
+      },
+      "mental": {
+        "positioning": 37,
+        "decisions": 31,
+        "composure": 41,
+        "workRate": 35,
+        "aggression": 33,
+        "anticipation": 32,
+        "teamwork": 33,
+        "leadership": 31
+      }
+    }
+  ]
+}

@@ -1,0 +1,948 @@
+{
+  "name": "اتحاد ببا",
+  "shortName": "ببا",
+  "slug": "biba-union",
+  "country": "EGY",
+  "region": "بني سويف",
+  "location": {
+    "lat": 28.9236,
+    "lon": 30.9822
+  },
+  "reputation": 36,
+  "stadium": {
+    "name": "ملعب ببا البلدي",
+    "shortName": "ببا",
+    "slug": "biba-union-stadium",
+    "capacity": 950,
+    "pitchQuality": 43
+  },
+  "squad": [
+    {
+      "name": "سامح شلبي",
+      "shortName": "شلبي",
+      "slug": "biba-union-1",
+      "age": 29,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 18,
+        "longShots": 32,
+        "passing": 38,
+        "vision": 36,
+        "crossing": 35,
+        "dribbling": 26,
+        "firstTouch": 39,
+        "heading": 41,
+        "tackling": 36,
+        "marking": 45
+      },
+      "physical": {
+        "pace": 25,
+        "acceleration": 40,
+        "strength": 34,
+        "stamina": 41,
+        "agility": 42,
+        "jumping": 37
+      },
+      "mental": {
+        "positioning": 45,
+        "decisions": 40,
+        "composure": 44,
+        "workRate": 33,
+        "aggression": 42,
+        "anticipation": 36,
+        "teamwork": 38,
+        "leadership": 38
+      },
+      "goalkeeping": {
+        "handling": 45,
+        "reflexes": 43,
+        "aerialReach": 44,
+        "distribution": 48,
+        "oneOnOnes": 48
+      }
+    },
+    {
+      "name": "عصام دياب",
+      "shortName": "دياب",
+      "slug": "biba-union-2",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 21,
+        "longShots": 44,
+        "passing": 39,
+        "vision": 44,
+        "crossing": 40,
+        "dribbling": 28,
+        "firstTouch": 42,
+        "heading": 41,
+        "tackling": 40,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 25,
+        "acceleration": 37,
+        "strength": 38,
+        "stamina": 46,
+        "agility": 37,
+        "jumping": 39
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 41,
+        "composure": 45,
+        "workRate": 44,
+        "aggression": 49,
+        "anticipation": 42,
+        "teamwork": 43,
+        "leadership": 44
+      },
+      "nickname": "الدينامو",
+      "goalkeeping": {
+        "handling": 53,
+        "reflexes": 48,
+        "aerialReach": 49,
+        "distribution": 49,
+        "oneOnOnes": 49
+      }
+    },
+    {
+      "name": "مصطفى سويلم",
+      "shortName": "سويلم",
+      "slug": "biba-union-3",
+      "age": 27,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 19,
+        "longShots": 38,
+        "passing": 37,
+        "vision": 40,
+        "crossing": 37,
+        "dribbling": 24,
+        "firstTouch": 35,
+        "heading": 36,
+        "tackling": 33,
+        "marking": 44
+      },
+      "physical": {
+        "pace": 23,
+        "acceleration": 37,
+        "strength": 41,
+        "stamina": 45,
+        "agility": 39,
+        "jumping": 39
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 35,
+        "composure": 49,
+        "workRate": 37,
+        "aggression": 40,
+        "anticipation": 42,
+        "teamwork": 38,
+        "leadership": 42
+      },
+      "goalkeeping": {
+        "handling": 43,
+        "reflexes": 44,
+        "aerialReach": 47,
+        "distribution": 43,
+        "oneOnOnes": 43
+      }
+    },
+    {
+      "name": "تامر سويلم",
+      "shortName": "سويلم",
+      "slug": "biba-union-4",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 31,
+        "longShots": 41,
+        "passing": 45,
+        "vision": 35,
+        "crossing": 36,
+        "dribbling": 41,
+        "firstTouch": 37,
+        "heading": 48,
+        "tackling": 53,
+        "marking": 62
+      },
+      "physical": {
+        "pace": 44,
+        "acceleration": 38,
+        "strength": 42,
+        "stamina": 47,
+        "agility": 39,
+        "jumping": 42
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 42,
+        "composure": 42,
+        "workRate": 40,
+        "aggression": 42,
+        "anticipation": 41,
+        "teamwork": 40,
+        "leadership": 41
+      }
+    },
+    {
+      "name": "عمر عبدالعال",
+      "shortName": "عبدالعال",
+      "slug": "biba-union-5",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 31,
+        "longShots": 41,
+        "passing": 37,
+        "vision": 39,
+        "crossing": 40,
+        "dribbling": 36,
+        "firstTouch": 37,
+        "heading": 45,
+        "tackling": 55,
+        "marking": 52
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 42,
+        "strength": 50,
+        "stamina": 38,
+        "agility": 38,
+        "jumping": 35
+      },
+      "mental": {
+        "positioning": 52,
+        "decisions": 39,
+        "composure": 40,
+        "workRate": 43,
+        "aggression": 45,
+        "anticipation": 37,
+        "teamwork": 45,
+        "leadership": 41
+      }
+    },
+    {
+      "name": "شادي قابيل",
+      "shortName": "قابيل",
+      "slug": "biba-union-6",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 28,
+        "longShots": 39,
+        "passing": 41,
+        "vision": 35,
+        "crossing": 41,
+        "dribbling": 35,
+        "firstTouch": 36,
+        "heading": 49,
+        "tackling": 55,
+        "marking": 56
+      },
+      "physical": {
+        "pace": 41,
+        "acceleration": 42,
+        "strength": 47,
+        "stamina": 37,
+        "agility": 42,
+        "jumping": 43
+      },
+      "mental": {
+        "positioning": 44,
+        "decisions": 37,
+        "composure": 44,
+        "workRate": 39,
+        "aggression": 41,
+        "anticipation": 36,
+        "teamwork": 37,
+        "leadership": 42
+      }
+    },
+    {
+      "name": "خالد فرغلي",
+      "shortName": "فرغلي",
+      "slug": "biba-union-7",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 38,
+        "longShots": 42,
+        "passing": 39,
+        "vision": 35,
+        "crossing": 41,
+        "dribbling": 40,
+        "firstTouch": 43,
+        "heading": 49,
+        "tackling": 61,
+        "marking": 56
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 40,
+        "strength": 48,
+        "stamina": 38,
+        "agility": 41,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 44,
+        "composure": 42,
+        "workRate": 39,
+        "aggression": 41,
+        "anticipation": 46,
+        "teamwork": 37,
+        "leadership": 39
+      }
+    },
+    {
+      "name": "طارق حمدي",
+      "shortName": "حمدي",
+      "slug": "biba-union-8",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 32,
+        "longShots": 46,
+        "passing": 40,
+        "vision": 40,
+        "crossing": 49,
+        "dribbling": 35,
+        "firstTouch": 45,
+        "heading": 46,
+        "tackling": 60,
+        "marking": 58
+      },
+      "physical": {
+        "pace": 44,
+        "acceleration": 48,
+        "strength": 43,
+        "stamina": 40,
+        "agility": 42,
+        "jumping": 39
+      },
+      "mental": {
+        "positioning": 50,
+        "decisions": 43,
+        "composure": 45,
+        "workRate": 45,
+        "aggression": 44,
+        "anticipation": 45,
+        "teamwork": 44,
+        "leadership": 45
+      }
+    },
+    {
+      "name": "باسم العجمي",
+      "shortName": "العجمي",
+      "slug": "biba-union-9",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 25,
+        "longShots": 38,
+        "passing": 41,
+        "vision": 30,
+        "crossing": 37,
+        "dribbling": 36,
+        "firstTouch": 37,
+        "heading": 45,
+        "tackling": 49,
+        "marking": 56
+      },
+      "physical": {
+        "pace": 37,
+        "acceleration": 41,
+        "strength": 44,
+        "stamina": 41,
+        "agility": 38,
+        "jumping": 42
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 33,
+        "composure": 39,
+        "workRate": 36,
+        "aggression": 42,
+        "anticipation": 41,
+        "teamwork": 31,
+        "leadership": 40
+      }
+    },
+    {
+      "name": "حسن السقا",
+      "shortName": "السقا",
+      "slug": "biba-union-10",
+      "age": 30,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 27,
+        "longShots": 37,
+        "passing": 34,
+        "vision": 32,
+        "crossing": 38,
+        "dribbling": 32,
+        "firstTouch": 39,
+        "heading": 48,
+        "tackling": 54,
+        "marking": 52
+      },
+      "physical": {
+        "pace": 36,
+        "acceleration": 40,
+        "strength": 46,
+        "stamina": 38,
+        "agility": 41,
+        "jumping": 39
+      },
+      "mental": {
+        "positioning": 48,
+        "decisions": 41,
+        "composure": 35,
+        "workRate": 40,
+        "aggression": 39,
+        "anticipation": 36,
+        "teamwork": 37,
+        "leadership": 38
+      }
+    },
+    {
+      "name": "بلال عوض",
+      "shortName": "عوض",
+      "slug": "biba-union-11",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 28,
+        "longShots": 42,
+        "passing": 40,
+        "vision": 32,
+        "crossing": 35,
+        "dribbling": 34,
+        "firstTouch": 41,
+        "heading": 48,
+        "tackling": 58,
+        "marking": 54
+      },
+      "physical": {
+        "pace": 35,
+        "acceleration": 36,
+        "strength": 46,
+        "stamina": 36,
+        "agility": 36,
+        "jumping": 41
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 39,
+        "composure": 35,
+        "workRate": 38,
+        "aggression": 43,
+        "anticipation": 41,
+        "teamwork": 43,
+        "leadership": 33
+      }
+    },
+    {
+      "name": "عمرو رزق",
+      "shortName": "رزق",
+      "slug": "biba-union-12",
+      "age": 31,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 33,
+        "longShots": 39,
+        "passing": 43,
+        "vision": 45,
+        "crossing": 33,
+        "dribbling": 37,
+        "firstTouch": 35,
+        "heading": 36,
+        "tackling": 38,
+        "marking": 40
+      },
+      "physical": {
+        "pace": 35,
+        "acceleration": 34,
+        "strength": 36,
+        "stamina": 37,
+        "agility": 31,
+        "jumping": 38
+      },
+      "mental": {
+        "positioning": 41,
+        "decisions": 37,
+        "composure": 33,
+        "workRate": 45,
+        "aggression": 40,
+        "anticipation": 38,
+        "teamwork": 43,
+        "leadership": 37
+      }
+    },
+    {
+      "name": "عبدالله بدوي",
+      "shortName": "بدوي",
+      "slug": "biba-union-13",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 41,
+        "longShots": 32,
+        "passing": 41,
+        "vision": 37,
+        "crossing": 33,
+        "dribbling": 32,
+        "firstTouch": 31,
+        "heading": 31,
+        "tackling": 42,
+        "marking": 46
+      },
+      "physical": {
+        "pace": 40,
+        "acceleration": 35,
+        "strength": 29,
+        "stamina": 41,
+        "agility": 36,
+        "jumping": 30
+      },
+      "mental": {
+        "positioning": 41,
+        "decisions": 37,
+        "composure": 36,
+        "workRate": 47,
+        "aggression": 37,
+        "anticipation": 39,
+        "teamwork": 37,
+        "leadership": 36
+      },
+      "nickname": "السد العالي"
+    },
+    {
+      "name": "محمود شلبي",
+      "shortName": "شلبي",
+      "slug": "biba-union-14",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 39,
+        "longShots": 30,
+        "passing": 44,
+        "vision": 39,
+        "crossing": 39,
+        "dribbling": 29,
+        "firstTouch": 36,
+        "heading": 31,
+        "tackling": 44,
+        "marking": 38
+      },
+      "physical": {
+        "pace": 35,
+        "acceleration": 31,
+        "strength": 31,
+        "stamina": 39,
+        "agility": 32,
+        "jumping": 36
+      },
+      "mental": {
+        "positioning": 32,
+        "decisions": 35,
+        "composure": 35,
+        "workRate": 35,
+        "aggression": 32,
+        "anticipation": 34,
+        "teamwork": 33,
+        "leadership": 28
+      }
+    },
+    {
+      "name": "شادي دياب",
+      "shortName": "دياب",
+      "slug": "biba-union-15",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 41,
+        "longShots": 37,
+        "passing": 45,
+        "vision": 47,
+        "crossing": 37,
+        "dribbling": 34,
+        "firstTouch": 38,
+        "heading": 31,
+        "tackling": 38,
+        "marking": 38
+      },
+      "physical": {
+        "pace": 37,
+        "acceleration": 31,
+        "strength": 36,
+        "stamina": 46,
+        "agility": 35,
+        "jumping": 41
+      },
+      "mental": {
+        "positioning": 40,
+        "decisions": 37,
+        "composure": 38,
+        "workRate": 44,
+        "aggression": 41,
+        "anticipation": 36,
+        "teamwork": 38,
+        "leadership": 36
+      }
+    },
+    {
+      "name": "حسين قابيل",
+      "shortName": "قابيل",
+      "slug": "biba-union-16",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 35,
+        "longShots": 42,
+        "passing": 44,
+        "vision": 43,
+        "crossing": 37,
+        "dribbling": 37,
+        "firstTouch": 36,
+        "heading": 29,
+        "tackling": 48,
+        "marking": 48
+      },
+      "physical": {
+        "pace": 33,
+        "acceleration": 36,
+        "strength": 42,
+        "stamina": 47,
+        "agility": 34,
+        "jumping": 36
+      },
+      "mental": {
+        "positioning": 41,
+        "decisions": 36,
+        "composure": 41,
+        "workRate": 46,
+        "aggression": 38,
+        "anticipation": 37,
+        "teamwork": 47,
+        "leadership": 37
+      }
+    },
+    {
+      "name": "عمرو سويلم",
+      "shortName": "سويلم",
+      "slug": "biba-union-17",
+      "age": 27,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 34,
+        "longShots": 39,
+        "passing": 48,
+        "vision": 41,
+        "crossing": 34,
+        "dribbling": 30,
+        "firstTouch": 37,
+        "heading": 30,
+        "tackling": 48,
+        "marking": 46
+      },
+      "physical": {
+        "pace": 39,
+        "acceleration": 32,
+        "strength": 41,
+        "stamina": 39,
+        "agility": 38,
+        "jumping": 36
+      },
+      "mental": {
+        "positioning": 41,
+        "decisions": 35,
+        "composure": 37,
+        "workRate": 41,
+        "aggression": 40,
+        "anticipation": 37,
+        "teamwork": 40,
+        "leadership": 38
+      }
+    },
+    {
+      "name": "عصام منصور",
+      "shortName": "منصور",
+      "slug": "biba-union-18",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 49,
+        "longShots": 34,
+        "passing": 38,
+        "vision": 37,
+        "crossing": 37,
+        "dribbling": 41,
+        "firstTouch": 44,
+        "heading": 37,
+        "tackling": 34,
+        "marking": 37
+      },
+      "physical": {
+        "pace": 44,
+        "acceleration": 48,
+        "strength": 38,
+        "stamina": 39,
+        "agility": 40,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 38,
+        "decisions": 36,
+        "composure": 39,
+        "workRate": 42,
+        "aggression": 42,
+        "anticipation": 37,
+        "teamwork": 39,
+        "leadership": 38
+      },
+      "nickname": "الجدار"
+    },
+    {
+      "name": "أنس رزق",
+      "shortName": "رزق",
+      "slug": "biba-union-19",
+      "age": 29,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 42,
+        "longShots": 31,
+        "passing": 37,
+        "vision": 39,
+        "crossing": 36,
+        "dribbling": 38,
+        "firstTouch": 36,
+        "heading": 31,
+        "tackling": 28,
+        "marking": 32
+      },
+      "physical": {
+        "pace": 42,
+        "acceleration": 40,
+        "strength": 37,
+        "stamina": 37,
+        "agility": 37,
+        "jumping": 31
+      },
+      "mental": {
+        "positioning": 41,
+        "decisions": 31,
+        "composure": 40,
+        "workRate": 32,
+        "aggression": 40,
+        "anticipation": 35,
+        "teamwork": 37,
+        "leadership": 32
+      }
+    },
+    {
+      "name": "شادي عفيفي",
+      "shortName": "عفيفي",
+      "slug": "biba-union-20",
+      "age": 27,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 42,
+        "longShots": 36,
+        "passing": 30,
+        "vision": 33,
+        "crossing": 36,
+        "dribbling": 32,
+        "firstTouch": 31,
+        "heading": 31,
+        "tackling": 28,
+        "marking": 29
+      },
+      "physical": {
+        "pace": 35,
+        "acceleration": 39,
+        "strength": 29,
+        "stamina": 39,
+        "agility": 31,
+        "jumping": 36
+      },
+      "mental": {
+        "positioning": 37,
+        "decisions": 31,
+        "composure": 33,
+        "workRate": 34,
+        "aggression": 38,
+        "anticipation": 30,
+        "teamwork": 35,
+        "leadership": 29
+      }
+    },
+    {
+      "name": "هيثم بدوي",
+      "shortName": "بدوي",
+      "slug": "biba-union-21",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 27,
+        "passing": 33,
+        "vision": 31,
+        "crossing": 29,
+        "dribbling": 33,
+        "firstTouch": 30,
+        "heading": 32,
+        "tackling": 26,
+        "marking": 27
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 35,
+        "strength": 30,
+        "stamina": 35,
+        "agility": 35,
+        "jumping": 28
+      },
+      "mental": {
+        "positioning": 38,
+        "decisions": 30,
+        "composure": 37,
+        "workRate": 30,
+        "aggression": 32,
+        "anticipation": 33,
+        "teamwork": 33,
+        "leadership": 36
+      }
+    }
+  ]
+}

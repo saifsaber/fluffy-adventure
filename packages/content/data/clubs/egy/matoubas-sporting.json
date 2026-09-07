@@ -1,0 +1,950 @@
+{
+  "name": "نادي مطوبس الرياضي",
+  "shortName": "مطوبس",
+  "slug": "matoubas-sporting",
+  "country": "EGY",
+  "region": "كفر الشيخ",
+  "location": {
+    "lat": 31.2667,
+    "lon": 30.8333
+  },
+  "reputation": 41,
+  "stadium": {
+    "name": "استاد مطوبس البلدي",
+    "shortName": "مطوبس",
+    "slug": "matoubas-sporting-stadium",
+    "capacity": 1500,
+    "pitchQuality": 48
+  },
+  "squad": [
+    {
+      "name": "رمضان الحلواني",
+      "shortName": "الحلواني",
+      "slug": "matoubas-sporting-1",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 23,
+        "longShots": 51,
+        "passing": 40,
+        "vision": 47,
+        "crossing": 40,
+        "dribbling": 31,
+        "firstTouch": 39,
+        "heading": 50,
+        "tackling": 31,
+        "marking": 43
+      },
+      "physical": {
+        "pace": 37,
+        "acceleration": 47,
+        "strength": 45,
+        "stamina": 44,
+        "agility": 42,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 52,
+        "decisions": 40,
+        "composure": 51,
+        "workRate": 44,
+        "aggression": 50,
+        "anticipation": 40,
+        "teamwork": 45,
+        "leadership": 41
+      },
+      "nickname": "الحريف",
+      "goalkeeping": {
+        "handling": 50,
+        "reflexes": 51,
+        "aerialReach": 48,
+        "distribution": 52,
+        "oneOnOnes": 55
+      }
+    },
+    {
+      "name": "هشام قنديل",
+      "shortName": "قنديل",
+      "slug": "matoubas-sporting-2",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 21,
+        "longShots": 42,
+        "passing": 39,
+        "vision": 41,
+        "crossing": 45,
+        "dribbling": 30,
+        "firstTouch": 46,
+        "heading": 49,
+        "tackling": 30,
+        "marking": 41
+      },
+      "physical": {
+        "pace": 36,
+        "acceleration": 40,
+        "strength": 41,
+        "stamina": 47,
+        "agility": 42,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 48,
+        "composure": 51,
+        "workRate": 42,
+        "aggression": 42,
+        "anticipation": 45,
+        "teamwork": 39,
+        "leadership": 42
+      },
+      "goalkeeping": {
+        "handling": 54,
+        "reflexes": 51,
+        "aerialReach": 46,
+        "distribution": 49,
+        "oneOnOnes": 55
+      }
+    },
+    {
+      "name": "عادل هلال",
+      "shortName": "هلال",
+      "slug": "matoubas-sporting-3",
+      "age": 29,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 29,
+        "longShots": 47,
+        "passing": 44,
+        "vision": 48,
+        "crossing": 45,
+        "dribbling": 27,
+        "firstTouch": 43,
+        "heading": 47,
+        "tackling": 32,
+        "marking": 44
+      },
+      "physical": {
+        "pace": 40,
+        "acceleration": 41,
+        "strength": 54,
+        "stamina": 43,
+        "agility": 44,
+        "jumping": 47
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 43,
+        "composure": 48,
+        "workRate": 48,
+        "aggression": 44,
+        "anticipation": 45,
+        "teamwork": 41,
+        "leadership": 43
+      },
+      "goalkeeping": {
+        "handling": 49,
+        "reflexes": 51,
+        "aerialReach": 54,
+        "distribution": 49,
+        "oneOnOnes": 50
+      }
+    },
+    {
+      "name": "عماد بدوي",
+      "shortName": "بدوي",
+      "slug": "matoubas-sporting-4",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 49,
+        "passing": 46,
+        "vision": 45,
+        "crossing": 51,
+        "dribbling": 52,
+        "firstTouch": 47,
+        "heading": 55,
+        "tackling": 54,
+        "marking": 62
+      },
+      "physical": {
+        "pace": 57,
+        "acceleration": 50,
+        "strength": 62,
+        "stamina": 50,
+        "agility": 52,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 52,
+        "composure": 50,
+        "workRate": 44,
+        "aggression": 51,
+        "anticipation": 54,
+        "teamwork": 45,
+        "leadership": 53
+      }
+    },
+    {
+      "name": "رمضان الطوخي",
+      "shortName": "الطوخي",
+      "slug": "matoubas-sporting-5",
+      "age": 29,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 30,
+        "longShots": 41,
+        "passing": 41,
+        "vision": 38,
+        "crossing": 38,
+        "dribbling": 46,
+        "firstTouch": 41,
+        "heading": 56,
+        "tackling": 50,
+        "marking": 47
+      },
+      "physical": {
+        "pace": 47,
+        "acceleration": 40,
+        "strength": 49,
+        "stamina": 38,
+        "agility": 45,
+        "jumping": 44
+      },
+      "mental": {
+        "positioning": 46,
+        "decisions": 42,
+        "composure": 39,
+        "workRate": 40,
+        "aggression": 44,
+        "anticipation": 37,
+        "teamwork": 41,
+        "leadership": 39
+      }
+    },
+    {
+      "name": "أيمن غنيم",
+      "shortName": "غنيم",
+      "slug": "matoubas-sporting-6",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 33,
+        "longShots": 47,
+        "passing": 45,
+        "vision": 34,
+        "crossing": 39,
+        "dribbling": 45,
+        "firstTouch": 40,
+        "heading": 56,
+        "tackling": 52,
+        "marking": 56
+      },
+      "physical": {
+        "pace": 44,
+        "acceleration": 43,
+        "strength": 55,
+        "stamina": 50,
+        "agility": 42,
+        "jumping": 42
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 44,
+        "composure": 47,
+        "workRate": 48,
+        "aggression": 42,
+        "anticipation": 42,
+        "teamwork": 40,
+        "leadership": 41
+      },
+      "nickname": "الفنان"
+    },
+    {
+      "name": "خالد العجمي",
+      "shortName": "العجمي",
+      "slug": "matoubas-sporting-7",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 36,
+        "longShots": 48,
+        "passing": 43,
+        "vision": 37,
+        "crossing": 41,
+        "dribbling": 38,
+        "firstTouch": 43,
+        "heading": 59,
+        "tackling": 51,
+        "marking": 54
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 45,
+        "strength": 47,
+        "stamina": 44,
+        "agility": 46,
+        "jumping": 47
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 48,
+        "composure": 43,
+        "workRate": 40,
+        "aggression": 44,
+        "anticipation": 49,
+        "teamwork": 38,
+        "leadership": 47
+      }
+    },
+    {
+      "name": "حسن قابيل",
+      "shortName": "قابيل",
+      "slug": "matoubas-sporting-8",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 37,
+        "longShots": 50,
+        "passing": 42,
+        "vision": 41,
+        "crossing": 44,
+        "dribbling": 45,
+        "firstTouch": 46,
+        "heading": 55,
+        "tackling": 58,
+        "marking": 52
+      },
+      "physical": {
+        "pace": 51,
+        "acceleration": 46,
+        "strength": 55,
+        "stamina": 43,
+        "agility": 41,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 53,
+        "decisions": 48,
+        "composure": 43,
+        "workRate": 45,
+        "aggression": 44,
+        "anticipation": 40,
+        "teamwork": 42,
+        "leadership": 46
+      }
+    },
+    {
+      "name": "مروان عفيفي",
+      "shortName": "عفيفي",
+      "slug": "matoubas-sporting-9",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 34,
+        "longShots": 49,
+        "passing": 45,
+        "vision": 34,
+        "crossing": 43,
+        "dribbling": 46,
+        "firstTouch": 43,
+        "heading": 51,
+        "tackling": 50,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 48,
+        "acceleration": 45,
+        "strength": 54,
+        "stamina": 44,
+        "agility": 45,
+        "jumping": 43
+      },
+      "mental": {
+        "positioning": 44,
+        "decisions": 46,
+        "composure": 46,
+        "workRate": 46,
+        "aggression": 45,
+        "anticipation": 46,
+        "teamwork": 48,
+        "leadership": 43
+      }
+    },
+    {
+      "name": "شريف غنيم",
+      "shortName": "غنيم",
+      "slug": "matoubas-sporting-10",
+      "age": 35,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 34,
+        "longShots": 47,
+        "passing": 41,
+        "vision": 39,
+        "crossing": 46,
+        "dribbling": 44,
+        "firstTouch": 41,
+        "heading": 52,
+        "tackling": 59,
+        "marking": 47
+      },
+      "physical": {
+        "pace": 47,
+        "acceleration": 43,
+        "strength": 53,
+        "stamina": 43,
+        "agility": 44,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 45,
+        "decisions": 47,
+        "composure": 44,
+        "workRate": 46,
+        "aggression": 46,
+        "anticipation": 45,
+        "teamwork": 48,
+        "leadership": 46
+      }
+    },
+    {
+      "name": "كريم السقا",
+      "shortName": "السقا",
+      "slug": "matoubas-sporting-11",
+      "age": 34,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 38,
+        "longShots": 50,
+        "passing": 41,
+        "vision": 42,
+        "crossing": 44,
+        "dribbling": 43,
+        "firstTouch": 43,
+        "heading": 59,
+        "tackling": 50,
+        "marking": 52
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 44,
+        "strength": 55,
+        "stamina": 46,
+        "agility": 45,
+        "jumping": 47
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 42,
+        "composure": 42,
+        "workRate": 46,
+        "aggression": 44,
+        "anticipation": 46,
+        "teamwork": 48,
+        "leadership": 48
+      }
+    },
+    {
+      "name": "كريم شلبي",
+      "shortName": "شلبي",
+      "slug": "matoubas-sporting-12",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 42,
+        "longShots": 43,
+        "passing": 46,
+        "vision": 43,
+        "crossing": 47,
+        "dribbling": 37,
+        "firstTouch": 40,
+        "heading": 41,
+        "tackling": 43,
+        "marking": 43
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 42,
+        "strength": 42,
+        "stamina": 46,
+        "agility": 42,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 41,
+        "decisions": 43,
+        "composure": 37,
+        "workRate": 42,
+        "aggression": 44,
+        "anticipation": 36,
+        "teamwork": 48,
+        "leadership": 35
+      },
+      "nickname": "الصخرة"
+    },
+    {
+      "name": "إسلام الشاذلي",
+      "shortName": "الشاذلي",
+      "slug": "matoubas-sporting-13",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 36,
+        "longShots": 44,
+        "passing": 41,
+        "vision": 43,
+        "crossing": 40,
+        "dribbling": 44,
+        "firstTouch": 40,
+        "heading": 44,
+        "tackling": 41,
+        "marking": 41
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 40,
+        "strength": 44,
+        "stamina": 50,
+        "agility": 42,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 43,
+        "decisions": 44,
+        "composure": 43,
+        "workRate": 46,
+        "aggression": 37,
+        "anticipation": 41,
+        "teamwork": 46,
+        "leadership": 38
+      },
+      "nickname": "المايسترو"
+    },
+    {
+      "name": "هشام الشناوي",
+      "shortName": "الشناوي",
+      "slug": "matoubas-sporting-14",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 41,
+        "passing": 44,
+        "vision": 49,
+        "crossing": 44,
+        "dribbling": 41,
+        "firstTouch": 39,
+        "heading": 42,
+        "tackling": 43,
+        "marking": 34
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 42,
+        "strength": 46,
+        "stamina": 43,
+        "agility": 35,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 37,
+        "decisions": 39,
+        "composure": 35,
+        "workRate": 45,
+        "aggression": 38,
+        "anticipation": 41,
+        "teamwork": 44,
+        "leadership": 39
+      }
+    },
+    {
+      "name": "مصطفى نصار",
+      "shortName": "نصار",
+      "slug": "matoubas-sporting-15",
+      "age": 19,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 47,
+        "longShots": 44,
+        "passing": 45,
+        "vision": 47,
+        "crossing": 46,
+        "dribbling": 43,
+        "firstTouch": 44,
+        "heading": 42,
+        "tackling": 46,
+        "marking": 40
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 43,
+        "strength": 49,
+        "stamina": 46,
+        "agility": 41,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 46,
+        "decisions": 43,
+        "composure": 46,
+        "workRate": 50,
+        "aggression": 44,
+        "anticipation": 43,
+        "teamwork": 52,
+        "leadership": 42
+      }
+    },
+    {
+      "name": "مروان هلال",
+      "shortName": "هلال",
+      "slug": "matoubas-sporting-16",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 42,
+        "longShots": 46,
+        "passing": 45,
+        "vision": 49,
+        "crossing": 48,
+        "dribbling": 43,
+        "firstTouch": 45,
+        "heading": 45,
+        "tackling": 48,
+        "marking": 42
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 47,
+        "strength": 49,
+        "stamina": 48,
+        "agility": 42,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 41,
+        "decisions": 39,
+        "composure": 41,
+        "workRate": 47,
+        "aggression": 43,
+        "anticipation": 45,
+        "teamwork": 51,
+        "leadership": 43
+      }
+    },
+    {
+      "name": "مينا هلال",
+      "shortName": "هلال",
+      "slug": "matoubas-sporting-17",
+      "age": 33,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 39,
+        "longShots": 39,
+        "passing": 42,
+        "vision": 43,
+        "crossing": 40,
+        "dribbling": 34,
+        "firstTouch": 37,
+        "heading": 39,
+        "tackling": 32,
+        "marking": 35
+      },
+      "physical": {
+        "pace": 41,
+        "acceleration": 36,
+        "strength": 44,
+        "stamina": 42,
+        "agility": 35,
+        "jumping": 35
+      },
+      "mental": {
+        "positioning": 37,
+        "decisions": 38,
+        "composure": 37,
+        "workRate": 40,
+        "aggression": 37,
+        "anticipation": 34,
+        "teamwork": 42,
+        "leadership": 39
+      }
+    },
+    {
+      "name": "حسن مطاوع",
+      "shortName": "مطاوع",
+      "slug": "matoubas-sporting-18",
+      "age": 32,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 52,
+        "longShots": 40,
+        "passing": 36,
+        "vision": 37,
+        "crossing": 46,
+        "dribbling": 47,
+        "firstTouch": 38,
+        "heading": 45,
+        "tackling": 34,
+        "marking": 31
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 51,
+        "strength": 42,
+        "stamina": 40,
+        "agility": 45,
+        "jumping": 40
+      },
+      "mental": {
+        "positioning": 40,
+        "decisions": 41,
+        "composure": 45,
+        "workRate": 38,
+        "aggression": 40,
+        "anticipation": 46,
+        "teamwork": 39,
+        "leadership": 45
+      }
+    },
+    {
+      "name": "أحمد السقا",
+      "shortName": "السقا",
+      "slug": "matoubas-sporting-19",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 45,
+        "longShots": 32,
+        "passing": 28,
+        "vision": 38,
+        "crossing": 33,
+        "dribbling": 39,
+        "firstTouch": 32,
+        "heading": 38,
+        "tackling": 20,
+        "marking": 23
+      },
+      "physical": {
+        "pace": 43,
+        "acceleration": 41,
+        "strength": 38,
+        "stamina": 33,
+        "agility": 33,
+        "jumping": 36
+      },
+      "mental": {
+        "positioning": 30,
+        "decisions": 27,
+        "composure": 37,
+        "workRate": 36,
+        "aggression": 33,
+        "anticipation": 35,
+        "teamwork": 33,
+        "leadership": 36
+      }
+    },
+    {
+      "name": "أحمد الديب",
+      "shortName": "الديب",
+      "slug": "matoubas-sporting-20",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 37,
+        "passing": 30,
+        "vision": 32,
+        "crossing": 36,
+        "dribbling": 39,
+        "firstTouch": 39,
+        "heading": 41,
+        "tackling": 29,
+        "marking": 22
+      },
+      "physical": {
+        "pace": 45,
+        "acceleration": 44,
+        "strength": 36,
+        "stamina": 33,
+        "agility": 37,
+        "jumping": 33
+      },
+      "mental": {
+        "positioning": 35,
+        "decisions": 36,
+        "composure": 38,
+        "workRate": 30,
+        "aggression": 35,
+        "anticipation": 33,
+        "teamwork": 30,
+        "leadership": 39
+      }
+    },
+    {
+      "name": "بيشوي رزق",
+      "shortName": "رزق",
+      "slug": "matoubas-sporting-21",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 38,
+        "passing": 32,
+        "vision": 34,
+        "crossing": 31,
+        "dribbling": 42,
+        "firstTouch": 34,
+        "heading": 44,
+        "tackling": 26,
+        "marking": 23
+      },
+      "physical": {
+        "pace": 46,
+        "acceleration": 39,
+        "strength": 42,
+        "stamina": 40,
+        "agility": 32,
+        "jumping": 31
+      },
+      "mental": {
+        "positioning": 35,
+        "decisions": 34,
+        "composure": 37,
+        "workRate": 33,
+        "aggression": 36,
+        "anticipation": 31,
+        "teamwork": 35,
+        "leadership": 28
+      },
+      "nickname": "البلدوزر"
+    }
+  ]
+}

@@ -1,0 +1,946 @@
+{
+  "name": "السكة الحديد سوهاج",
+  "shortName": "سوهاج",
+  "slug": "sohag-railway",
+  "country": "EGY",
+  "region": "سوهاج",
+  "location": {
+    "lat": 26.5569,
+    "lon": 31.6947
+  },
+  "reputation": 48,
+  "stadium": {
+    "name": "استاد السكة الحديد",
+    "shortName": "سوهاج",
+    "slug": "sohag-railway-stadium",
+    "capacity": 2800,
+    "pitchQuality": 54
+  },
+  "squad": [
+    {
+      "name": "ياسر خميس",
+      "shortName": "خميس",
+      "slug": "sohag-railway-1",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 36,
+        "longShots": 55,
+        "passing": 51,
+        "vision": 52,
+        "crossing": 55,
+        "dribbling": 42,
+        "firstTouch": 55,
+        "heading": 51,
+        "tackling": 45,
+        "marking": 58
+      },
+      "physical": {
+        "pace": 49,
+        "acceleration": 57,
+        "strength": 54,
+        "stamina": 51,
+        "agility": 55,
+        "jumping": 54
+      },
+      "mental": {
+        "positioning": 59,
+        "decisions": 56,
+        "composure": 60,
+        "workRate": 49,
+        "aggression": 54,
+        "anticipation": 59,
+        "teamwork": 59,
+        "leadership": 56
+      },
+      "nickname": "الصاروخ",
+      "goalkeeping": {
+        "handling": 59,
+        "reflexes": 63,
+        "aerialReach": 62,
+        "distribution": 61,
+        "oneOnOnes": 59
+      }
+    },
+    {
+      "name": "طارق الشربيني",
+      "shortName": "الشربيني",
+      "slug": "sohag-railway-2",
+      "age": 17,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "sweeper_keeper"
+      ],
+      "technical": {
+        "finishing": 32,
+        "longShots": 46,
+        "passing": 46,
+        "vision": 54,
+        "crossing": 50,
+        "dribbling": 37,
+        "firstTouch": 51,
+        "heading": 47,
+        "tackling": 36,
+        "marking": 50
+      },
+      "physical": {
+        "pace": 38,
+        "acceleration": 55,
+        "strength": 47,
+        "stamina": 49,
+        "agility": 48,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 61,
+        "decisions": 48,
+        "composure": 52,
+        "workRate": 48,
+        "aggression": 45,
+        "anticipation": 56,
+        "teamwork": 47,
+        "leadership": 49
+      },
+      "goalkeeping": {
+        "handling": 54,
+        "reflexes": 55,
+        "aerialReach": 57,
+        "distribution": 58,
+        "oneOnOnes": 57
+      }
+    },
+    {
+      "name": "إسلام سرحان",
+      "shortName": "سرحان",
+      "slug": "sohag-railway-3",
+      "age": 27,
+      "nationality": "EGY",
+      "positions": [
+        "GK"
+      ],
+      "preferredRoles": [
+        "shot_stopper"
+      ],
+      "technical": {
+        "finishing": 35,
+        "longShots": 56,
+        "passing": 47,
+        "vision": 50,
+        "crossing": 50,
+        "dribbling": 34,
+        "firstTouch": 56,
+        "heading": 50,
+        "tackling": 45,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 53,
+        "acceleration": 57,
+        "strength": 50,
+        "stamina": 56,
+        "agility": 51,
+        "jumping": 52
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 57,
+        "composure": 57,
+        "workRate": 51,
+        "aggression": 49,
+        "anticipation": 57,
+        "teamwork": 58,
+        "leadership": 57
+      },
+      "goalkeeping": {
+        "handling": 60,
+        "reflexes": 61,
+        "aerialReach": 62,
+        "distribution": 62,
+        "oneOnOnes": 55
+      }
+    },
+    {
+      "name": "فتحي رزق",
+      "shortName": "رزق",
+      "slug": "sohag-railway-4",
+      "age": 31,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 42,
+        "longShots": 51,
+        "passing": 50,
+        "vision": 50,
+        "crossing": 53,
+        "dribbling": 49,
+        "firstTouch": 58,
+        "heading": 58,
+        "tackling": 61,
+        "marking": 66
+      },
+      "physical": {
+        "pace": 63,
+        "acceleration": 55,
+        "strength": 65,
+        "stamina": 53,
+        "agility": 51,
+        "jumping": 52
+      },
+      "mental": {
+        "positioning": 52,
+        "decisions": 50,
+        "composure": 54,
+        "workRate": 50,
+        "aggression": 53,
+        "anticipation": 58,
+        "teamwork": 52,
+        "leadership": 51
+      }
+    },
+    {
+      "name": "مينا خميس",
+      "shortName": "خميس",
+      "slug": "sohag-railway-5",
+      "age": 22,
+      "nationality": "EGY",
+      "positions": [
+        "RB"
+      ],
+      "preferredRoles": [
+        "defensive_fullback"
+      ],
+      "technical": {
+        "finishing": 46,
+        "longShots": 53,
+        "passing": 54,
+        "vision": 50,
+        "crossing": 55,
+        "dribbling": 53,
+        "firstTouch": 54,
+        "heading": 60,
+        "tackling": 62,
+        "marking": 62
+      },
+      "physical": {
+        "pace": 63,
+        "acceleration": 60,
+        "strength": 61,
+        "stamina": 51,
+        "agility": 52,
+        "jumping": 53
+      },
+      "mental": {
+        "positioning": 61,
+        "decisions": 54,
+        "composure": 54,
+        "workRate": 47,
+        "aggression": 58,
+        "anticipation": 62,
+        "teamwork": 55,
+        "leadership": 54
+      }
+    },
+    {
+      "name": "مروان شحاتة",
+      "shortName": "شحاتة",
+      "slug": "sohag-railway-6",
+      "age": 33,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "attacking_fullback"
+      ],
+      "technical": {
+        "finishing": 50,
+        "longShots": 58,
+        "passing": 51,
+        "vision": 53,
+        "crossing": 56,
+        "dribbling": 54,
+        "firstTouch": 53,
+        "heading": 62,
+        "tackling": 60,
+        "marking": 58
+      },
+      "physical": {
+        "pace": 62,
+        "acceleration": 63,
+        "strength": 58,
+        "stamina": 52,
+        "agility": 54,
+        "jumping": 51
+      },
+      "mental": {
+        "positioning": 57,
+        "decisions": 56,
+        "composure": 56,
+        "workRate": 50,
+        "aggression": 51,
+        "anticipation": 54,
+        "teamwork": 57,
+        "leadership": 52
+      }
+    },
+    {
+      "name": "طارق منصور",
+      "shortName": "منصور",
+      "slug": "sohag-railway-7",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "LB"
+      ],
+      "preferredRoles": [
+        "inverted_fullback"
+      ],
+      "technical": {
+        "finishing": 46,
+        "longShots": 52,
+        "passing": 52,
+        "vision": 54,
+        "crossing": 53,
+        "dribbling": 58,
+        "firstTouch": 51,
+        "heading": 65,
+        "tackling": 63,
+        "marking": 62
+      },
+      "physical": {
+        "pace": 57,
+        "acceleration": 57,
+        "strength": 63,
+        "stamina": 48,
+        "agility": 50,
+        "jumping": 54
+      },
+      "mental": {
+        "positioning": 55,
+        "decisions": 52,
+        "composure": 58,
+        "workRate": 48,
+        "aggression": 58,
+        "anticipation": 56,
+        "teamwork": 53,
+        "leadership": 54
+      }
+    },
+    {
+      "name": "تامر عبدالعال",
+      "shortName": "عبدالعال",
+      "slug": "sohag-railway-8",
+      "age": 21,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "ball_playing_defender"
+      ],
+      "technical": {
+        "finishing": 44,
+        "longShots": 53,
+        "passing": 44,
+        "vision": 42,
+        "crossing": 50,
+        "dribbling": 46,
+        "firstTouch": 53,
+        "heading": 55,
+        "tackling": 56,
+        "marking": 61
+      },
+      "physical": {
+        "pace": 56,
+        "acceleration": 56,
+        "strength": 50,
+        "stamina": 52,
+        "agility": 44,
+        "jumping": 45
+      },
+      "mental": {
+        "positioning": 54,
+        "decisions": 50,
+        "composure": 44,
+        "workRate": 50,
+        "aggression": 53,
+        "anticipation": 56,
+        "teamwork": 51,
+        "leadership": 51
+      }
+    },
+    {
+      "name": "مروان مطاوع",
+      "shortName": "مطاوع",
+      "slug": "sohag-railway-9",
+      "age": 18,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 41,
+        "longShots": 51,
+        "passing": 50,
+        "vision": 43,
+        "crossing": 56,
+        "dribbling": 47,
+        "firstTouch": 57,
+        "heading": 61,
+        "tackling": 65,
+        "marking": 59
+      },
+      "physical": {
+        "pace": 65,
+        "acceleration": 56,
+        "strength": 54,
+        "stamina": 54,
+        "agility": 49,
+        "jumping": 49
+      },
+      "mental": {
+        "positioning": 58,
+        "decisions": 56,
+        "composure": 56,
+        "workRate": 51,
+        "aggression": 54,
+        "anticipation": 55,
+        "teamwork": 51,
+        "leadership": 57
+      }
+    },
+    {
+      "name": "عادل زهران",
+      "shortName": "زهران",
+      "slug": "sohag-railway-10",
+      "age": 20,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "covering_defender"
+      ],
+      "technical": {
+        "finishing": 43,
+        "longShots": 52,
+        "passing": 59,
+        "vision": 47,
+        "crossing": 60,
+        "dribbling": 50,
+        "firstTouch": 55,
+        "heading": 62,
+        "tackling": 69,
+        "marking": 68
+      },
+      "physical": {
+        "pace": 62,
+        "acceleration": 59,
+        "strength": 60,
+        "stamina": 54,
+        "agility": 53,
+        "jumping": 53
+      },
+      "mental": {
+        "positioning": 59,
+        "decisions": 57,
+        "composure": 56,
+        "workRate": 53,
+        "aggression": 54,
+        "anticipation": 59,
+        "teamwork": 51,
+        "leadership": 52
+      }
+    },
+    {
+      "name": "نادر الجندي",
+      "shortName": "الجندي",
+      "slug": "sohag-railway-11",
+      "age": 24,
+      "nationality": "EGY",
+      "positions": [
+        "CB"
+      ],
+      "preferredRoles": [
+        "stopper"
+      ],
+      "technical": {
+        "finishing": 52,
+        "longShots": 56,
+        "passing": 57,
+        "vision": 45,
+        "crossing": 56,
+        "dribbling": 53,
+        "firstTouch": 56,
+        "heading": 62,
+        "tackling": 59,
+        "marking": 69
+      },
+      "physical": {
+        "pace": 63,
+        "acceleration": 64,
+        "strength": 63,
+        "stamina": 52,
+        "agility": 54,
+        "jumping": 60
+      },
+      "mental": {
+        "positioning": 59,
+        "decisions": 57,
+        "composure": 59,
+        "workRate": 54,
+        "aggression": 55,
+        "anticipation": 64,
+        "teamwork": 62,
+        "leadership": 54
+      }
+    },
+    {
+      "name": "يوسف قابيل",
+      "shortName": "قابيل",
+      "slug": "sohag-railway-12",
+      "age": 26,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "anchor"
+      ],
+      "technical": {
+        "finishing": 55,
+        "longShots": 51,
+        "passing": 55,
+        "vision": 59,
+        "crossing": 55,
+        "dribbling": 48,
+        "firstTouch": 52,
+        "heading": 47,
+        "tackling": 50,
+        "marking": 51
+      },
+      "physical": {
+        "pace": 62,
+        "acceleration": 59,
+        "strength": 54,
+        "stamina": 54,
+        "agility": 53,
+        "jumping": 50
+      },
+      "mental": {
+        "positioning": 49,
+        "decisions": 52,
+        "composure": 52,
+        "workRate": 50,
+        "aggression": 55,
+        "anticipation": 53,
+        "teamwork": 54,
+        "leadership": 54
+      }
+    },
+    {
+      "name": "أيمن سرحان",
+      "shortName": "سرحان",
+      "slug": "sohag-railway-13",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "CDM"
+      ],
+      "preferredRoles": [
+        "ball_winner"
+      ],
+      "technical": {
+        "finishing": 49,
+        "longShots": 47,
+        "passing": 52,
+        "vision": 52,
+        "crossing": 42,
+        "dribbling": 45,
+        "firstTouch": 42,
+        "heading": 38,
+        "tackling": 46,
+        "marking": 47
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 49,
+        "strength": 45,
+        "stamina": 55,
+        "agility": 40,
+        "jumping": 43
+      },
+      "mental": {
+        "positioning": 42,
+        "decisions": 45,
+        "composure": 46,
+        "workRate": 49,
+        "aggression": 44,
+        "anticipation": 47,
+        "teamwork": 51,
+        "leadership": 45
+      }
+    },
+    {
+      "name": "باسم بدوي",
+      "shortName": "بدوي",
+      "slug": "sohag-railway-14",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "box_to_box"
+      ],
+      "technical": {
+        "finishing": 55,
+        "longShots": 51,
+        "passing": 64,
+        "vision": 56,
+        "crossing": 50,
+        "dribbling": 54,
+        "firstTouch": 51,
+        "heading": 42,
+        "tackling": 49,
+        "marking": 53
+      },
+      "physical": {
+        "pace": 60,
+        "acceleration": 59,
+        "strength": 51,
+        "stamina": 57,
+        "agility": 53,
+        "jumping": 50
+      },
+      "mental": {
+        "positioning": 51,
+        "decisions": 49,
+        "composure": 48,
+        "workRate": 54,
+        "aggression": 50,
+        "anticipation": 53,
+        "teamwork": 59,
+        "leadership": 53
+      }
+    },
+    {
+      "name": "هشام الحلواني",
+      "shortName": "الحلواني",
+      "slug": "sohag-railway-15",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "CM"
+      ],
+      "preferredRoles": [
+        "deep_lying_playmaker"
+      ],
+      "technical": {
+        "finishing": 46,
+        "longShots": 49,
+        "passing": 59,
+        "vision": 54,
+        "crossing": 47,
+        "dribbling": 49,
+        "firstTouch": 52,
+        "heading": 42,
+        "tackling": 46,
+        "marking": 45
+      },
+      "physical": {
+        "pace": 50,
+        "acceleration": 49,
+        "strength": 53,
+        "stamina": 56,
+        "agility": 43,
+        "jumping": 52
+      },
+      "mental": {
+        "positioning": 44,
+        "decisions": 49,
+        "composure": 47,
+        "workRate": 51,
+        "aggression": 45,
+        "anticipation": 50,
+        "teamwork": 56,
+        "leadership": 50
+      }
+    },
+    {
+      "name": "عصام عبدربه",
+      "shortName": "عبدربه",
+      "slug": "sohag-railway-16",
+      "age": 31,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "advanced_playmaker"
+      ],
+      "technical": {
+        "finishing": 49,
+        "longShots": 44,
+        "passing": 57,
+        "vision": 56,
+        "crossing": 48,
+        "dribbling": 46,
+        "firstTouch": 44,
+        "heading": 42,
+        "tackling": 41,
+        "marking": 45
+      },
+      "physical": {
+        "pace": 55,
+        "acceleration": 51,
+        "strength": 41,
+        "stamina": 46,
+        "agility": 49,
+        "jumping": 42
+      },
+      "mental": {
+        "positioning": 52,
+        "decisions": 43,
+        "composure": 47,
+        "workRate": 49,
+        "aggression": 41,
+        "anticipation": 56,
+        "teamwork": 46,
+        "leadership": 46
+      }
+    },
+    {
+      "name": "خالد الجندي",
+      "shortName": "الجندي",
+      "slug": "sohag-railway-17",
+      "age": 25,
+      "nationality": "EGY",
+      "positions": [
+        "CAM"
+      ],
+      "preferredRoles": [
+        "shadow_striker"
+      ],
+      "technical": {
+        "finishing": 57,
+        "longShots": 50,
+        "passing": 61,
+        "vision": 57,
+        "crossing": 54,
+        "dribbling": 57,
+        "firstTouch": 47,
+        "heading": 54,
+        "tackling": 53,
+        "marking": 55
+      },
+      "physical": {
+        "pace": 54,
+        "acceleration": 59,
+        "strength": 51,
+        "stamina": 59,
+        "agility": 50,
+        "jumping": 57
+      },
+      "mental": {
+        "positioning": 50,
+        "decisions": 51,
+        "composure": 58,
+        "workRate": 56,
+        "aggression": 47,
+        "anticipation": 57,
+        "teamwork": 53,
+        "leadership": 49
+      }
+    },
+    {
+      "name": "بيشوي الشناوي",
+      "shortName": "الشناوي",
+      "slug": "sohag-railway-18",
+      "age": 23,
+      "nationality": "EGY",
+      "positions": [
+        "RW"
+      ],
+      "preferredRoles": [
+        "inside_forward"
+      ],
+      "technical": {
+        "finishing": 61,
+        "longShots": 46,
+        "passing": 42,
+        "vision": 43,
+        "crossing": 50,
+        "dribbling": 54,
+        "firstTouch": 45,
+        "heading": 45,
+        "tackling": 34,
+        "marking": 37
+      },
+      "physical": {
+        "pace": 54,
+        "acceleration": 59,
+        "strength": 43,
+        "stamina": 46,
+        "agility": 44,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 43,
+        "decisions": 46,
+        "composure": 54,
+        "workRate": 45,
+        "aggression": 43,
+        "anticipation": 49,
+        "teamwork": 43,
+        "leadership": 42
+      }
+    },
+    {
+      "name": "محمد العجمي",
+      "shortName": "العجمي",
+      "slug": "sohag-railway-19",
+      "age": 28,
+      "nationality": "EGY",
+      "positions": [
+        "LW"
+      ],
+      "preferredRoles": [
+        "touchline_winger"
+      ],
+      "technical": {
+        "finishing": 54,
+        "longShots": 45,
+        "passing": 41,
+        "vision": 45,
+        "crossing": 45,
+        "dribbling": 54,
+        "firstTouch": 49,
+        "heading": 41,
+        "tackling": 31,
+        "marking": 31
+      },
+      "physical": {
+        "pace": 57,
+        "acceleration": 55,
+        "strength": 40,
+        "stamina": 41,
+        "agility": 51,
+        "jumping": 48
+      },
+      "mental": {
+        "positioning": 47,
+        "decisions": 44,
+        "composure": 49,
+        "workRate": 46,
+        "aggression": 43,
+        "anticipation": 50,
+        "teamwork": 45,
+        "leadership": 40
+      }
+    },
+    {
+      "name": "رجب رزق",
+      "shortName": "رزق",
+      "slug": "sohag-railway-20",
+      "age": 29,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "poacher"
+      ],
+      "technical": {
+        "finishing": 56,
+        "longShots": 43,
+        "passing": 43,
+        "vision": 39,
+        "crossing": 41,
+        "dribbling": 48,
+        "firstTouch": 42,
+        "heading": 47,
+        "tackling": 29,
+        "marking": 37
+      },
+      "physical": {
+        "pace": 51,
+        "acceleration": 50,
+        "strength": 46,
+        "stamina": 38,
+        "agility": 37,
+        "jumping": 42
+      },
+      "mental": {
+        "positioning": 45,
+        "decisions": 42,
+        "composure": 47,
+        "workRate": 45,
+        "aggression": 43,
+        "anticipation": 46,
+        "teamwork": 42,
+        "leadership": 41
+      }
+    },
+    {
+      "name": "زياد عفيفي",
+      "shortName": "عفيفي",
+      "slug": "sohag-railway-21",
+      "age": 29,
+      "nationality": "EGY",
+      "positions": [
+        "ST"
+      ],
+      "preferredRoles": [
+        "target_man"
+      ],
+      "technical": {
+        "finishing": 52,
+        "longShots": 33,
+        "passing": 40,
+        "vision": 41,
+        "crossing": 36,
+        "dribbling": 42,
+        "firstTouch": 44,
+        "heading": 37,
+        "tackling": 30,
+        "marking": 28
+      },
+      "physical": {
+        "pace": 52,
+        "acceleration": 52,
+        "strength": 35,
+        "stamina": 40,
+        "agility": 42,
+        "jumping": 41
+      },
+      "mental": {
+        "positioning": 41,
+        "decisions": 37,
+        "composure": 49,
+        "workRate": 38,
+        "aggression": 40,
+        "anticipation": 38,
+        "teamwork": 41,
+        "leadership": 43
+      }
+    }
+  ]
+}
