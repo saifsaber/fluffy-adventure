@@ -41,7 +41,7 @@ export function roundRobinRounds<T>(entries: readonly T[]): readonly (readonly [
     for (let i = 0; i < half; i++) {
       const a = lineup[i];
       const b = lineup[lineup.length - 1 - i];
-      if (a == null || b == null) continue; // the bye — that club rests this round
+      if (a === null || a === undefined || b === null || b === undefined) continue; // the bye
       // Alternate which side is listed first, so home and away spread across the season.
       pairs.push(round % 2 === 0 ? [a, b] : [b, a]);
     }
