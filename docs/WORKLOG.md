@@ -62,7 +62,11 @@ at all**.
 - [x] The Egyptian fourth division: 20 clubs across 14 real governorates, 420 players, ~24 attributes each
 - [x] Fixture generation from the league file (round-robin count is a field, not code) → a 38-round schedule
 - [x] Travel distance from club coordinates, used as a fatigue input
-- [ ] *(deferred to after Step 4)* Postgres schema + migrations + `pnpm db:seed`
+> **Deferred, deliberately — do not pick this up.** Postgres schema, migrations and `pnpm db:seed`
+> wait until after Step 4. ADR-002 explains why: the engine and the balance gate run against content
+> files with no database at all, and a schema written after the engine exists is a transcription
+> rather than a guess. It is written as a quote and not a checkbox so an autonomous run does not read
+> it as the next task.
 
 ### Step 3 — the engine
 
