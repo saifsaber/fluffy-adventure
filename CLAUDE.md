@@ -19,6 +19,23 @@ Planning complete. No product code yet. Build order is in
    randomness. Same seed ⇒ identical match. This buys counterfactual replay, a fair daily challenge,
    honest PvP, and reproducible bugs — all four die together if it breaks.
 
+## Four things that keep global expansion possible
+
+The product ships Egypt first and expands one market at a time. That only stays cheap if these are
+structurally true from the start — retrofitting any of them is a rewrite, not a rollout.
+Full reasoning in `docs/01-product/05-global-strategy.md`.
+
+1. **Causes are a closed enum, never generated prose.** `CauseTag` + `CAUSE_REGISTRY` in
+   `packages/engine/src/types`. `Record<CauseTag, CauseMeta>` makes an unregistered cause a build
+   error. Translating a locale is then a lookup table, not a rewrite — and the AI layer physically
+   cannot narrate a cause the engine did not emit.
+2. **i18n structure exists from day one; one locale ships.** Egyptian Arabic is the only locale for
+   now (ADR-001 #2).
+3. **Every named entity carries a Latin-script `slug`** alongside its local name (the `Named`
+   interface). A share card has to read in any locale.
+4. **A league is data, not code.** Adding a country is a seed file. If supporting a new league would
+   require a code change, the schema is wrong.
+
 ## Layout
 
 ```

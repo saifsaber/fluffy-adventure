@@ -47,7 +47,9 @@ explaining why, and proceed.
 - [x] pnpm workspace, TypeScript strict, shared tsconfig, lint + format
 - [x] `packages/engine` scaffold with the purity guard test
 - [x] CI: lint, typecheck, test on every push
-- [ ] `packages/engine` domain types: `Player`, `Club`, `Tactics`, `MatchInput`, `MatchResult`, `MatchTrace`, `CauseTag`
+- [x] `packages/engine` domain types: `Player`, `Club`, `Tactics`, `MatchInput`, `MatchResult`, `MatchTrace`, `CauseTag`
+
+**Step 1 is complete.**
 
 ### Step 2 — data and schema
 - [ ] Postgres schema + migrations (careers, seasons, clubs, players, tactics, fixtures, matches, **match_traces**, **decisions**)
@@ -88,4 +90,9 @@ explaining why, and proceed.
 
 ## Log
 
-- **2026-09-07** — Planning complete. Seven agents and two skills built and registered. Step 1 foundation landed: pnpm workspace, TS strict, engine package with a purity guard, CI on push. Autonomous loop armed.
+- **2026-09-07** — Planning complete. Seven agents and two skills built and registered. Step 1 foundation landed: pnpm workspace, TS strict, engine package with a purity guard, CI on push. Autonomous loop armed (every 6h).
+- **2026-09-07** — **Step 1 complete.** Domain types landed: branded ids, ~24 player attributes across technical/physical/mental/goalkeeping, `PlayerRole` as an axis separate from `Position`, tactics as a shape (line height, pressing intensity + trigger, tempo, directness, width, compactness) rather than a multiplier, `InMatchDecision` as a discriminated union so every decision is counterfactual-able, shots carrying their own context so xG is derived, `SideStats` documented as counters only, and `CauseTag` + `CAUSE_REGISTRY`.
+  - `Record<CauseTag, CauseMeta>` makes an unregistered cause a **build error** — verified by adding one and watching TS2741 fire.
+  - `Named` carries a Latin `slug`, so global-strategy §8.3 is already satisfied at the type level.
+  - `test/fixtures.ts` builds a complete `MatchInput` by hand. It exists to prove the types are usable before the seeder, API and client depend on them.
+  - **Next run:** Step 2. Note that global-strategy §8.4 (a league is data, not code) is a schema constraint, not a nice-to-have — design the seed format before writing migrations.
