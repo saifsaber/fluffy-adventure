@@ -61,7 +61,7 @@ at all**.
 - [x] Latin-script `slug` on every named entity (global-strategy §8.3)
 - [x] The Egyptian fourth division: 20 clubs across 14 real governorates, 420 players, ~24 attributes each
 - [x] Fixture generation from the league file (round-robin count is a field, not code) → a 38-round schedule
-- [ ] Travel distance from club coordinates, used as a fatigue input
+- [x] Travel distance from club coordinates, used as a fatigue input
 - [ ] *(deferred to after Step 4)* Postgres schema + migrations + `pnpm db:seed`
 
 ### Step 3 — the engine
@@ -121,6 +121,8 @@ version that passes tests but models nothing.
 
 ---
 
+**Step 2 is complete except the deferred Postgres work. Next is the engine.**
+
 ## Note for whoever runs next
 
 The engine (Step 3) is decomposed deliberately. Two rules for it:
@@ -135,6 +137,9 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
 ## Log
 
 - **2026-09-07** — Planning complete. Seven agents and two skills built and registered. Step 1 foundation landed: pnpm workspace, TS strict, engine package with a purity guard, CI on push. Autonomous loop armed (every 6h).
+- **2026-09-07** — **Travel.** Haversine distance, a road-distance estimate, and `travelBurden()` scaled to the longest trip in the league actually being played rather than a hardcoded country figure. Tests check the maths against real Egyptian distances (Cairo–Aswan ≈ 682 km, Cairo–Alexandria ≈ 180 km) and confirm the real fourth division produces a genuine spread — shortest hop under 80 km, longest over 700, a ratio above 10 — because a travel input where every trip is similar is a constant and worth nothing.
+  - One test initially asserted that a flat lat/lon approximation is badly wrong over Egypt. It is not: north–south the error is 4 km. The **claim** was corrected rather than the threshold lowered. What haversine actually buys is longitude convergence, which shows up east–west — Siwa to Taba is 909 km real against 1041 km naive — so the test now measures that instead. Worth remembering when reading the harness thresholds in Step 4: a failing check is a claim to re-examine, not a number to move.
+  - **Next run: Step 3a — the seeded PRNG.** Small, self-contained, and the foundation the whole engine rests on.
 - **2026-09-07** — **Fixtures.** `generateFixtures()` / `roundsInSeason()` in `@dakka/content`. Circle-method round-robin; the number 38 appears nowhere in code — it falls out of `(clubs − 1) × roundRobin` read from the league file. Tests assert every pair meets exactly twice **once at each ground**, every club gets 19 home and 19 away, no club plays twice in a round, and an odd club count rests one side per round rather than failing. A second test changes `roundRobin` and the club count on a copy of the league and checks the season reshapes itself — that is the "data not code" contract under test, not just asserted in a comment.
   - **Next run:** travel distance from the stored club coordinates (haversine), exposed so the engine can take it as a fatigue input. After that, Step 3 — the engine.
 - **2026-09-07** — **Step 2, first slice.** `@dakka/content` landed: Zod content schema, loader, and the Egyptian fourth division as data — 20 clubs across 14 governorates, 420 players. Everything that differs between football cultures (round-robin count, promotion/playoff/relegation slots, points per result) is a **field**; `loadLeague()` contains no country-specific branch, so adding Vietnam is a data change.

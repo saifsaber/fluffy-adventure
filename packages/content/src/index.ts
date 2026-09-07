@@ -5,3 +5,5 @@ export type { ClubData, LeagueData, PlayerData } from './schema.js';
 export { DATA_ROOT } from './paths.js';
 export { generateFixtures, roundRobinRounds, roundsInSeason } from './fixtures.js';
 export type { Fixture } from './fixtures.js';
+export { distanceKm, estimatedRoadKm, travelBurden } from './travel.js';
+export type { Coordinates } from './travel.js';
