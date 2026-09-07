@@ -3,3 +3,5 @@ export type { LoadedLeague } from './load.js';
 export { clubSchema, leagueSchema, playerSchema, positionSchema, roleSchema } from './schema.js';
 export type { ClubData, LeagueData, PlayerData } from './schema.js';
 export { DATA_ROOT } from './paths.js';
+export { generateFixtures, roundRobinRounds, roundsInSeason } from './fixtures.js';
+export type { Fixture } from './fixtures.js';
