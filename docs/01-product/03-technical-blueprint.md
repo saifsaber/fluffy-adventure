@@ -20,6 +20,31 @@ Read the situation (dashboard tells you what needs a decision)
   → Opponents adapt to your patterns → the next decision is harder
 ```
 
+## 1b. Distribution — the correction after reviewing the viral tier
+
+The first version of this blueprint optimised for depth and correctness and contained **no
+distribution mechanic**. Reviewing 38-0 (a 2-minute draft game a solo developer grew to a claimed
+5.4 M players with no marketing) made that omission untenable: in this category, reach comes from a
+share loop and a daily loop, and both are far cheaper to build than a causal engine.
+
+The fix is not to build a draft game. It is to notice that **determinism — already required for
+counterfactual replay — pays off four times**:
+
+| Property | Enabled by determinism | Can a competitor copy it? |
+|---|---|---|
+| Counterfactual replay | re-run the seeded match with one decision changed | not without a deterministic engine |
+| **Seeded daily challenge** | same fixture, seed, squad and opponent for every player worldwide; the only variable is decision quality | 38-0 has no simulation; Modareb's engine is random, so runs aren't comparable |
+| **Honest PvP** | server resolves once, both managers see the identical match | requires the same engine on client and server |
+| **Share artifact that is an argument** | the trace is a set of contestable claims; the counterfactual is the reply | requires a trace, which requires a causal engine |
+
+38-0's most-screenshotted output is the line labelled **"Weak Link"** — because it is contestable.
+A score is not shareable; an *argument* is. Our decision trace is made of arguments.
+
+**Scheduling note:** none of this changes the Week-1 build order. The daily challenge and share card
+are cheap *because* the engine is deterministic — they are Week 6 work built on Week 1 foundations,
+not a parallel track. What changes is that they are now in the MVP-adjacent plan instead of absent
+from it.
+
 ## 2. The AI / not-AI split — the rule
 
 **AI never decides an outcome. AI explains, converses, and generates. Code decides.**
@@ -140,8 +165,12 @@ squad & tactics (formation, mentality, pressing, tempo, width, roles) · the cau
 live matchday with in-match decisions · derived stats & xG · decision trace · AI debrief in Egyptian
 Arabic · counterfactual replay for one decision · board objectives · season end · the dashboard.
 
-Out of MVP: 6,409-player transfer market · PvP · youth academy · world rankings · licences · cups ·
-monetisation · multi-nation leagues.
+**Added to MVP after the viral-tier review** (both are days of work on a deterministic engine, and
+without them the product has no way to reach anyone): a **seeded daily challenge** — one fixture, one
+squad, identical for everyone — and a **share card built from the decision trace**, not from a score.
+
+Out of MVP: 6,409-player transfer market · ranked PvP · private leagues · youth academy ·
+world rankings · licences · cups · monetisation · multi-nation leagues.
 
 Rationale: breadth is where Modareb already wins and where it is cheap to catch up later.
 Depth of the core loop is where it cannot follow us, and it must be right before anything is built on it.
@@ -150,7 +179,7 @@ Depth of the core loop is where it cannot follow us, and it must be right before
 
 - **MVP** — the loop above, provably football-shaped.
 - **V1** — transfers + negotiation, training & development, youth, board/press, full season structure, cup, monetisation.
-- **V2** — PvP (deterministic server resolution), leagues/divisions pyramid, manager career moves, social & clubs, advanced analytics.
+- **V2** — ranked PvP (deterministic server resolution), **private leagues**, **an elimination event in the shape of 38-0's "Last One Standing"** (a daily cut line, which is the strongest daily-return mechanic observed in the category), leagues/divisions pyramid, manager career moves, advanced analytics.
 - **Future** — user-generated leagues, real data licensing, community tournaments, coaching-education crossover.
 
 ## 9. Risks
@@ -163,6 +192,8 @@ Depth of the core loop is where it cannot follow us, and it must be right before
 | Licensing of real players/clubs | own dataset + fictionalised elite until properly licensed — never Modareb's exposure |
 | Scope creep vs Modareb's breadth | depth-first is the strategy; breadth is scheduled, not opportunistic |
 | Offline↔cloud sync conflicts | server is authoritative; client writes are a replayable queue with seeds |
+| **No distribution — the risk the first draft missed** | the seeded daily challenge and trace-based share card ship in the MVP, not later; both are cheap on a deterministic engine |
+| Concept cloning (38-0 was cloned within weeks) | our moat is the engine + dataset + trace, none of which is copyable from a client bundle — unlike a scoring formula |
 
 ## 10. Open decisions (need the product owner)
 

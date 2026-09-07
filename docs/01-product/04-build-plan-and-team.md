@@ -47,6 +47,9 @@ Seven agents, not fourteen. Each earns its place or it isn't built.
 | **Frontend** | the product people touch | RTL design system, screens, dashboard, matchday | invent numbers the API doesn't return |
 | **Code Review** | quality gate | reviews every PR before merge | approve its own work |
 
+> **Note on the Frontend agent's scope:** it also owns the share card and daily-challenge surfaces.
+> These are distribution, not decoration — the share artifact must render the *trace*, never a bare score.
+
 **Flow (not a straight line — the harness is a loop, and it gates):**
 
 ```
@@ -88,7 +91,11 @@ what that decision changed — with every number derived, none invented, and no 
 - **Week 2** — AI layer: trace→debrief in Egyptian Arabic, opponent briefing, dialect eval set, cost controls. Real dashboard.
 - **Week 3** — season loop: board objectives, confidence, sack risk, season end; cloud save + offline sync; auth.
 - **Week 4** — squad depth (roles, traits, personality), training & development, adaptive opponent managers.
-- **Week 5** — polish, RTL design system consolidation, E2E tests, performance, MVP release candidate.
+- **Week 5** — polish, RTL design system consolidation, E2E tests, performance.
+- **Week 6** — **distribution layer**: the seeded daily challenge (identical fixture/seed/squad for
+  everyone) and the share card generated from the decision trace. Both are cheap here precisely
+  because the engine has been deterministic since Week 1 — they would be impossible to retrofit onto
+  a random engine. MVP release candidate.
 
 ### Why this order
 
