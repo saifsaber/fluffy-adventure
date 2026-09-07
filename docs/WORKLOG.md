@@ -65,12 +65,39 @@ at all**.
 - [ ] *(deferred to after Step 4)* Postgres schema + migrations + `pnpm db:seed`
 
 ### Step 3 — the engine
-- [ ] Seeded PRNG wrapper; determinism test (same seed ⇒ byte-identical result, 1000 runs)
-- [ ] Possession-chain state machine: `BUILD_UP → PROGRESSION → FINAL_THIRD → SHOT → outcome`
-- [ ] Matchup resolution — space per zone from the two shapes, contested by the actual players in that zone
-- [ ] xG from shot context (distance, angle, pressure, assist type, body part)
-- [ ] Fitness, momentum, cards, substitutions
-- [ ] Statistics counted as events occur — **never back-filled**
+
+**Read this before starting any box below.** The engine is the entire competitive claim, and it is
+the one part that cannot be retrofitted. So it is broken into small pieces that can each be finished,
+tested and pushed on their own. Do **one** box per run. Do not attempt two. A half-built matchup
+resolver pushed at the end of a run is worse than nothing, because the next run inherits it without
+knowing what was intended.
+
+Boxes marked ⚠️ carry the most judgement. If a run cannot do one well, the right move is to push a
+note under "## Blocked" describing what is hard about it and stop — not to produce a plausible
+version that passes tests but models nothing.
+
+- [ ] **3a. Seeded PRNG.** A tiny injectable `Rng` interface (`next(): number` in [0,1), plus
+      `int(min,max)` and `pick(array)`). One implementation, seeded from a string. No engine logic yet.
+      Test: same seed ⇒ identical sequence over 10,000 draws; two different seeds differ; the
+      distribution is roughly uniform. This is the foundation everything else rests on and it is
+      genuinely small — a good first engine run.
+- [ ] **3b. Zone model.** Divide the pitch into named zones and map each `Position` to the zones it
+      occupies and contests. Pure data plus a lookup. No probabilities yet.
+      Test: every position maps to at least one zone; the eleven positions of a 4-3-3 cover the pitch.
+- [ ] **3c. ⚠️ Space and matchup resolution.** Given both sides' `Tactics` (line height, width,
+      compactness) and their players in a zone, compute how much space each side has there.
+      This is the heart of the product: the same tactical choice must help in one context and hurt in
+      another. Test that explicitly — construct two opponents where a high line wins and where it
+      loses, and assert the sign of the effect flips. If it cannot flip, it is a scalar in disguise.
+- [ ] **3d. Possession chain.** `BUILD_UP → PROGRESSION → FINAL_THIRD → SHOT → outcome`, with
+      `TURNOVER` transitions, driven by 3c. Counters incremented as events occur.
+      Test: a match produces a plausible number of chains; possession ticks sum correctly.
+- [ ] **3e. ⚠️ xG from shot context.** Distance, angle, pressure, body part, situation → probability.
+      Calibrate against public xG norms (penalty ≈ 0.76, a six-yard tap-in high, a 30-yard shot low).
+      Test known situations against expected ranges. Never derive xG from the outcome.
+- [ ] **3f. Fitness, momentum, cards, substitutions** over 90 minutes, feeding back into 3c.
+- [ ] **3g. Assemble `simulate(MatchInput): MatchResult`** and assert the whole-match determinism
+      property: same seed ⇒ byte-identical `MatchResult`, over 1,000 runs.
 
 ### Step 4 — the gate
 - [ ] 10,000-season headless harness
@@ -93,6 +120,17 @@ at all**.
 *(nothing yet)*
 
 ---
+
+## Note for whoever runs next
+
+The engine (Step 3) is decomposed deliberately. Two rules for it:
+
+1. **One box per run.** The boxes are sized so a single run can finish, test and push one.
+2. **A ⚠️ box you cannot do well should be pushed as a blocker, not as a plausible-looking
+   implementation.** The failure mode that would kill this product is an engine that passes its
+   tests while modelling nothing — because then the decision trace explains a simulation that is not
+   real, and a confident wrong explanation is worse than no explanation. The 10,000-season harness in
+   Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
 
