@@ -1,0 +1,72 @@
+# Independent watchdog for the autonomous build loop.
+#
+# The loop runs as scheduled Claude sessions. If those stop — quota exhausted, a disabled routine,
+# a container that never starts — nothing inside the loop can report that, because the thing that
+# would report it is the thing that died. This workflow is outside it: GitHub runs it on its own
+# schedule and emails the repository owner when the job fails.
+#
+# It stays quiet while the plan is progressing, and stops alerting entirely once the plan is done.
+name: Heartbeat
+
+on:
+  schedule:
+    # 09:00 UTC daily. A missed day of building is worth knowing about; an hourly page is not.
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  freshness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Report build state and alert if the loop has stalled
+        run: |
+          set -euo pipefail
+
+          LAST_EPOCH=$(git log -1 --format=%ct)
+          LAST_ISO=$(git log -1 --format=%cI)
+          SUBJECT=$(git log -1 --format=%s)
+          AGE_H=$(( ( $(date -u +%s) - LAST_EPOCH ) / 3600 ))
+
+          REMAINING=$(grep -c '^- \[ \]' docs/WORKLOG.md || true)
+          DONE=$(grep -c '^- \[x\]' docs/WORKLOG.md || true)
+          NEXT=$(grep -m1 '^- \[ \]' docs/WORKLOG.md | sed 's/^- \[ \] //' || echo '(nothing queued)')
+          BLOCKED=$(sed -n '/^## Blocked/,/^## /p' docs/WORKLOG.md | grep -c '^- ' || true)
+
+          {
+            echo "## Dakka build heartbeat"
+            echo
+            echo "| | |"
+            echo "|---|---|"
+            echo "| Last commit | \`$LAST_ISO\` (${AGE_H}h ago) |"
+            echo "| | $SUBJECT |"
+            echo "| Progress | $DONE done, $REMAINING remaining |"
+            echo "| Next up | $NEXT |"
+            echo "| Blocked items | $BLOCKED |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$REMAINING" -eq 0 ]; then
+            echo "Plan complete — nothing queued, so staleness is expected. Not alerting."
+            exit 0
+          fi
+
+          # 26h rather than 24h: the loop fires every 6h, so a single missed run is normal noise
+          # and should not page anyone. Four consecutive misses is a real stall.
+          if [ "$AGE_H" -ge 26 ]; then
+            echo "::error::The autonomous build loop has not pushed for ${AGE_H}h and $REMAINING items remain."
+            echo "Next queued item: $NEXT"
+            echo
+            echo "Likely causes, in order:"
+            echo "  1. Weekly usage quota exhausted — it resumes on its own when the window resets."
+            echo "  2. The routine was paused or disabled."
+            echo "  3. Runs are starting but failing before they push (check docs/WORKLOG.md 'Blocked')."
+            exit 1
+          fi
+
+          echo "Loop healthy: last push ${AGE_H}h ago, $REMAINING items remaining."
