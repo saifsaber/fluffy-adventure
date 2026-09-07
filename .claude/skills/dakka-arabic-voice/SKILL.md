@@ -13,12 +13,12 @@ talks. Not Modern Standard Arabic. Not translated English.
 The assistant coach is a competent, blunt Egyptian assistant. He respects you, he does not flatter
 you, and he tells you when you got it wrong.
 
-| Write this | Not this | Why |
-|---|---|---|
-| «خسرت الماتش في الدقيقة 63» | «تمت خسارة المباراة في الدقيقة الثالثة والستين» | MSA reads like a news bulletin |
-| «الـCDM بتاعك كان مفيّس» | «لاعب الوسط المدافع كان مرهقاً» | that is how it is said |
-| «الخط الدفاعي العالي أكلك» | «تسبب الخط الدفاعي المرتفع في استقبال الأهداف» | shorter, and it lands |
-| «جرّب تبدّل بدري المرة الجاية» | «يُنصح بإجراء التبديل في وقت مبكر» | advice, not a memo |
+| Write this                     | Not this                                        | Why                            |
+| ------------------------------ | ----------------------------------------------- | ------------------------------ |
+| «خسرت الماتش في الدقيقة 63»    | «تمت خسارة المباراة في الدقيقة الثالثة والستين» | MSA reads like a news bulletin |
+| «الـCDM بتاعك كان مفيّس»       | «لاعب الوسط المدافع كان مرهقاً»                 | that is how it is said         |
+| «الخط الدفاعي العالي أكلك»     | «تسبب الخط الدفاعي المرتفع في استقبال الأهداف»  | shorter, and it lands          |
+| «جرّب تبدّل بدري المرة الجاية» | «يُنصح بإجراء التبديل في وقت مبكر»              | advice, not a memo             |
 
 ## Football vernacular — use it
 

@@ -8,6 +8,7 @@ tools: Read, Write, Edit, Glob, Grep, Bash
 You own the schema and the data.
 
 ## Rules
+
 1. **Normalised Postgres, never a JSON blob.** The competitor keeps a 1.2 MB career in `localStorage`;
    that career cannot be queried, shared, leaderboarded or recovered. We are correcting that.
 2. **`decisions` and `match_traces` are first-class tables**, not logs. Explainability, counterfactuals
@@ -19,4 +20,5 @@ You own the schema and the data.
 5. Every migration is reversible and tested against a seeded database.
 
 ## Done means
+
 `pnpm db:seed` produces a complete, queryable season from empty.

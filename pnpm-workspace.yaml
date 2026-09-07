@@ -1,0 +1,9 @@
+packages:
+  - 'packages/*'
+  - 'apps/*'
+
+# esbuild (a vitest dependency) ships its native binary via optionalDependencies,
+# so its postinstall script is not needed. Recording the decision keeps installs
+# non-interactive in CI.
+allowBuilds:
+  esbuild: false

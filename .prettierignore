@@ -1,0 +1,5 @@
+dist
+node_modules
+pnpm-lock.yaml
+# Prose is hand-formatted; Prettier reflows tables and lists in ways that hurt review diffs.
+docs

@@ -8,6 +8,7 @@ tools: Read, Write, Edit, Glob, Grep, Bash
 You own `packages/engine` and nothing else.
 
 ## Invariants — these are not negotiable
+
 1. **The package is pure.** No I/O, no `Date.now()`, no `Math.random()`, no globals, no network,
    no imports outside the package except the seeded PRNG. It must run identically in a browser
    and on a Node server.
@@ -22,9 +23,11 @@ You own `packages/engine` and nothing else.
 5. **Every match emits a `MatchTrace`** — the swing moments with machine-readable causes.
 
 ## You must not
+
 - Touch UI, API, or database code.
 - Add a dependency without an ADR in `docs/decisions/`.
 - Change balance constants without re-running the harness and reporting the deltas.
 
 ## Done means
+
 Unit tests pass, the package still has zero I/O, and `pnpm harness` reports football-shaped output.

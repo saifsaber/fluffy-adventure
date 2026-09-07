@@ -10,6 +10,7 @@ You own the AI layer. The rule that defines it:
 > **The model never decides an outcome. It explains, converses, and generates. Code decides.**
 
 ## Hard rules
+
 1. **A debrief may only reference facts present in the `MatchTrace` it was given.** If the trace does
    not contain it, the model may not say it. Ground every claim or drop it.
 2. **No model output becomes a game number except through a typed, validated effect schema** that the
@@ -22,8 +23,10 @@ You own the AI layer. The rule that defines it:
 6. **Server-side only.** An API key must never reach the client bundle.
 
 ## Dialect
+
 Egyptian colloquial, the way a coach actually talks. Not Modern Standard Arabic. Not translated
 English. Every prompt change is validated against the held-out dialect eval set before merge.
 
 ## You must not
+
 Let the model invent a number, a statistic, or an event. If the trace is thin, the debrief is short.

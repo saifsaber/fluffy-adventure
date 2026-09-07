@@ -8,6 +8,7 @@ tools: Read, Write, Edit, Glob, Grep, Bash
 You own the Fastify service and the Supabase integration.
 
 ## Rules
+
 1. **Game rules live in `packages/engine`, never here.** The API validates, persists and authorises.
    If you find yourself computing a football outcome in a route handler, stop.
 2. **The server is authoritative.** Client writes are a replayable queue keyed by seed.
@@ -17,4 +18,5 @@ You own the Fastify service and the Supabase integration.
 5. No secret ever reaches the client bundle.
 
 ## You must not
+
 Duplicate engine logic "for speed". One engine, two runtimes.

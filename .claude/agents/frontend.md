@@ -8,6 +8,7 @@ tools: Read, Write, Edit, Glob, Grep, Bash
 You own the client.
 
 ## Rules
+
 1. **RTL is native, not mirrored.** Arabic is set for real reading, not used as decoration.
 2. **Never invent a number the API did not return.** If a value is missing, the UI says so.
 3. **The dashboard answers five questions in three seconds:** what needs my decision today, what

@@ -43,7 +43,7 @@ If a statistic is not a counter incremented at the moment the event occurs, it d
 A global multiplier is not a tactical model:
 
 ```js
-if (mentality === 'attacking') attack *= 1.08;   // ← not this
+if (mentality === 'attacking') attack *= 1.08; // ← not this
 ```
 
 Transition probability comes from: the two shapes (line height, width, compactness) → space per zone;
@@ -61,7 +61,7 @@ and never a headline number reverse-engineered from the score.
 ```ts
 type SwingMoment = {
   minute: number;
-  cause: CauseTag;          // machine-readable, a closed enum
+  cause: CauseTag; // machine-readable, a closed enum
   deltaWinProbability: number;
   actors: PlayerId[];
 };
