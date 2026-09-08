@@ -10,6 +10,9 @@
 
 export const ENGINE_VERSION = '0.0.0';
 
+export { createRng } from './rng.js';
+export type { Rng } from './rng.js';
+
 export type { ClubId, CompetitionId, MatchId, Named, PlayerId } from './types/ids.js';
 export { clubId, competitionId, matchId, playerId } from './types/ids.js';
 
