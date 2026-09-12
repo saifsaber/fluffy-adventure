@@ -42,6 +42,9 @@ export {
 export type { SideSetup, SpaceMap, ZoneSpace } from './space.js';
 
 export { TICKS_PER_MINUTE, possessionShare, shotZones, simulateChain } from './chain.js';
+
+export { PENALTY_XG, XG_ANCHORS, expectedGoals, isOnTarget, resolveShot } from './xg.js';
+export type { XgAnchor } from './xg.js';
 export type {
   ChainEnd,
   ChainInput,

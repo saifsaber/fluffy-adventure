@@ -158,18 +158,39 @@ version that passes tests but models nothing.
       conserves it by construction — only line height and press change how much space exists at all.
       `map.causes` is already derived from the numbers that produced it, so Step 5 reads causes
       instead of inventing them.
-- [ ] **3e. ⚠️ xG from shot context.** Distance, angle, pressure, body part, situation → probability.
-      Calibrate against public xG norms (penalty ≈ 0.76, a six-yard tap-in high, a 30-yard shot low).
-      Test known situations against expected ranges. Never derive xG from the outcome.
-      **What 3d hands you:** `ShotContext = Omit<Shot, 'xg' | 'outcome'>` — minute, side, shooter,
-      `distanceM`, `angleDeg`, `pressure` (5–98), `bodyPart`, `situation`. Turning it into a `Shot`
-      is exactly your job. You physically cannot cheat here: the chain never computed an outcome, so
-      there is nothing to reverse-engineer from.
-      **The number that matters:** two even 55-rated sides produce **23.6 shots a match** with a mean
-      distance of **18.1 m**. The blueprint wants 2.5–2.8 goals a match, so mean xG per shot has to
-      land near **0.11**. Calibrate the curve on the football norms first and then check it against
-      that figure — if it comes out far away, say so in the log rather than bending the curve to hit
-      it, because the shot *rate* may be what is wrong and Step 4 is what decides.
+- [x] **3e. ⚠️ xG from shot context.** `packages/engine/src/xg.ts`. A logistic on distance and the
+      angle of goal available, solved for five published anchors and asserted against all five.
+      `expectedGoals(shot: ShotContext): number` — it cannot see the outcome, and it cannot see the
+      shooter either. The second omission is the important one: if a striker's finishing raised his
+      xG, "he should have scored" would be unsayable, because the yardstick would move with the man
+      being measured.
+- [ ] **3d·fix. ⚠️ Shot quality distribution — found by 3e, and it blocks Step 4.**
+      The xG curve is right; the shots being fed to it are not. Measured over 6,908 shots from even
+      sides, `shotGeometry()` in `chain.ts` produces distances from **p10 14.5 m to p90 22.0 m** —
+      every shot in football taken from one seven-metre band.
+
+      | | this engine | real football |
+      |---|---|---|
+      | inside 11 m | **0.5%** | ~30% |
+      | inside the box (16.5 m) | 32% | ~62% |
+      | beyond 25 m | **0%** | ~8% |
+      | mean xG per shot | **0.047** | ~0.11 |
+      | goals per match | **1.15** | 2.5–2.8 |
+
+      The mean distance (18.1 m) is already correct — it is the **spread** that is missing. Because
+      xG is sharply convex in distance, a distribution with the right mean and no close-range tail
+      cannot produce goals: the six-yard chances that score most of football's goals do not exist in
+      this engine. Do **not** fix this by lifting the xG curve; it is calibrated to published norms
+      and its anchors are the only external truth in this repo.
+
+      The cause is conceptual, not a constant. The chain treats "reached the final third" as one
+      undifferentiated event, so every chance comes out a generic 18-metre effort. Real football has
+      a quality distribution *within* the final third — most attacks produce a half-chance, a few are
+      worked to six yards. Give the shot geometry a right-skewed distribution with a real tail toward
+      goal, driven by how much space the chain actually found, and derive the angle from the
+      geometry (the goal subtends 62.8° at 6 m, 36.8° at 11 m, 25.0° at 16.5 m, 16.7° at 25 m) rather
+      than from a per-zone constant. Then re-measure the table above.
+
 - [ ] **3f. Fitness, momentum, cards, substitutions** over 90 minutes, feeding back into 3c.
       `fitnessFactor()` is already applied inside `tacticalPresence`, so 3f only has to update
       `PlayerCondition.fitness` between ticks — it does not have to retrofit fatigue into the
@@ -214,6 +235,37 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-12** — **3e: xG from shot context.** `packages/engine/src/xg.ts`. A logistic on distance
+  and the angle of goal available, solved for three published anchors and checked against two more.
+  - **The signature is the guarantee.** `expectedGoals(shot: ShotContext): number` takes the context
+    and nothing else. It cannot see the outcome, because `ShotContext` has none and the chain never
+    computed one. It cannot see the **shooter** either, and that is the deliberate part: if finishing
+    raised a player's xG, then "he scored more than his chances were worth" would be meaningless,
+    because the yardstick would move with the man. Finishing enters at `resolveShot`, and the gap
+    between goals and xG is precisely what `CLINICAL_FINISHING` and `WASTEFUL_FINISHING` measure.
+    Those two causes exist only because this function refuses to look.
+  - **Verified by violating it.** Making a good striker's chances "worth more" — the tempting,
+    wrong version — fails exactly the two shooter-blindness tests and nothing else.
+  - **Calibration.** Six yards central 0.420, penalty spot 0.193, edge of the box 0.060, tight angle
+    close in 0.080, thirty yards 0.008, penalty 0.760. Angle is a separate input from distance on
+    purpose, and the test proves why: eight metres out by the byline is a **worse** chance than
+    fourteen metres out in front of goal.
+  - **The counter bonus is deliberately small (+0.15 logit).** The chain already hands counters
+    twenty points less pressure, which is most of the benefit; the full effect on top would pay twice
+    for the same defensive disarray. That is the commonest way a model silently doubles an advantage.
+  - **Goals track xG.** Over 20,000 shots by average players against an average keeper, goals divided
+    by xG sits inside 0.9–1.1. If that ever drifts, the xG we display has become decoration.
+  - **3e found a defect in 3d, and it is now the next box.** The curve is right; the shots are not.
+    Mean xG per shot is **0.047** against football's ~0.11, giving **1.15 goals a match** against the
+    blueprint's 2.5–2.8. The cause is measured precisely: shot distances run p10 14.5 m to p90 22.0 m,
+    so **0.5% of shots come from inside 11 m where real football has 30%**, and none at all from
+    beyond 25 m. The mean distance is correct — the spread is missing. I did **not** lift the curve to
+    close the gap, because the anchors are the only externally-sourced numbers in this repo and
+    bending them would have hidden the real fault. See the `3d·fix` box for the full table.
+  - 142 tests green, lint/typecheck/format clean.
+  - **Next run: `3d·fix`.** It is ⚠️ and it blocks Step 4 — the harness cannot pass at 1.15 goals a
+    match, and no amount of tuning elsewhere will fix a distribution with no close-range tail.
 
 - **2026-09-12** — **3d: the possession chain.** `packages/engine/src/chain.ts`. A match is a sequence
   of possessions; each walks `BUILD_UP → PROGRESSION → FINAL_THIRD → SHOT` and every transition
