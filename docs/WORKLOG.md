@@ -22,6 +22,38 @@ unchecked item, and updates this file. Nothing else carries state between runs.
 
 ---
 
+## Loop health — read this if the branch has gone quiet
+
+Two independent routines drive this loop, on purpose, because the first one failed silently for
+four days and nothing inside it could report that.
+
+| | |
+|---|---|
+| `trig_01MiGgaizGR9rP72iPdkRo7e` | fires into a **persistent session**, `21 */6 * * *` (00:21 · 06:21 · 12:21 · 18:21 UTC) |
+| `trig_017gCYPs5L6e87wS3kahpv9i` | fires a **fresh container** each time, `21 3,9,15,21 * * *` — offset three hours so the two never run together |
+| `.github/workflows/heartbeat.yml` | outside both. Fails the job — which emails the owner — if the branch is stale ≥26h while boxes remain |
+
+**What went wrong, 2026-09-08 → 2026-09-12.** `3b` landed on 08 Sep at 06:22 and nothing landed
+again until 12 Sep. Every scheduled fire in between reported `SUCCEEDED`, which was misleading: for a
+routine bound to a persistent session that status records only that the **wake was delivered**, not
+that any turn ran. The best-supported explanation is that a remote container is reclaimed after a
+period of inactivity, and a six-hour gap between ticks is longer than that window — so each wake
+arrived at a session with nothing alive to execute it and queued instead. Consistent with the
+evidence: the loop worked while the session was in active use on 07–08 Sep, stopped as soon as it was
+left alone, and the backlog ran the moment the session was next opened.
+
+**INFERRED, not OBSERVED.** The falsifiable prediction is that the fresh-container routine, which
+provisions its own container per fire, keeps landing commits while nobody opens the session. If the
+branch goes quiet again while `trig_017gCYPs5L6e87wS3kahpv9i` is enabled, that explanation is wrong
+and the next candidate is the account's usage window, which the heartbeat's own alert text already
+names first.
+
+**The watchdog worked.** Runs 2, 3 and 4 (09, 10 and 11 Sep) all failed deliberately and emailed the
+owner. That part of the design is verified rather than hoped for — the alerting caught a real stall
+on the first day it happened.
+
+---
+
 ## Planning status — complete, do not redo
 
 Research and planning are finished and approved. These exist and are binding:
