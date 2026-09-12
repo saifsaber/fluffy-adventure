@@ -133,9 +133,11 @@ version that passes tests but models nothing.
       across all 180 combinations, so no setting can ever be a bonus — and **the sign of the effect
       flips with the opponent**, for all three shape knobs. The gate was itself verified: making the
       line-height term opponent-independent breaks exactly the three tests that should break.
-- [ ] **3d. Possession chain.** `BUILD_UP → PROGRESSION → FINAL_THIRD → SHOT → outcome`, with
-      `TURNOVER` transitions, driven by 3c. Counters incremented as events occur.
-      Test: a match produces a plausible number of chains; possession ticks sum correctly.
+- [x] **3d. Possession chain.** `packages/engine/src/chain.ts`. Every transition probability comes
+      from the space map for the zone the ball is actually in, so a shot exists because a side got
+      through three specific zones against a specific opponent. The chain emits a `ShotContext` and
+      **stops** — it has no way to know whether the shot went in, which is what makes "xG is never
+      reverse-engineered from the result" structurally true rather than a promise.
       **What 3c hands you:** `resolveSpace(attack, defend) → SpaceMap`, zones in the *attacking*
       side's frame. `space` is weighted bodies of overload, **not** a probability — 3d owns that
       mapping and should calibrate it against Step 4's thresholds rather than guess it. Two identical
@@ -148,6 +150,15 @@ version that passes tests but models nothing.
 - [ ] **3e. ⚠️ xG from shot context.** Distance, angle, pressure, body part, situation → probability.
       Calibrate against public xG norms (penalty ≈ 0.76, a six-yard tap-in high, a 30-yard shot low).
       Test known situations against expected ranges. Never derive xG from the outcome.
+      **What 3d hands you:** `ShotContext = Omit<Shot, 'xg' | 'outcome'>` — minute, side, shooter,
+      `distanceM`, `angleDeg`, `pressure` (5–98), `bodyPart`, `situation`. Turning it into a `Shot`
+      is exactly your job. You physically cannot cheat here: the chain never computed an outcome, so
+      there is nothing to reverse-engineer from.
+      **The number that matters:** two even 55-rated sides produce **23.6 shots a match** with a mean
+      distance of **18.1 m**. The blueprint wants 2.5–2.8 goals a match, so mean xG per shot has to
+      land near **0.11**. Calibrate the curve on the football norms first and then check it against
+      that figure — if it comes out far away, say so in the log rather than bending the curve to hit
+      it, because the shot *rate* may be what is wrong and Step 4 is what decides.
 - [ ] **3f. Fitness, momentum, cards, substitutions** over 90 minutes, feeding back into 3c.
       `fitnessFactor()` is already applied inside `tacticalPresence`, so 3f only has to update
       `PlayerCondition.fitness` between ticks — it does not have to retrofit fatigue into the
@@ -192,6 +203,43 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-12** — **3d: the possession chain.** `packages/engine/src/chain.ts`. A match is a sequence
+  of possessions; each walks `BUILD_UP → PROGRESSION → FINAL_THIRD → SHOT` and every transition
+  probability is read from the space map for the zone the ball is actually in.
+  - **What it refuses to do matters more than what it does.** The chain emits a `ShotContext` and
+    stops. It never resolves a shot, so it never knows a result, so nothing downstream of it can be
+    derived from one. That is a structural guarantee rather than a rule someone has to remember.
+  - **It also does not count passes.** The chain models a phase of play, not individual passes, so
+    there is no honest moment at which to increment a pass counter. `passesAttempted` and
+    `passesCompleted` therefore stay unset and **must not be displayed** until something actually
+    simulates passes. Under-reporting is recoverable; a plausible invented number is the whole
+    competitor.
+  - **Verified by fabricating on purpose.** Adding the competitor's literal line —
+    `shots = Math.max(shots, 8 + random())` — fails two accounting tests immediately: the counter no
+    longer matches the shots actually emitted, and the phase funnel stops narrowing. A shot is
+    physically unreachable unless a possession got through build-up and progression first.
+  - **Calibration, against two even 55-rated sides:** 23.6 shots, 143 possessions, 7.9 corners, 18.1 m
+    mean shot distance, possession 50/50. Counters are 2.2 a match, and a counter shot is measurably
+    less pressed than an open-play one — derived from the defence being out of shape, not assigned.
+  - **Tempo buys the ball or spends it.** A slow, short side holds each possession longer and finishes
+    with 69% of the ball against a fast, long one. Possession share is an outcome of that trade and is
+    computed from counted ticks at the moment it is asked for.
+  - **Two things for Step 4 to judge, flagged rather than hand-tuned.** (1) An ultra-attacking side on
+    a very high line took slightly **fewer** shots (11.8) than an ultra-defensive deep opponent (12.7).
+    That may well be wrong — a deep block should create less — but the harness is the authority and
+    tuning to intuition before it exists is how thresholds get quietly fitted to the engine instead of
+    the other way round. (2) Corners run at 7.9 a match against a real ≈10.3.
+  - **For the data layer:** footedness is not modelled. There is no `preferredFoot` attribute, so
+    which foot a shot comes off is drawn rather than derived, and says so in the code. It is a weak
+    xG input and should be replaced the moment the player schema carries a foot.
+  - Two type errors that the tests could not see — `tsc` caught both. `entryPhase` can never be
+    `SHOT`, which made a guard dead code and the inference circular; naming `EntryPhase` and
+    `FieldPhase` fixed both and made the invariant explicit: winning the ball high starts you past
+    the build-up, it does not hand you a shot.
+  - 120 tests green, lint/typecheck/format clean.
+  - **Next run: 3e ⚠️, xG from shot context.** Read the "What 3d hands you" note on that box first —
+    especially the mean-xG-per-shot figure and the instruction not to bend the curve to hit it.
 
 - **2026-09-12** — **3c: space and matchup resolution.** `packages/engine/src/space.ts` — the heart of
   the engine, and the one box where a plausible-looking implementation would have been worse than

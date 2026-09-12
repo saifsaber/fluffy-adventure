@@ -41,6 +41,18 @@ export {
 } from './space.js';
 export type { SideSetup, SpaceMap, ZoneSpace } from './space.js';
 
+export { TICKS_PER_MINUTE, possessionShare, shotZones, simulateChain } from './chain.js';
+export type {
+  ChainEnd,
+  ChainInput,
+  ChainPhase,
+  ChainResult,
+  ChainStats,
+  Possession,
+  ShotContext,
+  Side,
+} from './chain.js';
+
 export type { ClubId, CompetitionId, MatchId, Named, PlayerId } from './types/ids.js';
 export { clubId, competitionId, matchId, playerId } from './types/ids.js';
 
