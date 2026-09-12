@@ -42,11 +42,18 @@ arrived at a session with nothing alive to execute it and queued instead. Consis
 evidence: the loop worked while the session was in active use on 07–08 Sep, stopped as soon as it was
 left alone, and the backlog ran the moment the session was next opened.
 
-**INFERRED, not OBSERVED.** The falsifiable prediction is that the fresh-container routine, which
-provisions its own container per fire, keeps landing commits while nobody opens the session. If the
-branch goes quiet again while `trig_017gCYPs5L6e87wS3kahpv9i` is enabled, that explanation is wrong
-and the next candidate is the account's usage window, which the heartbeat's own alert text already
-names first.
+**CONFIRMED the same day, by direct observation.** The moment the session came back to life,
+**seventeen** build ticks arrived at once — every fire from 08 Sep 12:23 through 12 Sep 12:21,
+delivered in one batch, none of them previously executed. The last tick that actually ran was 08 Sep
+06:22, which is exactly the commit the branch was stuck on. So the wakes were never lost and the
+routine was never broken; they queued against a session with no live container and waited for
+someone to open it. Nothing inside a loop built that way can ever report its own failure, because
+the thing that would report it is the thing that is not running.
+
+**The consequence for anyone reading later:** `last_run: SUCCEEDED` on a persistent-session routine
+means the wake was handed over, and nothing more. Do not read it as evidence that work happened.
+The only honest health signal is a commit on the branch, which is why the heartbeat workflow
+measures exactly that and nothing else.
 
 **The watchdog worked.** Runs 2, 3 and 4 (09, 10 and 11 Sep) all failed deliberately and emailed the
 owner. That part of the design is verified rather than hoped for — the alerting caught a real stall
