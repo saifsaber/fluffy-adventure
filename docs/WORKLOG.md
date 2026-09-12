@@ -88,18 +88,32 @@ version that passes tests but models nothing.
 - [x] **3b. Zone model.** Divide the pitch into named zones and map each `Position` to the zones it
       occupies and contests. Pure data plus a lookup. No probabilities yet.
       Test: every position maps to at least one zone; the eleven positions of a 4-3-3 cover the pitch.
-- [ ] **3c. ⚠️ Space and matchup resolution.** Given both sides' `Tactics` (line height, width,
-      compactness) and their players in a zone, compute how much space each side has there.
-      This is the heart of the product: the same tactical choice must help in one context and hurt in
-      another. Test that explicitly — construct two opponents where a high line wins and where it
-      loses, and assert the sign of the effect flips. If it cannot flip, it is a scalar in disguise.
+- [x] **3c. ⚠️ Space and matchup resolution.** `packages/engine/src/space.ts`. Two guarantees are
+      asserted mechanically rather than argued: **shape tactics conserve presence** — line height,
+      mentality, width and compactness are implemented only as transfers between zones, verified
+      across all 180 combinations, so no setting can ever be a bonus — and **the sign of the effect
+      flips with the opponent**, for all three shape knobs. The gate was itself verified: making the
+      line-height term opponent-independent breaks exactly the three tests that should break.
 - [ ] **3d. Possession chain.** `BUILD_UP → PROGRESSION → FINAL_THIRD → SHOT → outcome`, with
       `TURNOVER` transitions, driven by 3c. Counters incremented as events occur.
       Test: a match produces a plausible number of chains; possession ticks sum correctly.
+      **What 3c hands you:** `resolveSpace(attack, defend) → SpaceMap`, zones in the *attacking*
+      side's frame. `space` is weighted bodies of overload, **not** a probability — 3d owns that
+      mapping and should calibrate it against Step 4's thresholds rather than guess it. Two identical
+      55-rated 4-3-3s give bands of roughly `defensive +1.8 · middle −0.1 · attacking −1.7`, so the
+      final third is legitimately the hardest place to find room. Take the route from
+      `bestAttackingZone(map)`: the grid *total* is the wrong signal, because every shape setting
+      conserves it by construction — only line height and press change how much space exists at all.
+      `map.causes` is already derived from the numbers that produced it, so Step 5 reads causes
+      instead of inventing them.
 - [ ] **3e. ⚠️ xG from shot context.** Distance, angle, pressure, body part, situation → probability.
       Calibrate against public xG norms (penalty ≈ 0.76, a six-yard tap-in high, a 30-yard shot low).
       Test known situations against expected ranges. Never derive xG from the outcome.
 - [ ] **3f. Fitness, momentum, cards, substitutions** over 90 minutes, feeding back into 3c.
+      `fitnessFactor()` is already applied inside `tacticalPresence`, so 3f only has to update
+      `PlayerCondition.fitness` between ticks — it does not have to retrofit fatigue into the
+      resolver. Tiredness shrinks a side's *total* presence, deliberately the one thing no tactic
+      can do.
 - [ ] **3g. Assemble `simulate(MatchInput): MatchResult`** and assert the whole-match determinism
       property: same seed ⇒ byte-identical `MatchResult`, over 1,000 runs.
 
@@ -139,6 +153,40 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-12** — **3c: space and matchup resolution.** `packages/engine/src/space.ts` — the heart of
+  the engine, and the one box where a plausible-looking implementation would have been worse than
+  nothing. Two properties carry the whole claim, and both are mechanical:
+  - **Every shape setting is a conserved transfer.** `lineHeight` moves weight between the defensive
+    and middle bands, `mentality` between middle and attacking, `width` between centre and flanks,
+    `compactness` condenses around the block's gravity band and tucks the flanks in. Roles drift
+    their own player the same way. Nothing anywhere adds. A test sweeps all 180 combinations of the
+    four settings and asserts the grid total is unchanged to nine decimals. **A tactic that cannot
+    raise your total cannot be a bonus in disguise** — the only thing it can do is change where you
+    are strong, which is what a shape is. This is the mechanical form of the rule in
+    `dakka-engine-rules` §4 and it is stronger than any comment.
+  - **The sign flips.** A high line compresses the opponent's build-up *and* leaves grass behind the
+    defence; which term wins depends on whether they can reach it. Against a slow side that builds
+    short it costs them space (−0.34); against a quick side playing direct it gives space away
+    (+1.59). Same setting, opposite sign. Going wide beats a narrow opponent and walks into a wide
+    one. A tight block smothers a central side and is pulled apart by a wing-heavy one. All three
+    are asserted as sign flips, not magnitudes.
+  - **The gate was verified by breaking it.** Replacing the opponent-dependent `threat / recovery`
+    term with a constant made exactly three tests fail — the two line-height flips and the cause
+    that depends on them — and nothing else. A gate never seen to fail is not a gate.
+  - Line height and mentality act on *different* band pairs on purpose, so they cannot double-count.
+    One test asserted the wrong one and failed; the **assertion** was corrected, not the model, and
+    it now pins the split in both directions.
+  - Causes are computed here, from the numbers that produced them — `HIGH_LINE_VS_PACE` fires only
+    when exposure actually exceeds compression, so a slow side facing a high line does not get it.
+    That ordering is the difference between an explanation and a plausible story, and it means the
+    Step 5 trace is a read rather than an invention.
+  - `test/fixtures.ts` gained `patchClub`, `withRoles` and `makeSide`. A test that cannot make one
+    side quick and another composed cannot demonstrate a context-dependent tactic at all.
+  - 96 tests green, lint/typecheck/format clean.
+  - **Next run: 3d, the possession chain.** Read the "What 3c hands you" note on that box before
+    starting — in particular that `space` is not a probability and the grid total is the wrong
+    signal to read.
 
 - **2026-09-07** — Planning complete. Seven agents and two skills built and registered. Step 1 foundation landed: pnpm workspace, TS strict, engine package with a purity guard, CI on push. Autonomous loop armed (every 6h).
 - **2026-09-08** — **3b done: the zone model.** A 3×3 grid (defensive/middle/attacking × left/centre/right), a `FOOTPRINTS` map from every `Position` to the zones it occupies and contests, `zoneOccupancy()` and `zoneStrength()`. Pure data and lookups, no probabilities — those are 3c's job. 15 tests, 71 total.

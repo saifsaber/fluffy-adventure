@@ -28,6 +28,19 @@ export {
 } from './zones.js';
 export type { Band, Channel, Zone, ZoneFootprint, ZonePresence } from './zones.js';
 
+export {
+  bandCompetence,
+  bandSpace,
+  bestAttackingZone,
+  channelSpace,
+  fitnessFactor,
+  gridTotal,
+  indexSquad,
+  resolveSpace,
+  tacticalPresence,
+} from './space.js';
+export type { SideSetup, SpaceMap, ZoneSpace } from './space.js';
+
 export type { ClubId, CompetitionId, MatchId, Named, PlayerId } from './types/ids.js';
 export { clubId, competitionId, matchId, playerId } from './types/ids.js';
 

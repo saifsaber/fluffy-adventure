@@ -1,15 +1,20 @@
 import {
   clubId,
   competitionId,
+  indexSquad,
   matchId,
   playerId,
   type Club,
   type MatchInput,
+  type MentalAttributes,
+  type PhysicalAttributes,
   type Player,
   type PlayerAttributes,
   type Position,
   type PlayerRole,
+  type SideSetup,
   type Tactics,
+  type TechnicalAttributes,
 } from '../src/index.js';
 
 /**
@@ -164,5 +169,70 @@ export function makeMatchInput(seed = 'test-seed'): MatchInput {
       attendance: 900,
       isDerby: false,
     },
+  };
+}
+
+/**
+ * Attribute overrides for a fixture player.
+ *
+ * The flat squads above answer "do the types work". These answer the question 3c actually turns on:
+ * what happens when the *same* shape is filled with different footballers. A test that cannot make
+ * one side quick and another side composed cannot demonstrate a context-dependent tactic.
+ */
+export interface AttributePatch {
+  readonly technical?: Partial<TechnicalAttributes>;
+  readonly physical?: Partial<PhysicalAttributes>;
+  readonly mental?: Partial<MentalAttributes>;
+  readonly fitness?: number;
+}
+
+export function patchPlayer(player: Player, patch: AttributePatch): Player {
+  const { technical, physical, mental, goalkeeping } = player.attributes;
+  return {
+    ...player,
+    attributes: {
+      technical: { ...technical, ...patch.technical },
+      physical: { ...physical, ...patch.physical },
+      mental: { ...mental, ...patch.mental },
+      ...(goalkeeping === undefined ? {} : { goalkeeping }),
+    },
+    condition:
+      patch.fitness === undefined
+        ? player.condition
+        : { ...player.condition, fitness: patch.fitness },
+  };
+}
+
+/** Applies a patch to every player fielded in one of the given positions. */
+export function patchClub(club: Club, byPosition: Partial<Record<Position, AttributePatch>>): Club {
+  return {
+    ...club,
+    squad: club.squad.map((player) => {
+      const natural = player.positions[0];
+      const patch = byPosition[natural];
+      return patch === undefined ? player : patchPlayer(player, patch);
+    }),
+  };
+}
+
+/** Replaces the role assigned to every player fielded in one of the given positions. */
+export function withRoles(
+  tactics: Tactics,
+  byPosition: Partial<Record<Position, PlayerRole>>,
+): Tactics {
+  return {
+    ...tactics,
+    startingXI: tactics.startingXI.map((selection) => {
+      const role = byPosition[selection.position];
+      return role === undefined ? selection : { ...selection, role };
+    }),
+  };
+}
+
+/** A club plus a shape, in the form the matchup resolver takes. */
+export function makeSide(club: Club, overrides: Partial<Tactics> = {}): SideSetup {
+  return {
+    tactics: { ...makeTactics(club), ...overrides },
+    players: indexSquad(club.squad),
   };
 }
