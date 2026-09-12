@@ -24,40 +24,51 @@ unchecked item, and updates this file. Nothing else carries state between runs.
 
 ## Loop health — read this if the branch has gone quiet
 
-Two independent routines drive this loop, on purpose, because the first one failed silently for
-four days and nothing inside it could report that.
+One routine drives this loop, `trig_01MiGgaizGR9rP72iPdkRo7e`, firing into a persistent session every
+six hours (`21 */6 * * *`). `.github/workflows/heartbeat.yml` watches it from outside and fails the
+job — which emails the owner — if the branch is stale ≥26h while boxes remain.
 
-| | |
-|---|---|
-| `trig_01MiGgaizGR9rP72iPdkRo7e` | fires into a **persistent session**, `21 */6 * * *` (00:21 · 06:21 · 12:21 · 18:21 UTC) |
-| `trig_017gCYPs5L6e87wS3kahpv9i` | fires a **fresh container** each time, `21 3,9,15,21 * * *` — offset three hours so the two never run together |
-| `.github/workflows/heartbeat.yml` | outside both. Fails the job — which emails the owner — if the branch is stale ≥26h while boxes remain |
+### What actually stopped it, 2026-09-08 → 2026-09-12
 
-**What went wrong, 2026-09-08 → 2026-09-12.** `3b` landed on 08 Sep at 06:22 and nothing landed
-again until 12 Sep. Every scheduled fire in between reported `SUCCEEDED`, which was misleading: for a
-routine bound to a persistent session that status records only that the **wake was delivered**, not
-that any turn ran. The best-supported explanation is that a remote container is reclaimed after a
-period of inactivity, and a six-hour gap between ticks is longer than that window — so each wake
-arrived at a session with nothing alive to execute it and queued instead. Consistent with the
-evidence: the loop worked while the session was in active use on 07–08 Sep, stopped as soon as it was
-left alone, and the backlog ran the moment the session was next opened.
+**The account's weekly usage limit was exhausted.** A sibling session on the same account records it
+verbatim: *"You've hit your weekly limit · resets Sep 12, 12pm (UTC)"*, with a seven-day rate limit in
+`rejected` state. The window reset at 12:00 UTC on 12 Sep and the very next scheduled tick, 12:21,
+ran and built 3c. Every fire in between — seventeen of them — queued unexecuted and arrived in one
+batch afterwards.
 
-**CONFIRMED the same day, by direct observation.** The moment the session came back to life,
-**seventeen** build ticks arrived at once — every fire from 08 Sep 12:23 through 12 Sep 12:21,
-delivered in one batch, none of them previously executed. The last tick that actually ran was 08 Sep
-06:22, which is exactly the commit the branch was stuck on. So the wakes were never lost and the
-routine was never broken; they queued against a session with no live container and waited for
-someone to open it. Nothing inside a loop built that way can ever report its own failure, because
-the thing that would report it is the thing that is not running.
+**The heartbeat named this on day one.** Its alert text lists *"Weekly usage quota exhausted — it
+resumes on its own when the window resets"* as cause number one, and it fired on 09, 10 and 11 Sep.
+The watchdog was right and was not read.
 
-**The consequence for anyone reading later:** `last_run: SUCCEEDED` on a persistent-session routine
-means the wake was handed over, and nothing more. Do not read it as evidence that work happened.
-The only honest health signal is a commit on the branch, which is why the heartbeat workflow
-measures exactly that and nothing else.
+### A wrong diagnosis, recorded so it is not repeated
 
-**The watchdog worked.** Runs 2, 3 and 4 (09, 10 and 11 Sep) all failed deliberately and emailed the
-owner. That part of the design is verified rather than hoped for — the alerting caught a real stall
-on the first day it happened.
+Earlier on 12 Sep this file claimed the cause was **container reclamation** — that a six-hour gap
+outlived the container, so wakes arrived with nothing to execute them — and labelled it CONFIRMED on
+the strength of those seventeen queued ticks. **That was wrong.** Queued ticks show that turns did not
+run; they say nothing about why. The rate-limit record does, and it fits the timing exactly, to the
+minute of the reset.
+
+Two lessons worth more than the fix:
+
+1. **A symptom consistent with your theory is not evidence for it.** The queue was equally consistent
+   with the true cause, and the true cause was already written down in the alert.
+2. **Check the cheap signal first.** One `list_sessions` call carried the answer the whole time.
+
+### The fresh-container runner, tried and removed
+
+A second routine was created that fires a fresh container per tick, on the theory above. It ran once
+at 15:21 for seven minutes and **pushed nothing**, because a routine created through the API gets no
+repository attached — `sources` and `outcomes` are both empty — so the session can clone this public
+repo but has no credentials to push back. The routine could not do the one thing a build loop exists
+to do, and every fire spent weekly allowance to achieve nothing, so it was deleted.
+
+### What this means for how the loop is run
+
+The mechanism was never broken. The binding constraint is the **weekly allowance**, and the loop
+resumes by itself when the window resets — exactly as the heartbeat says. Throughput is therefore
+bought by making each tick cheap, not by adding runners: a second routine would have doubled the burn
+on the very budget that was the limit. The largest cost per tick is this session's own accumulated
+context, which is why boxes are sized to be finished and pushed in one run.
 
 ---
 
