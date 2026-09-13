@@ -8,8 +8,9 @@
  * honest PvP, and reproducible bug reports — they all break together.
  */
 
-export const ENGINE_VERSION = '0.0.0';
+export { ENGINE_VERSION } from './version.js';
 
+export { simulate } from './simulate.js';
 export { createRng } from './rng.js';
 export type { Rng } from './rng.js';
 

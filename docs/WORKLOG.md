@@ -175,17 +175,36 @@ version that passes tests but models nothing.
       and otherwise every 30 ticks so accumulated fatigue reaches the resolver. Before it, both maps
       were resolved once at kick-off, which made every in-match decision decoration.
 
-- [ ] **3g. Assemble `simulate(MatchInput): MatchResult`** and assert the whole-match determinism
-      property: same seed ⇒ byte-identical `MatchResult`, over 1,000 runs.
-      **What is already built:** `simulateChain` gives possessions, shot contexts, events and
-      `conditionAfter` (per side); `resolveShot` turns each context into a `Shot`. 3g is assembly —
-      count goals from resolved shots, fill `SideStats`, build `PlayerMatchOutcome`, and map
-      `ChainEvent` onto `MatchEvent`. **Leave `passesAttempted`/`passesCompleted` unset**: nothing
-      simulates individual passes yet, so there is no honest moment to increment them.
-      **Score-driven urgency belongs here, not in the chain.** A side chasing a game pushes up, and
-      3g is the first place the score exists — the chain deliberately never learns it, which is what
-      makes xG impossible to reverse-engineer from a result. Implement it as a conserved band
-      transfer, the way momentum already is.
+- [x] **3g. Assemble `simulate(MatchInput): MatchResult`.** `packages/engine/src/simulate.ts`.
+      Determinism asserted over **1,000 runs** of the same seed, byte-identical. The one thing it
+      adds is the **score**, which no earlier stage was allowed to know: shots are resolved as they
+      are struck, so a side behind late throws bodies forward — and a shot's context is frozen
+      before it is resolved, so nothing is ever shaped by its own outcome.
+      `passesAttempted`, `passesCompleted`, `offsides` and `assists` are now **optional and absent**,
+      because nothing counts them. Absent is not zero, and the compiler enforces the difference.
+
+**Step 3 is complete. The engine runs a whole match.**
+
+### Step 3·gap — what Step 4 will fail on
+
+Measured with `simulate()` over 500 matches of two even 55-rated sides. Both of these are real
+missing models, not tuning, and the harness cannot pass without them.
+
+- [ ] **⚠️ Home advantage is 0.006 goals. The blueprint needs +0.3 to +0.4.**
+      Nothing models it at all. `MatchContext` already carries `attendance` and `isDerby`, nothing
+      reads either, and `HOME_CROWD_LIFT` sits unused in the cause registry — the pieces were
+      designed for this and never connected. Travel already costs the away side fitness (3f), which
+      is a start but is worth almost nothing on its own.
+      Build it the way everything else in this engine is built: **as a conserved transfer, not a
+      multiplier on the home side's rating.** A crowd lifts a team's work rate and pushes it up the
+      pitch; it does not make its players better. Scale it by `attendance` against the stadium's
+      capacity so a full small ground beats an empty big one, and let `isDerby` raise both the lift
+      and the aggression. Then re-measure the split — it is currently home 1.434, away 1.428.
+- [ ] **Sanity-check the strength curve against real league spread.** A 68-rated side beats a
+      46-rated one 93.3% of the time. That may well be correct for a gap that large; the threshold
+      of 55–65% is about the *league's* typical gap, so it has to be measured on the real Egyptian
+      fourth-division ratings rather than on invented extremes. Do this inside Step 4 with the actual
+      content, not with fixtures.
 
 ### Step 4 — the gate
 > **Two things measured in 3f for the harness to judge.** (1) Goals a match are **2.85** against the
@@ -229,6 +248,38 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-13** — **3g: `simulate()`, and Step 3 is complete.** The engine plays a whole match.
+  - **Determinism holds over 1,000 runs** of the same seed, byte for byte. That is the property
+    counterfactual replay, the seeded daily challenge, honest PvP and reproducible bug reports all
+    rest on, and they die together, so it is checked at a thousand rather than at two.
+  - **`simulate()` decides nothing.** Possessions came from the chain, xG from a curve that cannot
+    see the shooter, outcomes from a resolver that cannot see the future. This file tallies them,
+    which is why it is short and why there is nowhere in it to invent a number.
+  - **The one thing it adds is the score.** Shots are resolved the instant they are struck, so the
+    running score reaches the chain in time to change what happens next — a side a goal down late
+    throws bodies forward, as a conserved transfer, and can be caught on the break for it. The
+    ordering guarantee is the point: a shot's context is frozen *before* it is resolved, so the score
+    changes what follows and never reaches backwards. 17.9% of goals now come after the 75th minute.
+  - **`passesAttempted`, `passesCompleted`, `offsides` and `assists` became optional.** Nothing
+    counts a pass or an offside line, so there is no honest moment to increment them, and a zero
+    would claim we looked and found none. Absent now differs from zero at the type level, and the
+    compiler will not let a UI read one without handling it. Verified by filling them in with
+    plausible values derived from possession — the exact competitor pattern — which fails the test
+    immediately.
+  - **Ratings are built only from counted contributions**: goals, the xG of the chances a player got
+    into, saves, goals conceded, fouls and cards. No form fudge and no jitter, so a player who did
+    nothing gets 6.0 every time — which means a rating can be *explained* rather than merely shown.
+  - **The trace is emitted empty on purpose.** It is Step 5's, and an empty trace has to be a legible
+    state rather than a hole someone quietly patches, because `dakka-engine-rules` §6 says a thin
+    trace means a short debrief and the model does not fill the gap. A test asserts it is empty.
+  - **Two gaps measured and filed above as `Step 3·gap`.** Home advantage is **0.006** against a
+    required +0.3–0.4 — nothing models the crowd at all, though `attendance`, `isDerby` and
+    `HOME_CROWD_LIFT` were all designed for it and left unconnected. And the strength curve needs
+    checking against the real league's spread rather than invented extremes.
+  - 203 tests green, lint/typecheck/format clean.
+  - **Next run: home advantage.** It is the last thing standing between the engine and the Step 4
+    harness, and the note on that box says how to build it without reaching for a multiplier.
 
 - **2026-09-13** — **3f: fitness, momentum, cards and substitutions.** The box that makes 3c live.
   - **The structural change.** Both space maps used to be resolved once at kick-off and never again.

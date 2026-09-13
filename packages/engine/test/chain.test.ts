@@ -317,6 +317,7 @@ describe('possession share', () => {
       home: emptyChainStats(),
       away: emptyChainStats(),
       ticks: 0,
+      score: { home: 0, away: 0 },
       conditionAfter: { home: new Map(), away: new Map() },
     };
     expect(possessionShare(empty)).toEqual({ home: 0.5, away: 0.5 });

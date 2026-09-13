@@ -109,24 +109,39 @@ export interface SideStats {
   readonly fouls: number;
   readonly yellowCards: number;
   readonly redCards: number;
-  readonly offsides: number;
   /** Sum of every shot's xg. Derived, never assigned. */
   readonly xg: number;
-  /** Completed passes, counted. */
-  readonly passesCompleted: number;
-  readonly passesAttempted: number;
   /** Ticks of possession, counted. Percentage is computed at render time from both sides. */
   readonly possessionTicks: number;
+
+  /**
+   * Not measured yet — and **absent is not zero**.
+   *
+   * Nothing in the engine simulates individual passes or an offside line, so there is no moment at
+   * which either counter could honestly be incremented. Leaving them optional makes "we did not
+   * measure this" a different value from "this happened zero times", which is the whole difference
+   * between an empty stats row and a fabricated one. A UI must render them as absent, never as 0.
+   *
+   * They become required the day something counts them. Until then the compiler will not let anyone
+   * read one without handling the undefined.
+   */
+  readonly passesCompleted?: number;
+  readonly passesAttempted?: number;
+  readonly offsides?: number;
 }
 
 export interface PlayerMatchOutcome {
   readonly playerId: PlayerId;
   readonly minutesPlayed: number;
   readonly goals: number;
-  readonly assists: number;
   /** 1–10, derived from contributions actually recorded during the match. */
   readonly rating: number;
   readonly conditionAfter: PlayerCondition;
+  /**
+   * Not measured yet, for the same reason as `SideStats.passesCompleted`: the chain models a phase
+   * of play rather than the pass that set up the shot, so there is nobody to credit. Absent, not 0.
+   */
+  readonly assists?: number;
 }
 
 export interface MatchResult {

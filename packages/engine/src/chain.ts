@@ -14,7 +14,7 @@ import {
   YELLOW_PER_FOUL,
   type Intensity,
 } from './condition.js';
-import type { BodyPart, Shot, ShotSituation } from './types/match.js';
+import type { BodyPart, Shot, ShotOutcome, ShotSituation } from './types/match.js';
 import type { CauseTag } from './types/trace.js';
 import type { PassingDirectness, Tempo } from './types/tactics.js';
 import {
@@ -112,6 +112,11 @@ export interface ChainResult {
   readonly away: ChainStats;
   readonly ticks: number;
   /**
+   * Goals, when a `resolve` callback was supplied — otherwise both zero, because without one the
+   * chain genuinely does not know whether anything went in.
+   */
+  readonly score: { readonly home: number; readonly away: number };
+  /**
    * Every player's condition at full time, counted down tick by tick rather than assigned. This is
    * what feeds the next match, and what `tacticalPresence` was already reading.
    *
@@ -138,6 +143,18 @@ export interface ChainInput {
   readonly minutes: number;
   /** Kilometres the away side travelled. A real lower-league fatigue input. */
   readonly awayTravelKm?: number;
+  /**
+   * Called the instant a shot is struck, before play resumes. Optional.
+   *
+   * This is the **only** way the chain ever learns a score, and the ordering matters: a shot's own
+   * context — where it came from, how pressed, off which body part — is computed and frozen before
+   * this is called, so no shot is ever shaped by its own outcome, or by any later one. What the
+   * score does change is what happens *next*, which is exactly what it changes in football: a side
+   * a goal down with ten minutes left throws bodies forward.
+   *
+   * Leave it out and the chain runs as it always has, knowing nothing about goals at all.
+   */
+  readonly resolve?: (shot: ShotContext, keeper: PlayerId | undefined) => ShotOutcome;
 }
 
 /** Something that happened, recorded when it happened. */
@@ -476,6 +493,7 @@ interface LiveSide {
   readonly sentOff: Set<PlayerId>;
   readonly used: Set<PlayerId>;
   momentum: number;
+  urgency: number;
   travel: number;
   applied: number;
   dirty: boolean;
@@ -493,6 +511,7 @@ function liveSide(side: ChainSide, travel: number): LiveSide {
     sentOff: new Set(),
     used: new Set(),
     momentum: 0,
+    urgency: 0,
     travel,
     applied: 0,
     dirty: true,
@@ -519,6 +538,7 @@ function snapshot(live: LiveSide): SideSetup {
         : { ...live.tactics, startingXI },
     players,
     momentum: live.momentum,
+    urgency: live.urgency,
   };
 }
 
@@ -712,6 +732,20 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
     stats[side] = { ...stats[side], ...patch };
   };
 
+  const score: Record<Side, number> = { home: 0, away: 0 };
+
+  /**
+   * How hard a side is chasing, from the deficit and how little time is left.
+   *
+   * Nothing before the hour: a side a goal down on twenty minutes has time to play properly. From
+   * there it climbs to the full deficit at the whistle.
+   */
+  const urgencyFor = (who: Side, minute: number): number => {
+    const deficit = score[other(who)] - score[who];
+    const lateness = Math.max(0, (minute - 55) / 35);
+    return clamp(deficit, -2, 2) * clamp(lateness, 0, 1);
+  };
+
   let tick = 0;
   let side: Side = 'home';
   let entryPhase: EntryPhase = 'BUILD_UP';
@@ -727,6 +761,8 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
     const minute = Math.min(input.minutes, Math.floor(tick / TICKS_PER_MINUTE) + 1);
     applyDecisions(live.home, minute, 'home', events);
     applyDecisions(live.away, minute, 'away', events);
+    live.home.urgency = urgencyFor('home', minute);
+    live.away.urgency = urgencyFor('away', minute);
     refresh(tick);
 
     const attack = setups[side];
@@ -883,6 +919,17 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
         shots.push(shot);
         reached = 'SHOT';
         ended = 'shot';
+
+        if (input.resolve !== undefined) {
+          // The context above is already frozen. Only what happens *after* this can be affected.
+          const keeperOf = setups[other(side)].tactics.startingXI.find((s) => s.position === 'GK');
+          if (input.resolve(shot, keeperOf?.playerId) === 'goal') {
+            score[side] += 1;
+            // A goal reshapes both sides at once, so neither waits for the tick schedule.
+            live.home.dirty = true;
+            live.away.dirty = true;
+          }
+        }
         stats[side] = {
           ...stats[side],
           shots: stats[side].shots + 1,
@@ -949,6 +996,7 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
     home: stats.home,
     away: stats.away,
     ticks: tick,
+    score: { home: score.home, away: score.away },
     conditionAfter: { home: finalCondition(live.home), away: finalCondition(live.away) },
   };
 }

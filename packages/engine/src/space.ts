@@ -68,6 +68,14 @@ export interface SideSetup {
    * behind is a real thing that should be able to cost them.
    */
   readonly momentum?: number;
+  /**
+   * How hard the side is chasing the game, roughly −2 to 2. Optional; absent means level.
+   *
+   * Distinct from momentum on purpose. Momentum is "we are on top"; urgency is "we are losing and
+   * running out of time", and a debrief that cannot tell those apart is telling the manager the
+   * wrong story. Both act as the same conserved transfer, so neither is a bonus.
+   */
+  readonly urgency?: number;
 }
 
 export interface ZoneSpace {
@@ -292,6 +300,16 @@ const COMPACT_CHANNEL: Record<Compactness, number> = { tight: -0.15, balanced: 0
 /** How far forward a side on top pushes, at full momentum. */
 export const MOMENTUM_BAND_SHIFT = 0.03;
 
+/**
+ * How far forward a side throws itself when it is losing and time is short.
+ *
+ * Larger than momentum because chasing a game genuinely reshapes a team — and, being a conserved
+ * transfer, it empties the areas those bodies came from. A side pushing for an equaliser and being
+ * caught on the break is one of football's most familiar endings, and it should fall out of this
+ * rather than be scripted.
+ */
+export const URGENCY_BAND_SHIFT = 0.09;
+
 /** Where the block's weight sits, which is what compactness condenses around. */
 const BLOCK_GRAVITY: Record<LineHeight, Band> = {
   deep: 'defensive',
@@ -395,7 +413,8 @@ export function tacticalPresence(side: SideSetup): Grid {
     grid,
     'middle',
     'attacking',
-    clamp(side.momentum ?? 0, -1.5, 1.5) * MOMENTUM_BAND_SHIFT,
+    clamp(side.momentum ?? 0, -1.5, 1.5) * MOMENTUM_BAND_SHIFT +
+      clamp(side.urgency ?? 0, -2, 2) * URGENCY_BAND_SHIFT,
   );
 
   return grid;
