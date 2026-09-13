@@ -47,14 +47,33 @@ export { PENALTY_XG, XG_ANCHORS, expectedGoals, isOnTarget, resolveShot } from '
 export type { XgAnchor } from './xg.js';
 export type {
   ChainEnd,
+  ChainEvent,
   ChainInput,
   ChainPhase,
   ChainResult,
+  ChainSide,
   ChainStats,
+  EntryPhase,
+  FieldPhase,
   Possession,
   ShotContext,
   Side,
 } from './chain.js';
+
+export {
+  MOMENTUM_DECAY,
+  MOMENTUM_LIMIT,
+  MOMENTUM_PER_CHANCE,
+  MOMENTUM_PER_FINAL_THIRD,
+  PENALTY_PER_BOX_FOUL,
+  STRAIGHT_RED_PER_FOUL,
+  YELLOW_PER_FOUL,
+  decayMomentum,
+  drainPerTick,
+  foulChance,
+  travelBurden,
+} from './condition.js';
+export type { Intensity } from './condition.js';
 
 export type { ClubId, CompetitionId, MatchId, Named, PlayerId } from './types/ids.js';
 export { clubId, competitionId, matchId, playerId } from './types/ids.js';

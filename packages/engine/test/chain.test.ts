@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  BANDS,
   CAUSE_REGISTRY,
   FOOTPRINTS,
   goalAngle,
@@ -24,6 +25,19 @@ import { makeClub, makeSide } from './fixtures.js';
  */
 
 const base = makeClub('base', 55);
+
+const emptyChainStats = (): ChainResult['home'] => ({
+  possessions: 0,
+  possessionTicks: 0,
+  shots: 0,
+  corners: 0,
+  turnovers: 0,
+  fouls: 0,
+  yellowCards: 0,
+  redCards: 0,
+  penaltiesAwarded: 0,
+  reached: { BUILD_UP: 0, PROGRESSION: 0, FINAL_THIRD: 0, SHOT: 0 },
+});
 const evenMatch = (seed: string): ChainResult =>
   simulateChain({ home: makeSide(base), away: makeSide(base), minutes: 90 }, createRng(seed));
 
@@ -112,9 +126,15 @@ describe('no shot exists without a chain that produced it', () => {
       const last = possession.route[possession.route.length - 1];
       expect(last).toBeDefined();
       expect(bandOf(last!)).toBe('attacking');
-      // A possession that started in build-up must have visited all three bands to get here.
-      if (possession.route.length >= 3) {
-        expect(bandOf(possession.route[0]!)).toBe('defensive');
+      // The route only ever goes forward. Asserting "three zones means it started in defence" was
+      // the wrong shape for this: a possession won high starts in midfield, and one that wins a
+      // corner revisits the final third, so length says nothing about where it began.
+      const order = possession.route.map((zone) => BANDS.indexOf(bandOf(zone)));
+      for (let i = 1; i < order.length; i++) {
+        expect(
+          order[i],
+          `route went backwards: ${possession.route.join(' → ')}`,
+        ).toBeGreaterThanOrEqual(order[i - 1]!);
       }
     }
   });
@@ -172,7 +192,9 @@ describe('no shot exists without a chain that produced it', () => {
       for (const possession of result.possessions) {
         if (possession.turnoverCause === undefined) continue;
         expect(CAUSE_REGISTRY[possession.turnoverCause]).toBeDefined();
-        expect(possession.ended).toBe('turnover');
+        // Not `toBe('turnover')`: the ball can be lost and the whistle go before the next one
+        // starts, which marks the possession `full_time`. What a named cause rules out is a shot.
+        expect(possession.ended).not.toBe('shot');
       }
     }
   });
@@ -291,23 +313,11 @@ describe('possession share', () => {
     const empty: ChainResult = {
       possessions: [] as readonly Possession[],
       shots: [],
-      home: {
-        possessions: 0,
-        possessionTicks: 0,
-        shots: 0,
-        corners: 0,
-        turnovers: 0,
-        reached: { BUILD_UP: 0, PROGRESSION: 0, FINAL_THIRD: 0, SHOT: 0 },
-      },
-      away: {
-        possessions: 0,
-        possessionTicks: 0,
-        shots: 0,
-        corners: 0,
-        turnovers: 0,
-        reached: { BUILD_UP: 0, PROGRESSION: 0, FINAL_THIRD: 0, SHOT: 0 },
-      },
+      events: [],
+      home: emptyChainStats(),
+      away: emptyChainStats(),
       ticks: 0,
+      conditionAfter: { home: new Map(), away: new Map() },
     };
     expect(possessionShare(empty)).toEqual({ home: 0.5, away: 0.5 });
   });

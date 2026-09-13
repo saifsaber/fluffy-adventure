@@ -59,6 +59,15 @@ export interface SideSetup {
   readonly tactics: Tactics;
   /** Every player named in `tactics.startingXI`, keyed by id. */
   readonly players: ReadonlyMap<PlayerId, Player>;
+  /**
+   * Recent balance of chances, roughly −1.5 to 1.5. Optional; absent means level.
+   *
+   * A side on top pushes up. That is all momentum is here, and it is applied as the same conserved
+   * transfer every tactical setting uses — so it cannot raise a side's total presence, and like any
+   * other shape change the right opponent can punish it. A team pressing for a winner leaving space
+   * behind is a real thing that should be able to cost them.
+   */
+  readonly momentum?: number;
 }
 
 export interface ZoneSpace {
@@ -280,6 +289,9 @@ const WIDTH_SHIFT: Record<TeamWidth, number> = { narrow: -0.18, balanced: 0, wid
 const COMPACT_BAND: Record<Compactness, number> = { tight: 0.16, balanced: 0, loose: -0.13 };
 const COMPACT_CHANNEL: Record<Compactness, number> = { tight: -0.15, balanced: 0, loose: 0.13 };
 
+/** How far forward a side on top pushes, at full momentum. */
+export const MOMENTUM_BAND_SHIFT = 0.03;
+
 /** Where the block's weight sits, which is what compactness condenses around. */
 const BLOCK_GRAVITY: Record<LineHeight, Band> = {
   deep: 'defensive',
@@ -379,6 +391,12 @@ export function tacticalPresence(side: SideSetup): Grid {
   grid = transferChannels(grid, WIDTH_SHIFT[tactics.width]);
   grid = condenseBands(grid, BLOCK_GRAVITY[tactics.lineHeight], COMPACT_BAND[tactics.compactness]);
   grid = transferChannels(grid, COMPACT_CHANNEL[tactics.compactness]);
+  grid = transferBands(
+    grid,
+    'middle',
+    'attacking',
+    clamp(side.momentum ?? 0, -1.5, 1.5) * MOMENTUM_BAND_SHIFT,
+  );
 
   return grid;
 }

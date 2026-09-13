@@ -169,15 +169,31 @@ version that passes tests but models nothing.
       (blueprint wants 2.5–2.8) and mean xG per shot **0.047 → 0.115** (football is ~0.11), without
       touching the xG curve. The distance bands are now asserted against published football.
 
-- [ ] **3f. Fitness, momentum, cards, substitutions** over 90 minutes, feeding back into 3c.
-      `fitnessFactor()` is already applied inside `tacticalPresence`, so 3f only has to update
-      `PlayerCondition.fitness` between ticks — it does not have to retrofit fatigue into the
-      resolver. Tiredness shrinks a side's *total* presence, deliberately the one thing no tactic
-      can do.
+- [x] **3f. Fitness, momentum, cards, substitutions.** `packages/engine/src/condition.ts` plus live
+      match state in `chain.ts`. **This is the box that makes 3c live:** the space maps are now
+      rebuilt whenever something discrete happens — a substitution, a sending-off, a shape change —
+      and otherwise every 30 ticks so accumulated fatigue reaches the resolver. Before it, both maps
+      were resolved once at kick-off, which made every in-match decision decoration.
+
 - [ ] **3g. Assemble `simulate(MatchInput): MatchResult`** and assert the whole-match determinism
       property: same seed ⇒ byte-identical `MatchResult`, over 1,000 runs.
+      **What is already built:** `simulateChain` gives possessions, shot contexts, events and
+      `conditionAfter` (per side); `resolveShot` turns each context into a `Shot`. 3g is assembly —
+      count goals from resolved shots, fill `SideStats`, build `PlayerMatchOutcome`, and map
+      `ChainEvent` onto `MatchEvent`. **Leave `passesAttempted`/`passesCompleted` unset**: nothing
+      simulates individual passes yet, so there is no honest moment to increment them.
+      **Score-driven urgency belongs here, not in the chain.** A side chasing a game pushes up, and
+      3g is the first place the score exists — the chain deliberately never learns it, which is what
+      makes xG impossible to reverse-engineer from a result. Implement it as a conserved band
+      transfer, the way momentum already is.
 
 ### Step 4 — the gate
+> **Two things measured in 3f for the harness to judge.** (1) Goals a match are **2.85** against the
+> stated 2.5–2.8: open play and set pieces give 2.68, which is inside the band, and correctly-rated
+> penalties add 0.19 on top. Each component matches real football on its own, so detuning one to slip
+> under the ceiling would break something that is currently right. (2) The attacking-vs-deep-block
+> pairing has now thrown three odd readings across 3d, 3d·fix and 3f, and wants a proper look.
+
 - [ ] 10,000-season headless harness
 - [ ] Thresholds per `docs/01-product/03-technical-blueprint.md`: goals/match 2.5–2.8 · home advantage +0.3–0.4 · xG↔goals r>0.9 · champion 78–95 pts · stronger side wins 55–65% · every tactic has a context-dependent effect · determinism 100%
 - [ ] **Gate: no UI work begins until this passes.** Fix the engine, never the thresholds.
@@ -213,6 +229,45 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-13** — **3f: fitness, momentum, cards and substitutions.** The box that makes 3c live.
+  - **The structural change.** Both space maps used to be resolved once at kick-off and never again.
+    A substitution changed nothing, a sending-off changed nothing, ninety minutes of running changed
+    nothing — `InMatchDecision` had been a typed union since Step 1 and **no code read it**. The maps
+    are now rebuilt on any discrete event and otherwise every 30 ticks, which is cheap enough for a
+    10,000-season harness and still lets fatigue reach the resolver.
+  - **Verified by reverting it.** Putting back the resolve-once behaviour fails four tests, including
+    one where a sent-off player carries on committing fouls for the rest of the match.
+  - **Everything is counted when it happens**, per side, and the rates land on football: **21.9
+    fouls** (real ~22), **3.38 yellows** (~3.5), **0.200 reds** (~0.2), **0.204 penalties** (~0.25).
+  - **Effort is the resource shape cannot conjure.** A gegenpress / fast / ultra-attacking side ends
+    on **70.3** fitness where a contain / slow / ultra-defensive one ends on **89.9**. That is the
+    counterweight to 3c's conservation guarantee: no tactic can raise your total presence, but
+    running yourself into the ground genuinely lowers it.
+  - **Reds were twice the real rate until a real mechanism fixed them.** Rather than shaving the
+    constant, a booked player now pulls out of challenges — ordinary football, and it took second
+    bookings from 0.42 a match to 0.20 on its own.
+  - **A found API flaw, worth recording.** `conditionAfter` was one map keyed by player id. Two
+    squads sharing an id — as the fixtures do — let one side's fatigue silently overwrite the
+    other's, and it hid the entire intensity model for a full probe run: gegenpress and contain both
+    read 84.5. It is per side now, and a test deliberately plays a squad against itself to keep it
+    that way. The lesson is the general one: a merge keyed on something not guaranteed unique will
+    fail quietly and look like a modelling result.
+  - **Momentum is chances and territory, decayed — never goals.** The chain still does not know the
+    score, which is what keeps xG impossible to reverse-engineer from a result. It acts as a
+    conserved band transfer like every other shape change, so a side pressing for a winner leaves
+    space behind and the right opponent can punish it. Conservation is asserted for it too.
+  - **Goals a match are 2.85 against the stated 2.5–2.8, and I did not tune to hide it.** Measured
+    over 600 matches: goals 2.853 against xG 2.867, a ratio of 0.995, so the calibration identity
+    holds. Open play and set pieces are 2.68 — inside the band — and penalties, awarded at the real
+    rate, add 0.19. Every component is individually right, so shaving one to slip under the ceiling
+    would break something correct. Flagged for the harness under Step 4 with the decomposition.
+  - One older test was over-specified and failed once counters and corners could share a route: it
+    read "three zones means the possession started in defence". Replaced with the actual invariant,
+    that a route never goes backwards through the bands.
+  - 181 tests green, lint/typecheck/format clean.
+  - **Next run: 3g — assemble `simulate()`.** Read the note on that box: it is assembly, pass stats
+    stay unset, and score-driven urgency belongs there because 3g is the first place a score exists.
 
 - **2026-09-13** — **3d·fix: the shot quality distribution.** The box 3e opened, and the one that was
   standing between this engine and Step 4.

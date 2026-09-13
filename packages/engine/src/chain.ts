@@ -1,6 +1,19 @@
 import type { Rng } from './rng.js';
 import type { PlayerId } from './types/ids.js';
-import type { Player } from './types/player.js';
+import type { Player, PlayerCondition } from './types/player.js';
+import type { InMatchDecision, Selection, Tactics } from './types/tactics.js';
+import {
+  decayMomentum,
+  drainPerTick,
+  foulChance,
+  travelBurden,
+  MOMENTUM_PER_CHANCE,
+  MOMENTUM_PER_FINAL_THIRD,
+  PENALTY_PER_BOX_FOUL,
+  STRAIGHT_RED_PER_FOUL,
+  YELLOW_PER_FOUL,
+  type Intensity,
+} from './condition.js';
 import type { BodyPart, Shot, ShotSituation } from './types/match.js';
 import type { CauseTag } from './types/trace.js';
 import type { PassingDirectness, Tempo } from './types/tactics.js';
@@ -9,6 +22,7 @@ import {
   ZONES,
   bandOf,
   channelOf,
+  mirror,
   type Band,
   type Channel,
   type Zone,
@@ -82,6 +96,10 @@ export interface ChainStats {
   readonly shots: number;
   readonly corners: number;
   readonly turnovers: number;
+  readonly fouls: number;
+  readonly yellowCards: number;
+  readonly redCards: number;
+  readonly penaltiesAwarded: number;
   /** How many possessions got at least as far as each phase. */
   readonly reached: Record<ChainPhase, number>;
 }
@@ -89,17 +107,70 @@ export interface ChainStats {
 export interface ChainResult {
   readonly possessions: readonly Possession[];
   readonly shots: readonly ShotContext[];
+  readonly events: readonly ChainEvent[];
   readonly home: ChainStats;
   readonly away: ChainStats;
   readonly ticks: number;
+  /**
+   * Every player's condition at full time, counted down tick by tick rather than assigned. This is
+   * what feeds the next match, and what `tacticalPresence` was already reading.
+   *
+   * Kept per side rather than merged into one map: two squads can legitimately field the same player
+   * id in a test fixture or a friendly against a reserve side, and a merged map silently lets one
+   * side's fatigue overwrite the other's. That bug hid the entire intensity model for one probe run.
+   */
+  readonly conditionAfter: {
+    readonly home: ReadonlyMap<PlayerId, PlayerCondition>;
+    readonly away: ReadonlyMap<PlayerId, PlayerCondition>;
+  };
+}
+
+/** A side, plus whatever the manager does to it while the match is running. */
+export interface ChainSide extends SideSetup {
+  /** Ordered by minute. Anything the manager changes mid-match. */
+  readonly decisions?: readonly InMatchDecision[];
 }
 
 export interface ChainInput {
-  readonly home: SideSetup;
-  readonly away: SideSetup;
+  readonly home: ChainSide;
+  readonly away: ChainSide;
   /** Regulation minutes. 90 for a league match. */
   readonly minutes: number;
+  /** Kilometres the away side travelled. A real lower-league fatigue input. */
+  readonly awayTravelKm?: number;
 }
+
+/** Something that happened, recorded when it happened. */
+export type ChainEvent =
+  | {
+      readonly kind: 'foul';
+      readonly minute: number;
+      readonly side: Side;
+      readonly player: PlayerId;
+    }
+  | {
+      readonly kind: 'card';
+      readonly minute: number;
+      readonly side: Side;
+      readonly player: PlayerId;
+      readonly colour: 'yellow' | 'red';
+      /** True when the red came from a second booking rather than a straight dismissal. */
+      readonly second: boolean;
+    }
+  | {
+      readonly kind: 'substitution';
+      readonly minute: number;
+      readonly side: Side;
+      readonly off: PlayerId;
+      readonly on: PlayerId;
+    }
+  | {
+      readonly kind: 'tactical_change';
+      readonly minute: number;
+      readonly side: Side;
+      readonly what: InMatchDecision['kind'];
+    }
+  | { readonly kind: 'penalty_awarded'; readonly minute: number; readonly side: Side };
 
 /** One tick is ten seconds. Fine enough for possession share, coarse enough to stay cheap. */
 export const TICKS_PER_MINUTE = 6;
@@ -213,6 +284,10 @@ function emptyStats(): ChainStats {
     shots: 0,
     corners: 0,
     turnovers: 0,
+    fouls: 0,
+    yellowCards: 0,
+    redCards: 0,
+    penaltiesAwarded: 0,
     reached: { BUILD_UP: 0, PROGRESSION: 0, FINAL_THIRD: 0, SHOT: 0 },
   };
 }
@@ -387,28 +462,251 @@ function turnoverCause(phase: FieldPhase, map: SpaceMap, defend: SideSetup): Cau
   return undefined;
 }
 
+/** How often the space maps are rebuilt when nothing discrete has happened. */
+const RECOMPUTE_EVERY_TICKS = 30;
+
+/** One side's mutable state for the duration of a match. */
+interface LiveSide {
+  readonly base: ReadonlyMap<PlayerId, Player>;
+  readonly decisions: readonly InMatchDecision[];
+  tactics: Tactics;
+  /** Live fitness by player id, drained tick by tick. */
+  readonly fitness: Map<PlayerId, number>;
+  readonly yellows: Map<PlayerId, number>;
+  readonly sentOff: Set<PlayerId>;
+  readonly used: Set<PlayerId>;
+  momentum: number;
+  travel: number;
+  applied: number;
+  dirty: boolean;
+}
+
+function liveSide(side: ChainSide, travel: number): LiveSide {
+  const fitness = new Map<PlayerId, number>();
+  for (const [id, player] of side.players) fitness.set(id, player.condition.fitness);
+  return {
+    base: side.players,
+    decisions: [...(side.decisions ?? [])].sort((x, y) => x.minute - y.minute),
+    tactics: side.tactics,
+    fitness,
+    yellows: new Map(),
+    sentOff: new Set(),
+    used: new Set(),
+    momentum: 0,
+    travel,
+    applied: 0,
+    dirty: true,
+  };
+}
+
+/** The side as the resolver should see it right now: live fitness, current shape, eleven or fewer. */
+function snapshot(live: LiveSide): SideSetup {
+  const players = new Map<PlayerId, Player>();
+  for (const [id, player] of live.base) {
+    const current = live.fitness.get(id);
+    players.set(
+      id,
+      current === undefined || current === player.condition.fitness
+        ? player
+        : { ...player, condition: { ...player.condition, fitness: current } },
+    );
+  }
+  const startingXI = live.tactics.startingXI.filter((s) => !live.sentOff.has(s.playerId));
+  return {
+    tactics:
+      startingXI.length === live.tactics.startingXI.length
+        ? live.tactics
+        : { ...live.tactics, startingXI },
+    players,
+    momentum: live.momentum,
+  };
+}
+
+const intensityOf = (tactics: Tactics): Intensity => ({
+  pressing: tactics.pressingIntensity,
+  tempo: tactics.tempo,
+  mentality: tactics.mentality,
+});
+
+function applyShapeChange(tactics: Tactics, decision: InMatchDecision): Tactics {
+  switch (decision.kind) {
+    case 'mentality':
+      return { ...tactics, mentality: decision.to };
+    case 'line_height':
+      return { ...tactics, lineHeight: decision.to };
+    case 'pressing':
+      return { ...tactics, pressingIntensity: decision.to };
+    case 'tempo':
+      return { ...tactics, tempo: decision.to };
+    case 'width':
+      return { ...tactics, width: decision.to };
+    case 'compactness':
+      return { ...tactics, compactness: decision.to };
+    case 'role_change':
+      return {
+        ...tactics,
+        startingXI: tactics.startingXI.map((s): Selection =>
+          s.playerId === decision.playerId ? { ...s, role: decision.to } : s,
+        ),
+      };
+    /* c8 ignore next 2 */
+    default:
+      return tactics;
+  }
+}
+
+/**
+ * Apply everything the manager asked for up to this minute.
+ *
+ * Substitutions and shape changes both mark the side dirty, so the very next possession is resolved
+ * against the new shape rather than the old one. That is the whole point of 3f: before it the space
+ * map was computed once for the match, which made every in-match decision decoration.
+ */
+function applyDecisions(live: LiveSide, minute: number, side: Side, events: ChainEvent[]): void {
+  while (live.applied < live.decisions.length) {
+    const decision = live.decisions[live.applied];
+    if (decision === undefined || decision.minute > minute) break;
+    live.applied += 1;
+
+    if (decision.kind === 'substitution') {
+      // Someone already off, sent off, or not on the bench cannot come on. Silently skipping an
+      // impossible substitution beats recording one that did not happen.
+      const onField = live.tactics.startingXI.some((s) => s.playerId === decision.off);
+      if (!onField || live.used.has(decision.on) || !live.base.has(decision.on)) continue;
+      live.used.add(decision.on);
+      live.tactics = {
+        ...live.tactics,
+        startingXI: live.tactics.startingXI.map((s): Selection =>
+          s.playerId === decision.off
+            ? { playerId: decision.on, position: decision.position, role: decision.role }
+            : s,
+        ),
+      };
+      events.push({ kind: 'substitution', minute, side, off: decision.off, on: decision.on });
+      live.dirty = true;
+      continue;
+    }
+
+    live.tactics = applyShapeChange(live.tactics, decision);
+    events.push({ kind: 'tactical_change', minute, side, what: decision.kind });
+    live.dirty = true;
+  }
+}
+
+/**
+ * Subtract this possession's effort from everyone on the pitch.
+ *
+ * Fitness moves continuously and slowly, so the space maps are not rebuilt on every point lost —
+ * they are rebuilt on the schedule below, which keeps a 10,000-season harness affordable while still
+ * letting accumulated fatigue reach the resolver.
+ */
+function spendFitness(live: LiveSide, ticks: number): void {
+  const intensity = intensityOf(live.tactics);
+  for (const selection of live.tactics.startingXI) {
+    if (live.sentOff.has(selection.playerId)) continue;
+    const player = live.base.get(selection.playerId);
+    const current = live.fitness.get(selection.playerId);
+    if (player === undefined || current === undefined) continue;
+    const spent = drainPerTick(player, selection.role, intensity, live.travel) * ticks;
+    live.fitness.set(selection.playerId, Math.max(0, current - spent));
+  }
+}
+
+/** How much less readily a player already on a yellow goes into a challenge. */
+const BOOKED_CAUTION = 0.3;
+
+/**
+ * Who committed the foul: someone defending the zone the ball was in.
+ *
+ * A player already on a yellow is far less likely to be the one — he pulls out of the challenge,
+ * and his manager is watching. That is ordinary football, and it is also what keeps second bookings
+ * as rare as they actually are: without it this engine sent someone off nearly twice as often as
+ * the real game does.
+ */
+function pickFouler(
+  defence: SideSetup,
+  zone: Zone,
+  booked: ReadonlyMap<PlayerId, number>,
+  rng: Rng,
+): PlayerId | undefined {
+  const there = mirror(zone);
+  const contesting = defence.tactics.startingXI.filter((s) => {
+    const footprint = FOOTPRINTS[s.position];
+    return footprint.occupies.includes(there) || footprint.contests.includes(there);
+  });
+  if (contesting.length === 0) return undefined;
+  // Weighted by aggression: the players who give fouls away are the ones sent to win the ball.
+  const weights = contesting.map((s) => {
+    const player = defence.players.get(s.playerId);
+    const appetite = player === undefined ? 1 : 0.4 + player.attributes.mental.aggression / 100;
+    return (booked.get(s.playerId) ?? 0) > 0 ? appetite * BOOKED_CAUTION : appetite;
+  });
+  const total = weights.reduce((sum, w) => sum + w, 0);
+  let roll = rng.next() * total;
+  for (let i = 0; i < contesting.length; i++) {
+    roll -= weights[i] ?? 0;
+    if (roll <= 0) return contesting[i]?.playerId;
+  }
+  return contesting[contesting.length - 1]?.playerId;
+}
+
+/** Mean aggression of the eleven — what decides how often a challenge becomes a foul. */
+function averageAggression(side: SideSetup): number {
+  let total = 0;
+  let count = 0;
+  for (const selection of side.tactics.startingXI) {
+    const player = side.players.get(selection.playerId);
+    if (player === undefined) continue;
+    total += player.attributes.mental.aggression;
+    count += 1;
+  }
+  return count === 0 ? 50 : total / count;
+}
+
 /**
  * Play the match out, possession by possession.
  *
  * Pure and deterministic: the same seed and the same two setups produce the same possessions in the
  * same order, which is the property counterfactual replay is built on.
+ *
+ * Since 3f the two space maps are **live**. They are rebuilt whenever something discrete happens — a
+ * substitution, a sending-off, a shape change — and otherwise every `RECOMPUTE_EVERY_TICKS`, so
+ * accumulated fatigue reaches the resolver without paying for a rebuild on every possession.
  */
 export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
   const chainRng = rng.fork('chain');
   const totalTicks = Math.round(input.minutes * TICKS_PER_MINUTE);
   const halfway = Math.round(totalTicks / 2);
 
-  const setups: Record<Side, SideSetup> = { home: input.home, away: input.away };
-  // Shapes are fixed for the whole match until in-match decisions arrive in 3f, so the two maps are
-  // resolved once rather than per possession.
-  const maps: Record<Side, SpaceMap> = {
-    home: resolveSpace(input.home, input.away),
-    away: resolveSpace(input.away, input.home),
+  const live: Record<Side, LiveSide> = {
+    home: liveSide(input.home, 0),
+    away: liveSide(input.away, travelBurden(input.awayTravelKm ?? 0)),
   };
 
   const stats: Record<Side, ChainStats> = { home: emptyStats(), away: emptyStats() };
   const possessions: Possession[] = [];
   const shots: ShotContext[] = [];
+  const events: ChainEvent[] = [];
+
+  const setups: Record<Side, SideSetup> = { home: snapshot(live.home), away: snapshot(live.away) };
+  const maps: Record<Side, SpaceMap> = {
+    home: resolveSpace(setups.home, setups.away),
+    away: resolveSpace(setups.away, setups.home),
+  };
+  let lastResolved = 0;
+  live.home.dirty = false;
+  live.away.dirty = false;
+
+  const refresh = (at: number): void => {
+    if (at - lastResolved < RECOMPUTE_EVERY_TICKS && !live.home.dirty && !live.away.dirty) return;
+    setups.home = snapshot(live.home);
+    setups.away = snapshot(live.away);
+    maps.home = resolveSpace(setups.home, setups.away);
+    maps.away = resolveSpace(setups.away, setups.home);
+    live.home.dirty = false;
+    live.away.dirty = false;
+    lastResolved = at;
+  };
 
   const bump = (side: Side, patch: Partial<Omit<ChainStats, 'reached'>>): void => {
     stats[side] = { ...stats[side], ...patch };
@@ -420,12 +718,16 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
   let secondHalfStarted = false;
 
   while (tick < totalTicks) {
-    // The away side kicks off the second half, and the ball is reset rather than carried over.
     if (!secondHalfStarted && tick >= halfway) {
       secondHalfStarted = true;
       side = 'away';
       entryPhase = 'BUILD_UP';
     }
+
+    const minute = Math.min(input.minutes, Math.floor(tick / TICKS_PER_MINUTE) + 1);
+    applyDecisions(live.home, minute, 'home', events);
+    applyDecisions(live.away, minute, 'away', events);
+    refresh(tick);
 
     const attack = setups[side];
     const defend = setups[other(side)];
@@ -440,6 +742,7 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
     let shot: ShotContext | undefined;
     let cause: CauseTag | undefined;
     let corner = false;
+    let penalty = false;
 
     const tempo =
       TEMPO_TICKS[attack.tactics.tempo] * DIRECTNESS_TICKS[attack.tactics.passingDirectness];
@@ -468,7 +771,60 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
         continue;
       }
 
-      // A final-third attempt that breaks down sometimes goes out for a corner rather than away.
+      // The ball was lost. Sometimes it was taken; sometimes it was a foul.
+      const defending = other(side);
+      if (chainRng.bool(foulChance(averageAggression(defend), defend.tactics.pressingIntensity))) {
+        const fouler = pickFouler(defend, zone, live[defending].yellows, chainRng);
+        if (fouler !== undefined) {
+          const defenceLive = live[defending];
+          bump(defending, { fouls: stats[defending].fouls + 1 });
+          events.push({ kind: 'foul', minute, side: defending, player: fouler });
+
+          const straightRed = chainRng.bool(STRAIGHT_RED_PER_FOUL);
+          if (straightRed || chainRng.bool(YELLOW_PER_FOUL)) {
+            const priors = defenceLive.yellows.get(fouler) ?? 0;
+            const second = !straightRed && priors >= 1;
+            if (straightRed || second) {
+              defenceLive.sentOff.add(fouler);
+              defenceLive.dirty = true;
+              bump(defending, { redCards: stats[defending].redCards + 1 });
+              events.push({
+                kind: 'card',
+                minute,
+                side: defending,
+                player: fouler,
+                colour: 'red',
+                second,
+              });
+            } else {
+              defenceLive.yellows.set(fouler, priors + 1);
+              bump(defending, { yellowCards: stats[defending].yellowCards + 1 });
+              events.push({
+                kind: 'card',
+                minute,
+                side: defending,
+                player: fouler,
+                colour: 'yellow',
+                second: false,
+              });
+            }
+          }
+
+          // A foul in the box is the most expensive thing a defender can do.
+          if (
+            step === 'FINAL_THIRD' &&
+            channelOf(zone) === 'centre' &&
+            chainRng.bool(PENALTY_PER_BOX_FOUL)
+          ) {
+            penalty = true;
+            bump(side, { penaltiesAwarded: stats[side].penaltiesAwarded + 1 });
+            events.push({ kind: 'penalty_awarded', minute, side });
+            phase = 'SHOT';
+            continue;
+          }
+        }
+      }
+
       if (step === 'FINAL_THIRD' && chainRng.bool(0.18)) {
         corner = true;
         bump(side, { corners: stats[side].corners + 1 });
@@ -485,35 +841,43 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
 
     if (phase === 'SHOT') {
       const zone = route[route.length - 1] as Zone;
-      const shooter = pickShooter(attack, zone, chainRng);
-      if (shooter !== undefined) {
-        const room = map.zones[zone].space;
-        const situation: ShotSituation = corner
+      const situation: ShotSituation = penalty
+        ? 'penalty'
+        : corner
           ? 'set_piece'
           : startedOnCounter
             ? 'counter'
             : 'open_play';
-        const { distanceM, angleDeg, penetration } = shotGeometry(zone, room, situation, chainRng);
+      const shooter = penalty
+        ? attack.tactics.setPieceTakers.penalties
+        : pickShooter(attack, zone, chainRng);
+      if (shooter !== undefined) {
+        const room = map.zones[zone].space;
+        const geometry = penalty
+          ? { distanceM: 11, angleDeg: goalAngle(0, 11), penetration: 1 }
+          : shotGeometry(zone, room, situation, chainRng);
         const defence = map.zones[zone].defence;
         const attackHere = map.zones[zone].attack;
-        const pressure = clamp(
-          45 +
-            12 * (defence - attackHere) +
-            // Getting deeper means more bodies around the ball, but only mildly: the very best
-            // chances are the ones where penetration outran the defence rather than joined it.
-            8 * (penetration - 0.5) -
-            (situation === 'counter' ? 20 : 0),
-          5,
-          98,
-        );
+        const pressure = penalty
+          ? 5
+          : clamp(
+              45 +
+                12 * (defence - attackHere) +
+                8 * (geometry.penetration - 0.5) -
+                (situation === 'counter' ? 20 : 0),
+              5,
+              98,
+            );
         shot = {
           minute: Math.min(input.minutes, Math.floor(startTick / TICKS_PER_MINUTE) + 1),
           side,
           shooter,
-          distanceM,
-          angleDeg,
+          distanceM: geometry.distanceM,
+          angleDeg: geometry.angleDeg,
           pressure,
-          bodyPart: pickBodyPart(attack.players.get(shooter), zone, situation, chainRng),
+          bodyPart: penalty
+            ? 'right_foot'
+            : pickBodyPart(attack.players.get(shooter), zone, situation, chainRng),
           situation,
         };
         shots.push(shot);
@@ -536,6 +900,17 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
       possessionTicks: stats[side].possessionTicks + spent,
     });
 
+    spendFitness(live.home, spent);
+    spendFitness(live.away, spent);
+
+    // Momentum is chances and territory, decayed — never goals. The chain does not know the score,
+    // and keeping it that way is what makes xG impossible to reverse-engineer from a result.
+    const gained =
+      (ended === 'shot' ? MOMENTUM_PER_CHANCE : 0) +
+      (reached === 'FINAL_THIRD' || reached === 'SHOT' ? MOMENTUM_PER_FINAL_THIRD : 0);
+    live[side].momentum = decayMomentum(live[side].momentum + gained);
+    live[other(side)].momentum = decayMomentum(live[other(side)].momentum - gained * 0.6);
+
     possessions.push({
       side,
       startMinute: Math.min(input.minutes, Math.floor(startTick / TICKS_PER_MINUTE) + 1),
@@ -547,25 +922,35 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
       ...(cause === undefined ? {} : { turnoverCause: cause }),
     });
 
-    /**
-     * Where the other side picks the ball up.
-     *
-     * Losing it in your own final third hands them possession close to your goal, so they start
-     * already past the build-up — which is exactly what committing bodies forward buys the
-     * opponent, and why an ultra-attacking mentality has to be able to cost you.
-     */
     const winner = other(side);
-    // Annotated on purpose: without it the inference is circular, because where the next
-    // possession starts depends on this, and how far this one got depends on where it started.
     const wonHigh: boolean = ended === 'turnover' && reached === 'FINAL_THIRD';
     const launch =
-      COUNTER_LAUNCH[setups[winner].tactics.passingDirectness] *
-      COUNTER_TEMPO[setups[winner].tactics.tempo];
+      COUNTER_LAUNCH[live[winner].tactics.passingDirectness] *
+      COUNTER_TEMPO[live[winner].tactics.tempo];
     side = winner;
     entryPhase = wonHigh && chainRng.bool(clamp(launch, 0, 0.8)) ? 'PROGRESSION' : 'BUILD_UP';
   }
 
-  return { possessions, shots, home: stats.home, away: stats.away, ticks: tick };
+  const finalCondition = (one: LiveSide): ReadonlyMap<PlayerId, PlayerCondition> => {
+    const out = new Map<PlayerId, PlayerCondition>();
+    for (const [id, player] of one.base) {
+      out.set(id, {
+        ...player.condition,
+        fitness: one.fitness.get(id) ?? player.condition.fitness,
+      });
+    }
+    return out;
+  };
+
+  return {
+    possessions,
+    shots,
+    events,
+    home: stats.home,
+    away: stats.away,
+    ticks: tick,
+    conditionAfter: { home: finalCondition(live.home), away: finalCondition(live.away) },
+  };
 }
 
 /** Possession share, computed from counted ticks at the moment it is asked for. */
