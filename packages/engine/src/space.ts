@@ -76,6 +76,15 @@ export interface SideSetup {
    * wrong story. Both act as the same conserved transfer, so neither is a bonus.
    */
   readonly urgency?: number;
+  /**
+   * How much the ground is behind this side, 0 to 1. Optional; absent means a neutral venue.
+   *
+   * Unlike momentum and urgency this is not something the side did — but it acts through the same
+   * conserved transfer, so it is a *shape* the crowd pushes them into and not a bonus. A home side
+   * playing on the front foot against a quick counter-attacking away side can be punished for it,
+   * which is the point: even luck has to route through a mechanism that can go wrong.
+   */
+  readonly crowd?: number;
 }
 
 export interface ZoneSpace {
@@ -310,6 +319,9 @@ export const MOMENTUM_BAND_SHIFT = 0.03;
  */
 export const URGENCY_BAND_SHIFT = 0.09;
 
+/** How far a full house pushes the home side up the pitch, all match long. */
+export const CROWD_BAND_SHIFT = 0.05;
+
 /** Where the block's weight sits, which is what compactness condenses around. */
 const BLOCK_GRAVITY: Record<LineHeight, Band> = {
   deep: 'defensive',
@@ -414,7 +426,8 @@ export function tacticalPresence(side: SideSetup): Grid {
     'middle',
     'attacking',
     clamp(side.momentum ?? 0, -1.5, 1.5) * MOMENTUM_BAND_SHIFT +
-      clamp(side.urgency ?? 0, -2, 2) * URGENCY_BAND_SHIFT,
+      clamp(side.urgency ?? 0, -2, 2) * URGENCY_BAND_SHIFT +
+      clamp(side.crowd ?? 0, 0, 1) * CROWD_BAND_SHIFT,
   );
 
   return grid;

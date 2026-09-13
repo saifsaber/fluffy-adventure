@@ -95,6 +95,7 @@ export function drainPerTick(
   role: PlayerRole,
   intensity: Intensity,
   travelBurden: number,
+  crowd = 0,
 ): number {
   const stamina = clamp(player.attributes.physical.stamina, 1, 99);
   const workRate = clamp(player.attributes.mental.workRate, 1, 99);
@@ -110,7 +111,10 @@ export function drainPerTick(
     MENTALITY_EFFORT[intensity.mentality] *
     enduranceFactor *
     workFactor *
-    (1 + clamp(travelBurden, 0, 1) * 0.12)
+    (1 + clamp(travelBurden, 0, 1) * 0.12) *
+    // A crowd is adrenaline. This is why home advantage grows through a match rather than being
+    // present from the first whistle.
+    (1 - clamp(crowd, 0, 1) * CROWD_STAMINA_RELIEF)
   );
 }
 
@@ -118,6 +122,67 @@ export function drainPerTick(
 export function travelBurden(kilometres: number): number {
   return clamp(kilometres / 800, 0, 1);
 }
+
+/**
+ * How much the ground is behind the home side, 0 to 1.
+ *
+ * Driven mostly by how **full** the ground is rather than how big it is: a packed village ground is
+ * worth more than a quarter-empty stadium, which is exactly the situation the Egyptian fourth
+ * division is played in. Size still counts for something, so a full big ground beats a full small
+ * one, but only by a quarter of the total.
+ *
+ * A derby adds to it. Nothing here reads a club's reputation or its league position — a crowd is a
+ * crowd, and treating a big club's support as intrinsically worth more would be the multiplier this
+ * engine refuses everywhere else.
+ */
+export function crowdIntensity(attendance: number, capacity: number, isDerby: boolean): number {
+  if (capacity <= 0) return 0;
+  const fill = clamp(attendance / capacity, 0, 1);
+  const scale = 0.75 + 0.25 * clamp(attendance / 20_000, 0, 1);
+  return clamp(fill * scale * (isDerby ? 1.15 : 1), 0, 1);
+}
+
+/**
+ * What a crowd is worth, and what it deliberately is not.
+ *
+ * Home advantage is real and large — around a third of a goal a match — and it has to come from
+ * somewhere nameable. These are the three channels it comes from here, each an existing mechanism
+ * rather than a new bonus:
+ *
+ * 1. **Effort.** A crowd is adrenaline: the home side drains slower, so it is stronger late. That is
+ *    why home advantage grows through a match in the real game, and it falls out of this rather
+ *    than being scripted.
+ * 2. **Shape.** The home side plays on the front foot, as a conserved band transfer like momentum
+ *    and urgency. This one **can be punished** — pushing up against a quick counter-attacking side
+ *    is a worse idea at home than at a graveyard.
+ * 3. **The referee.** The best-evidenced component of home advantage in the literature: the away
+ *    side gives away more fouls and the home side fewer. It is `circumstantial` in the cause
+ *    registry for exactly that reason — nobody chose it.
+ *
+ * The distinction that keeps this honest: a **choice** must be able to hurt you, but a
+ * **circumstance** may simply be good or bad luck. `HOME_CROWD_LIFT` is registered circumstantial.
+ */
+export const CROWD_STAMINA_RELIEF = 0.14;
+export const CROWD_REFEREE_BIAS = 0.17;
+
+/**
+ * What a full house is worth in fitness points, felt as if the legs were fresher.
+ *
+ * Home sides are measured covering a few per cent more high-intensity distance than away sides, and
+ * this is that, routed through the channel fatigue already uses rather than added as a new bonus on
+ * top of ratings. Ten points is about two per cent of a side's presence — the conservative end of
+ * the published range, and deliberately so: a crowd should be worth something and not much.
+ */
+export const CROWD_FITNESS_LIFT = 10;
+
+/** Fouls given against a side, relative to neutral, once the referee has heard the ground. */
+export function refereeLeniency(crowd: number, atHome: boolean): number {
+  const bias = clamp(crowd, 0, 1) * CROWD_REFEREE_BIAS;
+  return atHome ? 1 - bias : 1 + bias;
+}
+
+/** A derby is fiercer, and both sides give more away in one. */
+export const DERBY_AGGRESSION = 1.18;
 
 /** Roughly twenty-two fouls a match across both sides, before aggression and pressing move it. */
 const BASE_FOUL_CHANCE = 0.17;
@@ -136,9 +201,22 @@ const PRESS_FOULS: Record<PressingIntensity, number> = {
  * ball-winner, and the reason `aggression` has to sit on the same axis as `tackling` rather than
  * being decoration.
  */
-export function foulChance(aggression: number, pressing: PressingIntensity): number {
+export function foulChance(
+  aggression: number,
+  pressing: PressingIntensity,
+  leniency = 1,
+  derby = false,
+): number {
   const aggressionFactor = 0.7 + (0.6 * clamp(aggression, 1, 99)) / 100;
-  return clamp(BASE_FOUL_CHANCE * aggressionFactor * PRESS_FOULS[pressing], 0, 0.6);
+  return clamp(
+    BASE_FOUL_CHANCE *
+      aggressionFactor *
+      PRESS_FOULS[pressing] *
+      leniency *
+      (derby ? DERBY_AGGRESSION : 1),
+    0,
+    0.6,
+  );
 }
 
 /** About one foul in six is booked. Straight reds are rarer than that by two orders of magnitude. */

@@ -7,6 +7,7 @@ import {
   type Side,
 } from './chain.js';
 import { indexSquad } from './space.js';
+import { crowdIntensity } from './condition.js';
 import { isOnTarget, resolveShot } from './xg.js';
 import { ENGINE_VERSION } from './version.js';
 import type { PlayerId } from './types/ids.js';
@@ -174,6 +175,15 @@ export function simulate(input: MatchInput): MatchResult {
       away: toChainSide(input.away),
       minutes: MINUTES,
       awayTravelKm: input.context.awayTravelKm,
+      // The home side's own ground, its own crowd. Nothing here reads either club's reputation:
+      // a crowd is a crowd, and treating a big club's support as intrinsically worth more would be
+      // the multiplier this engine refuses everywhere else.
+      crowd: crowdIntensity(
+        input.context.attendance,
+        input.home.club.stadium.capacity,
+        input.context.isDerby,
+      ),
+      isDerby: input.context.isDerby,
       resolve: (context: ShotContext, keeper: PlayerId | undefined) => {
         const shooterSide: Side = context.side;
         const shot = resolveShot(

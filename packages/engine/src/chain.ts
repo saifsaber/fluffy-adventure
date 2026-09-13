@@ -6,7 +6,9 @@ import {
   decayMomentum,
   drainPerTick,
   foulChance,
+  refereeLeniency,
   travelBurden,
+  CROWD_FITNESS_LIFT,
   MOMENTUM_PER_CHANCE,
   MOMENTUM_PER_FINAL_THIRD,
   PENALTY_PER_BOX_FOUL,
@@ -143,6 +145,10 @@ export interface ChainInput {
   readonly minutes: number;
   /** Kilometres the away side travelled. A real lower-league fatigue input. */
   readonly awayTravelKm?: number;
+  /** How much the ground is behind the home side, 0 to 1. Absent means a neutral venue. */
+  readonly crowd?: number;
+  /** Both sides give more away in a derby. */
+  readonly isDerby?: boolean;
   /**
    * Called the instant a shot is struck, before play resumes. Optional.
    *
@@ -495,11 +501,13 @@ interface LiveSide {
   momentum: number;
   urgency: number;
   travel: number;
+  /** 0 for the away side: a crowd lifts the side it came to watch. */
+  crowd: number;
   applied: number;
   dirty: boolean;
 }
 
-function liveSide(side: ChainSide, travel: number): LiveSide {
+function liveSide(side: ChainSide, travel: number, crowd: number): LiveSide {
   const fitness = new Map<PlayerId, number>();
   for (const [id, player] of side.players) fitness.set(id, player.condition.fitness);
   return {
@@ -513,6 +521,7 @@ function liveSide(side: ChainSide, travel: number): LiveSide {
     momentum: 0,
     urgency: 0,
     travel,
+    crowd,
     applied: 0,
     dirty: true,
   };
@@ -522,7 +531,11 @@ function liveSide(side: ChainSide, travel: number): LiveSide {
 function snapshot(live: LiveSide): SideSetup {
   const players = new Map<PlayerId, Player>();
   for (const [id, player] of live.base) {
-    const current = live.fitness.get(id);
+    const raw = live.fitness.get(id);
+    // The crowd is felt as fresher legs, capped at fully fit. It is never stored back into
+    // `live.fitness`, so a player does not finish the match *fitter* for having been cheered.
+    const current =
+      raw === undefined ? undefined : Math.min(100, raw + live.crowd * CROWD_FITNESS_LIFT);
     players.set(
       id,
       current === undefined || current === player.condition.fitness
@@ -539,6 +552,7 @@ function snapshot(live: LiveSide): SideSetup {
     players,
     momentum: live.momentum,
     urgency: live.urgency,
+    crowd: live.crowd,
   };
 }
 
@@ -627,7 +641,7 @@ function spendFitness(live: LiveSide, ticks: number): void {
     const player = live.base.get(selection.playerId);
     const current = live.fitness.get(selection.playerId);
     if (player === undefined || current === undefined) continue;
-    const spent = drainPerTick(player, selection.role, intensity, live.travel) * ticks;
+    const spent = drainPerTick(player, selection.role, intensity, live.travel, live.crowd) * ticks;
     live.fitness.set(selection.playerId, Math.max(0, current - spent));
   }
 }
@@ -699,8 +713,8 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
   const halfway = Math.round(totalTicks / 2);
 
   const live: Record<Side, LiveSide> = {
-    home: liveSide(input.home, 0),
-    away: liveSide(input.away, travelBurden(input.awayTravelKm ?? 0)),
+    home: liveSide(input.home, 0, clamp(input.crowd ?? 0, 0, 1)),
+    away: liveSide(input.away, travelBurden(input.awayTravelKm ?? 0), 0),
   };
 
   const stats: Record<Side, ChainStats> = { home: emptyStats(), away: emptyStats() };
@@ -809,7 +823,16 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
 
       // The ball was lost. Sometimes it was taken; sometimes it was a foul.
       const defending = other(side);
-      if (chainRng.bool(foulChance(averageAggression(defend), defend.tactics.pressingIntensity))) {
+      if (
+        chainRng.bool(
+          foulChance(
+            averageAggression(defend),
+            defend.tactics.pressingIntensity,
+            refereeLeniency(live.home.crowd, defending === 'home'),
+            input.isDerby ?? false,
+          ),
+        )
+      ) {
         const fouler = pickFouler(defend, zone, live[defending].yellows, chainRng);
         if (fouler !== undefined) {
           const defenceLive = live[defending];

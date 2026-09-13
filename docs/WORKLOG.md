@@ -190,16 +190,34 @@ version that passes tests but models nothing.
 Measured with `simulate()` over 500 matches of two even 55-rated sides. Both of these are real
 missing models, not tuning, and the harness cannot pass without them.
 
-- [ ] **⚠️ Home advantage is 0.006 goals. The blueprint needs +0.3 to +0.4.**
-      Nothing models it at all. `MatchContext` already carries `attendance` and `isDerby`, nothing
-      reads either, and `HOME_CROWD_LIFT` sits unused in the cause registry — the pieces were
-      designed for this and never connected. Travel already costs the away side fitness (3f), which
-      is a start but is worth almost nothing on its own.
-      Build it the way everything else in this engine is built: **as a conserved transfer, not a
-      multiplier on the home side's rating.** A crowd lifts a team's work rate and pushes it up the
-      pitch; it does not make its players better. Scale it by `attendance` against the stadium's
-      capacity so a full small ground beats an empty big one, and let `isDerby` raise both the lift
-      and the aggression. Then re-measure the split — it is currently home 1.434, away 1.428.
+- [x] **⚠️ Home advantage — built, and it delivers +0.14 of the required +0.30–0.40.** Three named
+      channels, each individually tested: fresher legs (a crowd is adrenaline, routed through the
+      fatigue channel), the front foot (a conserved band transfer, so it can be punished), and the
+      referee (the best-evidenced component in the literature). An empty ground gives 0.004; a full
+      house 0.140; a derby 0.179. It also **grows through the match** — 0.056 in the first half,
+      0.084 in the second — which is what the real game does and which falls out of the adrenaline
+      channel rather than being scripted. The remaining gap is **not** a crowd problem; see below.
+
+- [ ] **⚠️ The deep block is too strong. Four independent measurements now say so, and it is what
+      blocks the home-advantage threshold.**
+      | where | what was seen |
+      |---|---|
+      | 3d | an ultra-defensive deep side took **more** shots (12.7) than an ultra-attacking high one (11.8) |
+      | 3d·fix | a deep compact block conceded **closer** chances (14.8 m) than a loose high line (15.3 m) |
+      | 3f | flagged again when the goal decomposition was measured |
+      | home advantage | an away side simply dropping its line **erased the entire advantage**: +0.140 → **−0.001** |
+
+      That last one is decisive. Home advantage cannot reach +0.35 while any away side can delete it
+      by sitting deep, and cranking the crowd constants to force the number would need ~25 fitness
+      points or a band shift larger than half an ultra-attacking mentality — neither is credible, and
+      both would be fitting the engine to a threshold instead of fixing it.
+
+      **Where to look.** A deep line lowers `LINE_RISK` to 0, which zeroes both `exposure` *and*
+      `compression` in `space.ts` — so a deep block pays **no price at all** for sitting off. In
+      football it does: it concedes territory, the ball, and shooting position. Give sitting deep its
+      real cost (the opponent starts attacks higher up and keeps the ball more), then re-measure all
+      four rows above. Expect goals per match to move; re-check that too.
+
 - [ ] **Sanity-check the strength curve against real league spread.** A 68-rated side beats a
       46-rated one 93.3% of the time. That may well be correct for a gap that large; the threshold
       of 55–65% is about the *league's* typical gap, so it has to be measured on the real Egyptian
@@ -248,6 +266,43 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-13** — **Home advantage, and the defect it finally pinned down.**
+  - **Built out of three named channels**, each tested on its own: a crowd is adrenaline, so the home
+    side drains slower; a crowd pushes a side onto the front foot, as a conserved band transfer that
+    the right opponent can punish; and the referee hears the ground, which is the best-evidenced
+    component of home advantage in the literature. `crowdIntensity` is driven mostly by how **full**
+    a ground is rather than how big — the fourth division is played in small grounds, and a model
+    that scored the crowd by stadium size would say every lower-league match is played in silence.
+    Nothing reads either club's reputation: a crowd is a crowd, and scaling it by who the club is
+    would be the multiplier this engine refuses everywhere else, dressed as atmosphere.
+  - **The principle this box turned on.** A **choice** must be able to hurt you; a **circumstance**
+    may simply be good or bad luck. `HOME_CROWD_LIFT` is registered `circumstantial` for exactly that
+    reason. So a crowd is allowed to be worth something — but the one channel that is a shape change
+    is still conserved, so even luck routes through a mechanism that can go wrong.
+  - **Delivered: empty 0.004 · full house 0.140 · derby 0.179**, against a required +0.30–0.40. It
+    grows through the match (0.056 first half, 0.084 second), which is what the real game does and
+    which falls out of the adrenaline channel rather than being scripted. Fouls read 9.2 home
+    against 12.2 away at a full house.
+  - **I did not force the number.** Reaching +0.35 through the crowd would need about 25 fitness
+    points of lift, or a band shift larger than half an ultra-attacking mentality. Neither is
+    physically credible, and both would be fitting the engine to a threshold rather than fixing it.
+  - **A measurement mistake worth recording.** My first sweep read a tunable from `globalThis` at
+    module load, before the test set it — so every row ran at the same value and the "curve" was pure
+    seed noise. It also showed that **seed noise is about ±0.1 goals at N=400**, which means the
+    earlier crowd readings were barely above noise. Everything after that is **paired**: identical
+    seeds across conditions, so the noise cancels in the comparison. Unpaired sampling would have let
+    me report almost any conclusion I wanted here.
+  - **And it pinned down the real defect.** Testing whether away caution explains the rest gave the
+    decisive result: an away side simply **dropping its line erased the entire advantage**, +0.140 →
+    −0.001. That is the **fourth** independent signal that the deep block is too strong, after 3d,
+    3d·fix and 3f. Filed as its own ⚠️ box with all four rows and a specific place to look: a deep
+    line zeroes `LINE_RISK`, which cancels both `exposure` **and** `compression`, so sitting off
+    currently costs a side nothing at all. In football it costs territory, the ball and shooting
+    position.
+  - 216 tests green, lint/typecheck/format clean.
+  - **Next run: the deep block.** It blocks the home-advantage threshold and probably more of Step 4
+    besides. Re-measure all four rows in that box afterwards, and re-check goals per match.
 
 - **2026-09-13** — **3g: `simulate()`, and Step 3 is complete.** The engine plays a whole match.
   - **Determinism holds over 1,000 runs** of the same seed, byte for byte. That is the property

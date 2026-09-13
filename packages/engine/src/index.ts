@@ -62,6 +62,10 @@ export type {
 } from './chain.js';
 
 export {
+  CROWD_FITNESS_LIFT,
+  CROWD_REFEREE_BIAS,
+  CROWD_STAMINA_RELIEF,
+  DERBY_AGGRESSION,
   MOMENTUM_DECAY,
   MOMENTUM_LIMIT,
   MOMENTUM_PER_CHANCE,
@@ -69,9 +73,11 @@ export {
   PENALTY_PER_BOX_FOUL,
   STRAIGHT_RED_PER_FOUL,
   YELLOW_PER_FOUL,
+  crowdIntensity,
   decayMomentum,
   drainPerTick,
   foulChance,
+  refereeLeniency,
   travelBurden,
 } from './condition.js';
 export type { Intensity } from './condition.js';
