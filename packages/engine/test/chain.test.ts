@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   CAUSE_REGISTRY,
   FOOTPRINTS,
+  goalAngle,
   TICKS_PER_MINUTE,
   bandOf,
   createRng,
@@ -200,11 +201,11 @@ describe('a match is football-shaped', () => {
     expect(per((r) => possessionShare(r).home)).toBeCloseTo(0.5, 1);
   });
 
-  it('takes most shots from around eighteen metres, not from everywhere', () => {
+  it('takes most shots from around fifteen metres, not from everywhere', () => {
     const distances = results.flatMap((r) => r.shots.map((s) => s.distanceM));
-    expect(mean(distances)).toBeGreaterThan(14);
-    expect(mean(distances)).toBeLessThan(22);
-    expect(Math.min(...distances.slice(0, 500))).toBeGreaterThanOrEqual(4);
+    expect(mean(distances)).toBeGreaterThan(13);
+    expect(mean(distances)).toBeLessThan(18);
+    expect(Math.min(...distances.slice(0, 500))).toBeGreaterThanOrEqual(3);
   });
 });
 
@@ -309,5 +310,121 @@ describe('possession share', () => {
       ticks: 0,
     };
     expect(possessionShare(empty)).toEqual({ home: 0.5, away: 0.5 });
+  });
+});
+
+/**
+ * The shot-quality distribution, fixed after 3e measured it and found it wrong.
+ *
+ * The first version produced every shot from a seven-metre band around eighteen metres: the mean
+ * was right and the spread was missing, and since xG is sharply convex in distance, that gave 1.15
+ * goals a match against a real 2.5–2.8. These tests pin the distribution itself, against published
+ * figures for top-flight football, so it cannot silently narrow again.
+ */
+describe('shots come from where football takes them', () => {
+  const distances = sample(200, (i) => evenMatch(`bands-${i}`)).flatMap((r) =>
+    r.shots.map((s) => s.distanceM),
+  );
+  const share = (lo: number, hi: number): number =>
+    distances.filter((d) => d >= lo && d < hi).length / distances.length;
+
+  // Published shares for top-flight football. The tolerances are wide enough to survive a rebalance
+  // that keeps the shape, and narrow enough to fail if the spread collapses again.
+  it.each([
+    { band: 'inside six metres', lo: 0, hi: 6, expected: 0.08, tolerance: 0.05 },
+    { band: 'six to eleven', lo: 6, hi: 11, expected: 0.22, tolerance: 0.07 },
+    { band: 'eleven to the box edge', lo: 11, hi: 16.5, expected: 0.32, tolerance: 0.07 },
+    { band: 'the box edge to twenty-two', lo: 16.5, hi: 22, expected: 0.22, tolerance: 0.07 },
+    { band: 'twenty-two to thirty', lo: 22, hi: 30, expected: 0.13, tolerance: 0.06 },
+  ])('puts about $expected of shots $band', ({ lo, hi, expected, tolerance }) => {
+    const got = share(lo, hi);
+    expect(Math.abs(got - expected), `got ${got.toFixed(3)}`).toBeLessThanOrEqual(tolerance);
+  });
+
+  it('takes about three shots in five from inside the box', () => {
+    const inside = distances.filter((d) => d <= 16.5).length / distances.length;
+    expect(inside).toBeGreaterThan(0.5);
+    expect(inside).toBeLessThan(0.72);
+  });
+
+  it('reaches both ends of the range, which is the whole point', () => {
+    expect(share(0, 8)).toBeGreaterThan(0.08);
+    expect(distances.filter((d) => d >= 25).length / distances.length).toBeGreaterThan(0.02);
+  });
+});
+
+describe('the angle of a shot is geometry, not a constant', () => {
+  it('matches the goalmouth actually visible from the spot', () => {
+    // A goal is 7.32m wide, so from directly in front the angle is 2·atan(3.66/depth).
+    expect(goalAngle(0, 6)).toBeCloseTo(62.8, 0);
+    expect(goalAngle(0, 11)).toBeCloseTo(36.8, 0);
+    expect(goalAngle(0, 16.5)).toBeCloseTo(25.0, 0);
+    expect(goalAngle(0, 25)).toBeCloseTo(16.7, 0);
+  });
+
+  it('closes up as the shooter moves toward the byline', () => {
+    let previous = Infinity;
+    for (const lateral of [0, 4, 8, 12, 18]) {
+      const angle = goalAngle(lateral, 6);
+      expect(angle).toBeLessThan(previous);
+      previous = angle;
+    }
+    // Eight metres out by the touchline sees less of the goal than eighteen metres out in front.
+    expect(goalAngle(18, 6)).toBeLessThan(goalAngle(0, 18));
+  });
+
+  it('is symmetric, and never negative', () => {
+    for (const lateral of [1, 5, 14, 30]) {
+      expect(goalAngle(lateral, 9)).toBeCloseTo(goalAngle(-lateral, 9), 9);
+      expect(goalAngle(lateral, 9)).toBeGreaterThan(0);
+    }
+    expect(goalAngle(0, 0)).toBeGreaterThan(0);
+  });
+});
+
+describe('penetration responds to the match, not to a die alone', () => {
+  it('works closer chances when it is the far better side', () => {
+    // Space has to change chance *quality*, not just chance count — otherwise ability and tactics
+    // would only ever move the shot tally, and every shot would be worth the same.
+    //
+    // Deliberately not asserted here: whether a deep compact block concedes closer chances than a
+    // loose high line. Measured, it does — 14.8 m against 15.3 m — which is arguable football, since
+    // a low block concedes territory but not space. I could not justify either direction from first
+    // principles, and pinning one would be encoding a guess as a test. Left to the Step 4 harness,
+    // which is the second signal pointing at this same pairing (see the 3d log).
+    const strong = mean(
+      sample(50, (i) =>
+        simulateChain(
+          {
+            home: makeSide(makeClub('strong', 78)),
+            away: makeSide(makeClub('weak', 38)),
+            minutes: 90,
+          },
+          createRng(`quality-${i}`),
+        ),
+      ).flatMap((r) => r.shots.filter((s) => s.side === 'home').map((s) => s.distanceM)),
+    );
+    const even = mean(
+      sample(50, (i) => evenMatch(`quality-even-${i}`)).flatMap((r) =>
+        r.shots.filter((s) => s.side === 'home').map((s) => s.distanceM),
+      ),
+    );
+    expect(strong).toBeLessThan(even);
+  });
+
+  it('gets closer on the break than in a settled attack', () => {
+    const shots = sample(120, (i) => evenMatch(`break-${i}`)).flatMap((r) => r.shots);
+    const counters = shots.filter((s) => s.situation === 'counter').map((s) => s.distanceM);
+    const settled = shots.filter((s) => s.situation === 'open_play').map((s) => s.distanceM);
+    expect(counters.length).toBeGreaterThan(20);
+    expect(mean(counters)).toBeLessThan(mean(settled));
+  });
+
+  it('keeps set-piece shots close and in a crowd, as corners are', () => {
+    const setPieces = sample(120, (i) => evenMatch(`sp-${i}`)).flatMap((r) =>
+      r.shots.filter((s) => s.situation === 'set_piece'),
+    );
+    expect(setPieces.length).toBeGreaterThan(20);
+    expect(mean(setPieces.map((s) => s.distanceM))).toBeLessThan(14);
   });
 });

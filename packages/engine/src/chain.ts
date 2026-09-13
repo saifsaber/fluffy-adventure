@@ -260,13 +260,100 @@ function pickShooter(side: SideSetup, zone: Zone, rng: Rng): PlayerId | undefine
   return present[present.length - 1]?.id;
 }
 
-/** Distance and angle come from where the chain actually got to, and from how much room it found. */
-function shotGeometry(zone: Zone, room: number, rng: Rng): { distanceM: number; angleDeg: number } {
+/**
+ * How far a chance got into the block, and what that leaves the shooter looking at.
+ *
+ * The first version of this treated "reached the final third" as one event and produced every shot
+ * from a seven-metre band around eighteen metres. The mean was right and the distribution was not,
+ * and because xG is sharply convex in distance, a spread that narrow cannot produce goals: the
+ * six-yard chances that score most of football's goals simply did not exist. 3e found it by
+ * measurement — 0.5% of shots inside 11 m against a real 30%, and 1.15 goals a match.
+ *
+ * The fix is to model the quantity that actually varies. Most attacks that reach the final third
+ * produce a half-chance from range; a few are worked right through. `penetration` is that spectrum,
+ * and everything else here is geometry:
+ *
+ * - `penetration = U^k` — a right-skewed draw, because breaking a block down is hard. `k` falls
+ *   when the attacking side has room in the zone, and falls further on a counter, so a side that
+ *   has genuinely opened the defence gets closer chances rather than more of the same ones.
+ * - **Depth** comes from penetration; **lateral offset** comes from the channel the chain was in.
+ * - **Distance and angle are then derived**, not chosen. The angle is the goalmouth actually
+ *   subtended from that point, which is why a shot from eight metres by the byline correctly rates
+ *   below one from fourteen metres in front.
+ *
+ * `PENETRATION_SKEW` and `PENETRATION_DEPTH` were fitted to the published distribution of shot
+ * distances in top-flight football — 8% inside six metres, 62% inside the box, 3% beyond thirty —
+ * and `test/chain.test.ts` asserts those bands directly.
+ */
+const PENETRATION_SKEW = 0.45;
+const PENETRATION_DEPTH = 0.8;
+/** Perpendicular distance from the goal line: a tap-in at one end, a speculative effort at the other. */
+const DEPTH_NEAR = 3;
+const DEPTH_FAR = 32;
+/** Room in the zone makes the block easier to get into. */
+const PENETRATION_PER_SPACE = 0.09;
+/** And a defence still running back is easier still. */
+const COUNTER_PENETRATION = 0.12;
+/** Half the width of a goal, in metres. The only reason any of this geometry works. */
+const GOAL_HALF_WIDTH = 3.66;
+/** How far off centre a shot strays, by the channel the attack came down. Both peak at the middle. */
+const SPREAD_CENTRAL = 10;
+const SPREAD_WIDE = 15;
+
+/** The goalmouth actually visible from a point on the pitch, in degrees. */
+export function goalAngle(lateralM: number, depthM: number): number {
+  const lateral = Math.abs(lateralM);
+  const depth = Math.max(depthM, 0.5);
+  const near = Math.atan((lateral + GOAL_HALF_WIDTH) / depth);
+  const far = Math.atan((lateral - GOAL_HALF_WIDTH) / depth);
+  return ((near - far) * 180) / Math.PI;
+}
+
+interface ShotGeometry {
+  readonly distanceM: number;
+  readonly angleDeg: number;
+  /** 0 = a hopeful effort from range, 1 = worked right through to the six-yard box. */
+  readonly penetration: number;
+}
+
+function shotGeometry(zone: Zone, room: number, situation: ShotSituation, rng: Rng): ShotGeometry {
   const central = channelOf(zone) === 'centre';
-  const space = clamp(room, -2, 3);
-  const distanceM = clamp((central ? 13.5 : 18) - space * 1.8 + (rng.next() - 0.5) * 9, 4, 35);
-  const angleDeg = clamp((central ? 42 : 20) + space * 4 + (rng.next() - 0.5) * 14, 5, 78);
-  return { distanceM, angleDeg };
+
+  if (situation === 'set_piece') {
+    // A corner is its own geometry: the ball arrives in the air into a crowded six-yard area, so
+    // the spread is tight and close rather than drawn from open-play penetration.
+    const depth = 4 + rng.next() * 10;
+    const lateral = (rng.next() - 0.5) * 12;
+    return {
+      distanceM: Math.hypot(lateral, depth),
+      angleDeg: goalAngle(lateral, depth),
+      penetration: 0.7,
+    };
+  }
+
+  const skew = clamp(
+    PENETRATION_SKEW -
+      PENETRATION_PER_SPACE * clamp(room, -3, 4) -
+      (situation === 'counter' ? COUNTER_PENETRATION : 0),
+    0.25,
+    1.6,
+  );
+  const penetration = Math.pow(rng.next(), skew);
+  const depth =
+    DEPTH_NEAR + (DEPTH_FAR - DEPTH_NEAR) * Math.pow(1 - penetration, PENETRATION_DEPTH);
+
+  // Peaked at the middle whichever channel the attack came down, because players attack the goal
+  // rather than the corner flag: a chance worked down the left is still usually finished in front.
+  // The channel widens the spread, it does not move the mode — reading it the other way round put
+  // only 15% of shots in central positions and was most of why this engine could not score.
+  const spread = rng.next();
+  const lateral = (central ? SPREAD_CENTRAL : SPREAD_WIDE) * spread * spread;
+
+  return {
+    distanceM: Math.hypot(lateral, depth),
+    angleDeg: goalAngle(lateral, depth),
+    penetration,
+  };
 }
 
 /**
@@ -406,11 +493,16 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
           : startedOnCounter
             ? 'counter'
             : 'open_play';
-        const { distanceM, angleDeg } = shotGeometry(zone, room, chainRng);
+        const { distanceM, angleDeg, penetration } = shotGeometry(zone, room, situation, chainRng);
         const defence = map.zones[zone].defence;
         const attackHere = map.zones[zone].attack;
         const pressure = clamp(
-          45 + 12 * (defence - attackHere) - (situation === 'counter' ? 20 : 0),
+          45 +
+            12 * (defence - attackHere) +
+            // Getting deeper means more bodies around the ball, but only mildly: the very best
+            // chances are the ones where penetration outran the defence rather than joined it.
+            8 * (penetration - 0.5) -
+            (situation === 'counter' ? 20 : 0),
           5,
           98,
         );

@@ -164,32 +164,10 @@ version that passes tests but models nothing.
       shooter either. The second omission is the important one: if a striker's finishing raised his
       xG, "he should have scored" would be unsayable, because the yardstick would move with the man
       being measured.
-- [ ] **3d·fix. ⚠️ Shot quality distribution — found by 3e, and it blocks Step 4.**
-      The xG curve is right; the shots being fed to it are not. Measured over 6,908 shots from even
-      sides, `shotGeometry()` in `chain.ts` produces distances from **p10 14.5 m to p90 22.0 m** —
-      every shot in football taken from one seven-metre band.
-
-      | | this engine | real football |
-      |---|---|---|
-      | inside 11 m | **0.5%** | ~30% |
-      | inside the box (16.5 m) | 32% | ~62% |
-      | beyond 25 m | **0%** | ~8% |
-      | mean xG per shot | **0.047** | ~0.11 |
-      | goals per match | **1.15** | 2.5–2.8 |
-
-      The mean distance (18.1 m) is already correct — it is the **spread** that is missing. Because
-      xG is sharply convex in distance, a distribution with the right mean and no close-range tail
-      cannot produce goals: the six-yard chances that score most of football's goals do not exist in
-      this engine. Do **not** fix this by lifting the xG curve; it is calibrated to published norms
-      and its anchors are the only external truth in this repo.
-
-      The cause is conceptual, not a constant. The chain treats "reached the final third" as one
-      undifferentiated event, so every chance comes out a generic 18-metre effort. Real football has
-      a quality distribution *within* the final third — most attacks produce a half-chance, a few are
-      worked to six yards. Give the shot geometry a right-skewed distribution with a real tail toward
-      goal, driven by how much space the chain actually found, and derive the angle from the
-      geometry (the goal subtends 62.8° at 6 m, 36.8° at 11 m, 25.0° at 16.5 m, 16.7° at 25 m) rather
-      than from a per-zone constant. Then re-measure the table above.
+- [x] **3d·fix. ⚠️ Shot quality distribution.** Replaced the per-zone distance and angle constants
+      with real geometry driven by how far the attack penetrated. Goals a match went **1.15 → 2.63**
+      (blueprint wants 2.5–2.8) and mean xG per shot **0.047 → 0.115** (football is ~0.11), without
+      touching the xG curve. The distance bands are now asserted against published football.
 
 - [ ] **3f. Fitness, momentum, cards, substitutions** over 90 minutes, feeding back into 3c.
       `fitnessFactor()` is already applied inside `tacticalPresence`, so 3f only has to update
@@ -235,6 +213,55 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-13** — **3d·fix: the shot quality distribution.** The box 3e opened, and the one that was
+  standing between this engine and Step 4.
+  - **The defect.** `shotGeometry` picked distance and angle from per-zone constants plus noise, so
+    every shot in football came from a seven-metre band around eighteen metres. The mean was right;
+    the spread did not exist. xG is sharply convex in distance, so a distribution like that cannot
+    score: **0.5% of shots came from inside 11 m where real football has 30%**, and the engine
+    produced 1.15 goals a match.
+  - **The fix is a quantity, not a constant.** Reaching the final third is not one event. Most
+    attacks that get there produce a half-chance from range and a few are worked right through, so
+    `penetration = U^k` is that spectrum — right-skewed because breaking a block down is hard, with
+    `k` falling when the attacking side has room in the zone and falling further on a counter.
+    Depth comes from penetration, lateral offset from the channel, and **distance and angle are then
+    derived rather than chosen**. The angle is the goalmouth genuinely subtended from that spot.
+  - **Fitted to published football, then asserted.** `PENETRATION_SKEW = 0.45` and
+    `PENETRATION_DEPTH = 0.8` were solved against the real distribution of shot distances, the same
+    discipline the xG anchors use: external targets, fitted parameters, tests that pin them.
+
+    | band | engine | real |
+    |---|---|---|
+    | inside 6 m | 6.5% | 8% |
+    | 6–11 m | 24.2% | 22% |
+    | 11–16.5 m | 30.4% | 32% |
+    | 16.5–22 m | 21.9% | 22% |
+    | 22–30 m | 15.8% | 13% |
+    | inside the box | **61.0%** | 62% |
+    | mean distance | **15.1 m** | 15.1 m |
+    | mean xG per shot | **0.115** | ~0.11 |
+    | goals per match | **2.63** | 2.5–2.8 |
+
+  - **The real error was conceptual, and worth remembering.** The first attempt still came out at
+    0.068 xG per shot. The measurement showed why: only **15% of shots were central**, because the
+    code read "the channel the attack progressed down" as "where the shot was struck". A cross from
+    the left is finished in the middle. Making the lateral offset peak at the centre for *both*
+    channels — the channel widens the spread, it does not move the mode — was most of the remaining
+    gap. Players attack the goal, not the corner flag.
+  - **The xG curve was not touched.** It is calibrated to published anchors, they are the only
+    externally-sourced numbers in the repo, and the fault was never there. Goals (2.63) and xG (2.67)
+    per match now agree, which is the check that the displayed number means something.
+  - **One test was dropped rather than fitted.** I had asserted that a defence which leaves room
+    concedes closer chances. Measured, the opposite holds — 14.8 m against a deep compact block
+    versus 15.3 m against a loose high line — which is arguable football, since a low block concedes
+    territory but not space. I could not justify either direction from first principles, so pinning
+    one would have been encoding a guess as a test. It is the **second** signal pointing at the
+    attacking-vs-deep-block pairing (3d's log flagged the shot counts), and Step 4 should look there.
+  - 155 tests green, lint/typecheck/format clean.
+  - **Next run: 3f — fitness, momentum, cards and substitutions over 90 minutes.** Note that
+    `fitnessFactor()` is already inside `tacticalPresence`, so 3f updates `PlayerCondition` between
+    ticks rather than retrofitting fatigue into the resolver.
 
 - **2026-09-12** — **3e: xG from shot context.** `packages/engine/src/xg.ts`. A logistic on distance
   and the angle of goal available, solved for three published anchors and checked against two more.
