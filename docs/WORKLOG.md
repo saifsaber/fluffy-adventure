@@ -198,25 +198,42 @@ missing models, not tuning, and the harness cannot pass without them.
       0.084 in the second — which is what the real game does and which falls out of the adrenaline
       channel rather than being scripted. The remaining gap is **not** a crowd problem; see below.
 
-- [ ] **⚠️ The deep block is too strong. Four independent measurements now say so, and it is what
-      blocks the home-advantage threshold.**
-      | where | what was seen |
-      |---|---|
-      | 3d | an ultra-defensive deep side took **more** shots (12.7) than an ultra-attacking high one (11.8) |
-      | 3d·fix | a deep compact block conceded **closer** chances (14.8 m) than a loose high line (15.3 m) |
-      | 3f | flagged again when the goal decomposition was measured |
-      | home advantage | an away side simply dropping its line **erased the entire advantage**: +0.140 → **−0.001** |
+- [x] **⚠️ The deep block. Three of the four rows fixed; the fourth has a new and different cause.**
+      Two changes, each with a clear football reason:
+      1. **Line height moves the whole team.** It used to transfer defence↔midfield only, so a deep
+         side kept every forward exactly where it was — a team cut in half, and the reason sitting
+         off was free. It is now a flow across all three bands. Mentality still moves midfield↔attack
+         and nothing else, so the two knobs remain genuinely different: **line height says where the
+         block sits, mentality says how many commit forward within it.**
+      2. **Congestion buys quality, not volume.** A packed final third was suppressing *whether* a
+         side shot as well as *where from*, charging the same congestion twice. You can always have a
+         go from the edge of the box; what a packed area takes away is getting inside it.
 
-      That last one is decisive. Home advantage cannot reach +0.35 while any away side can delete it
-      by sitting deep, and cranking the crowd constants to force the number would need ~25 fitness
-      points or a band shift larger than half an ultra-attacking mentality — neither is credible, and
-      both would be fitting the engine to a threshold instead of fixing it.
+      | row | before | after |
+      |---|---|---|
+      | 3d·fix — chances conceded by a deep block vs a high line | 14.8 m vs 15.3 m (backwards) | **16.1 m vs 13.4 m** |
+      | home advantage vs a deep away side | +0.140 → **−0.001** (erased) | **+0.205**, above the +0.175 even case |
+      | shot volume conceded by a low block | 0.84× a high line | **1.01×** |
+      | goals per match | 2.85 | **2.83** |
 
-      **Where to look.** A deep line lowers `LINE_RISK` to 0, which zeroes both `exposure` *and*
-      `compression` in `space.ts` — so a deep block pays **no price at all** for sitting off. In
-      football it does: it concedes territory, the ball, and shooting position. Give sitting deep its
-      real cost (the opponent starts attacks higher up and keeps the ball more), then re-measure all
-      four rows above. Expect goals per match to move; re-check that too.
+- [ ] **⚠️ Row 1 is still wrong, and it is a different defect: `attack − defence` treats 0 v 0 the
+      same as 2 v 2.**
+      An ultra-attacking side on a very high line still works **fewer** shots (11.3) than the
+      ultra-defensive deep side it is playing (12.7). It should dominate.
+
+      The cause is not the low block this time. Possession sits at **50% in every configuration
+      measured** — it responds to tempo and directness and to nothing else — so a side camped in the
+      opponent's half cannot actually camp. And the reason it cannot is in `space.ts`:
+      `space = attackPresence − defencePresence`, which scores an empty midfield contested by nobody
+      (0 − 0) exactly the same as a crowded one (2 − 2). In football those are completely different:
+      0 v 0 means **there is nobody to pass to**. So when both sides vacate midfield — precisely what
+      happens when one goes ultra-attacking and the other goes ultra-defensive — the model says
+      "neutral" and lets the deep side stroll through it.
+
+      **Fix direction:** progression should need your own **presence**, not only a relative edge.
+      Keep the differential, and add an absolute term so an empty band is hard for whoever holds the
+      ball. Then re-measure row 1, possession share across all the tactical pairings, and goals per
+      match, which will move.
 
 - [ ] **Sanity-check the strength curve against real league spread.** A 68-rated side beats a
       46-rated one 93.3% of the time. That may well be correct for a gap that large; the threshold
@@ -266,6 +283,38 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-14** — **The deep block: three rows fixed, and the fourth traced to a different defect.**
+  - **Line height now moves the whole team.** It transferred defence↔midfield only, so a side
+    dropping its line kept every forward where it was. That is not a low block, it is a team cut in
+    half — and it was why sitting off cost nothing. Mentality still moves midfield↔attack alone, so
+    the two stay distinct: line height says where the block sits, mentality how many commit forward
+    within it. The original split existed to stop them double-counting, and stopping the
+    double-count is what created the free lunch.
+  - **Congestion buys quality, not volume.** A packed final third was suppressing whether a side shot
+    as well as where from — charging the same congestion twice. You can always have a go from the
+    edge of the box; what a packed area takes away is getting inside it.
+  - **Results.** Chances conceded by a deep block versus a high line went from 14.8 m vs 15.3 m
+    (backwards) to **16.1 m vs 13.4 m**. Home advantage against a deep away side went from **erased**
+    (−0.001) to **+0.205**, now above the +0.175 even-tactics case — sitting deep costs you. Shot
+    volume conceded by a low block went from 0.84× to 1.01× a high line. Goals per match held at 2.83.
+  - **A test that guarded nothing, caught.** After the fix I reverted it to check the gate — and
+    **every test still passed**. The correction was load-bearing and completely unguarded, which is
+    exactly how a fix gets silently undone by a later run. Worse, my first attempt at a guard also
+    passed under revert: the thresholds were loose enough that the *other* change carried them. The
+    discriminating measure turned out to be shot **volume** conceded by a low block — 1.01× with the
+    fix, 0.84× without — and the test is now set where it actually separates the two.
+  - **Row 1 is still wrong, and it is a different defect.** An ultra-attacking high side still works
+    fewer shots (11.3) than the ultra-defensive deep side it plays (12.7). The cause is not the low
+    block: **possession sits at 50% in every configuration measured**, responding only to tempo and
+    directness, so a side camped in the opponent's half cannot camp. And that traces to
+    `space = attackPresence − defencePresence`, which scores an empty midfield (0 − 0) identically to
+    a crowded one (2 − 2). In football, 0 v 0 means there is nobody to pass to. When both sides
+    vacate midfield — exactly what ultra-attacking versus ultra-defensive produces — the model calls
+    it neutral and lets the deep side stroll through. Filed as its own ⚠️ box with the fix direction.
+  - 219 tests green, lint/typecheck/format clean.
+  - **Next run: the 0-v-0 problem.** It is the last thing between here and the Step 4 harness, and it
+    will move goals per match and possession share, so re-measure both.
 
 - **2026-09-13** — **Home advantage, and the defect it finally pinned down.**
   - **Built out of three named channels**, each tested on its own: a crowd is adrenaline, so the home

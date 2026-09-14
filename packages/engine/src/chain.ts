@@ -239,13 +239,13 @@ const PHASE_REFERENCE: Record<FieldPhase, number> = {
 const PHASE_SLOPE: Record<FieldPhase, number> = {
   BUILD_UP: 0.09,
   PROGRESSION: 0.11,
-  FINAL_THIRD: 0.1,
+  FINAL_THIRD: 0.05,
 };
 
 const PHASE_FLOOR: Record<FieldPhase, number> = {
   BUILD_UP: 0.35,
   PROGRESSION: 0.15,
-  FINAL_THIRD: 0.05,
+  FINAL_THIRD: 0.18,
 };
 
 const PHASE_CEILING: Record<FieldPhase, number> = {
@@ -389,7 +389,7 @@ const PENETRATION_DEPTH = 0.8;
 const DEPTH_NEAR = 3;
 const DEPTH_FAR = 32;
 /** Room in the zone makes the block easier to get into. */
-const PENETRATION_PER_SPACE = 0.09;
+const PENETRATION_PER_SPACE = 0.16;
 /** And a defence still running back is easier still. */
 const COUNTER_PENETRATION = 0.12;
 /** Half the width of a goal, in metres. The only reason any of this geometry works. */

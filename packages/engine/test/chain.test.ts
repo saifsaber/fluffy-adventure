@@ -439,3 +439,52 @@ describe('penetration responds to the match, not to a die alone', () => {
     expect(mean(setPieces.map((s) => s.distanceM))).toBeLessThan(14);
   });
 });
+
+/**
+ * Congestion buys quality, not volume.
+ *
+ * The low block was too strong for four measurements running, and this was why: a crowded final
+ * third suppressed **whether** a side shot as well as **where** from, charging the same congestion
+ * twice. In football you can always have a go from the edge of the box — what a packed penalty area
+ * takes away is the chance to get inside it.
+ *
+ * Without this test the fix is invisible: reverting it broke nothing, which is exactly how a
+ * correction gets quietly undone by a later run.
+ */
+describe('a packed box changes where you shoot from, not whether you shoot', () => {
+  const against = (defence: Parameters<typeof makeSide>[1], label: string) => {
+    const results = sample(200, (i) =>
+      simulateChain(
+        { home: makeSide(base), away: makeSide(base, defence), minutes: 90 },
+        createRng(`${label}-${i}`),
+      ),
+    );
+    const shots = results.flatMap((r) => r.shots.filter((s) => s.side === 'home'));
+    return {
+      perMatch: shots.length / results.length,
+      distance: mean(shots.map((s) => s.distanceM)),
+    };
+  };
+
+  const lowBlock = against({ lineHeight: 'deep', compactness: 'tight' }, 'low');
+  const highLine = against({ lineHeight: 'very_high', compactness: 'loose' }, 'high');
+
+  it('pushes shots measurably further out against a low block', () => {
+    // 2.7 m apart as built. The thresholds here are set where they actually discriminate: charging
+    // congestion to volume as well as quality gives 1.7 m, so a looser bound would pass either way
+    // and guard nothing.
+    expect(lowBlock.distance).toBeGreaterThan(highLine.distance + 2.1);
+  });
+
+  it('does not also take the shots away', () => {
+    // The measure that catches the regression. A low block concedes the same **number** of attempts
+    // as a high line (ratio 1.01); charging congestion twice drops it to 0.84, and sitting deep
+    // becomes free — which is where four separate investigations kept ending up.
+    expect(lowBlock.perMatch / highLine.perMatch).toBeGreaterThan(0.93);
+  });
+
+  it('still makes the chances against a high line the better ones', () => {
+    expect(highLine.distance).toBeLessThan(15);
+    expect(lowBlock.distance).toBeGreaterThan(15);
+  });
+});

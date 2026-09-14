@@ -87,19 +87,22 @@ describe('presence is conserved by every shape setting', () => {
   });
 
   it('is conservation, not inertness — the weight genuinely moves', () => {
-    // The two vertical knobs are deliberately split so they cannot double-count: line height moves
-    // the rear block between the defensive and middle bands, mentality decides how many of the
-    // middle join the attack. Asserting them separately is what keeps that split honest.
+    // Line height moves the **whole team**; mentality decides how many bodies commit forward within
+    // the block it set. The two were once split so line height touched only defence↔midfield — and
+    // that split was exactly why a low block cost nothing, because the deep side kept every forward
+    // where it was. A side whose defence sits deep while its strikers stay high is not a low block,
+    // it is a team cut in half.
     const deep = tacticalPresence(makeSide(base, { lineHeight: 'deep' }));
     const high = tacticalPresence(makeSide(base, { lineHeight: 'very_high' }));
-    expect(high.middle_centre).toBeGreaterThan(deep.middle_centre);
     expect(high.defensive_centre).toBeLessThan(deep.defensive_centre);
-    expect(high.attacking_centre).toBeCloseTo(deep.attacking_centre, 9);
+    expect(high.attacking_centre).toBeGreaterThan(deep.attacking_centre);
 
     const cautious = tacticalPresence(makeSide(base, { mentality: 'ultra_defensive' }));
     const committed = tacticalPresence(makeSide(base, { mentality: 'ultra_attacking' }));
     expect(committed.attacking_centre).toBeGreaterThan(cautious.attacking_centre);
     expect(committed.middle_centre).toBeLessThan(cautious.middle_centre);
+    // Mentality alone leaves the back line where it was — that is what keeps the two from being
+    // the same knob under two names.
     expect(committed.defensive_centre).toBeCloseTo(cautious.defensive_centre, 9);
 
     const narrow = tacticalPresence(makeSide(base, { width: 'narrow' }));

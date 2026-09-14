@@ -279,7 +279,19 @@ function flowChannels(grid: Grid, signed: number, home: Channel): Grid {
 // Tactical constants
 // ---------------------------------------------------------------------------------------------
 
-/** Defensive line ↔ midfield. How far up the back line pushes the whole rear block. */
+/**
+ * How far up the pitch the **whole team** sits.
+ *
+ * Applied as a flow across all three bands, not a transfer between two. Dropping the back line
+ * thirty yards drops the forwards with it — a side whose defence sits deep while its strikers stay
+ * high is not a low block, it is a team cut in half.
+ *
+ * This was originally split so that line height touched only defence↔midfield and mentality only
+ * midfield↔attack, to stop them double-counting. That split turned out to be the reason a low block
+ * cost nothing: the deep side kept its entire attacking presence while giving up none of it, so
+ * sitting off was free. The two are genuinely different things and both belong: **line height says
+ * where the block sits, mentality says how many bodies commit forward within it.**
+ */
 const LINE_SHIFT: Record<LineHeight, number> = {
   deep: -0.2,
   normal: 0,
@@ -287,7 +299,7 @@ const LINE_SHIFT: Record<LineHeight, number> = {
   very_high: 0.26,
 };
 
-/** Midfield ↔ attack. How many bodies commit forward once the back line has taken its position. */
+/** Midfield ↔ attack. How many bodies commit forward *within* the block the line height set. */
 const MENTALITY_SHIFT: Record<Mentality, number> = {
   ultra_defensive: -0.22,
   defensive: -0.11,
@@ -416,7 +428,7 @@ export function tacticalPresence(side: SideSetup): Grid {
     for (const zone of ZONES) grid[zone] += own[zone];
   }
 
-  grid = transferBands(grid, 'defensive', 'middle', LINE_SHIFT[tactics.lineHeight]);
+  grid = flowBands(grid, LINE_SHIFT[tactics.lineHeight]);
   grid = transferBands(grid, 'middle', 'attacking', MENTALITY_SHIFT[tactics.mentality]);
   grid = transferChannels(grid, WIDTH_SHIFT[tactics.width]);
   grid = condenseBands(grid, BLOCK_GRAVITY[tactics.lineHeight], COMPACT_BAND[tactics.compactness]);
