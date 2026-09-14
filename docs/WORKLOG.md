@@ -269,9 +269,53 @@ missing models, not tuning, and the harness cannot pass without them.
 > under the ceiling would break something that is currently right. (2) The attacking-vs-deep-block
 > pairing has now thrown three odd readings across 3d, 3d·fix and 3f, and wants a proper look.
 
-- [ ] 10,000-season headless harness
-- [ ] Thresholds per `docs/01-product/03-technical-blueprint.md`: goals/match 2.5–2.8 · home advantage +0.3–0.4 · xG↔goals r>0.9 · champion 78–95 pts · stronger side wins 55–65% · every tactic has a context-dependent effect · determinism 100%
-- [ ] **Gate: no UI work begins until this passes.** Fix the engine, never the thresholds.
+- [x] **10,000-season headless harness.** `packages/harness` — runs whole seasons of the real
+      Egyptian fourth division through `simulate()`, on real grounds, real crowds and real distances
+      between Egyptian towns, and checks the result against the blueprint. Thresholds live as data
+      with their source beside them, and `test/harness.test.ts` **pins their exact values** so
+      loosening one means deleting a test. A check that could not be measured reports `??`, never a
+      pass: a green report that skipped something is worse than a red one.
+- [x] Thresholds per `docs/01-product/03-technical-blueprint.md`, as data in `metrics.ts`.
+- [ ] **Gate: no UI work begins until this passes.** Currently **3 of 6**.
+
+### Step 4·verdict — what the gate actually says
+
+First run on real content, 20 seasons / 7,600 matches:
+
+| | measured | wanted | |
+|---|---|---|---|
+| xG ↔ goals correlation | **0.951** | > 0.9 | ✅ the xG we display predicts the goals we score |
+| champion points | **94.9** | 78–95 | ✅ though right at the ceiling |
+| determinism | **1.000** | 1 | ✅ a season replays byte for byte |
+| goals per match | **3.654** | 2.5–2.8 | ❌ |
+| home advantage | **0.044** | +0.3–0.4 | ❌ |
+| stronger side wins | **0.787** | 0.55–0.65 | ❌ |
+
+- [ ] **⚠️ Goals per match is 3.65 on real content, against 2.83 on even fixtures.** This is new
+      information and it was invisible until now: every earlier measurement used two identical
+      55-rated sides. A real league has mismatches and extreme tactical pairings, and those produce
+      far more goals than the average fixture does. Do not tune the goal rate down on its own — the
+      likeliest cause is the same one below, since a league where the stronger side wins 79% of the
+      time is a league of blowouts.
+- [ ] **⚠️ The stronger side wins 78.7%, against a wanted 55–65%.** The strength curve is far too
+      steep: reputation differences of eight points or more decide matches almost outright. This is
+      the biggest single failure and probably drives the goals figure too. Look at how player
+      competence compounds — `bandCompetence` feeds presence, presence feeds space, space feeds every
+      phase probability, so a 20% ability edge is being multiplied through four stages.
+- [ ] **⚠️ Home advantage is 0.044 on real content** (it measured 0.140 on even fixtures with a full
+      house). Fourth-division grounds are small, so `crowdIntensity` stays low — which is honest —
+      and the remaining gap is the same blowout problem swamping it.
+- [ ] **The pitch-position model, ready to land inside the harness.** Written up in full above under
+      Step 3·gap. It needs the phase constants re-fitted against every pairing at once, which is
+      exactly what this harness now makes possible.
+- [ ] **Performance: the full 10,000-season gate takes about 10 hours.** A match costs 9.4 ms, so
+      3.8 M matches is not a per-change check. This run already took it from 13.7 ms (a 31% cut, with
+      the season hash verified byte-identical before and after), and `resolveSpace` is still 62% of
+      the remaining time. Either it gets faster again or the full gate runs on a schedule while
+      `--seasons=20` (72 s) stays the routine check. The report prints the count it used, because a
+      threshold met over twenty seasons and one met over ten thousand are different claims.
+- [ ] **Wire `pnpm harness` into CI once it is green.** Not before: a permanently red pipeline
+      teaches everyone to ignore it.
 
 ### Step 5 — trace and counterfactual
 - [ ] `MatchTrace` emission — 5–8 swing moments with enum causes and win-probability deltas
@@ -304,6 +348,42 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-14** — **Step 4: the harness exists, and it says the engine is not ready.**
+  - **`packages/harness` runs real seasons.** Real grounds, real crowds derived from each club's
+    standing, real distances between Egyptian towns, real fixture list, real points system read from
+    the league file. Nothing in it decides a result — it builds each `MatchInput`, calls `simulate`,
+    and adds up what comes back, which is the only way a gate can check the engine rather than offer
+    a second opinion about it.
+  - **The verdict, 20 seasons / 7,600 matches: 3 of 6.** Passing — xG↔goals correlation **0.951**
+    (the xG we show genuinely predicts the goals we score), champion points **94.9**, determinism
+    **1.000** (a whole season replays byte for byte). Failing — goals per match **3.654** against
+    2.5–2.8, home advantage **0.044** against +0.3–0.4, and the stronger side winning **78.7%**
+    against a wanted 55–65%.
+  - **The most valuable thing it found was invisible before.** Every earlier measurement used two
+    identical 55-rated sides and read 2.83 goals a match. On a real league it is **3.65**. The
+    difference is mismatches: a league where the stronger side wins 79% of the time is a league of
+    blowouts, and blowouts are where the extra goals come from. So the goals figure is probably a
+    symptom of the strength curve and not a separate fault — which is precisely the kind of thing
+    single-fixture probing could never have told me, and why the harness had to come before the
+    re-balancing rather than after.
+  - **The thresholds are pinned by a test.** `CLAUDE.md` says the engine gets fixed and the
+    thresholds do not get lowered; `harness.test.ts` asserts their exact values, so loosening one
+    now means deleting a test that says why it exists.
+  - **An unmeasured check reports `??` and fails the run.** Three-valued on purpose: a green report
+    that quietly skipped a check is worse than a red one.
+  - **A 31% speed-up, verified byte-identical.** A match went from 13.7 ms to 9.4 ms by writing out
+    the nine-key grid literals instead of `Object.fromEntries`, inlining the competence sums instead
+    of allocating a six-element array per zone per player, and resolving both sides' maps in one pass
+    instead of building every grid twice. I took a SHA of a whole season's results before and after
+    each step and it never moved — which is the only way to make a performance change to a
+    deterministic engine and still be able to say it changed nothing.
+  - Full gate still takes ~10 hours, and `resolveSpace` is still 62% of a match. Filed with the
+    number rather than left as "it's slow".
+  - 241 tests green, lint/typecheck/format clean.
+  - **Next run: the strength curve.** It is the largest failure, it probably explains the goals
+    figure, and the note on that box says where to look — ability compounds through four stages
+    between `bandCompetence` and a phase probability.
 
 - **2026-09-14** — **Row 1: diagnosed and built, then deliberately reverted. Nothing shipped.**
   - **My previous diagnosis was wrong, and the correction matters.** I had blamed

@@ -37,6 +37,7 @@ export {
   fitnessFactor,
   gridTotal,
   indexSquad,
+  resolveBoth,
   resolveSpace,
   tacticalPresence,
 } from './space.js';

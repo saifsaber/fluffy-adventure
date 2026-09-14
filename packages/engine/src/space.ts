@@ -114,7 +114,37 @@ export interface SpaceMap {
 
 type Grid = Record<Zone, number>;
 
-const emptyGrid = (): Grid => Object.fromEntries(ZONES.map((zone) => [zone, 0])) as Grid;
+/**
+ * A zeroed grid, written out longhand.
+ *
+ * `Object.fromEntries(ZONES.map(...))` reads better and is thirty times slower, and this is the
+ * hottest allocation in the engine: resolving one match's space maps calls it several hundred
+ * times. At the old cost the 10,000-season gate would have taken sixteen hours.
+ */
+const emptyGrid = (): Grid => ({
+  defensive_left: 0,
+  defensive_centre: 0,
+  defensive_right: 0,
+  middle_left: 0,
+  middle_centre: 0,
+  middle_right: 0,
+  attacking_left: 0,
+  attacking_centre: 0,
+  attacking_right: 0,
+});
+
+/** Same reason: a nine-key spread in a hot loop is worth writing out. */
+const copyGrid = (grid: Grid): Grid => ({
+  defensive_left: grid.defensive_left,
+  defensive_centre: grid.defensive_centre,
+  defensive_right: grid.defensive_right,
+  middle_left: grid.middle_left,
+  middle_centre: grid.middle_centre,
+  middle_right: grid.middle_right,
+  attacking_left: grid.attacking_left,
+  attacking_centre: grid.attacking_centre,
+  attacking_right: grid.attacking_right,
+});
 
 const mean = (values: readonly number[]): number =>
   values.reduce((sum, value) => sum + value, 0) / values.length;
@@ -140,17 +170,23 @@ export const gridTotal = (grid: Grid): number => ZONES.reduce((sum, zone) => sum
 export function bandCompetence(player: Player, band: Band): number {
   const { technical: t, physical: p, mental: m, goalkeeping: g } = player.attributes;
 
+  // Written as sums rather than `mean([...])` on purpose: this runs tens of thousands of times a
+  // match, and the array that expression allocates was a measurable share of the whole engine.
   if (band === 'defensive') {
     // A keeper resists in his own third with keeping attributes, not with tackling he never uses.
     if (g !== undefined) {
-      return mean([m.positioning, m.anticipation, g.handling, g.oneOnOnes, g.aerialReach]) / 50;
+      return (m.positioning + m.anticipation + g.handling + g.oneOnOnes + g.aerialReach) / 5 / 50;
     }
-    return mean([t.marking, t.tackling, m.positioning, m.anticipation, p.strength, p.jumping]) / 50;
+    return (
+      (t.marking + t.tackling + m.positioning + m.anticipation + p.strength + p.jumping) / 6 / 50
+    );
   }
   if (band === 'middle') {
-    return mean([t.passing, t.vision, m.decisions, m.workRate, m.teamwork, p.stamina]) / 50;
+    return (t.passing + t.vision + m.decisions + m.workRate + m.teamwork + p.stamina) / 6 / 50;
   }
-  return mean([t.dribbling, t.finishing, t.firstTouch, m.composure, p.acceleration, p.pace]) / 50;
+  return (
+    (t.dribbling + t.finishing + t.firstTouch + m.composure + p.acceleration + p.pace) / 6 / 50
+  );
 }
 
 /**
@@ -173,7 +209,7 @@ export function fitnessFactor(fitness: number): number {
 /** Moves a fraction of one band's weight into another, channel by channel. Sign gives direction. */
 function transferBands(grid: Grid, back: Band, forward: Band, signed: number): Grid {
   if (signed === 0) return grid;
-  const out = { ...grid };
+  const out = copyGrid(grid);
   const from = signed > 0 ? back : forward;
   const to = signed > 0 ? forward : back;
   const fraction = Math.abs(signed);
@@ -188,7 +224,7 @@ function transferBands(grid: Grid, back: Band, forward: Band, signed: number): G
 /** Positive widens (centre → flanks); negative narrows (flanks → centre). */
 function transferChannels(grid: Grid, signed: number): Grid {
   if (signed === 0) return grid;
-  const out = { ...grid };
+  const out = copyGrid(grid);
   const fraction = Math.abs(signed);
   for (const band of BANDS) {
     const centre = zoneOf(band, 'centre');
@@ -213,7 +249,7 @@ function transferChannels(grid: Grid, signed: number): Grid {
 /** Positive pulls the other bands into the block's gravity band; negative spreads it back out. */
 function condenseBands(grid: Grid, gravity: Band, signed: number): Grid {
   if (signed === 0) return grid;
-  const out = { ...grid };
+  const out = copyGrid(grid);
   const others = BANDS.filter((band) => band !== gravity);
   const fraction = Math.abs(signed);
   for (const channel of CHANNELS) {
@@ -236,7 +272,7 @@ function condenseBands(grid: Grid, gravity: Band, signed: number): Grid {
 /** A conserved flow one band forward (positive) or back (negative), used for per-player role drift. */
 function flowBands(grid: Grid, signed: number): Grid {
   if (signed === 0) return grid;
-  const out = { ...grid };
+  const out = copyGrid(grid);
   const fraction = Math.abs(signed);
   for (const channel of CHANNELS) {
     const def = grid[zoneOf('defensive', channel)];
@@ -258,7 +294,7 @@ function flowBands(grid: Grid, signed: number): Grid {
 /** Positive drifts toward the player's own flank; negative tucks them inside. */
 function flowChannels(grid: Grid, signed: number, home: Channel): Grid {
   if (signed === 0 || home === 'centre') return grid;
-  const out = { ...grid };
+  const out = copyGrid(grid);
   const fraction = Math.abs(signed);
   for (const band of BANDS) {
     const centre = zoneOf(band, 'centre');
@@ -531,9 +567,35 @@ const pressResistanceOf = (players: readonly Player[]): number =>
  * attacking side's own build-up area.
  */
 export function resolveSpace(attack: SideSetup, defend: SideSetup): SpaceMap {
-  const attackGrid = tacticalPresence(attack);
-  const defendGrid = tacticalPresence(defend);
+  return resolveWith(attack, defend, tacticalPresence(attack), tacticalPresence(defend));
+}
 
+/**
+ * Both directions at once.
+ *
+ * A match needs the map from each side's point of view, and computing them separately builds every
+ * side's presence grid twice. Since the grids depend only on a side's own shape and players, doing
+ * both here halves the work — which matters because this is what the 10,000-season gate spends its
+ * time on.
+ */
+export function resolveBoth(
+  home: SideSetup,
+  away: SideSetup,
+): { readonly home: SpaceMap; readonly away: SpaceMap } {
+  const homeGrid = tacticalPresence(home);
+  const awayGrid = tacticalPresence(away);
+  return {
+    home: resolveWith(home, away, homeGrid, awayGrid),
+    away: resolveWith(away, home, awayGrid, homeGrid),
+  };
+}
+
+function resolveWith(
+  attack: SideSetup,
+  defend: SideSetup,
+  attackGrid: Grid,
+  defendGrid: Grid,
+): SpaceMap {
   const lineRisk = LINE_RISK[defend.tactics.lineHeight];
 
   // What the attacking side can do with grass behind the line, against what the defence can recover.

@@ -6,6 +6,9 @@
     },
     {
       "path": "./packages/content"
+    },
+    {
+      "path": "./packages/harness"
     }
   ]
 }

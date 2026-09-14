@@ -29,7 +29,7 @@ import {
   type Channel,
   type Zone,
 } from './zones.js';
-import { bandCompetence, resolveSpace, type SideSetup, type SpaceMap } from './space.js';
+import { bandCompetence, resolveBoth, type SideSetup, type SpaceMap } from './space.js';
 
 /**
  * The possession chain — how space becomes events.
@@ -723,10 +723,7 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
   const events: ChainEvent[] = [];
 
   const setups: Record<Side, SideSetup> = { home: snapshot(live.home), away: snapshot(live.away) };
-  const maps: Record<Side, SpaceMap> = {
-    home: resolveSpace(setups.home, setups.away),
-    away: resolveSpace(setups.away, setups.home),
-  };
+  const maps: Record<Side, SpaceMap> = resolveBoth(setups.home, setups.away);
   let lastResolved = 0;
   live.home.dirty = false;
   live.away.dirty = false;
@@ -735,8 +732,9 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
     if (at - lastResolved < RECOMPUTE_EVERY_TICKS && !live.home.dirty && !live.away.dirty) return;
     setups.home = snapshot(live.home);
     setups.away = snapshot(live.away);
-    maps.home = resolveSpace(setups.home, setups.away);
-    maps.away = resolveSpace(setups.away, setups.home);
+    const both = resolveBoth(setups.home, setups.away);
+    maps.home = both.home;
+    maps.away = both.away;
     live.home.dirty = false;
     live.away.dirty = false;
     lastResolved = at;

@@ -143,10 +143,17 @@ export interface ZonePresence {
 export function zoneOccupancy(
   selections: readonly Selection[],
 ): Record<Zone, readonly ZonePresence[]> {
-  const occupancy = Object.fromEntries(ZONES.map((zone) => [zone, [] as ZonePresence[]])) as Record<
-    Zone,
-    ZonePresence[]
-  >;
+  const occupancy: Record<Zone, ZonePresence[]> = {
+    defensive_left: [],
+    defensive_centre: [],
+    defensive_right: [],
+    middle_left: [],
+    middle_centre: [],
+    middle_right: [],
+    attacking_left: [],
+    attacking_centre: [],
+    attacking_right: [],
+  };
 
   for (const selection of selections) {
     const footprint = FOOTPRINTS[selection.position];

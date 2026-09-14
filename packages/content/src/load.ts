@@ -93,9 +93,20 @@ export function toClub(data: ClubData): Club {
 export interface LoadedLeague {
   readonly league: LeagueData;
   readonly clubs: readonly Club[];
+  /**
+   * The clubs as they sit on disk, in the same order.
+   *
+   * `toClub` deliberately drops `location`: the engine takes travel as a pre-computed
+   * `awayTravelKm` and knows no geography at all, which is what keeps it pure and what lets a new
+   * country be a data file. Anything that has to *compute* that distance — the season harness, the
+   * fixture scheduler — needs the coordinates, so they stay available here rather than being
+   * smuggled into the engine's `Club`.
+   */
+  readonly data: readonly ClubData[];
 }
 
-export function loadClub(file: string): Club {
+/** The club exactly as it sits on disk, validated. */
+export function loadClubData(file: string): ClubData {
   const data = parseOrThrow(clubSchema, readJson(file), file);
   const seen = new Set<string>();
   for (const player of data.squad) {
@@ -103,7 +114,11 @@ export function loadClub(file: string): Club {
       throw new ContentError(file, `duplicate player slug "${player.slug}"`);
     seen.add(player.slug);
   }
-  return toClub(data);
+  return data;
+}
+
+export function loadClub(file: string): Club {
+  return toClub(loadClubData(file));
 }
 
 /**
@@ -116,15 +131,16 @@ export function loadLeague(dataRoot: string, leagueSlug: string): LoadedLeague {
   const leagueFile = join(dataRoot, 'leagues', `${leagueSlug}.json`);
   const league = parseOrThrow(leagueSchema, readJson(leagueFile), leagueFile);
 
-  const clubs = league.clubs.map((slug) =>
-    loadClub(join(dataRoot, 'clubs', league.country.toLowerCase(), `${slug}.json`)),
+  const data = league.clubs.map((slug) =>
+    loadClubData(join(dataRoot, 'clubs', league.country.toLowerCase(), `${slug}.json`)),
   );
+  const clubs = data.map(toClub);
 
   const duplicates = league.clubs.filter((slug, i) => league.clubs.indexOf(slug) !== i);
   if (duplicates.length > 0) {
     throw new ContentError(leagueFile, `club listed more than once: ${duplicates.join(', ')}`);
   }
-  return { league, clubs };
+  return { league, clubs, data };
 }
 
 export function listLeagues(dataRoot: string): readonly string[] {
