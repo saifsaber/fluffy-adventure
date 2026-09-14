@@ -216,24 +216,45 @@ missing models, not tuning, and the harness cannot pass without them.
       | shot volume conceded by a low block | 0.84× a high line | **1.01×** |
       | goals per match | 2.85 | **2.83** |
 
-- [ ] **⚠️ Row 1 is still wrong, and it is a different defect: `attack − defence` treats 0 v 0 the
-      same as 2 v 2.**
-      An ultra-attacking side on a very high line still works **fewer** shots (11.3) than the
-      ultra-defensive deep side it is playing (12.7). It should dominate.
+- [ ] **⚠️ Row 1: a frame error in how contests are paired. Diagnosed, built, measured — and
+      deliberately NOT landed. Do this one together with the Step 4 harness.**
 
-      The cause is not the low block this time. Possession sits at **50% in every configuration
-      measured** — it responds to tempo and directness and to nothing else — so a side camped in the
-      opponent's half cannot actually camp. And the reason it cannot is in `space.ts`:
-      `space = attackPresence − defencePresence`, which scores an empty midfield contested by nobody
-      (0 − 0) exactly the same as a crowded one (2 − 2). In football those are completely different:
-      0 v 0 means **there is nobody to pass to**. So when both sides vacate midfield — precisely what
-      happens when one goes ultra-attacking and the other goes ultra-defensive — the model says
-      "neutral" and lets the deep side stroll through it.
+      **The previous note on this box was wrong** and is corrected here. It blamed
+      `space = attack − defence` for scoring an empty midfield (0 − 0) like a crowded one (2 − 2).
+      Measured, that is not what happens: against an ultra-attacking side the deep side has **more**
+      midfield presence (2.67 against 1.84), so the differential is real and correctly favours it.
 
-      **Fix direction:** progression should need your own **presence**, not only a relative edge.
-      Keep the differential, and add an absolute term so an empty band is hard for whoever holds the
-      ball. Then re-measure row 1, possession share across all the tactical pairings, and goals per
-      match, which will move.
+      **The actual defect is a frame error.** Zones are thirds of a *shape*, and `mirror()` pairs them
+      band for band — which assumes both teams' thirds line up on the grass. They do not. A side
+      sitting deep has its whole block compressed into its own third, so its "midfield" is behind the
+      halfway line and is **not** contesting the opponent's build-up. Pairing it there anyway lets a
+      low block strangle a phase of play it is not present in.
+
+      **The fix, which is built and verified in principle.** Give each side a pitch offset from its
+      line height, place both sides' bands on a shared 0–2 pitch coordinate, and sample **both** onto
+      it with a proximity kernel. Not normalised: a block that is nowhere near genuinely stops
+      contesting, and a compressed block genuinely doubles its density. With both sides at a normal
+      line height it reduces **exactly** to the current `mirror()` pairing — verified, the even-tactics
+      numbers came out byte-identical, so it is safe to re-apply.
+
+      | | now | with the pitch model |
+      |---|---|---|
+      | ultra-attacking vs ultra-defensive, shots | 11.29 − 13.11 (backwards) | **12.13 − 11.79** ✓ |
+      | possession, vs a low block | 50.0% (never moves) | **51.4%** ✓ |
+      | goals per match, away side deep | 2.51 | **1.90** ✗ |
+      | home advantage, away side deep | +0.205 | **−0.03** ✗ |
+
+      **Why it was not landed.** It trades one symptom for two: congestion in front of a low block
+      roughly triples, and `PHASE_BASE`, the floors and the ceilings were all calibrated against the
+      old congestion levels. Rebalancing them needs every tactical pairing checked *at once* — fitting
+      them one probe at a time is how constants end up tuned to whichever pairing was measured last.
+      That is what the harness is for, so this belongs with Step 4 and not before it.
+
+      **One real bug found along the way, worth keeping.** `LINE_SHIFT` (a band transfer) and the new
+      pitch offset both model "the team drops", so applying both double-counts it. Under the pitch
+      model, line height should carry the offset **only** and `LINE_SHIFT` should go to zero;
+      mentality keeps the band transfer. Removing the double count moved goals from 1.74 to 1.90 on
+      its own.
 
 - [ ] **Sanity-check the strength curve against real league spread.** A 68-rated side beats a
       46-rated one 93.3% of the time. That may well be correct for a gap that large; the threshold
@@ -283,6 +304,40 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-14** — **Row 1: diagnosed and built, then deliberately reverted. Nothing shipped.**
+  - **My previous diagnosis was wrong, and the correction matters.** I had blamed
+    `space = attack − defence` for treating an empty midfield (0 − 0) like a crowded one (2 − 2).
+    Measured, that is not what happens: against an ultra-attacking side, the deep side has **more**
+    midfield presence — 2.67 against 1.84 — so the differential is real and correctly favours it.
+    The worklog box has been rewritten rather than left to mislead the next run.
+  - **The real defect is a frame error.** Zones are thirds of a *shape*, and `mirror()` pairs them
+    band for band, which assumes both teams' thirds line up on the grass. They do not. A side sitting
+    deep is compressed into its own third, so its "midfield" is behind the halfway line and is not
+    contesting the opponent's build-up at all. Pairing it there let a low block strangle a phase of
+    play it was not present in.
+  - **Built it and it works — as far as it goes.** Both sides placed on a shared 0–2 pitch coordinate
+    and sampled with a proximity kernel. It reduces **exactly** to the old pairing when both sides
+    play a normal line, which I verified: the even-tactics numbers came out byte-identical. Row 1
+    flipped — an ultra-attacking side now outshoots the ultra-defensive one, 12.13 to 11.79, where it
+    was 11.29 to 13.11 — and **possession moved off 50% for the first time** (51.4% against a low
+    block), which no tactic had ever managed.
+  - **And I reverted it, because it trades one symptom for two.** Goals per match against a deep side
+    fall from 2.51 to 1.90, and the home advantage against a deep away side goes from +0.205 back to
+    −0.03 — undoing the box before this one. Congestion in front of a low block roughly triples, and
+    `PHASE_BASE`, the floors and the ceilings were all calibrated against the old levels. Rebalancing
+    them needs every pairing checked at once; doing it one probe at a time is exactly how constants
+    end up fitted to whichever pairing I happened to measure last. **That is what the harness is for**,
+    so the change is written up in full and filed to land with Step 4.
+  - **One genuine bug found inside the experiment, and kept in the note.** `LINE_SHIFT` (a band
+    transfer) and the pitch offset both model "the team drops", so applying both double-counts it.
+    Under the pitch model line height should carry the offset only. Removing the double count moved
+    goals from 1.74 to 1.90 on its own.
+  - Branch unchanged at 219 tests green. **A reverted experiment with a written-up result is worth
+    more than a landed regression** — and this is the second time this week that checking a fix by
+    reverting it has been the step that told me the truth.
+  - **Next run: Step 4, the 10,000-season harness.** Build it to re-fit the phase constants against
+    every tactical pairing simultaneously, then land the pitch model inside it.
 
 - **2026-09-14** — **The deep block: three rows fixed, and the fourth traced to a different defect.**
   - **Line height now moves the whole team.** It transferred defence↔midfield only, so a side
