@@ -261,9 +261,15 @@ first built two days ago.
 | stronger side wins | **0.628** | 0.55–0.65 |
 | determinism | **1.000** | 1 |
 
-> **The xG correlation sits at 0.901 against a floor of 0.9.** That margin is thin and it is not
-> noise — it was measured on 900 club-seasons. It is also in genuine tension with a feature: finishing
-> skill is *designed* to make goals deviate from xG, because that is what `CLINICAL_FINISHING` and
+> **The xG correlation sits at 0.901 against a floor of 0.9, and the thin margin is real rather than
+> marginal.** It was re-measured at **0.904 on 6,000 club-seasons** — 300 seasons, 114,000 matches —
+> which the zone-lookup speedup made a four-minute question instead of an afternoon one. Nearly
+> seven times the sample moved it *up* by 0.003 and left every other threshold in place (2.568
+> goals, 23.890 shots, 0.323 home advantage, 0.629 stronger-side, determinism 1.000). So 0.901 was
+> not a run that squeaked through; the engine genuinely sits just above the floor.
+>
+> It sits *just* above it because the number is in genuine tension with a feature: finishing skill is
+> *designed* to make goals deviate from xG, because that is what `CLINICAL_FINISHING` and
 > `WASTEFUL_FINISHING` measure. A correlation of 1.0 would mean finishing does not exist. Treat a
 > drift below 0.9 as a signal to re-examine `PER_FINISHING`, not to chase the number.
 
@@ -304,6 +310,11 @@ first built two days ago.
         allocation inside `tacticalPresence`; the cost was in string handling underneath it. A
         micro-benchmark told me which *function* was expensive and I assumed I knew *why*. The
         profile answered the second question in four minutes.
+
+      **Confirmed at scale.** 300 seasons, 114,000 matches, sustained **530 matches/s** — the
+      speedup is not an artefact of short runs, and the throughput held while the accumulator grew.
+      Memory is not the next wall either: `Accumulator` is streaming, keeping scalars plus arrays
+      that grow by about twenty entries a season, so the full 10,000 is bounded by CPU alone.
 
       **What is left, and why it is a separate decision.** The profile is now flat — the top entry
       is `tacticalPresence` at 17%, which is real work. Going further means changing `Grid` from
@@ -382,6 +393,10 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
   - **CI now runs the gate at 45 seasons rather than 20**, which is what the speedup was worth
     spending: it is the sample size every figure in the docs is quoted at, and at 20 the thin xG
     margin reports noise.
+  - **Then spent the rest of it settling that margin.** 300 seasons — 114,000 matches, 215 s, a
+    thing that was not worth doing yesterday — puts the xG correlation at **0.904 on 6,000
+    club-seasons** against 0.901 on 900. All seven thresholds pass. The engine sits just above the
+    floor because finishing is *meant* to decouple goals from xG, not because a small run got lucky.
 
 - **2026-09-15** — **Performance: a negative result, recorded properly. Nothing shipped.**
   - Micro-benchmarks pointed at `resolveBoth` as roughly half a match, so I tried the two obvious
