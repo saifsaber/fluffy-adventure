@@ -87,22 +87,19 @@ describe('presence is conserved by every shape setting', () => {
   });
 
   it('is conservation, not inertness — the weight genuinely moves', () => {
-    // Line height moves the **whole team**; mentality decides how many bodies commit forward within
-    // the block it set. The two were once split so line height touched only defence↔midfield — and
-    // that split was exactly why a low block cost nothing, because the deep side kept every forward
-    // where it was. A side whose defence sits deep while its strikers stay high is not a low block,
-    // it is a team cut in half.
+    // Line height no longer moves bodies **within** the shape at all — it moves the whole block
+    // along the pitch, which is a different thing and is checked in `resolveSpace` below. Modelling
+    // it as a band transfer as well double-counted "the team drops", and that double count was why a
+    // low block used to cost nothing.
     const deep = tacticalPresence(makeSide(base, { lineHeight: 'deep' }));
     const high = tacticalPresence(makeSide(base, { lineHeight: 'very_high' }));
-    expect(high.defensive_centre).toBeLessThan(deep.defensive_centre);
-    expect(high.attacking_centre).toBeGreaterThan(deep.attacking_centre);
+    for (const zone of ZONES) expect(high[zone], zone).toBeCloseTo(deep[zone], 9);
 
+    // Mentality is the knob that redistributes within the block, and it still does.
     const cautious = tacticalPresence(makeSide(base, { mentality: 'ultra_defensive' }));
     const committed = tacticalPresence(makeSide(base, { mentality: 'ultra_attacking' }));
     expect(committed.attacking_centre).toBeGreaterThan(cautious.attacking_centre);
     expect(committed.middle_centre).toBeLessThan(cautious.middle_centre);
-    // Mentality alone leaves the back line where it was — that is what keeps the two from being
-    // the same knob under two names.
     expect(committed.defensive_centre).toBeCloseTo(cautious.defensive_centre, 9);
 
     const narrow = tacticalPresence(makeSide(base, { width: 'narrow' }));
@@ -418,5 +415,33 @@ describe('causes', () => {
     const second = resolveSpace(attack, defend).causes;
     expect(first).toEqual(second);
     expect(new Set(first).size).toBe(first.length);
+  });
+});
+
+describe('line height is where the block stands, not how it is shaped', () => {
+  it('changes which part of the pitch a side contests', () => {
+    // The replacement claim for what line height used to do. Presence is untouched (asserted
+    // above); what moves is the ground the block covers, and that is what the resolver reads.
+    const vsDeep = resolveSpace(makeSide(base), makeSide(base, { lineHeight: 'deep' }));
+    const vsHigh = resolveSpace(makeSide(base), makeSide(base, { lineHeight: 'very_high' }));
+
+    // A side that drops off crowds its own box and hands over the halfway line.
+    expect(vsDeep.zones.attacking_centre.space).toBeLessThan(
+      vsHigh.zones.attacking_centre.space - 2,
+    );
+    expect(vsDeep.zones.defensive_centre.space).toBeGreaterThan(
+      vsHigh.zones.defensive_centre.space + 2,
+    );
+  });
+
+  it('leaves a normal line resolving exactly as a plain band-for-band pairing would', () => {
+    // The safety property of the pitch model: with neither side offset it must reduce to the
+    // original mirror pairing, so everything calibrated before it is still calibrated.
+    const map = resolveSpace(makeSide(base), makeSide(base));
+    for (const zone of ZONES) {
+      const presence = tacticalPresence(makeSide(base));
+      expect(map.zones[zone].attack).toBeCloseTo(presence[zone], 9);
+      expect(map.zones[zone].defence).toBeCloseTo(presence[mirror(zone)], 9);
+    }
   });
 });

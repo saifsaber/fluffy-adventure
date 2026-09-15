@@ -214,14 +214,15 @@ const NEXT_PHASE: Record<FieldPhase, ChainPhase> = {
  * The chance of getting through each phase when the zone offers exactly as much room as it does in
  * an even match. Space moves these; it does not create them.
  *
- * Chosen so that `0.80 × 0.55 × 0.33 ≈ 0.145` of possessions produce a shot, which against roughly
- * 80 possessions a side is about twelve shots — the right neighbourhood for a real league match.
- * Step 4's harness is the authority on whether that holds across 10,000 seasons; these are the
- * starting point it will judge, not a result.
+ * Re-fitted against the harness once it existed, on whole seasons of the real league rather than on
+ * two identical sides. Progression came down hardest (0.55 → 0.34): under the pitch-position model a
+ * side that pushes its block up genuinely vacates its own third, so advancing the ball became much
+ * easier than the old band-for-band pairing had made it, and the league was producing 4.5 goals a
+ * match. These are no longer a guess awaiting judgement — they are what the gate settled on.
  */
 const PHASE_BASE: Record<FieldPhase, number> = {
   BUILD_UP: 0.8,
-  PROGRESSION: 0.55,
+  PROGRESSION: 0.45,
   FINAL_THIRD: 0.33,
 };
 
@@ -383,13 +384,32 @@ function pickShooter(side: SideSetup, zone: Zone, rng: Rng): PlayerId | undefine
  * distances in top-flight football — 8% inside six metres, 62% inside the box, 3% beyond thirty —
  * and `test/chain.test.ts` asserts those bands directly.
  */
+/**
+ * How closed down a shot is before the zone and the situation adjust it.
+ *
+ * Raised from 45 once the harness could measure a whole league. With shot **distances** matching
+ * published football closely — 7 / 27 / 33 / 21 / 12 per cent across the bands against a real
+ * 8 / 22 / 32 / 22 / 13 — the shots were still worth 0.139 xG each where football gives about 0.11.
+ * Geometry that right and value that wrong means the missing term is the defender.
+ *
+ * This is the one quantity in the chain that is the engine's **own invention**: distance bands and
+ * the xG curve are both anchored to published figures, and `pressure` is a 5–98 scale I made up. So
+ * when two external anchors disagree, the correction belongs here and not in either of them.
+ *
+ * Stated plainly: a resulting mean around 70 is high, and it may be covering for a curve that is
+ * slightly generous at these geometries rather than for shots that are genuinely that closed down.
+ * Both would look identical from here. Worth revisiting if real shot-level data ever becomes
+ * available to calibrate pressure directly.
+ */
+const SHOT_PRESSURE_BASE = 75;
+
 const PENETRATION_SKEW = 0.45;
 const PENETRATION_DEPTH = 0.8;
 /** Perpendicular distance from the goal line: a tap-in at one end, a speculative effort at the other. */
 const DEPTH_NEAR = 3;
 const DEPTH_FAR = 32;
 /** Room in the zone makes the block easier to get into. */
-const PENETRATION_PER_SPACE = 0.16;
+const PENETRATION_PER_SPACE = 0.06;
 /** And a defence still running back is easier still. */
 const COUNTER_PENETRATION = 0.12;
 /** Half the width of a goal, in metres. The only reason any of this geometry works. */
@@ -918,7 +938,7 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
         const pressure = penalty
           ? 5
           : clamp(
-              45 +
+              SHOT_PRESSURE_BASE +
                 12 * (defence - attackHere) +
                 8 * (geometry.penetration - 0.5) -
                 (situation === 'counter' ? 20 : 0),

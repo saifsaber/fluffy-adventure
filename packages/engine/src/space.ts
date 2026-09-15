@@ -167,6 +167,24 @@ export const gridTotal = (grid: Grid): number => ZONES.reduce((sum, zone) => sum
  * contests there — a centre-back's marking does not help him in the final third, and the resolver
  * should not pretend otherwise.
  */
+/**
+ * How much of an attribute gap survives into the match.
+ *
+ * Presence is bodies times competence, and competence used to be `mean / 50` — so a squad averaging
+ * 70 carried 1.75 times the presence of one averaging 40, in every zone, and that gap was then
+ * multiplied again through three sequential phase gates. The harness measured the result: the
+ * stronger side won 79% of the time, against a blueprint that says 55–65% and "never ~100%".
+ *
+ * Football damps ability far harder than that. A better squad is better in every duel and still
+ * loses often, because the game is low-scoring and eleven players average out. `COMPETENCE_SPREAD`
+ * is how much of the raw attribute ratio reaches the pitch; the rest is the damping. It is not a
+ * fudge factor for the threshold — it is the statement that a 1–99 attribute scale is not linear in
+ * match effect, which was an unexamined assumption until the harness existed to test it.
+ */
+export const COMPETENCE_SPREAD = 0.34;
+
+const damp = (ratio: number): number => 1 - COMPETENCE_SPREAD + COMPETENCE_SPREAD * ratio;
+
 export function bandCompetence(player: Player, band: Band): number {
   const { technical: t, physical: p, mental: m, goalkeeping: g } = player.attributes;
 
@@ -175,17 +193,21 @@ export function bandCompetence(player: Player, band: Band): number {
   if (band === 'defensive') {
     // A keeper resists in his own third with keeping attributes, not with tackling he never uses.
     if (g !== undefined) {
-      return (m.positioning + m.anticipation + g.handling + g.oneOnOnes + g.aerialReach) / 5 / 50;
+      return damp(
+        (m.positioning + m.anticipation + g.handling + g.oneOnOnes + g.aerialReach) / 5 / 50,
+      );
     }
-    return (
-      (t.marking + t.tackling + m.positioning + m.anticipation + p.strength + p.jumping) / 6 / 50
+    return damp(
+      (t.marking + t.tackling + m.positioning + m.anticipation + p.strength + p.jumping) / 6 / 50,
     );
   }
   if (band === 'middle') {
-    return (t.passing + t.vision + m.decisions + m.workRate + m.teamwork + p.stamina) / 6 / 50;
+    return damp(
+      (t.passing + t.vision + m.decisions + m.workRate + m.teamwork + p.stamina) / 6 / 50,
+    );
   }
-  return (
-    (t.dribbling + t.finishing + t.firstTouch + m.composure + p.acceleration + p.pace) / 6 / 50
+  return damp(
+    (t.dribbling + t.finishing + t.firstTouch + m.composure + p.acceleration + p.pace) / 6 / 50,
   );
 }
 
@@ -328,11 +350,23 @@ function flowChannels(grid: Grid, signed: number, home: Channel): Grid {
  * sitting off was free. The two are genuinely different things and both belong: **line height says
  * where the block sits, mentality says how many bodies commit forward within it.**
  */
-const LINE_SHIFT: Record<LineHeight, number> = {
-  deep: -0.2,
+/**
+ * Where each side's block sits **on the pitch**, in band-widths, positive toward the opponent's goal.
+ *
+ * Zones are thirds of a *shape*, and pairing them band-for-band quietly assumes both teams' thirds
+ * line up on the grass. They do not. A side sitting deep has its whole block compressed into its own
+ * third, so its "midfield" is behind the halfway line and is **not** contesting the opponent's
+ * build-up — pairing it there anyway let a low block strangle a phase of play it was not present in.
+ *
+ * This replaces the old band transfer entirely. Both modelled "the team drops", so applying both
+ * double-counted it; where the block stands is the more physical of the two, and mentality keeps the
+ * band transfer for how many bodies commit forward within it.
+ */
+const BLOCK_OFFSET: Record<LineHeight, number> = {
+  deep: -0.45,
   normal: 0,
-  high: 0.15,
-  very_high: 0.26,
+  high: 0.26,
+  very_high: 0.45,
 };
 
 /** Midfield ↔ attack. How many bodies commit forward *within* the block the line height set. */
@@ -464,7 +498,6 @@ export function tacticalPresence(side: SideSetup): Grid {
     for (const zone of ZONES) grid[zone] += own[zone];
   }
 
-  grid = flowBands(grid, LINE_SHIFT[tactics.lineHeight]);
   grid = transferBands(grid, 'middle', 'attacking', MENTALITY_SHIFT[tactics.mentality]);
   grid = transferChannels(grid, WIDTH_SHIFT[tactics.width]);
   grid = condenseBands(grid, BLOCK_GRAVITY[tactics.lineHeight], COMPACT_BAND[tactics.compactness]);
@@ -596,6 +629,36 @@ function resolveWith(
   attackGrid: Grid,
   defendGrid: Grid,
 ): SpaceMap {
+  // The pitch runs 0 (the attacking side's own goal) to 2 (the goal it is attacking).
+  const attackAt = (band: Band): number =>
+    clamp(BANDS.indexOf(band) + BLOCK_OFFSET[attack.tactics.lineHeight], 0, 2);
+  const defendAt = (band: Band): number =>
+    clamp(2 - BANDS.indexOf(band) - BLOCK_OFFSET[defend.tactics.lineHeight], 0, 2);
+
+  /**
+   * How much of a side is close enough to contest a given third of the pitch.
+   *
+   * **Both** sides are sampled the same way onto the same coordinate. That symmetry is the point: a
+   * zone is a third of the *pitch*, and each side's shape decides how much of it is standing there.
+   * A side that has pushed its block into the opponent's half has genuinely abandoned its own third.
+   *
+   * Deliberately not normalised: a block that is nowhere near stops contesting altogether, and a
+   * compressed one really does double its density where it stands. With both sides at a normal line
+   * height this reduces **exactly** to the old band-for-band pairing.
+   */
+  const near = (
+    grid: Grid,
+    at: (band: Band) => number,
+    channel: Channel,
+    third: number,
+  ): number => {
+    let total = 0;
+    for (const band of BANDS) {
+      const weight = 1 - Math.abs(third - at(band));
+      if (weight > 0) total += weight * grid[zoneOf(band, channel)];
+    }
+    return total;
+  };
   const lineRisk = LINE_RISK[defend.tactics.lineHeight];
 
   // What the attacking side can do with grass behind the line, against what the defence can recover.
@@ -621,10 +684,11 @@ function resolveWith(
 
   const zones = Object.fromEntries(
     ZONES.map((zone): [Zone, ZoneSpace] => {
-      const attackHere = attackGrid[zone];
-      const defenceHere = defendGrid[mirror(zone)];
       const band = bandOf(zone);
       const channel = channelOf(zone);
+      const third = BANDS.indexOf(band);
+      const attackHere = near(attackGrid, attackAt, channel, third);
+      const defenceHere = near(defendGrid, defendAt, channelOf(mirror(zone)), third);
 
       let adjustment = 0;
       if (band === 'attacking') adjustment += exposure * EXPOSURE_SPREAD[channel];

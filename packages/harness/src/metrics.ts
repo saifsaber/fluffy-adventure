@@ -25,6 +25,10 @@ export interface Threshold {
 
 export const THRESHOLDS: readonly Threshold[] = [
   { key: 'goalsPerMatch', what: 'goals per match', low: 2.5, high: 2.8, unit: '' },
+  // Added after the first re-fit hit the goal rate with far too few shots, each worth far too much.
+  // Goals are shots times conversion, so a gate that checks only the product can be satisfied by a
+  // league of eight shots a side — which no one watching would recognise as football.
+  { key: 'shotsPerMatch', what: 'shots per match', low: 22, high: 28, unit: '' },
   { key: 'homeAdvantage', what: 'home advantage', low: 0.3, high: 0.4, unit: ' goals' },
   { key: 'xgCorrelation', what: 'xG ↔ goals correlation', low: 0.9, high: 1, unit: '' },
   { key: 'championPoints', what: 'champion points', low: 78, high: 95, unit: '' },
@@ -75,6 +79,7 @@ export function correlation(xs: readonly number[], ys: readonly number[]): numbe
 export class Accumulator {
   private matches = 0;
   private goals = 0;
+  private shots = 0;
   private homeGoals = 0;
   private awayGoals = 0;
   private championPoints: number[] = [];
@@ -93,6 +98,7 @@ export class Accumulator {
     for (const match of season.matches) {
       this.matches += 1;
       this.goals += match.homeScore + match.awayScore;
+      this.shots += match.stats.home.shots + match.stats.away.shots;
       this.homeGoals += match.homeScore;
       this.awayGoals += match.awayScore;
 
@@ -132,6 +138,7 @@ export class Accumulator {
     };
 
     put('goalsPerMatch', this.matches === 0 ? undefined : this.goals / this.matches, this.matches);
+    put('shotsPerMatch', this.matches === 0 ? undefined : this.shots / this.matches, this.matches);
     put(
       'homeAdvantage',
       this.matches === 0 ? undefined : (this.homeGoals - this.awayGoals) / this.matches,

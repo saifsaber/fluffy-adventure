@@ -34,7 +34,8 @@ describe('the thresholds are the blueprint’s, and stay that way', () => {
     expect(byKey.get('championPoints')).toMatchObject({ low: 78, high: 95 });
     expect(byKey.get('strongerSideWins')).toMatchObject({ low: 0.55, high: 0.65 });
     expect(byKey.get('determinism')).toMatchObject({ low: 1, high: 1 });
-    expect(THRESHOLDS).toHaveLength(6);
+    expect(byKey.get('shotsPerMatch')).toMatchObject({ low: 22, high: 28 });
+    expect(THRESHOLDS).toHaveLength(7);
   });
 });
 
@@ -59,7 +60,7 @@ describe('the accumulator counts what happened', () => {
       awayClubId: away,
       homeScore: hs,
       awayScore: as,
-      stats: { home: { xg: hs }, away: { xg: as } },
+      stats: { home: { xg: hs, shots: hs * 4 }, away: { xg: as, shots: as * 4 } },
     }) as unknown as MatchResult;
 
   const season = (matches: MatchResult[]) =>
@@ -243,6 +244,6 @@ describe('the command line', () => {
     // is what will tell whoever is reading that the gate has been reached.
     expect(code === 0 || report).toBeTruthy();
     if (code !== 0) expect(report).toContain('thresholds not met');
-    else expect(report).toContain('All 6 thresholds met.');
+    else expect(report).toContain('All 7 thresholds met.');
   });
 });

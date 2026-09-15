@@ -251,8 +251,12 @@ describe('tactics reach the scoreboard through the chain, not around it', () => 
     const results = sample(40, (i) =>
       simulateChain({ home: strong, away: weak, minutes: 90 }, createRng(`gap-${i}`)),
     );
+    // 1.67x as built. Ability is deliberately damped — see `COMPETENCE_SPREAD` — because the
+    // undamped model had the stronger side winning 79% of a real league, against a blueprint that
+    // says 55–65% and "never ~100%". So the bar here is that a far better side works clearly more
+    // openings, not that it overwhelms: football does not work that way, and neither should this.
     expect(mean(results.map((r) => r.home.shots))).toBeGreaterThan(
-      mean(results.map((r) => r.away.shots)) * 2,
+      mean(results.map((r) => r.away.shots)) * 1.35,
     );
   });
 

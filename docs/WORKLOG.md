@@ -216,45 +216,12 @@ missing models, not tuning, and the harness cannot pass without them.
       | shot volume conceded by a low block | 0.84× a high line | **1.01×** |
       | goals per match | 2.85 | **2.83** |
 
-- [ ] **⚠️ Row 1: a frame error in how contests are paired. Diagnosed, built, measured — and
-      deliberately NOT landed. Do this one together with the Step 4 harness.**
-
-      **The previous note on this box was wrong** and is corrected here. It blamed
-      `space = attack − defence` for scoring an empty midfield (0 − 0) like a crowded one (2 − 2).
-      Measured, that is not what happens: against an ultra-attacking side the deep side has **more**
-      midfield presence (2.67 against 1.84), so the differential is real and correctly favours it.
-
-      **The actual defect is a frame error.** Zones are thirds of a *shape*, and `mirror()` pairs them
-      band for band — which assumes both teams' thirds line up on the grass. They do not. A side
-      sitting deep has its whole block compressed into its own third, so its "midfield" is behind the
-      halfway line and is **not** contesting the opponent's build-up. Pairing it there anyway lets a
-      low block strangle a phase of play it is not present in.
-
-      **The fix, which is built and verified in principle.** Give each side a pitch offset from its
-      line height, place both sides' bands on a shared 0–2 pitch coordinate, and sample **both** onto
-      it with a proximity kernel. Not normalised: a block that is nowhere near genuinely stops
-      contesting, and a compressed block genuinely doubles its density. With both sides at a normal
-      line height it reduces **exactly** to the current `mirror()` pairing — verified, the even-tactics
-      numbers came out byte-identical, so it is safe to re-apply.
-
-      | | now | with the pitch model |
-      |---|---|---|
-      | ultra-attacking vs ultra-defensive, shots | 11.29 − 13.11 (backwards) | **12.13 − 11.79** ✓ |
-      | possession, vs a low block | 50.0% (never moves) | **51.4%** ✓ |
-      | goals per match, away side deep | 2.51 | **1.90** ✗ |
-      | home advantage, away side deep | +0.205 | **−0.03** ✗ |
-
-      **Why it was not landed.** It trades one symptom for two: congestion in front of a low block
-      roughly triples, and `PHASE_BASE`, the floors and the ceilings were all calibrated against the
-      old congestion levels. Rebalancing them needs every tactical pairing checked *at once* — fitting
-      them one probe at a time is how constants end up tuned to whichever pairing was measured last.
-      That is what the harness is for, so this belongs with Step 4 and not before it.
-
-      **One real bug found along the way, worth keeping.** `LINE_SHIFT` (a band transfer) and the new
-      pitch offset both model "the team drops", so applying both double-counts it. Under the pitch
-      model, line height should carry the offset **only** and `LINE_SHIFT` should go to zero;
-      mentality keeps the band transfer. Removing the double count moved goals from 1.74 to 1.90 on
-      its own.
+- [x] **⚠️ Row 1: the frame error — landed, with every constant re-fitted against the harness.**
+      Zones are thirds of the *pitch* now, not thirds of a shape. Each side gets an offset from its
+      line height, both are sampled onto a shared 0–2 coordinate, and with neither offset it reduces
+      **exactly** to the old `mirror()` pairing — asserted by a test, so everything calibrated before
+      it is still calibrated. `LINE_SHIFT` is gone: it and the offset both modelled "the team drops",
+      and applying both double-counted it.
 
 - [ ] **Sanity-check the strength curve against real league spread.** A 68-rated side beats a
       46-rated one 93.3% of the time. That may well be correct for a gap that large; the threshold
@@ -278,44 +245,35 @@ missing models, not tuning, and the harness cannot pass without them.
 - [x] Thresholds per `docs/01-product/03-technical-blueprint.md`, as data in `metrics.ts`.
 - [ ] **Gate: no UI work begins until this passes.** Currently **3 of 6**.
 
-### Step 4·verdict — what the gate actually says
+### Step 4·verdict — 6 of 7, on 45 seasons of real content
 
-First run on real content, 20 seasons / 7,600 matches:
+17,100 matches. Was 3 of 6 when the harness was first built.
 
 | | measured | wanted | |
 |---|---|---|---|
-| xG ↔ goals correlation | **0.951** | > 0.9 | ✅ the xG we display predicts the goals we score |
-| champion points | **94.9** | 78–95 | ✅ though right at the ceiling |
-| determinism | **1.000** | 1 | ✅ a season replays byte for byte |
-| goals per match | **3.654** | 2.5–2.8 | ❌ |
-| home advantage | **0.044** | +0.3–0.4 | ❌ |
-| stronger side wins | **0.787** | 0.55–0.65 | ❌ |
+| goals per match | **2.571** | 2.5–2.8 | ✅ |
+| shots per match | **23.908** | 22–28 | ✅ |
+| xG ↔ goals correlation | **0.904** | > 0.9 | ✅ |
+| champion points | **84.489** | 78–95 | ✅ |
+| stronger side wins | **0.632** | 0.55–0.65 | ✅ |
+| determinism | **1.000** | 1 | ✅ |
+| home advantage | **0.063** | +0.3–0.4 | ❌ |
 
-- [ ] **⚠️ Goals per match is 3.65 on real content, against 2.83 on even fixtures.** This is new
-      information and it was invisible until now: every earlier measurement used two identical
-      55-rated sides. A real league has mismatches and extreme tactical pairings, and those produce
-      far more goals than the average fixture does. Do not tune the goal rate down on its own — the
-      likeliest cause is the same one below, since a league where the stronger side wins 79% of the
-      time is a league of blowouts.
-- [ ] **⚠️ The stronger side wins 78.7%, against a wanted 55–65%.** The strength curve is far too
-      steep: reputation differences of eight points or more decide matches almost outright. This is
-      the biggest single failure and probably drives the goals figure too. Look at how player
-      competence compounds — `bandCompetence` feeds presence, presence feeds space, space feeds every
-      phase probability, so a 20% ability edge is being multiplied through four stages.
-- [ ] **⚠️ Home advantage is 0.044 on real content** (it measured 0.140 on even fixtures with a full
-      house). Fourth-division grounds are small, so `crowdIntensity` stays low — which is honest —
-      and the remaining gap is the same blowout problem swamping it.
-- [ ] **The pitch-position model, ready to land inside the harness.** Written up in full above under
-      Step 3·gap. It needs the phase constants re-fitted against every pairing at once, which is
-      exactly what this harness now makes possible.
-- [ ] **Performance: the full 10,000-season gate takes about 10 hours.** A match costs 9.4 ms, so
-      3.8 M matches is not a per-change check. This run already took it from 13.7 ms (a 31% cut, with
-      the season hash verified byte-identical before and after), and `resolveSpace` is still 62% of
-      the remaining time. Either it gets faster again or the full gate runs on a schedule while
-      `--seasons=20` (72 s) stays the routine check. The report prints the count it used, because a
-      threshold met over twenty seasons and one met over ten thousand are different claims.
+- [ ] **⚠️ Home advantage, 0.063 against +0.3–0.4. The last threshold, and the hardest.**
+      Three channels already exist and all work (fresher legs, the front foot, the referee) — they
+      simply do not add up to a third of a goal in a division played in small grounds, where
+      `crowdIntensity` is honestly low. Reaching +0.35 through the crowd alone would need ~25 fitness
+      points or a band shift larger than half an ultra-attacking mentality, which was measured and
+      rejected as not credible.
+      **Where the remaining advantage should come from: the manager, not the crowd.** Away sides in
+      real football set up more cautiously, and that behavioural difference is a large part of
+      observed home advantage. The harness currently gives every club one fixed tactical identity
+      regardless of venue (`harness/src/tactics.ts` says so in its own header). Give the AI manager a
+      venue-aware setup and re-measure before touching a single crowd constant.
 - [ ] **Wire `pnpm harness` into CI once it is green.** Not before: a permanently red pipeline
       teaches everyone to ignore it.
+- [ ] **Performance: the full 10,000-season gate takes ~5 hours** (180 matches/s, up from 66).
+      `--seasons=45` runs in 95 s and is the routine check.
 
 ### Step 5 — trace and counterfactual
 - [ ] `MatchTrace` emission — 5–8 swing moments with enum causes and win-probability deltas
@@ -348,6 +306,47 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-15** — **The pitch model landed, every constant re-fitted, and the gate went 3 of 6 to
+  6 of 7.** Measured on 45 seasons — 17,100 matches — of the real Egyptian fourth division.
+  - **Zones are thirds of the pitch now.** Each side gets an offset from its line height, both are
+    sampled onto a shared coordinate, and with neither offset it reduces **exactly** to the old
+    pairing — asserted, so everything calibrated before it stays calibrated. `LINE_SHIFT` is gone:
+    it and the offset both modelled "the team drops", and applying both double-counted it.
+  - **The re-fit was driven by the harness, not by probes**, which is exactly why the harness had to
+    come first. Sweeping constants against whole leagues found combinations that single-fixture
+    probing would have called good and the league would have rejected.
+  - **The harness caught a failure that was not in its own threshold list.** An early re-fit hit
+    goals per match perfectly — with 15.7 shots a match, each worth 0.155 xG. Goals are shots times
+    conversion, so a gate checking only the product can be satisfied by a league no one would
+    recognise as football. I added **shots per match (22–28) as a seventh threshold**, which is
+    tightening the gate — permitted; lowering one is not — and then had to earn it back.
+  - **Two external anchors disagreed, and the correction went on the invention.** With shot distances
+    matching published football closely, shots were still worth 0.139 xG each against a real ~0.11.
+    The distance bands and the xG curve are both anchored to published figures; `pressure` is a 5–98
+    scale I made up. So the correction belongs there — `SHOT_PRESSURE_BASE` 45 → 75 — and the code
+    says plainly that a resulting mean near 70 is high, that it may be covering for a slightly
+    generous curve rather than genuinely closed-down shots, and that the two look identical from
+    here.
+  - **`COMPETENCE_SPREAD`: ability is now damped to a third of its raw ratio.** Competence was
+    `mean / 50`, so a squad averaging 70 carried 1.75× the presence of one averaging 40 in every
+    zone — and that gap was multiplied again through three sequential phase gates. The stronger side
+    won 79% of a real league. Damping is not a fudge for the threshold; it is the statement that a
+    1–99 attribute scale is not linear in match effect, which was an unexamined assumption until
+    there was a harness to test it.
+  - **A conclusion I drew and then corrected.** I read three harness runs as showing the xG
+    correlation tracking `COMPETENCE_SPREAD`. The spread across near-identical configurations was
+    0.016 — the "trend" was inside the noise. Re-measured at 900 club-seasons instead of 280, which
+    is the only reason the final number (0.904) can be trusted at all.
+  - **Two tests were rewritten, not nudged.** Line height no longer moves bodies within the shape, so
+    the old assertion was asserting a mechanism that no longer exists; it now asserts the new truth
+    (presence untouched) plus the replacement claim (the block contests different ground). And the
+    strength test's 2× bar became 1.35×, with the reason written beside it — a far better side should
+    work clearly more openings, not overwhelm.
+  - 243 tests green, lint/typecheck/format clean.
+  - **Next run: home advantage — and the answer is probably not the crowd.** Away managers set up
+    more cautiously in real football, and the harness gives every club one fixed tactical identity
+    regardless of venue. Make the manager venue-aware and re-measure before touching a crowd constant.
 
 - **2026-09-14** — **Step 4: the harness exists, and it says the engine is not ready.**
   - **`packages/harness` runs real seasons.** Real grounds, real crowds derived from each club's
