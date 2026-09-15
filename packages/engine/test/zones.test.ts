@@ -9,6 +9,7 @@ import {
   channelOf,
   mirror,
   zoneOccupancy,
+  zoneOf,
   zoneStrength,
   type Zone,
 } from '../src/zones.js';
@@ -24,6 +25,21 @@ describe('the zone grid', () => {
     for (const zone of ZONES) {
       expect(BANDS).toContain(bandOf(zone));
       expect(CHANNELS).toContain(channelOf(zone));
+    }
+  });
+
+  it('reads each zone back as the band and channel its own name says', () => {
+    // `bandOf` and `channelOf` are lookup tables because they are the engine's hottest path, and a
+    // table can be complete and still wrong — `Record<Zone, Band>` catches a missing key, never a
+    // mistyped value. So the zone's *name* is the oracle: `Zone` is `${Band}_${Channel}`, which
+    // makes splitting it the definition rather than a reimplementation. The split lives here, where
+    // it runs nine times in a test, instead of in the engine, where it ran millions of times a
+    // season. Checking membership alone — as the test above does — passes a swapped table.
+    for (const zone of ZONES) {
+      const [band, channel] = zone.split('_');
+      expect(bandOf(zone), zone).toBe(band);
+      expect(channelOf(zone), zone).toBe(channel);
+      expect(zoneOf(bandOf(zone), channelOf(zone)), zone).toBe(zone);
     }
   });
 });

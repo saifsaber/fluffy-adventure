@@ -25,9 +25,60 @@ export const ZONES: readonly Zone[] = BANDS.flatMap((band) =>
   CHANNELS.map((channel): Zone => `${band}_${channel}`),
 );
 
-export const zoneOf = (band: Band, channel: Channel): Zone => `${band}_${channel}`;
-export const bandOf = (zone: Zone): Band => zone.split('_')[0] as Band;
-export const channelOf = (zone: Zone): Channel => zone.split('_')[1] as Channel;
+/**
+ * Zone ↔ (band, channel) as tables rather than string surgery.
+ *
+ * These three functions are the innermost thing the engine does — a profile of a real harness run
+ * put `bandOf` and `channelOf` alone at 40% of total CPU, because each call was a `String.split`
+ * allocating a two-element array to recover one of nine constants, and `zoneOf` built a fresh
+ * string on every lookup into a grid.
+ *
+ * Written as `Record`s they are also *safer* than the versions they replace: those ended in an
+ * unchecked `as Band` cast, whereas an unmapped zone here is a build error — the same guard used
+ * for `CauseTag` and `Position`. `zones.test.ts` still asserts round-tripping against `ZONES`, so
+ * the tables cannot drift from the type.
+ */
+const BAND_OF: Record<Zone, Band> = {
+  defensive_left: 'defensive',
+  defensive_centre: 'defensive',
+  defensive_right: 'defensive',
+  middle_left: 'middle',
+  middle_centre: 'middle',
+  middle_right: 'middle',
+  attacking_left: 'attacking',
+  attacking_centre: 'attacking',
+  attacking_right: 'attacking',
+};
+
+const CHANNEL_OF: Record<Zone, Channel> = {
+  defensive_left: 'left',
+  defensive_centre: 'centre',
+  defensive_right: 'right',
+  middle_left: 'left',
+  middle_centre: 'centre',
+  middle_right: 'right',
+  attacking_left: 'left',
+  attacking_centre: 'centre',
+  attacking_right: 'right',
+};
+
+const ZONE_OF: Record<Band, Record<Channel, Zone>> = {
+  defensive: {
+    left: 'defensive_left',
+    centre: 'defensive_centre',
+    right: 'defensive_right',
+  },
+  middle: { left: 'middle_left', centre: 'middle_centre', right: 'middle_right' },
+  attacking: {
+    left: 'attacking_left',
+    centre: 'attacking_centre',
+    right: 'attacking_right',
+  },
+};
+
+export const zoneOf = (band: Band, channel: Channel): Zone => ZONE_OF[band][channel];
+export const bandOf = (zone: Zone): Band => BAND_OF[zone];
+export const channelOf = (zone: Zone): Channel => CHANNEL_OF[zone];
 
 /**
  * The opponent zone that contests this one.

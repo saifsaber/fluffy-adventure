@@ -11,7 +11,8 @@
     "format": "prettier --check .",
     "typecheck": "tsc --build --force",
     "test": "vitest run",
-    "harness": "pnpm --filter @dakka/harness harness"
+    "harness": "pnpm --filter @dakka/harness harness",
+    "harness:profile": "pnpm --filter @dakka/harness run harness:profile"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.0",

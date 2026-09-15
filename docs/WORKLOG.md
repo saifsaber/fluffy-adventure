@@ -267,29 +267,49 @@ first built two days ago.
 > `WASTEFUL_FINISHING` measure. A correlation of 1.0 would mean finishing does not exist. Treat a
 > drift below 0.9 as a signal to re-examine `PER_FINISHING`, not to chase the number.
 
-- [ ] **Performance: the full 10,000-season run takes hours. Two optimisations tried, both worth
-      nothing, and I do not yet know where the time goes.**
+- [x] **Performance: 2.4× on the real workload, from a profile rather than a guess. The guesses
+      before it were worth nothing.**
 
-      `--seasons=20` is ~40 s and `--seasons=45` is what every balance claim was measured on, so the
-      loop works. The blueprint's full run does not, at roughly 3.8 M matches.
+      **The obstacle was a flag, not a build.** This file previously recorded `node --cpu-prof`
+      through `tsx` as reporting 98% idle, and concluded a compiled build was needed. That was
+      wrong: run as `tsx cli.ts`, tsx re-executes the program in a **child** process and the
+      sampler dutifully profiles the idle parent. `node --cpu-prof --import tsx src/cli.ts`
+      profiles in-process and names real source files. No bundle, no compiled output, no new
+      dependency — and `pnpm harness:profile` now ships so nobody rediscovers this.
 
-      **What was tried, and why it failed.** Micro-benchmarks said `resolveBoth` was about half a
-      match, so: (1) one reusable scratch grid in `tacticalPresence` instead of ~33 short-lived ones
-      per call, and (2) precomputing the three pitch positions instead of an `Array.indexOf` per zone
-      per band. Both verified byte-identical against a whole-season SHA. Measured properly — paired,
-      same machine, same session, real workload — they gave **131/128 matches per second against a
-      baseline of 128/128**. Nothing. **Reverted**, because an in-place mutation rewrite that buys
-      no speed is strictly worse code than the copying version it replaced.
+      **What the profile said, which nobody would have guessed.** 28% of total CPU in `bandOf` and
+      12% in `channelOf` — **40% of the engine spent recovering one of nine constants from a
+      string**, because both were `zone.split('_')[0]`, allocating a two-element array per call.
+      `zoneOf` was the same mistake inverted: it built a fresh `${band}_${channel}` string for
+      every grid lookup, which is most of why `flowBands` sat at 11%.
 
-      The lesson worth keeping: V8 allocates short-lived small objects almost for free, and a
-      three-element `indexOf` is not a scan worth removing. Both "optimisations" were guesses dressed
-      as analysis.
+      **The fix is three lookup tables** in `zones.ts`. Measured paired, interleaved, same session:
+      **229 → 548 matches/s, a 2.4× speedup whose two distributions do not overlap.** The 45-season
+      gate went from minutes to **34 s**; the blueprint's full 10,000 seasons goes from roughly
+      eight hours to about two, which is the difference between impossible and an overnight job.
 
-      **Next step is a real profile, and note the obstacle.** `node --cpu-prof` through `tsx` reports
-      98% idle — the sampler does not see the work through its loader — and the compiled output in
-      `dist/` will not run standalone because every workspace `package.json` points `main` at TS
-      source. So: give the harness a build that resolves to compiled JS, or profile inside Vitest
-      with `--inspect-brk`, and find the hot path by measurement before touching anything.
+      Three things worth keeping:
+
+      - **The tables are *safer* than the code they replaced**, which is not the usual trade. Both
+        accessors ended in an unchecked `as Band` cast; `Record<Zone, Band>` makes a missing key a
+        build error. It does **not** catch a *mistyped* one, so `zones.test.ts` gained a test that
+        reads each zone back against its own name — `Zone` is `${Band}_${Channel}`, so the split is
+        the definition, and it now runs nine times in a test instead of millions of times a season.
+        Verified by sabotage: a consistently swapped channel table survives the mirror round-trip
+        and 15 of 16 zone tests, and is caught by the new one.
+      - **The gate output is identical to three decimals** — 2.581 / 23.887 / 0.332 / 0.901 /
+        83.311 / 0.628 / 1.000, the same seven numbers recorded above. A performance change that
+        moves a balance number is a correctness bug wearing a costume.
+      - **Both earlier guesses were aimed at the wrong half of the code.** They optimised
+        allocation inside `tacticalPresence`; the cost was in string handling underneath it. A
+        micro-benchmark told me which *function* was expensive and I assumed I knew *why*. The
+        profile answered the second question in four minutes.
+
+      **What is left, and why it is a separate decision.** The profile is now flat — the top entry
+      is `tacticalPresence` at 17%, which is real work. Going further means changing `Grid` from
+      `Record<Zone, number>` to a nine-element array indexed by `band * 3 + channel`, which touches
+      the engine's public types and should be argued on its own merits, not smuggled in as a
+      micro-optimisation. Not needed at the current speed.
 
 ### Step 5 — trace and counterfactual
 - [ ] `MatchTrace` emission — 5–8 swing moments with enum causes and win-probability deltas
@@ -312,6 +332,18 @@ first built two days ago.
 
 ## Note for whoever runs next
 
+**Next box is Step 5 — the decision trace.** `MatchTrace` is still emitted empty by design, with a
+test asserting it. The engine can be trusted to produce football now and it is fast enough to iterate
+on; the remaining job is making it *explain itself*, which is the thing this whole product exists
+for. `map.causes` is already computed in `space.ts` from the numbers that produced it, so the trace
+reads causes rather than inventing them — `dakka-engine-rules` §6 wants 5–8 swing moments with
+machine-readable `CauseTag`s, and a thin trace means a short debrief, never a model filling the gap.
+
+One habit this branch has now paid for three times over: **measure before deciding, and verify every
+guard by making it fail.** Three separate pieces of work were reverted after measurement said they
+did nothing, and the one that finally worked was found by a profile after two rounds of confident
+guessing. A test that passes when you sabotage the thing it guards is not a test.
+
 The engine (Step 3) is decomposed deliberately. Two rules for it:
 
 1. **One box per run.** The boxes are sized so a single run can finish, test and push one.
@@ -322,6 +354,34 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-15 (2)** — **The engine is 2.4× faster. The profile found it in four minutes; two days
+  of guessing had found nothing.**
+  - **The obstacle recorded here yesterday was a flag, not a missing build.** `tsx cli.ts`
+    re-executes the program in a child process, so `--cpu-prof` sampled the idle parent and reported
+    98% idle. `node --cpu-prof --import tsx src/cli.ts` profiles in-process. I had written "give the
+    harness a build that resolves to compiled JS" as the next step; I did build that bundle, and it
+    worked, and then it turned out to be unnecessary. **Shipped `pnpm harness:profile`** so the next
+    run gets the answer in one command instead of rediscovering the flag.
+  - **The answer: 40% of all CPU was in `bandOf` and `channelOf`**, recovering one of nine constants
+    from a string with `zone.split('_')`, once per call, millions of times a season. `zoneOf` was the
+    same mistake inverted — a fresh template string per grid lookup. Three lookup tables in
+    `zones.ts`. Paired, interleaved, same session: **229 → 548 matches/s, distributions
+    non-overlapping.** The 45-season gate: minutes → **34 s**. The blueprint's full run: ~8 h → ~2 h.
+  - **The gate output is identical to three decimals** — all seven numbers unchanged. That is the
+    check that matters for a performance change, and I would not have shipped it otherwise.
+  - **The tables are safer than what they replaced**, which is not the usual trade: `split()[0] as
+    Band` was an unchecked cast, `Record<Zone, Band>` is a build error. But a *complete* table can
+    still be *wrong*, so `zones.test.ts` gained a test reading each zone back against its own name.
+    Verified by sabotage — a consistently swapped channel table passes the mirror round-trip and 15
+    of the 16 zone tests, and fails the new one.
+  - **Why the earlier guesses missed.** Both aimed at allocation inside `tacticalPresence`; the cost
+    was in the string handling underneath it. A micro-benchmark had told me which function was
+    expensive and I assumed I knew why. That is the whole lesson: a benchmark localises, only a
+    profile explains.
+  - **CI now runs the gate at 45 seasons rather than 20**, which is what the speedup was worth
+    spending: it is the sample size every figure in the docs is quoted at, and at 20 the thin xG
+    margin reports noise.
 
 - **2026-09-15** — **Performance: a negative result, recorded properly. Nothing shipped.**
   - Micro-benchmarks pointed at `resolveBoth` as roughly half a match, so I tried the two obvious
