@@ -267,8 +267,29 @@ first built two days ago.
 > `WASTEFUL_FINISHING` measure. A correlation of 1.0 would mean finishing does not exist. Treat a
 > drift below 0.9 as a signal to re-examine `PER_FINISHING`, not to chase the number.
 
-- [ ] **Performance: the full 10,000-season run takes ~5 hours** (181 matches/s). `--seasons=45`
-      takes 95 s and is what every claim above was measured on. `resolveSpace` is still the hot path.
+- [ ] **Performance: the full 10,000-season run takes hours. Two optimisations tried, both worth
+      nothing, and I do not yet know where the time goes.**
+
+      `--seasons=20` is ~40 s and `--seasons=45` is what every balance claim was measured on, so the
+      loop works. The blueprint's full run does not, at roughly 3.8 M matches.
+
+      **What was tried, and why it failed.** Micro-benchmarks said `resolveBoth` was about half a
+      match, so: (1) one reusable scratch grid in `tacticalPresence` instead of ~33 short-lived ones
+      per call, and (2) precomputing the three pitch positions instead of an `Array.indexOf` per zone
+      per band. Both verified byte-identical against a whole-season SHA. Measured properly — paired,
+      same machine, same session, real workload — they gave **131/128 matches per second against a
+      baseline of 128/128**. Nothing. **Reverted**, because an in-place mutation rewrite that buys
+      no speed is strictly worse code than the copying version it replaced.
+
+      The lesson worth keeping: V8 allocates short-lived small objects almost for free, and a
+      three-element `indexOf` is not a scan worth removing. Both "optimisations" were guesses dressed
+      as analysis.
+
+      **Next step is a real profile, and note the obstacle.** `node --cpu-prof` through `tsx` reports
+      98% idle — the sampler does not see the work through its loader — and the compiled output in
+      `dist/` will not run standalone because every workspace `package.json` points `main` at TS
+      source. So: give the harness a build that resolves to compiled JS, or profile inside Vitest
+      with `--inspect-brk`, and find the hot path by measurement before touching anything.
 
 ### Step 5 — trace and counterfactual
 - [ ] `MatchTrace` emission — 5–8 swing moments with enum causes and win-probability deltas
@@ -301,6 +322,29 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-15** — **Performance: a negative result, recorded properly. Nothing shipped.**
+  - Micro-benchmarks pointed at `resolveBoth` as roughly half a match, so I tried the two obvious
+    things: one reusable scratch grid in `tacticalPresence` instead of about thirty-three short-lived
+    ones per call, and precomputing the three pitch positions instead of an `indexOf` per zone per
+    band. Both were verified byte-identical against a whole-season SHA, so correctness was never in
+    question.
+  - **Measured paired, on the real workload, same machine, same session: 131/128 matches per second
+    against a baseline of 128/128.** Nothing. Reverted — an in-place mutation rewrite that buys no
+    speed is strictly worse than the copying version it replaced, and keeping it "because it should
+    be faster" is how complexity accumulates without justification.
+  - Two things worth keeping from it. V8 allocates short-lived small objects almost for free, and a
+    three-element `indexOf` is not a scan worth removing; both of my "optimisations" were guesses
+    dressed as analysis. And the paired measurement mattered: the machine was running roughly 30%
+    slower this session than last, so an unpaired before/after would have shown whatever I wanted.
+  - **Profiling did not work, and the obstacle is now written down** rather than left for the next
+    run to rediscover: `node --cpu-prof` through `tsx` reports 98% idle because the sampler does not
+    see the work through its loader, and the compiled `dist/` output will not run standalone because
+    every workspace `package.json` points `main` at TypeScript source.
+  - Tree unchanged, 245 tests green. **I do not know where the time goes, and the box says so.**
+  - **Next run: Step 5, the decision trace.** `MatchTrace` is still emitted empty by design. The
+    engine can be trusted to produce football now; the next job is making it explain itself, which is
+    the thing the whole product exists for.
 
 - **2026-09-15** — **The gate passes. All seven thresholds, on 17,100 matches of real content.**
   Step 4 is the wall the blueprint put in front of any UI work, and it is down.
