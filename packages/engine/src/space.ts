@@ -85,6 +85,21 @@ export interface SideSetup {
    * which is the point: even luck has to route through a mechanism that can go wrong.
    */
   readonly crowd?: number;
+  /**
+   * How little this side knows the surface it is playing on, 0 to about 0.12. Absent means home.
+   *
+   * The last of the fields designed into this engine and never connected — `Stadium.pitchQuality`
+   * has sat in the type since Step 1 doing nothing. A rutted fourth-division pitch is a real
+   * leveller, and the side that trains on it every week is the one that knows where the ball will
+   * sit up.
+   *
+   * Applied to presence rather than to a result, through the same channel fatigue uses, because it
+   * is a circumstance and not a choice. What is deliberately **not** modelled is the surface's
+   * effect on *both* sides: that would cancel in the differential and move only the overall goal
+   * rate, which is already calibrated. Only the asymmetry — the part that is actually familiarity —
+   * is modelled here.
+   */
+  readonly unfamiliarity?: number;
 }
 
 export interface ZoneSpace {
@@ -502,6 +517,13 @@ export function tacticalPresence(side: SideSetup): Grid {
   grid = transferChannels(grid, WIDTH_SHIFT[tactics.width]);
   grid = condenseBands(grid, BLOCK_GRAVITY[tactics.lineHeight], COMPACT_BAND[tactics.compactness]);
   grid = transferChannels(grid, COMPACT_CHANNEL[tactics.compactness]);
+
+  // A circumstance, like fitness: it lowers what a side can do rather than moving it around, which
+  // is why it is applied after every conserved transfer rather than as one of them.
+  const unfamiliarity = clamp(side.unfamiliarity ?? 0, 0, 0.5);
+  if (unfamiliarity > 0) {
+    for (const zone of ZONES) grid[zone] *= 1 - unfamiliarity;
+  }
   grid = transferBands(
     grid,
     'middle',

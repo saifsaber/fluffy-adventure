@@ -181,6 +181,20 @@ export function refereeLeniency(crowd: number, atHome: boolean): number {
   return atHome ? 1 - bias : 1 + bias;
 }
 
+/**
+ * How much of the surface an away side has to work out as it goes.
+ *
+ * Scaled by how poor the pitch is: on a good surface the ball behaves as everyone expects and
+ * familiarity is worth little; on a rutted one the side that trains there every week knows where it
+ * will sit up and the visitors do not. Fourth-division pitches in this league run 40–62, so this
+ * lands between five and eight per cent.
+ */
+export const PITCH_UNFAMILIARITY_MAX = 0.14;
+
+export function pitchUnfamiliarity(pitchQuality: number): number {
+  return clamp((1 - clamp(pitchQuality, 0, 100) / 100) * PITCH_UNFAMILIARITY_MAX, 0, 0.5);
+}
+
 /** A derby is fiercer, and both sides give more away in one. */
 export const DERBY_AGGRESSION = 1.18;
 

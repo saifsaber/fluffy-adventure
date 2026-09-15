@@ -149,6 +149,8 @@ export interface ChainInput {
   readonly crowd?: number;
   /** Both sides give more away in a derby. */
   readonly isDerby?: boolean;
+  /** How little the away side knows the surface. See `pitchUnfamiliarity`. */
+  readonly awayUnfamiliarity?: number;
   /**
    * Called the instant a shot is struck, before play resumes. Optional.
    *
@@ -523,11 +525,13 @@ interface LiveSide {
   travel: number;
   /** 0 for the away side: a crowd lifts the side it came to watch. */
   crowd: number;
+  /** 0 for the home side, which trains on this pitch every week. */
+  unfamiliarity: number;
   applied: number;
   dirty: boolean;
 }
 
-function liveSide(side: ChainSide, travel: number, crowd: number): LiveSide {
+function liveSide(side: ChainSide, travel: number, crowd: number, unfamiliarity: number): LiveSide {
   const fitness = new Map<PlayerId, number>();
   for (const [id, player] of side.players) fitness.set(id, player.condition.fitness);
   return {
@@ -542,6 +546,7 @@ function liveSide(side: ChainSide, travel: number, crowd: number): LiveSide {
     urgency: 0,
     travel,
     crowd,
+    unfamiliarity,
     applied: 0,
     dirty: true,
   };
@@ -573,6 +578,7 @@ function snapshot(live: LiveSide): SideSetup {
     momentum: live.momentum,
     urgency: live.urgency,
     crowd: live.crowd,
+    unfamiliarity: live.unfamiliarity,
   };
 }
 
@@ -733,8 +739,13 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
   const halfway = Math.round(totalTicks / 2);
 
   const live: Record<Side, LiveSide> = {
-    home: liveSide(input.home, 0, clamp(input.crowd ?? 0, 0, 1)),
-    away: liveSide(input.away, travelBurden(input.awayTravelKm ?? 0), 0),
+    home: liveSide(input.home, 0, clamp(input.crowd ?? 0, 0, 1), 0),
+    away: liveSide(
+      input.away,
+      travelBurden(input.awayTravelKm ?? 0),
+      0,
+      input.awayUnfamiliarity ?? 0,
+    ),
   };
 
   const stats: Record<Side, ChainStats> = { home: emptyStats(), away: emptyStats() };

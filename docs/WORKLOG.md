@@ -223,11 +223,11 @@ missing models, not tuning, and the harness cannot pass without them.
       it is still calibrated. `LINE_SHIFT` is gone: it and the offset both modelled "the team drops",
       and applying both double-counted it.
 
-- [ ] **Sanity-check the strength curve against real league spread.** A 68-rated side beats a
-      46-rated one 93.3% of the time. That may well be correct for a gap that large; the threshold
-      of 55–65% is about the *league's* typical gap, so it has to be measured on the real Egyptian
-      fourth-division ratings rather than on invented extremes. Do this inside Step 4 with the actual
-      content, not with fixtures.
+- [x] **Sanity-check the strength curve against real league spread.** Done by the harness, on the
+      real Egyptian ratings rather than invented extremes: the stronger side takes **0.632** of the
+      points on offer in mismatched fixtures, against a wanted 0.55–0.65. The invented-extremes
+      figure that started this (a 68-rated side beating a 46-rated one 93% of the time) was never
+      the right question — the threshold is about a *league's* typical gap.
 
 ### Step 4 — the gate
 > **Two things measured in 3f for the harness to judge.** (1) Goals a match are **2.85** against the
@@ -243,37 +243,32 @@ missing models, not tuning, and the harness cannot pass without them.
       loosening one means deleting a test. A check that could not be measured reports `??`, never a
       pass: a green report that skipped something is worse than a red one.
 - [x] Thresholds per `docs/01-product/03-technical-blueprint.md`, as data in `metrics.ts`.
-- [ ] **Gate: no UI work begins until this passes.** Currently **3 of 6**.
+- [x] **Gate: no UI work begins until this passes.** **It passes — 7 of 7.** UI work is unblocked.
+- [x] **`pnpm harness` wired into CI**, at 20 seasons (7,600 matches, ~40 s) on every push.
 
-### Step 4·verdict — 6 of 7, on 45 seasons of real content
+### Step 4·verdict — ALL SEVEN MET
 
-17,100 matches. Was 3 of 6 when the harness was first built.
+45 seasons, 17,100 matches of the real Egyptian fourth division. Was 3 of 6 when the harness was
+first built two days ago.
 
-| | measured | wanted | |
-|---|---|---|---|
-| goals per match | **2.571** | 2.5–2.8 | ✅ |
-| shots per match | **23.908** | 22–28 | ✅ |
-| xG ↔ goals correlation | **0.904** | > 0.9 | ✅ |
-| champion points | **84.489** | 78–95 | ✅ |
-| stronger side wins | **0.632** | 0.55–0.65 | ✅ |
-| determinism | **1.000** | 1 | ✅ |
-| home advantage | **0.063** | +0.3–0.4 | ❌ |
+| | measured | wanted |
+|---|---|---|
+| goals per match | **2.581** | 2.5–2.8 |
+| shots per match | **23.887** | 22–28 |
+| home advantage | **0.332** | +0.3–0.4 |
+| xG ↔ goals correlation | **0.901** | > 0.9 |
+| champion points | **83.311** | 78–95 |
+| stronger side wins | **0.628** | 0.55–0.65 |
+| determinism | **1.000** | 1 |
 
-- [ ] **⚠️ Home advantage, 0.063 against +0.3–0.4. The last threshold, and the hardest.**
-      Three channels already exist and all work (fresher legs, the front foot, the referee) — they
-      simply do not add up to a third of a goal in a division played in small grounds, where
-      `crowdIntensity` is honestly low. Reaching +0.35 through the crowd alone would need ~25 fitness
-      points or a band shift larger than half an ultra-attacking mentality, which was measured and
-      rejected as not credible.
-      **Where the remaining advantage should come from: the manager, not the crowd.** Away sides in
-      real football set up more cautiously, and that behavioural difference is a large part of
-      observed home advantage. The harness currently gives every club one fixed tactical identity
-      regardless of venue (`harness/src/tactics.ts` says so in its own header). Give the AI manager a
-      venue-aware setup and re-measure before touching a single crowd constant.
-- [ ] **Wire `pnpm harness` into CI once it is green.** Not before: a permanently red pipeline
-      teaches everyone to ignore it.
-- [ ] **Performance: the full 10,000-season gate takes ~5 hours** (180 matches/s, up from 66).
-      `--seasons=45` runs in 95 s and is the routine check.
+> **The xG correlation sits at 0.901 against a floor of 0.9.** That margin is thin and it is not
+> noise — it was measured on 900 club-seasons. It is also in genuine tension with a feature: finishing
+> skill is *designed* to make goals deviate from xG, because that is what `CLINICAL_FINISHING` and
+> `WASTEFUL_FINISHING` measure. A correlation of 1.0 would mean finishing does not exist. Treat a
+> drift below 0.9 as a signal to re-examine `PER_FINISHING`, not to chase the number.
+
+- [ ] **Performance: the full 10,000-season run takes ~5 hours** (181 matches/s). `--seasons=45`
+      takes 95 s and is what every claim above was measured on. `resolveSpace` is still the hot path.
 
 ### Step 5 — trace and counterfactual
 - [ ] `MatchTrace` emission — 5–8 swing moments with enum causes and win-probability deltas
@@ -306,6 +301,38 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-15** — **The gate passes. All seven thresholds, on 17,100 matches of real content.**
+  Step 4 is the wall the blueprint put in front of any UI work, and it is down.
+  - **Home advantage was the last one, and it came from the field nobody had connected.**
+    `Stadium.pitchQuality` has been in the type since Step 1 doing nothing. A side knows its own
+    surface; on a rutted fourth-division pitch that is worth something and on a smooth one it is not.
+    Wiring it took home advantage from **0.063 to 0.332**.
+  - **The result I like most is one nobody wrote.** A rutted pitch is now worth **0.367** of a goal
+    to its owner and a good one **0.165** — because familiarity matters more when the ball does
+    unpredictable things. That falls out of scaling by quality; there is no rule anywhere saying it.
+  - **Two wrong hypotheses, killed by measurement before they could cost anything.**
+    1. *Away caution.* I was confident home advantage came from away managers setting up more
+       cautiously, and wrote that into the box as the next step. Built it: the advantage did not
+       move (0.069) and goals fell from 2.571 to 2.217, because caution suppresses both sides about
+       equally. Reverted. In the literature away caution is a **response** to home advantage, not a
+       cause of it — I had the arrow backwards.
+    2. *A sensitivity sweep that measured nothing.* I probed how big a home-side edge the engine
+       needs by scaling fitness, and read "a 16% edge is worth only 0.056 goals" — which would have
+       said no credible mechanism could ever work. The bug: fitness starts at 100 and the code caps
+       it at 100, so the multiplier was clamped away. Re-run against presence, the real answer is
+       **~5.0 goals of advantage per unit of presence edge**, so +0.35 needs about 7%. That is the
+       difference between "this is impossible" and "this is one honest mechanism away".
+  - **Also landed: the harness now runs in CI** at 20 seasons on every push. It was deliberately kept
+    out until it was green, because a permanently red pipeline teaches everyone to ignore it.
+  - The xG correlation passes at **0.901** against a 0.9 floor, measured on 900 club-seasons. Thin,
+    and recorded as thin — with the note that it is in real tension with finishing skill, which is
+    *designed* to make goals deviate from xG. A correlation of 1.0 would mean finishing does not
+    exist.
+  - 245 tests green, lint/typecheck/format clean.
+  - **Next run: Step 5 — the decision trace.** `MatchTrace` is still emitted empty by design, and it
+    is the thing the whole product is for: the engine can now be trusted to produce football, so the
+    next job is making it explain itself.
 
 - **2026-09-15** — **The pitch model landed, every constant re-fitted, and the gate went 3 of 6 to
   6 of 7.** Measured on 45 seasons — 17,100 matches — of the real Egyptian fourth division.

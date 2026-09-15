@@ -20,3 +20,11 @@ jobs:
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test
+
+      # The balance gate. `CLAUDE.md` is explicit that failing it blocks the merge and that the
+      # engine gets fixed rather than the thresholds lowered — so it has to actually run, not sit in
+      # a document. Twenty seasons is 7,600 matches in about forty seconds, enough to catch a real
+      # regression on every push; the full 10,000-season run is for a balance decision that rests on
+      # it. It was deliberately left out of CI until it passed, because a permanently red pipeline
+      # teaches everyone to ignore the pipeline.
+      - run: pnpm harness -- --seasons=20

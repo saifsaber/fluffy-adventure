@@ -1,12 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import {
   CROWD_FITNESS_LIFT,
+  PITCH_UNFAMILIARITY_MAX,
   competitionId,
   crowdIntensity,
   drainPerTick,
   foulChance,
   gridTotal,
   matchId,
+  pitchUnfamiliarity,
   refereeLeniency,
   simulate,
   tacticalPresence,
@@ -130,18 +132,56 @@ describe('the three channels, separately', () => {
 });
 
 describe('what it adds up to', () => {
-  it('gives an empty ground no advantage at all', () => {
-    // Bounded at 0.12, not tighter: seed noise on this measurement is about ±0.1 goals at a few
-    // hundred matches, so a tighter assertion would be testing the sample rather than the engine.
-    // The claim that actually carries weight is the paired one below, where the noise cancels.
-    expect(Math.abs(advantageAt(0, 500))).toBeLessThan(0.12);
+  it('still favours the home side at an empty ground, because the pitch is theirs', () => {
+    // This test used to assert that an empty ground is worth nothing, and that was only true while
+    // the crowd was the sole channel. A side also knows its own surface — which is most of why
+    // lower-league home advantage is *larger* than the top flight's, not smaller.
+    const empty = advantageAt(0, 400);
+    expect(empty).toBeGreaterThan(0.08);
+    expect(empty).toBeLessThan(0.32);
   });
 
-  it('gives a full house a real and measurable one', () => {
-    const full = advantageAt(8000, 500);
-    const empty = advantageAt(0, 500);
-    expect(full).toBeGreaterThan(0.06);
-    expect(full - empty).toBeGreaterThan(0.05);
+  it('adds the crowd on top of that', () => {
+    const full = advantageAt(8000, 400);
+    const empty = advantageAt(0, 400);
+    expect(full).toBeGreaterThan(empty + 0.03);
+  });
+
+  it('makes a rutted pitch worth more to its owner than a good one', () => {
+    // The mechanism, visible: familiarity is worth little on a surface that behaves predictably and
+    // a lot on one that does not. Nobody wrote that rule — it falls out of scaling by pitch quality.
+    const rutted = ground('rutted', 8000);
+    const smooth = ground('smooth', 8000);
+    const on = (club: Club, quality: number, n: number): number => {
+      const venue: Club = { ...club, stadium: { ...club.stadium, pitchQuality: quality } };
+      let difference = 0;
+      for (let i = 0; i < n; i++) {
+        const result = simulate({
+          id: matchId('m'),
+          seed: `paired-${i}`,
+          home: { club: venue, tactics: makeTactics(venue), decisions: [] },
+          away: { club: away, tactics: makeTactics(away), decisions: [] },
+          context: {
+            competitionId: competitionId('eg-d4'),
+            awayTravelKm: 250,
+            attendance: 8000,
+            isDerby: false,
+          },
+        });
+        difference += result.homeScore - result.awayScore;
+      }
+      return difference / n;
+    };
+    expect(on(rutted, 40, 400)).toBeGreaterThan(on(smooth, 90, 400) + 0.08);
+  });
+
+  it('prices familiarity by how awkward the surface is', () => {
+    expect(pitchUnfamiliarity(100)).toBe(0);
+    expect(pitchUnfamiliarity(40)).toBeGreaterThan(pitchUnfamiliarity(90));
+    expect(pitchUnfamiliarity(0)).toBeCloseTo(PITCH_UNFAMILIARITY_MAX, 9);
+    // Never negative, never runaway, whatever nonsense a content file contains.
+    expect(pitchUnfamiliarity(-50)).toBeLessThanOrEqual(PITCH_UNFAMILIARITY_MAX);
+    expect(pitchUnfamiliarity(500)).toBe(0);
   });
 
   it('books the away side more often in front of a full house', () => {

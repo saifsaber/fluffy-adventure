@@ -7,7 +7,7 @@ import {
   type Side,
 } from './chain.js';
 import { indexSquad } from './space.js';
-import { crowdIntensity } from './condition.js';
+import { crowdIntensity, pitchUnfamiliarity } from './condition.js';
 import { isOnTarget, resolveShot } from './xg.js';
 import { ENGINE_VERSION } from './version.js';
 import type { PlayerId } from './types/ids.js';
@@ -184,6 +184,8 @@ export function simulate(input: MatchInput): MatchResult {
         input.context.isDerby,
       ),
       isDerby: input.context.isDerby,
+      // The away side has to work the surface out; the home side trains on it every week.
+      awayUnfamiliarity: pitchUnfamiliarity(input.home.club.stadium.pitchQuality),
       resolve: (context: ShotContext, keeper: PlayerId | undefined) => {
         const shooterSide: Side = context.side;
         const shot = resolveShot(
