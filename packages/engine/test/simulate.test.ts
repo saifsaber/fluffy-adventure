@@ -160,11 +160,12 @@ describe('what it refuses to make up', () => {
     for (const player of result.players) expect(player.assists).toBeUndefined();
   });
 
-  it('emits an empty trace rather than a plausible one', () => {
-    // Step 5's job. An empty trace has to be a legible state — `dakka-engine-rules` §6 says a thin
-    // trace means a short debrief and the model does not fill the gap.
-    expect(result.trace.swings).toEqual([]);
-    expect(result.trace.winProbabilityTimeline).toEqual([]);
+  it('emits a trace covering every minute, and swings inside the rule-6 band', () => {
+    // Step 5 filled this in. The trace's own invariants live in `trace.test.ts`; what belongs here
+    // is that `simulate` actually wires it up, because it used to be deliberately empty.
+    expect(result.trace.winProbabilityTimeline).toHaveLength(91);
+    expect(result.trace.swings.length).toBeGreaterThan(0);
+    expect(result.trace.swings.length).toBeLessThanOrEqual(8);
   });
 
   it('never reports more shots on target than shots, or a negative anything', () => {

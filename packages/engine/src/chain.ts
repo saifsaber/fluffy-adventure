@@ -130,6 +130,8 @@ export interface ChainResult {
     readonly home: ReadonlyMap<PlayerId, PlayerCondition>;
     readonly away: ReadonlyMap<PlayerId, PlayerCondition>;
   };
+  /** One entry per minute, index 0 being kickoff. Length is `minutes + 1`. */
+  readonly minuteStates: readonly MinuteState[];
 }
 
 /** A side, plus whatever the manager does to it while the match is running. */
@@ -196,6 +198,26 @@ export type ChainEvent =
       readonly what: InMatchDecision['kind'];
     }
   | { readonly kind: 'penalty_awarded'; readonly minute: number; readonly side: Side };
+
+/**
+ * The match as it stood at the end of one minute.
+ *
+ * Sampled every minute so the trace can say what the game looked like at any point without
+ * re-simulating it. `shotsPerMinute` is the chain's own model of itself — see
+ * `shotChancePerPossession` — and is what turns into a goal rate one layer up, where xG lives.
+ *
+ * The chain deliberately stops short of goals here. It knows the score (the resolver tells it) but
+ * it does not know what a chance is worth, and giving it that knowledge is exactly the shortcut
+ * that lets an engine reverse-engineer xG from a result.
+ */
+export interface MinuteState {
+  /** 0 is kickoff, before a ball is kicked. */
+  readonly minute: number;
+  readonly score: { readonly home: number; readonly away: number };
+  readonly shotsPerMinute: { readonly home: number; readonly away: number };
+  /** Why the pitch looked like this, strongest first, per side. The only causes the trace may cite. */
+  readonly causes: { readonly home: readonly CauseTag[]; readonly away: readonly CauseTag[] };
+}
 
 /** One tick is ten seconds. Fine enough for possession share, coarse enough to stay cheap. */
 export const TICKS_PER_MINUTE = 6;
@@ -319,13 +341,25 @@ function emptyStats(): ChainStats {
 }
 
 /** Picks one of the three channels of a band, favouring the one with more room. */
+/**
+ * Shifted so every channel keeps some chance: a side does not always attack down its best side, and
+ * a route that is never taken can never be punished.
+ *
+ * Named because `expectedRoom` has to weight zones exactly as `pickZone` picks them. Two copies of
+ * `0.4` would drift, and the day they drifted the trace would start explaining a match the engine
+ * had not played.
+ */
+const ZONE_PICK_FLOOR = 0.4;
+
+/** A failed final-third move that wins a corner instead, and the corner that becomes a shot. */
+const CORNER_FROM_FINAL_THIRD = 0.18;
+const SHOT_FROM_CORNER = 0.26;
+
 function pickZone(map: SpaceMap, band: Band, rng: Rng): Zone {
   const candidates = ZONES.filter((zone) => bandOf(zone) === band);
   let lowest = Infinity;
   for (const zone of candidates) lowest = Math.min(lowest, map.zones[zone].space);
-  // Shifted so every channel keeps some chance: a side does not always attack down its best side,
-  // and a route that is never taken can never be punished.
-  const weights = candidates.map((zone) => map.zones[zone].space - lowest + 0.4);
+  const weights = candidates.map((zone) => map.zones[zone].space - lowest + ZONE_PICK_FLOOR);
   const total = weights.reduce((sum, weight) => sum + weight, 0);
   let roll = rng.next() * total;
   for (let i = 0; i < candidates.length; i++) {
@@ -333,6 +367,77 @@ function pickZone(map: SpaceMap, band: Band, rng: Rng): Zone {
     if (roll <= 0) return candidates[i] as Zone;
   }
   return candidates[candidates.length - 1] as Zone;
+}
+
+/**
+ * How much room the chain *expects* to find in a band.
+ *
+ * Weighted exactly as `pickZone` picks — same floor, same weights — so this is not a second opinion
+ * about the pitch, it is the first one averaged. That matters more than it looks: the whole point of
+ * the trace is that it explains the match the engine actually played, and an approximation that
+ * drifted from `pickZone` would explain a slightly different one, convincingly.
+ */
+function expectedRoom(map: SpaceMap, band: Band): number {
+  let lowest = Infinity;
+  for (const zone of ZONES) {
+    if (bandOf(zone) === band) lowest = Math.min(lowest, map.zones[zone].space);
+  }
+  let weighted = 0;
+  let total = 0;
+  for (const zone of ZONES) {
+    if (bandOf(zone) !== band) continue;
+    const room = map.zones[zone].space;
+    const weight = room - lowest + ZONE_PICK_FLOOR;
+    weighted += weight * room;
+    total += weight;
+  }
+  return total === 0 ? 0 : weighted / total;
+}
+
+/** The chance of clearing one phase, at the room that phase expects to find. */
+function phaseSuccess(step: FieldPhase, map: SpaceMap): number {
+  return clamp(
+    PHASE_BASE[step] +
+      PHASE_SLOPE[step] * (expectedRoom(map, PHASE_BAND[step]) - PHASE_REFERENCE[step]),
+    PHASE_FLOOR[step],
+    PHASE_CEILING[step],
+  );
+}
+
+/**
+ * The chance one possession ends in a shot, given the space in force right now.
+ *
+ * Three phases cleared in a row, plus the corner a failed final-third move sometimes wins. It leaves
+ * out the penalty branch, which is rare enough (1.4% of shots) that modelling it would cost more
+ * clarity than it buys accuracy — and leaving it out understates, which is the safe direction.
+ *
+ * This exists so the win-probability timeline can ask "how likely is a goal from here" without
+ * replaying the match. It is checked against reality rather than asserted: `trace.test.ts` runs
+ * whole matches and compares the shots this predicts against the shots the chain actually produced.
+ */
+export function shotChancePerPossession(map: SpaceMap): number {
+  const buildUp = phaseSuccess('BUILD_UP', map);
+  const progression = phaseSuccess('PROGRESSION', map);
+  const finalThird = phaseSuccess('FINAL_THIRD', map);
+  const fromCorner = (1 - finalThird) * CORNER_FROM_FINAL_THIRD * SHOT_FROM_CORNER;
+  return buildUp * progression * (finalThird + fromCorner);
+}
+
+/**
+ * How long a possession lasts, in ticks, at the current space and this side's tempo.
+ *
+ * A side only spends time in a phase it reached, so each term is discounted by the chance of getting
+ * there. Slow, short-passing sides hold the ball longer, which is why possession share is an
+ * outcome of tempo here rather than a number anyone chose.
+ */
+function expectedPossessionTicks(map: SpaceMap, tactics: Tactics): number {
+  const tempo = TEMPO_TICKS[tactics.tempo] * DIRECTNESS_TICKS[tactics.passingDirectness];
+  const buildUp = phaseSuccess('BUILD_UP', map);
+  const progression = phaseSuccess('PROGRESSION', map);
+  return (
+    PHASE_TICKS.BUILD_UP * tempo +
+    buildUp * (PHASE_TICKS.PROGRESSION * tempo + progression * PHASE_TICKS.FINAL_THIRD * tempo)
+  );
 }
 
 /** Who takes the shot: someone actually standing in the zone it came from. */
@@ -778,6 +883,33 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
   const score: Record<Side, number> = { home: 0, away: 0 };
 
   /**
+   * One sample per minute, taken from the state in force at that minute and nothing else.
+   *
+   * Filled forward rather than on a timer: a possession can run through several minutes, and a
+   * minute with no possession boundary in it still happened. Every entry therefore describes the
+   * pitch as it actually stood, and index 0 is the pitch before kickoff.
+   */
+  const minuteStates: MinuteState[] = [];
+  const sampleThrough = (upTo: number): void => {
+    if (upTo < minuteStates.length) return;
+    const ticksHome = expectedPossessionTicks(maps.home, setups.home.tactics);
+    const ticksAway = expectedPossessionTicks(maps.away, setups.away.tactics);
+    // Possessions alternate, so both sides get the same count per minute — what differs is what
+    // each does with one. A side that slows the game down gives itself fewer possessions too.
+    const perMinute = TICKS_PER_MINUTE / Math.max(0.5, ticksHome + ticksAway);
+    const state: Omit<MinuteState, 'minute'> = {
+      score: { home: score.home, away: score.away },
+      shotsPerMinute: {
+        home: perMinute * shotChancePerPossession(maps.home),
+        away: perMinute * shotChancePerPossession(maps.away),
+      },
+      causes: { home: maps.home.causes, away: maps.away.causes },
+    };
+    for (let m = minuteStates.length; m <= upTo; m++) minuteStates.push({ minute: m, ...state });
+  };
+  sampleThrough(0);
+
+  /**
    * How hard a side is chasing, from the deficit and how little time is left.
    *
    * Nothing before the hour: a side a goal down on twenty minutes has time to play properly. From
@@ -807,6 +939,7 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
     live.home.urgency = urgencyFor('home', minute);
     live.away.urgency = urgencyFor('away', minute);
     refresh(tick);
+    sampleThrough(minute - 1);
 
     const attack = setups[side];
     const defend = setups[other(side)];
@@ -913,11 +1046,11 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
         }
       }
 
-      if (step === 'FINAL_THIRD' && chainRng.bool(0.18)) {
+      if (step === 'FINAL_THIRD' && chainRng.bool(CORNER_FROM_FINAL_THIRD)) {
         corner = true;
         bump(side, { corners: stats[side].corners + 1 });
         tick += 1;
-        if (chainRng.bool(0.26)) {
+        if (chainRng.bool(SHOT_FROM_CORNER)) {
           phase = 'SHOT';
           route.push(zone);
           continue;
@@ -1041,6 +1174,9 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
     return out;
   };
 
+  // Full time: the last minutes of a match that ended mid-possession still get their sample.
+  sampleThrough(input.minutes);
+
   return {
     possessions,
     shots,
@@ -1050,6 +1186,7 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
     ticks: tick,
     score: { home: score.home, away: score.away },
     conditionAfter: { home: finalCondition(live.home), away: finalCondition(live.away) },
+    minuteStates,
   };
 }
 

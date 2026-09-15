@@ -323,7 +323,62 @@ first built two days ago.
       micro-optimisation. Not needed at the current speed.
 
 ### Step 5 — trace and counterfactual
-- [ ] `MatchTrace` emission — 5–8 swing moments with enum causes and win-probability deltas
+- [x] **`MatchTrace` emission — the match explains itself.** `packages/engine/src/trace.ts`, wired
+      into `simulate()`, replacing the deliberately-empty trace. Mean **6.97 swings a match**, inside
+      `dakka-engine-rules` §6's 5–8, and the gate is **identical to three decimals** — the trace
+      reads the match, it does not change it.
+
+      **Win probability comes from the engine's own state.** The chain now records a `MinuteState`
+      every minute: the score, and how many shots a minute each side is generating *from the space
+      actually in force*. One layer up, where xG lives, that becomes a goal rate and runs through a
+      Poisson model of the minutes remaining. Nothing consults the final score to decide what the
+      game looked like at minute 20, and at full time the rate vanishes so the last entry is a fact
+      rather than a forecast.
+
+      **The rate model is checked against the chain, not asserted.** `shotChancePerPossession` is a
+      closed-form reading of a stochastic loop, so if it drifts the trace explains a slightly
+      different match — fluently. It predicts **0.95 of the home side's real shots and 0.94 of the
+      away side's**, and tracks the *split* as well as the total. Both are tests. It shares
+      `ZONE_PICK_FLOOR` and the corner constants with the loop that produces the shots, so the two
+      cannot drift by accident.
+
+      **A swing is measured against what was expected of it.** Before a shot is struck the win
+      probability is already `xg` of the way to what a goal would make it, so a goal is worth
+      `(1 - xg)` of the gap and a miss `-xg` of it. A converted penalty barely registers; a save from
+      six yards is one of the biggest moments in a match. Neither is special-cased — it falls out of
+      the arithmetic, which is what makes the trace know what was *surprising* rather than just list
+      goals.
+
+      **⚠️ The bug worth remembering: a cause cited backwards.** `map.causes` lists both polarities
+      of the same pitch, so taking the strongest entry explained an away goal with
+      `DEEP_BLOCK_ABSORBED_PRESSURE` — the reason the scorer's attack was being smothered. Fluent,
+      specific, and exactly backwards; the failure this product exists to be better than. Fixed by
+      adding `favours: 'attack' | 'defence' | 'neither'` to `CAUSE_REGISTRY`, where the compiler
+      makes every future cause declare one.
+
+      **And the first guard for it was worthless.** It asserted the cited cause was not
+      direction-blind, which a backwards cause passes — reverting the fix left all 21 tests green.
+      The test that bites checks the cause's polarity against *whether the shooter's side came out
+      of the moment ahead*; under the same sabotage it fails naming `MIDFIELD_OUTNUMBERED cited for
+      a goal that favoured away`. The `FORMATION_MISMATCH` guard needed a fixture whose two sides
+      line up differently, or it would have passed by never exercising the cause at all.
+
+      **What is deliberately not emitted, and why.** `SUBSTITUTION_SWUNG_MOMENTUM`,
+      `MISSED_SUBSTITUTION_WINDOW`, `MENTALITY_SHIFT_PAID_OFF` and `MENTALITY_SHIFT_BACKFIRED`.
+      Substitutions plainly move matches, but the honest question — *would this match have gone
+      differently without it?* — is a counterfactual, and answering it by reading the win probability
+      either side of the change credits the substitution with everything else in that minute. The
+      next box can answer it properly by replaying the match without the decision. A test pins the
+      omission so it cannot quietly creep back.
+
+      `FORMATION_MISMATCH` is also never cited: it fires on the largest zone mismatch *in either
+      direction*, so it does not know whose goal it opened. Making it directional in `space.ts` would
+      let it back in and is worth doing.
+
+      **Cost: ~2% of throughput**, measured paired and interleaved. Worth recording how nearly that
+      went wrong: the gate read 375 matches/s against 509 this morning, which looks like a 26%
+      regression and is not one — the machine is a third slower right now, and the paired no-trace
+      baseline reads 340. The unpaired comparison would have cost a whole run chasing nothing.
 - [ ] Counterfactual runner — same seed, one decision changed, N runs, outcome-distribution delta
 - [ ] **+MGR** — season re-simulated under a neutral baseline manager; the points difference is the player's contribution (global-strategy §4)
 
@@ -343,12 +398,14 @@ first built two days ago.
 
 ## Note for whoever runs next
 
-**Next box is Step 5 — the decision trace.** `MatchTrace` is still emitted empty by design, with a
-test asserting it. The engine can be trusted to produce football now and it is fast enough to iterate
-on; the remaining job is making it *explain itself*, which is the thing this whole product exists
-for. `map.causes` is already computed in `space.ts` from the numbers that produced it, so the trace
-reads causes rather than inventing them — `dakka-engine-rules` §6 wants 5–8 swing moments with
-machine-readable `CauseTag`s, and a thin trace means a short debrief, never a model filling the gap.
+**Next box is the counterfactual runner** — same seed, one decision changed, N runs, the delta in the
+outcome distribution. The trace now explains what happened; this is what lets it say what a *decision*
+was worth, and it is the only honest way to emit the four decision causes the trace currently leaves
+alone (`trace.ts` says why, and a test pins the omission).
+
+Determinism is the whole mechanism: `simulate()` is a pure function of its input, so replaying a match
+with one decision removed is a real experiment rather than an estimate. Change one thing, keep the
+seed, and the difference is attributable.
 
 One habit this branch has now paid for three times over: **measure before deciding, and verify every
 guard by making it fail.** Three separate pieces of work were reverted after measurement said they
@@ -365,6 +422,36 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-15 (3)** — **Step 5, first half: the trace. The engine explains itself now.**
+  - `trace.ts` turns the chain's new per-minute state into a win-probability timeline and 5–8 swing
+    moments with closed-enum causes. Mean 6.97 swings a match; gate identical to three decimals, so
+    the trace reads the match without touching it. 269 tests green.
+  - **The design decision that matters:** win probability is Poisson over the minutes remaining, at a
+    goal rate the *engine* reports (`MinuteState.shotsPerMinute`), not a curve fitted to results. The
+    closed-form rate is checked against the chain's real shot output — 0.95 home, 0.94 away, and the
+    split as well as the total — because a rate model that drifts makes the trace explain a slightly
+    different match, convincingly.
+  - **A swing is measured against expectation**, so `(1 - xg)` for a goal and `-xg` for a miss. A
+    converted penalty barely registers, a save from six yards is huge, and neither is special-cased.
+  - **⚠️ Caught a cause cited backwards** — an away goal explained by the reason its scorer was being
+    smothered. `CAUSE_REGISTRY.favours` fixes it. **The first test for it guarded nothing**: the
+    sabotage passed all 21 tests, because "the cause is not direction-blind" is true of a backwards
+    cause. The version that bites compares polarity against whether the shooter's side came out
+    ahead. Third time this branch has shipped a guard that did not guard; the sabotage check caught
+    it every time, and is the only reason.
+  - **Substitution and mentality causes are deliberately unemitted**, with a test pinning it. Saying
+    a sub swung a match needs the match replayed without it — which is the next box, and the right
+    tool. A missing moment costs a short debrief; a confident wrong one costs the whole claim.
+  - **Measurement note worth keeping:** the gate read 375 matches/s against 509 this morning. That is
+    not a 26% regression from the trace — paired, the trace costs ~2% and the machine is simply a
+    third slower today. Same lesson as the performance box, and it nearly cost a run.
+  - **Next:** the counterfactual runner — same seed, one decision changed, N runs, outcome
+    distribution delta. It unblocks the four decision causes above. Two smaller things found on the
+    way: `pickZone`, `bandSpace` and `channelSpace` each call `ZONES.filter(...)`, allocating an
+    array per call on a hot path — the same class of waste as the zone-string fix, worth its own box
+    with a paired measurement. And `FORMATION_MISMATCH` should be made directional in `space.ts` so
+    the trace can cite it.
 
 - **2026-09-15 (2)** — **The engine is 2.4× faster. The profile found it in four minutes; two days
   of guessing had found nothing.**

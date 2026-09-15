@@ -9,6 +9,7 @@ import {
 import { indexSquad } from './space.js';
 import { crowdIntensity, pitchUnfamiliarity } from './condition.js';
 import { isOnTarget, resolveShot } from './xg.js';
+import { buildTrace, type ResolvedShot } from './trace.js';
 import { ENGINE_VERSION } from './version.js';
 import type { PlayerId } from './types/ids.js';
 import type { Player, PlayerCondition } from './types/player.js';
@@ -21,7 +22,6 @@ import type {
   Shot,
   SideStats,
 } from './types/match.js';
-import type { MatchTrace } from './types/trace.js';
 
 /**
  * `simulate(input) → MatchResult`. The whole engine, assembled.
@@ -140,15 +140,6 @@ function ratePlayer(c: Contribution, minutes: number): number {
   return Math.round(clamp(rating, 1, 10) * 10) / 10;
 }
 
-/**
- * The trace is Step 5's.
- *
- * Emitted empty on purpose rather than filled with something plausible. `dakka-engine-rules` §6 is
- * explicit that a thin trace means a short debrief and the model does not fill the gap — so an
- * empty one has to be a legible state, not a hole someone patches later.
- */
-const EMPTY_TRACE: MatchTrace = { swings: [], winProbabilityTimeline: [] };
-
 export function simulate(input: MatchInput): MatchResult {
   const rng = createRng(input.seed);
   const shotRng = rng.fork('shots');
@@ -159,6 +150,9 @@ export function simulate(input: MatchInput): MatchResult {
     away: indexSquad(input.away.club.squad),
   };
 
+  // Kept with the keeper who faced each one: a save is two players' moment, and the chain knows
+  // which keeper it was at the instant the shot was struck. `resolved` is the same list without him.
+  const struck: ResolvedShot[] = [];
   const resolved: Shot[] = [];
   const contributions = new Map<PlayerId, Contribution>();
   const contributionFor = (id: PlayerId): Contribution => {
@@ -197,6 +191,7 @@ export function simulate(input: MatchInput): MatchResult {
           shotRng,
         );
         resolved.push(shot);
+        struck.push(keeper === undefined ? { shot } : { shot, keeper });
 
         const shooter = contributionFor(context.shooter);
         shooter.shots += 1;
@@ -302,7 +297,12 @@ export function simulate(input: MatchInput): MatchResult {
     shots: resolved,
     stats: { home: stats.home, away: stats.away },
     players,
-    trace: EMPTY_TRACE,
+    trace: buildTrace({
+      minuteStates: chain.minuteStates,
+      shots: struck,
+      events: chain.events,
+      minutes: MINUTES,
+    }),
     engineVersion: ENGINE_VERSION,
   };
 }

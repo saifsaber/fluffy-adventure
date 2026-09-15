@@ -323,6 +323,7 @@ describe('possession share', () => {
       ticks: 0,
       score: { home: 0, away: 0 },
       conditionAfter: { home: new Map(), away: new Map() },
+      minuteStates: [],
     };
     expect(possessionShare(empty)).toEqual({ home: 0.5, away: 0.5 });
   });

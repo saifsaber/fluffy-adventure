@@ -43,7 +43,24 @@ export {
 } from './space.js';
 export type { SideSetup, SpaceMap, ZoneSpace } from './space.js';
 
-export { TICKS_PER_MINUTE, goalAngle, possessionShare, shotZones, simulateChain } from './chain.js';
+export {
+  TICKS_PER_MINUTE,
+  goalAngle,
+  possessionShare,
+  shotChancePerPossession,
+  shotZones,
+  simulateChain,
+  type MinuteState,
+} from './chain.js';
+export {
+  MAX_SWINGS,
+  MEAN_GOALS_PER_SHOT,
+  MIN_SWING,
+  buildTrace,
+  homeWinProbability,
+  type ResolvedShot,
+  type TraceInput,
+} from './trace.js';
 
 export { PENALTY_XG, XG_ANCHORS, expectedGoals, isOnTarget, resolveShot } from './xg.js';
 export type { XgAnchor } from './xg.js';
