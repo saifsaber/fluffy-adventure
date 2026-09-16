@@ -573,6 +573,128 @@ first built two days ago.
 - [ ] Pick tactics → play match → derived stats → the trace → one counterfactual
 - [ ] RTL-native, Arabic, no design system yet — this screen exists to prove the engine
 
+### Weeks 2–6 — how the rest of the MVP is cut up
+
+These stay **inside "Next up"** on purpose: the protocol at the top takes the first unchecked box
+under that heading, and a section outside it would never be reached.
+
+Decomposed from `docs/01-product/04-build-plan-and-team.md` §C and the blueprint's §7 MVP list.
+Nothing here is new scope: if a box is not traceable to one of those, it does not belong.
+
+**Three rules for this section.**
+
+1. **Same sizing rule as the engine.** One box, one run, finished and pushed. A box that cannot be
+   finished in a run is written wrong — split it rather than half-landing it.
+2. **Order is dependency order, not importance order.** The AI layer cannot be honest before there
+   is a trace to read (there is), the dashboard cannot be honest before there is a season to show,
+   and the daily challenge cannot exist before persistence. Do not reorder to reach the fun parts.
+3. **⚠️ This is where a fake product would get built.** Everything up to here was engine work, where
+   fabrication is caught by the harness. From here on the failure mode is a screen that looks
+   finished: a debrief the model invented, a stat with no counter behind it, a button that does
+   nothing, a save that is a JSON blob in `localStorage`. Each box below names what faking it would
+   look like, because that is the cheapest moment to refuse.
+
+### Step 7 — the AI layer (Week 2)
+
+> The rule this whole step exists to obey, from the blueprint §2: **AI never decides an outcome. AI
+> explains, converses and generates. Code decides.** No model output becomes a game number except
+> through a typed, validated effect schema.
+
+- [ ] **`packages/ai` — the boundary, before any model call.** The typed effect schema, its
+      validator, and the rule that the only match input a prompt may read is `MatchTrace`. Pure, no
+      network, no keys. **Done means:** a test proves an effect the schema rejects cannot reach the
+      engine, and a prompt builder cannot be handed a `MatchResult`.
+- [ ] **`CAUSE_REGISTRY` → Egyptian Arabic phrasing table.** `Record<CauseTag, Phrasing>`, so an
+      unregistered cause is a build error and adding a locale is a second table, not a rewrite
+      (global-strategy §3). Load `dakka-arabic-voice` first. **Faking it looks like:** free prose per
+      cause instead of a table, which is a rewrite per locale and lets the model narrate a cause the
+      engine never emitted.
+- [ ] **The debrief prompt, built from a trace and nothing else.** Golden-file tested: every number
+      in the prompt traceable to a trace field, every cause in `CAUSE_REGISTRY`, and a thin trace
+      producing a short prompt rather than a padded one (`dakka-engine-rules` §6).
+- [ ] **⚠️ The debrief itself, server-side.** Needs Step 8's API — do this after it, or stub the
+      transport and say so. **Faking it looks like:** calling the model from the client with a key in
+      the bundle, or letting the debrief mention a statistic the trace does not contain.
+- [ ] **Opponent briefing from scouting data**, same discipline: the model sees a derived scouting
+      record, never the opponent's hidden attributes.
+- [ ] **⚠️ Dialect eval set and its scorer.** A held-out set of real Egyptian coach language, and a
+      harness that scores generated debriefs against it. **Done means:** a number that moves when the
+      prompt gets worse. Without this, "the Arabic is good" is an opinion.
+- [ ] **Cost controls.** Haiku for volume, a larger model for debriefs, prompt caching for the static
+      rules and club context, debrief on demand rather than automatic, hard per-career budget.
+      **Done means:** measured cost per match and per career, not an estimate.
+
+### Step 8 — persistence and the API (Week 3)
+
+> ADR-002 deferred Postgres until the content existed. It exists. The blueprint §5 is explicit that
+> a JSON blob is the anti-pattern being corrected — Modareb's 1.2 MB `localStorage` career cannot be
+> queried, shared, leaderboarded or recovered.
+
+- [ ] **`apps/api` — Fastify skeleton.** Health, error shape, config, and `@dakka/engine` wired as
+      server-authoritative resolution. **Done means:** the same seed resolves identically on client
+      and server, asserted by a test that runs both.
+- [ ] **Postgres schema — core tables and migrations.** `users` · `managers` · `careers` · `seasons`
+      · `competitions` · `clubs` · `players` · `squads` · `tactics` · `fixtures` · `matches`.
+      Normalised, indexed per blueprint §5.
+- [ ] **`match_traces` and `decisions` as first-class tables**, not logs. Every match stores its
+      seed so any match in history can be re-simulated or re-explained. This is what the
+      counterfactual and the coaching arc are built on.
+- [ ] **`pnpm db:seed`** — the Egyptian fourth division into Postgres from the existing data files.
+      **Done means:** a queryable season, and the seed is idempotent.
+- [ ] **⚠️ Auth and row-level security.** Supabase. **Done means:** a test proves one career cannot
+      read another's rows. **Faking it looks like:** filtering by `career_id` in application code
+      only.
+- [ ] **⚠️ Cloud save and offline sync.** IndexedDB replayable write-queue, server authoritative,
+      client writes carry their seeds. **Done means:** a test that plays offline, reconnects, and
+      ends with the server and client agreeing. **Faking it looks like:** last-write-wins.
+
+### Step 9 — the season loop (Week 3)
+
+- [ ] **Season state machine** — fixtures → matchday → result → standings → season end. Pure and
+      deterministic, in a package, not in a component.
+- [ ] **Board objectives, confidence and sack risk.** Derived from results the way everything else
+      here is derived. **Faking it looks like:** a confidence bar that moves by a hand-tuned amount
+      per result instead of being computed from the objective and the table.
+- [ ] **⚠️ The dashboard — the five questions, answered in under three seconds** (blueprint §6):
+      what needs a decision today · what changed since last time · am I on track · what is my biggest
+      risk · what does my assistant think, and why. **Done means:** every tile states a fact that
+      changes or requests a decision. A tile that exists to fill space gets deleted.
+
+### Step 10 — squad depth (Week 4)
+
+- [ ] **Roles and traits** — beyond the role fit the engine already reads.
+- [ ] **Personality**, and how it reaches the dressing room without deciding an outcome.
+- [ ] **⚠️ Training and development.** Player progression must be inspectable: attribute history is
+      versioned (blueprint §5) so a rise can be explained. **Faking it looks like:** a random walk
+      with a plausible curve.
+- [ ] **⚠️ Adaptive opponent managers.** They must make decisions through the same `InMatchDecision`
+      path a human uses, and the counterfactual runner must be able to price those decisions. An
+      opponent that cheats is the fastest way to lose the product's whole claim.
+
+### Step 11 — polish (Week 5)
+
+- [ ] **RTL design system consolidation** — touchline, not SaaS (blueprint §6). Explicitly not the
+      dark-slate-and-neon-emerald dashboard Modareb already is.
+- [ ] **E2E tests** over the full loop: pick tactics → play → debrief → counterfactual → season end.
+- [ ] **Performance pass** on the client. `pnpm harness:profile` is the pattern: profile before
+      touching anything, and measure paired.
+
+### Step 12 — distribution (Week 6)
+
+> Blueprint §1b: this is the omission the first draft made, and both boxes are cheap **because** the
+> engine has been deterministic since Week 1. They cannot be retrofitted onto a random engine, which
+> is exactly why they are a moat rather than a feature.
+
+- [ ] **⚠️ The seeded daily challenge** — one fixture, one squad, one seed, identical for every
+      player worldwide, so the only variable is decision quality. **Done means:** two players on
+      different devices provably get the same match.
+- [ ] **⚠️ The share card, built from the decision trace.** A score is not shareable; an argument is.
+      38-0's most-screenshotted output is the contestable line. The card carries a claim from the
+      trace and the counterfactual is the reply. Latin `slug` on every named entity so it reads in
+      any locale.
+- [ ] **MVP release candidate** — the blueprint §7 list, checked end to end against the "In:" line,
+      with the "Out of MVP:" list still out.
+
 ---
 
 ## Blocked
@@ -598,6 +720,16 @@ attributable and comes with its own error bars. Note what it costs, though — a
 
 Still open after that: the four decision causes in `trace.ts` can now be emitted honestly, because
 the runner can prove what a substitution was worth. That was the whole reason they were deferred.
+
+**Weeks 2–6 are now cut into boxes** (Steps 7–12, under "Next up" after Step 6), from the build plan
+§C and the blueprint's §7 MVP list. Read the three rules at the head of that section before starting
+one. The short version: order is dependency order, not importance order — the AI layer needs the API
+under it, the dashboard needs a season to show, the daily challenge needs persistence — and **this is
+the stretch where a fake product gets built**, because a finished-looking screen is not caught by any
+harness. Each box names what faking it would look like; that is the cheapest moment to refuse.
+
+Nothing there is new scope. If a box cannot be traced to the build plan or the blueprint, it should
+not have been written — delete it rather than build it.
 
 One habit this branch has now paid for three times over: **measure before deciding, and verify every
 guard by making it fail.** Three separate pieces of work were reverted after measurement said they
