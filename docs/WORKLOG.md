@@ -379,7 +379,77 @@ first built two days ago.
       went wrong: the gate read 375 matches/s against 509 this morning, which looks like a 26%
       regression and is not one — the machine is a third slower right now, and the paired no-trace
       baseline reads 340. The unpaired comparison would have cost a whole run chasing nothing.
-- [ ] Counterfactual runner — same seed, one decision changed, N runs, outcome-distribution delta
+- [x] **Counterfactual runner — what a decision was actually worth.**
+      `packages/engine/src/counterfactual.ts`. `counterfactual()` for the study,
+      `replayCounterfactual()` for the single illustrative pair, `withoutDecisions` /
+      `withoutDecision` to build the variant safely.
+
+      **The replay is the same match until the decision bites.** Change one decision, keep the seed,
+      and everything before that minute is byte-identical — the same draws in the same order, not a
+      model of what might have happened. `Replay.divergedAtMinute` reports where the two stop being
+      one match, and a test asserts the event streams match exactly before it. This is the thing no
+      non-deterministic engine can offer, and it is the entire return on rule 2.
+
+      **The hard part was refusing to answer.** Running it twice is easy; the danger is reporting a
+      difference smaller than its own noise, which is a number with no cause behind it dressed as
+      insight. So nothing returns a bare delta. Every measurement carries the standard error of its
+      own mean, computed from the spread of the pairs, and a `significant` flag that requires two of
+      them. **A `false` there is a real answer** — "too close to call at this many runs" — and
+      `runsNeededFor()` says what it would take, from the spread already observed rather than a rule
+      of thumb.
+
+      **Pairing is worth about 7× the runs.** The paired standard deviation of the points difference
+      is **0.693**, against roughly 1.9 for two independent runs, because both arms share every draw
+      up to the decision. Same claim, a seventh of the simulations.
+
+      **What it costs to call something.** Measured on the real league: a decision worth 0.1 points
+      needs **200–750 paired runs**; one worth a full point is called in well under 100. That is the
+      number the UI has to respect — a debrief that says "your substitution was worth +0.08 points"
+      after 50 runs is reporting noise.
+
+      **The test that matters most:** parking the bus from minute 1 significantly reduces goals
+      scored (−0.40) *and* goals conceded (−0.22) at 120 pairs, while the points effect stays
+      uncalled because the two nearly cancel. The runner reporting what it can measure and declining
+      what it cannot, in a single study. Verified by sabotage — breaking the seed pairing is caught
+      by the no-op study, which is the strongest form of that check: comparing a thing with itself
+      must give exactly zero.
+- [ ] **⚠️ The runner's first finding: sitting deep against a high line is punished far too hard.**
+      Found by the tool on its first real use, and **the 17,100-match gate cannot see it** — the
+      harness only ever plays each club's own fixed tactical identity, so it validates the league as
+      played, never the decision space a player can explore. That gap is the finding as much as the
+      numbers are.
+
+      Forcing one club from `deep` to `very_high` at minute 1, 150 paired runs against five
+      different opponents:
+
+      | opponent's shape | goals for | goals against | points |
+      |---|---|---|---|
+      | very_high / moderate / long | 2.11 → 6.25 | 1.61 → 2.67 | **+0.83** |
+      | very_high / gegenpress / long | 2.28 → 5.99 | 1.29 → 2.33 | **+0.64** |
+      | high / gegenpress / direct | 1.35 → 4.45 | 0.85 → 1.01 | **+1.12** |
+      | high / moderate / mixed | 1.90 → 5.98 | 1.21 → 1.69 | **+0.99** |
+      | high / contain / short | 1.31 → 3.66 | 0.89 → 1.89 | **+0.51** |
+
+      Every one significant. Scoring roughly triples; conceding rises much less.
+
+      **It is narrower than it first looks, and that matters for the fix.** Between two sides that
+      both start `normal`, the trade is real and correct: going `very_high` gives **+0.46 for and
+      +0.39 against** — space bought, space conceded. The mechanism works. What is wrong is
+      specifically **deep against a high line**, where the full ladder reads for 1.35 → 2.73 → 3.25 →
+      3.55 while against moves only 0.85 → 1.13. Sitting deep costs 60% of your attack and buys
+      almost nothing.
+
+      Football says the opposite: dropping off a high line is how you get space to counter into, and
+      `HIGH_LINE_VS_PACE` already exists as a cause. So the question for whoever takes this is
+      whether a deep block actually earns counter-attacking room in `space.ts` — `COUNTER_LAUNCH`
+      and `EntryPhase` are the machinery, and `bestAttackingZone` the likely place it is lost.
+
+      Caveats worth keeping: one home club, `attendance: 2500` regardless of capacity, and the five
+      opponents all play `high` or `very_high` because that is what `tacticsFor` gave them. Re-run
+      across opponents that sit deep before concluding how general it is. **Do not touch a balance
+      constant without a fresh gate run** — the current seven are 2.581 / 23.887 / 0.332 / 0.901 /
+      83.311 / 0.628 / 1.000.
+
 - [ ] **+MGR** — season re-simulated under a neutral baseline manager; the points difference is the player's contribution (global-strategy §4)
 
 ### Step 6 — thinnest UI
@@ -398,14 +468,16 @@ first built two days ago.
 
 ## Note for whoever runs next
 
-**Next box is the counterfactual runner** — same seed, one decision changed, N runs, the delta in the
-outcome distribution. The trace now explains what happened; this is what lets it say what a *decision*
-was worth, and it is the only honest way to emit the four decision causes the trace currently leaves
-alone (`trace.ts` says why, and a test pins the omission).
+**Next box is the ⚠️ line-height finding above** — the counterfactual runner's first result, and a
+balance hole the gate structurally cannot see. Read that box before touching `space.ts`; it has the
+measurements, the caveats, and the reason the harness missed it.
 
-Determinism is the whole mechanism: `simulate()` is a pure function of its input, so replaying a match
-with one decision removed is a real experiment rather than an estimate. Change one thing, keep the
-seed, and the difference is attributable.
+The runner now exists to check any such fix: change one thing, keep the seed, and the difference is
+attributable and comes with its own error bars. Note what it costs, though — a 0.1-point effect needs
+200–750 paired runs, so budget the simulations rather than trusting a small study.
+
+Still open after that: the four decision causes in `trace.ts` can now be emitted honestly, because
+the runner can prove what a substitution was worth. That was the whole reason they were deferred.
 
 One habit this branch has now paid for three times over: **measure before deciding, and verify every
 guard by making it fail.** Three separate pieces of work were reverted after measurement said they
@@ -422,6 +494,31 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-16** — **The counterfactual runner, and the first thing it found.**
+  - `counterfactual.ts`: same seed, one decision changed, N paired runs, with the honesty gate built
+    in. Every measurement carries the standard error of its own mean and a `significant` flag needing
+    two of them, and `runsNeededFor()` says what an uncalled effect would cost to call. A `false`
+    there is an answer, not a failure. 286 tests green, gate unchanged.
+  - **The replay is byte-identical until the decision minute** — asserted on the event streams, not
+    assumed. That is what rule 2 was bought for.
+  - **Pairing is worth ~7× the runs**: paired sd of the points difference is 0.693 against ~1.9
+    unpaired. And the practical scale: a 0.1-point decision needs 200–750 paired runs to call. The UI
+    must respect that number rather than quote a delta after fifty.
+  - **⚠️ First finding, written up as the next box: sitting deep against a high line is punished far
+    too hard.** Forcing `deep` → `very_high` roughly triples goals scored against five different
+    opponents (+0.51 to +1.12 points, all significant) while conceding barely moves. But between two
+    sides that both start `normal` the trade is correct (+0.46 for, +0.39 against), so the mechanism
+    works — what is broken is the deep-versus-high-line matchup specifically.
+  - **The part worth remembering is why the gate missed it.** The harness plays each club's own fixed
+    tactical identity, so it validates *the league as played* and never *the decision space a player
+    can explore*. A player who found "always push up" would break the game and 17,100 matches would
+    have said everything was fine. The counterfactual runner is the tool that sees this class of
+    problem, and it found one on its first real use.
+  - Probe discipline note: my first probe used `'lineHeight'` where the type is `'line_height'`, and
+    the decision silently did nothing — harness scratch files are `eslint-disable`d and not
+    typechecked, so nothing caught it. The exact-zero result is what exposed it. A counterfactual
+    that reports precisely 0.000 ± 0.000 means the variant is not a variant.
 
 - **2026-09-15 (3)** — **Step 5, first half: the trace. The engine explains itself now.**
   - `trace.ts` turns the chain's new per-minute state into a win-probability timeline and 5–8 swing

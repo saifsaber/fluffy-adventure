@@ -53,6 +53,18 @@ export {
   type MinuteState,
 } from './chain.js';
 export {
+  counterfactual,
+  replayCounterfactual,
+  runsNeededFor,
+  withoutDecision,
+  withoutDecisions,
+  type CounterfactualInput,
+  type CounterfactualResult,
+  type Distribution,
+  type Measured,
+  type Replay,
+} from './counterfactual.js';
+export {
   MAX_SWINGS,
   MEAN_GOALS_PER_SHOT,
   MIN_SWING,
