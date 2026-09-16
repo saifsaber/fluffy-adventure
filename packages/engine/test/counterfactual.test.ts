@@ -108,16 +108,22 @@ describe('a difference smaller than its own noise is not a finding', () => {
   });
 
   it('calls what it can see and refuses what it cannot, in the same study', () => {
-    // Parking the bus from the first minute: fewer goals at both ends. Both of those are called at
-    // 120 pairs; the points effect is not, because the two nearly cancel. That is the whole design
-    // in one result — the runner reports what it can measure and declines what it cannot, rather
-    // than quoting a points figure that is really the difference of two larger numbers.
+    // Parking the bus from the first minute: fewer goals at both ends. Both of those are called;
+    // the points effect is not, because the two nearly cancel. That is the whole design in one
+    // result — the runner reports what it can measure and declines what it cannot, rather than
+    // quoting a points figure that is really the difference of two larger numbers.
+    //
+    // 300 pairs, not the 120 this first used. The goals-against effect is about -0.21 and its
+    // standard error at 120 sits just the wrong side of the bar, so the smaller study resolved it
+    // only by luck — which is the same mistake this file exists to stop anyone making. The effect
+    // itself barely moved when `EXPOSURE_SCALE` was re-fitted (-0.217 to -0.210); what changed is
+    // that the sample is now honestly big enough to see it.
     const variant = input(PARK_THE_BUS);
     const result = counterfactual({
       baseline: withoutDecisions(variant, 'home'),
       variant,
       side: 'home',
-      runs: 120,
+      runs: 300,
     });
 
     expect(result.goalsFor.significant).toBe(true);

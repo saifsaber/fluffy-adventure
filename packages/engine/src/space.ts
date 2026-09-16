@@ -570,7 +570,27 @@ const DIRECTNESS_VERTICALITY: Record<PassingDirectness, number> = {
 
 const TEMPO_VERTICALITY: Record<Tempo, number> = { slow: 0.7, balanced: 1, fast: 1.25 };
 
-const EXPOSURE_SCALE = 1.1;
+/**
+ * What the grass behind a high line is worth, once someone is running at it.
+ *
+ * Raised from 1.1 after the dominance probe showed line height was a ladder rather than a choice:
+ * every setting was beaten by the one above it, against every opponent. Measured like for like, in
+ * the same units — the space a side gains in its best attacking zone by going `very_high` instead of
+ * `deep`, against the grass that choice hands the opponent — the reward was **1.72** and the risk
+ * **0.88**. Two units of gain for under one of gift, before you count that the space you win is
+ * yours to use while the space you concede only matters when they attack. At 3 the risk is 2.40 and
+ * the ratio inverts to 0.71.
+ *
+ * At 3 the price of a high line is real: `deep` and `normal` stop being beaten by everything above
+ * them, and `normal` becomes the best answer to something again. The gate is unmoved where it
+ * matters — home advantage 0.332 against 0.332, and the xG correlation 0.902 against 0.904 on 6,000
+ * club-seasons. Goals go 2.581 to 2.722, which is more open football and still inside the band.
+ *
+ * It does **not** rescue `deep`, which is still the best answer to nothing. See the worklog: making
+ * it viable needs a deep block to convert a high line into counter-attacks, and the obvious way to
+ * do that costs the xG correlation.
+ */
+const EXPOSURE_SCALE = 3;
 const COMPRESSION_SCALE = 1;
 
 /** How the grass behind a line is shared out across the attacking third. Sums to one. */

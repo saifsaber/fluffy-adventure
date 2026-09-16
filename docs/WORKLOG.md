@@ -445,51 +445,83 @@ first built two days ago.
       "noise" case built by shifting both arms equally has a **constant** difference, which is
       certainty, not noise, and tests nothing.
 
-- [ ] **⚠️ Five of six tactical dials have a dominated setting. The tactical layer is currently a
-      set of single correct answers.** Measured at 8 fixtures × 60 seeds a cell — 480 matches — with
-      paired significance. This replaces the narrower line-height finding the counterfactual runner
-      first turned up; it is the same bug, and it is nearly everywhere.
+- [x] **⚠️ Line height is a choice again. `EXPOSURE_SCALE` 1.1 → 3, and the gate holds.**
+      One constant. All seven thresholds pass on **114,000 matches**, and the xG correlation — the
+      one with no margin — reads **0.902 against a baseline of 0.904**, a difference well inside the
+      noise at n=6,000 club-seasons.
 
-      | dial | verdict |
-      |---|---|
-      | `lineHeight` | **worst.** `deep` beaten by all three; `normal` beaten by `high` and `very_high`. `deep` and `normal` are the best answer to nothing |
-      | `pressingIntensity` | `high` and `gegenpress` beaten by `contain`; `gegenpress` also by `moderate` |
-      | `tempo` | `slow` and `balanced` beaten by `fast` |
-      | `width` | `balanced` and `wide` beaten by `narrow` |
-      | `compactness` | `balanced` and `loose` beaten by `tight` |
-      | `mentality` | **healthy** — every setting is worth choosing against something |
+      **The diagnosis I wrote last tick was wrong, and the measurement that corrected it is the
+      useful part.** I had said the dominant term was PROGRESSION volume. It is not, above `deep`:
+      shots barely move across the top of the ladder (13.7 → 14.4 → 14.2) while **xG per shot rises
+      47%** (0.1021 → 0.1505), because shot pressure falls 76.8 → 57.3 and distance 14.8m → 13.3m.
+      Volume is `deep`'s problem; the `normal` → `very_high` ladder is a shot-*quality* problem. Two
+      channels, and only one of them was where I had been looking.
 
-      **The mechanism, measured rather than guessed.** Against a fixed opponent, a side that drops
-      from `normal` to `deep` sees its own chance rate per possession fall **0.1705 → 0.0997** while
-      the opponent's *rises* **0.1513 → 0.1681**. Sitting deep makes you worse at **both** ends,
-      which no football model should allow. The dominant term is **PROGRESSION, not the final
-      third**: the deep side's midfield space goes −0.85 → −4.10 while the opponent's goes +0.61 →
-      +3.95, and `PHASE_SLOPE.PROGRESSION` is the largest slope in the chain.
+      **What was actually wrong: the reward for pushing up dwarfed the risk.** Measured like for like
+      — the space a side gains in its best attacking zone by going `very_high` rather than `deep`,
+      against the grass that hands the opponent — it was **1.72 of reward for 0.88 of risk**. At 3 it
+      is 1.72 against 2.40, a ratio of 0.71. `space.test.ts` pins the *ratio*, not either constant,
+      and `reward` is independent of the scale by construction (both arms face the same opponent, so
+      the exposure term cancels), which is what makes the bound bite on this constant alone.
 
-      **Why the trade never lands: the clamps are asymmetric.** A deep block's two benefits are both
-      capped and its costs are not. Its own build-up advantage runs into `PHASE_CEILING.BUILD_UP`
-      (0.97, only 0.17 above a base of 0.8), and its crowding of its own third runs into
-      `PHASE_FLOOR.FINAL_THIRD` (0.18, only 0.15 below a base of 0.33). Meanwhile the final third has
-      0.37 of headroom *above* base. So buying final-third space is always worth more than selling
-      it, and every dial that trades territory for solidity loses the trade.
+      | dial | dominated before | after |
+      |---|---|---|
+      | `lineHeight` | 5 | **3** — `normal` answers something again; only `deep` is best at nothing |
+      | `pressingIntensity` | 3 | **1** |
+      | `mentality` | 0 | **1** — a regression, see below |
+      | `tempo` | 2 | 2 |
+      | `width` | 3 | 3 |
+      | `compactness` | 3 | 3 |
 
-      **An attempt that failed, so nobody repeats it.** `COUNTER_DEPTH` — scaling `exposure` by how
-      much room the attacker had to run into, so a deep block converts a high opponent line into
-      counter-attacks. Football-honest and it moved the right way: `deep` vs `very_high` goal
-      difference went **+0.30 → +0.53**. But `very_high` vs `very_high` is **+0.89**, so line height
-      stayed dominated. **Reverted** — exposure is simply too small a lever against a 4-unit midfield
-      deficit, and a constant table that does not fix the stated problem is the "plausible-looking
-      implementation that models nothing" the ⚠️ rule exists to stop.
+      16 dominated pairs down to 13. Goals go 2.581 → 2.723 and shots 23.887 → 24.700, both inside
+      band; home advantage is unmoved at 0.332.
 
-      **So the fix is in the response curves, not in a new bonus**, which makes it a re-fit: §7 wants
-      a fresh gate run, and the last structural change to these curves took a whole box. Start from
-      `PHASE_CEILING.BUILD_UP` and `PHASE_FLOOR.FINAL_THIRD` in `chain.ts` — the asymmetry is
-      arithmetic and visible without simulating anything. Keep `pnpm dominance` open beside the gate:
-      the seven thresholds and the dominance matrix have to come good **together**, and it is easy to
-      fix one by breaking the other.
+      **Two things tried and rejected, with the numbers, so nobody spends a run on them again.**
 
-      Current gate, unchanged by any of this: 2.581 / 23.887 / 0.332 / 0.901 / 83.311 / 0.628 /
-      1.000.
+      1. **Splitting shot pressure into separate attacker and defender coefficients.** The reasoning
+         looked sound — `room` drives shot geometry *and* pressure, so an overload is charged twice,
+         the same double-count this engine fixed once for congestion. Sweeping the attacker term 12 →
+         0 did cut dominance (5 → 1), but the **xG correlation collapsed with it**: 0.892 → 0.860 →
+         0.845 → 0.765, against a floor of 0.9, and no re-centring of `SHOT_PRESSURE_BASE` recovered
+         it. The term is carrying real signal: strip the attacker's presence out of pressure and xG
+         stops distinguishing good chances from bad ones. **It is not a double-count** — it is two
+         genuine consequences of the same cause, and the diagnosis was wrong.
+      2. **`COUNTER_DEPTH`** — scaling exposure by how much room the attacker had to run into, so a
+         deep block converts a high line into counter-attacks. Retried here because the earlier
+         verdict ("too weak") was measured at the *old* exposure scale, where it had a third of the
+         leverage. At `EXPOSURE_SCALE=3` with `deep: 2.8` it **works**: zero dominated settings and
+         nothing best-at-nothing, a fully healthy line-height dial. But it costs **0.018 of xG
+         correlation** (0.900 → 0.882 at 45 seasons), consistently across every sweep row, and §7 is
+         explicit that the engine gets fixed rather than the threshold lowered. Left out.
+
+         The hypothesis worth testing next: a deep side's counters are taken by whoever happens to be
+         upfield, so the chance is good and the finisher is not — xG says one thing and goals say
+         another. If that is it, the fix is in who `pickShooter` finds on a counter, not in exposure.
+
+      **`deep` is still the best answer to nothing.** That is the honest remaining state of this
+      dial, and `COUNTER_DEPTH` above is the most promising route to it.
+
+- [ ] **⚠️ Four dials still have a dominated setting: `tempo`, `width`, `compactness`, and the
+      remainder of `lineHeight` and `mentality`.** `pnpm dominance -- --dial=all --pairs=8
+      --seeds=60` is the measurement, about four minutes.
+
+      Current state: `lineHeight` 3 (all of them `deep`), `mentality` 1 (`ultra_defensive` beaten by
+      `attacking` — this one *regressed* when `EXPOSURE_SCALE` rose, so check it is not a small-sample
+      artefact before chasing it), `pressingIntensity` 1 (`gegenpress` beaten by `contain`), `tempo`
+      2 (`slow` and `balanced` beaten by `fast`), `width` 3 (`narrow` beats everything),
+      `compactness` 3 (`tight` beats everything).
+
+      **What the line-height fix suggests as a method.** Look for the dial's *risk* term and ask
+      whether it is priced against its reward in the same units. `width` and `compactness` are the
+      obvious next candidates: `narrow` and `tight` concede something real — the flanks and the space
+      between the lines — and if those dials are ladders, the conceding side of each is probably as
+      underpriced as `exposure` was. Measure the two sides like for like before changing anything;
+      the figure that first made line height look ten times out of balance was comparing a three-zone
+      sum against a single scalar, and the real ratio was 1.95.
+
+      Keep `pnpm dominance` open beside `pnpm harness`: the seven thresholds and the matrix have to
+      come good together, and the xG correlation has **no margin** — it sits at 0.900–0.904 against a
+      floor of 0.9, so measure it at 300 seasons before believing any verdict about it.
 
 - [ ] **+MGR** — season re-simulated under a neutral baseline manager; the points difference is the player's contribution (global-strategy §4)
 
@@ -509,10 +541,10 @@ first built two days ago.
 
 ## Note for whoever runs next
 
-**Next box is the ⚠️ dominance re-fit above** — five of six tactical dials have a setting no context
-makes worth choosing. Read that box before touching the engine: it has the mechanism, the arithmetic
-behind it, and one attempted fix that failed and why, so the next run does not spend itself
-rediscovering any of the three.
+**Next box is the remaining ⚠️ dominance work above.** Line height is fixed; four dials still have a
+setting no context makes worth choosing. Read that box first: it carries the method that worked
+(price a dial's risk against its reward, in the same units), two fixes that failed with the numbers
+that killed them, and the warning that the xG correlation has no margin at all.
 
 The runner now exists to check any such fix: change one thing, keep the seed, and the difference is
 attributable and comes with its own error bars. Note what it costs, though — a 0.1-point effect needs
@@ -536,6 +568,37 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-16 (3)** — **Line height is a choice again. One constant, and two rejected fixes recorded
+  with their numbers.**
+  - `EXPOSURE_SCALE` 1.1 → 3. All seven thresholds pass on 114,000 matches; xG correlation 0.902
+    against a 0.904 baseline. Dominated pairs across all six dials: 16 → 13. `lineHeight` 5 → 3 and
+    `normal` is a real answer again; `pressingIntensity` 3 → 1; `mentality` 0 → 1, a regression worth
+    checking for small-sample artefact before chasing.
+  - **My last diagnosis was wrong and the correction is the useful part.** I said PROGRESSION volume.
+    Above `deep`, shots barely move (13.7 → 14.2) while **xG per shot rises 47%** — pressure 76.8 →
+    57.3, distance 14.8m → 13.3m. The upper ladder is shot *quality*. `deep`'s problem is volume.
+    Two different channels; I had been looking at one of them.
+  - **The real fault: reward 1.72 against risk 0.88**, measured like for like. And the figure that
+    first made it look like an order of magnitude was comparing a three-zone sum with a single
+    scalar — not like for like at all. The honest ratio was 1.95, and is 0.71 now.
+  - **Rejected, with numbers: splitting shot pressure into attacker and defender terms.** The
+    double-count reasoning was wrong. Sweeping the attacker coefficient 12 → 0 cut dominance but took
+    the xG correlation 0.892 → 0.765 with it, and no re-centring recovered it. That term carries real
+    signal; it is two consequences of one cause, not a double charge.
+  - **Rejected, with numbers: `COUNTER_DEPTH`.** Retried because the earlier "too weak" verdict was
+    measured at the old exposure scale. At the new one it *works* — zero dominated settings, a fully
+    healthy dial — but costs 0.018 of xG correlation, consistently. §7 says the engine gets fixed, not
+    the threshold. Next hypothesis: a deep side's counters are taken by whoever is upfield, so the
+    chance is good and the finisher is not — look at `pickShooter` on a counter.
+  - **A test I wrote had to move, and it was the right move for the wrong-looking reason.** The
+    counterfactual "calls what it can see" test failed after the re-fit. The park-the-bus effect on
+    goals conceded barely changed (-0.217 → -0.210); at 120 pairs it had been clearing the
+    significance bar by luck. Raised to 300 — resolution, not a nudge toward a desired answer.
+  - **Fourth guard-that-guarded-nothing on this branch.** The new ratio test passed at the old
+    constant because I wrote the bound from the un-measured "order of magnitude" figure rather than
+    from the real 1.95. Measured both ends, put the bound between them, and it fails on revert. The
+    sabotage check caught it; nothing else would have.
 
 - **2026-09-16 (2)** — **Took the line-height box. Did not fix it; found it was five times bigger, and
   built the tool that measures it.**

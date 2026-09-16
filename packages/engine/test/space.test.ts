@@ -297,6 +297,35 @@ describe('the same tactic helps against one opponent and hurts against another',
     );
   });
 
+  it('prices a high line against what pushing it up is worth', () => {
+    // The fix the dominance probe forced. Line height used to be a ladder rather than a choice —
+    // every setting beaten by the one above it, against every opponent — because pushing up bought
+    // far more than it cost. A choice that cannot hurt you is `dakka-engine-rules` §4's scalar in a
+    // costume.
+    //
+    // Both sides of the trade are measured in the same units and the same way, which matters: the
+    // figure that first made this look like an order-of-magnitude problem compared a three-zone sum
+    // against a single scalar. Like for like it was 1.72 of reward against 0.88 of risk — a ratio of
+    // 1.95 — and it is 0.71 now.
+    //
+    // `reward` is deliberately independent of `EXPOSURE_SCALE`: both arms face the same opponent, so
+    // the exposure term cancels and only presence is left. That makes this a test of the *balance*
+    // between the two, and it is the constant's value that has to move it.
+    const attacker = makeSide(base, { lineHeight: 'normal' });
+    const reward =
+      bestAttackingZone(resolveSpace(makeSide(base, { lineHeight: 'very_high' }), attacker)).space -
+      bestAttackingZone(resolveSpace(makeSide(base, { lineHeight: 'deep' }), attacker)).space;
+    const risk =
+      resolveSpace(attacker, makeSide(base, { lineHeight: 'very_high' })).exposure -
+      resolveSpace(attacker, makeSide(base, { lineHeight: 'deep' })).exposure;
+
+    expect(reward).toBeGreaterThan(0);
+    expect(risk).toBeGreaterThan(0);
+    // 1.95 under the old scale, 0.71 under this one. The bound sits between them with room on both
+    // sides, so it fails if the constant is walked back and does not fire on ordinary drift.
+    expect(reward / risk).toBeLessThan(1.2);
+  });
+
   it('going wide: beats a narrow opponent and walks into a wide one', () => {
     const wide = makeSide(base, { width: 'wide' });
     const narrow = makeSide(base, { width: 'narrow' });
