@@ -501,27 +501,71 @@ first built two days ago.
       **`deep` is still the best answer to nothing.** That is the honest remaining state of this
       dial, and `COUNTER_DEPTH` above is the most promising route to it.
 
-- [ ] **⚠️ Four dials still have a dominated setting: `tempo`, `width`, `compactness`, and the
-      remainder of `lineHeight` and `mentality`.** `pnpm dominance -- --dial=all --pairs=8
-      --seeds=60` is the measurement, about four minutes.
+- [ ] **⚠️ Four dials still have a dominated setting. The cause is found and the fix is found; the
+      fix cannot pass the gate, and the reason it cannot is the most useful thing here.** Nothing
+      shipped this run — `space.ts` is unchanged and the gate is where it was.
 
-      Current state: `lineHeight` 3 (all of them `deep`), `mentality` 1 (`ultra_defensive` beaten by
-      `attacking` — this one *regressed* when `EXPOSURE_SCALE` rose, so check it is not a small-sample
-      artefact before chasing it), `pressingIntensity` 1 (`gegenpress` beaten by `contain`), `tempo`
-      2 (`slow` and `balanced` beaten by `fast`), `width` 3 (`narrow` beats everything),
-      `compactness` 3 (`tight` beats everything).
+      **The root cause, measured.** Vs a balanced opponent, over 8 fixtures × 50 seeds:
 
-      **What the line-height fix suggests as a method.** Look for the dial's *risk* term and ask
-      whether it is priced against its reward in the same units. `width` and `compactness` are the
-      obvious next candidates: `narrow` and `tight` concede something real — the flanks and the space
-      between the lines — and if those dials are ladders, the conceding side of each is probably as
-      underpriced as `exposure` was. Measure the two sides like for like before changing anything;
-      the figure that first made line height look ten times out of balance was comparing a three-zone
-      sum against a single scalar, and the real ratio was 1.95.
+      | dial | goals for | goals against |
+      |---|---|---|
+      | `narrow` | **1.79** | 0.91 |
+      | `balanced` | 1.62 | 0.90 |
+      | `wide` | 1.47 | 0.95 |
+      | `tight` | **1.67** | **1.11** |
+      | `balanced` | 1.45 | 1.21 |
+      | `loose` | 1.39 | 1.30 |
 
-      Keep `pnpm dominance` open beside `pnpm harness`: the seven thresholds and the matrix have to
-      come good together, and the xG correlation has **no margin** — it sits at 0.900–0.904 against a
-      floor of 0.9, so measure it at 300 seasons before believing any verdict about it.
+      `narrow` scores 0.32 more than `wide` and concedes the *same*. `tight` scores 0.28 more than
+      `loose` **and** concedes 0.19 less. Concentrating is free, and the reason is structural:
+      `width` and `compactness` are conserved transfers of a side's **own** presence, so the space
+      they vacate costs the opponent nothing to be given. Nothing in the engine makes a defence pay
+      for being pulled out of shape, because nothing pulls it.
+
+      **The fix works.** `DEFENCE_FOLLOWS_ATTACK` — a conserved channel transfer on the *defending*
+      grid, in the direction of the attacking side's own channel bias. Stretching a defence is the
+      missing half of width, and it is naturally contextual: dragging a block that is already spread
+      achieves less, because there is less left in the middle to move. At **k = 0.6 both `width` and
+      `compactness` come back healthy**, no dominated settings at all.
+
+      **⚠️ And it cannot ship, because it levels the league.** Every strength that materially helps
+      the dials compresses the difference between clubs:
+
+      | k | goals | home adv | champion pts | stronger side | xG corr | verdict |
+      |---|---|---|---|---|---|---|
+      | 0 (shipped) | 2.723 | 0.339 | 82.4 | 0.633 | **0.900** | 3+3 dominated |
+      | 0.3 | 2.603 | 0.307 | 78.3 | 0.627 | 0.886 | 1 threshold fails |
+      | 0.4 | 2.574 | 0.293 | 77.0 | 0.621 | 0.877 | 3 fail |
+      | 0.6 | 2.531 | 0.287 | 76.2 | 0.619 | 0.872 | 3 fail, dials healthy |
+
+      Champion points fall 82 → 76 and `stronger side wins` 0.633 → 0.619. The mechanism makes
+      **shape matter more and players matter less**, and a league where clubs are more alike has less
+      between-club spread in xG for the correlation to work with.
+
+      **Scaling the drag by player quality does not rescue it**, which is worth knowing because it is
+      the obvious next idea. Ratio of the attackers' `workRate`/`teamwork` to the defenders'
+      `positioning`/`teamwork`, clamped like `reach` does for exposure: the correlation went to
+      **0.864**, *worse* than the unscaled version. Scaling how far the block is dragged still
+      punishes the concentrating side regardless of who they are.
+
+      **The pattern worth acting on.** The xG correlation has now been the binding constraint on
+      **every** structural change attempted: the shot-pressure split (0.892 → 0.765), `COUNTER_DEPTH`
+      (−0.018), and this (−0.014 to −0.028). It is not three unrelated coincidences. That check
+      measures the spread of club quality as much as it measures xG's honesty — a mechanism that
+      compresses clubs toward each other reduces the between-club variance the correlation needs, so
+      it fails whatever else it gets right.
+
+      **So the next attempt needs a mechanism a better side exploits more**, not one that is scaled
+      by quality after the fact. The difference matters: a good side should get *more* out of
+      stretching a defence, rather than being dragged by the same tactic slightly less hard. Ideas
+      worth measuring, in order of promise: make the space a stretch opens exploitable only by
+      players who can use it (pace, anticipation, off-the-ball), the way `exposure` already gates
+      grass behind a line on `paceOf`; or give the *flank itself* a use — there is no crossing in
+      this engine, so a chance worked wide is finished from wide, which is most of why conceding a
+      flank is cheap.
+
+      Measure the gate at **300 seasons** before believing any verdict about the correlation: it sits
+      at 0.900–0.904 against a floor of 0.9 and the 45-season reading runs about 0.003 low.
 
 - [ ] **+MGR** — season re-simulated under a neutral baseline manager; the points difference is the player's contribution (global-strategy §4)
 
@@ -541,10 +585,12 @@ first built two days ago.
 
 ## Note for whoever runs next
 
-**Next box is the remaining ⚠️ dominance work above.** Line height is fixed; four dials still have a
-setting no context makes worth choosing. Read that box first: it carries the method that worked
-(price a dial's risk against its reward, in the same units), two fixes that failed with the numbers
-that killed them, and the warning that the xG correlation has no margin at all.
+**Next box is the remaining ⚠️ dominance work above.** Read it before writing any code: the cause is
+already found and measured, a fix that works is already written down, and the reason that fix cannot
+ship — it levels the league and the xG correlation notices — is the constraint every future attempt
+has to satisfy. The concrete lead is at the end of that box: **this engine has no crossing**, so a
+chance worked down the flank is finished from the flank, which is most of why conceding a flank is
+free. Do not re-derive any of that.
 
 The runner now exists to check any such fix: change one thing, keep the seed, and the difference is
 attributable and comes with its own error bars. Note what it costs, though — a 0.1-point effect needs
@@ -568,6 +614,29 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-16 (4)** — **Found the cause of the width/compactness dominance and a fix that works.
+  Shipped nothing: the fix levels the league and the gate says no.**
+  - **Cause, measured:** `narrow` scores 0.32 more than `wide` and concedes the same; `tight` scores
+    0.28 more than `loose` and concedes 0.19 less. Both dials are conserved transfers of a side's
+    *own* presence, so the space they vacate costs the opponent nothing to be given. Nothing makes a
+    defence pay for being pulled out of shape, because nothing pulls it.
+  - **Fix, working:** `DEFENCE_FOLLOWS_ATTACK`, a conserved channel transfer on the defending grid
+    toward the attack's channel bias. At k=0.6 both dials come back fully healthy.
+  - **Why it cannot ship:** champion points 82 → 76, stronger-side 0.633 → 0.619, xG correlation
+    0.900 → 0.872. It makes shape matter more and players less. Even k=0.3 — barely enough to help —
+    still fails the correlation at 0.886. Reverted; `space.ts` is untouched and the gate is green.
+  - **Quality-scaling the drag made it worse, not better** (corr 0.864). Scaling *how far* a block is
+    dragged still punishes the concentrating side whoever they are.
+  - **The pattern to act on next time.** The xG correlation has now blocked *every* structural change
+    tried: pressure split (0.892 → 0.765), `COUNTER_DEPTH` (−0.018), this (−0.014 to −0.028). That
+    check measures the spread of club quality as much as xG's honesty, so any mechanism that
+    compresses clubs toward each other fails it whatever else it gets right. The next attempt needs a
+    mechanism **a better side exploits more** — not one scaled by quality after the fact.
+  - **Concrete lead for the next run:** there is no crossing in this engine. A chance worked down the
+    flank is finished from the flank, which is most of why conceding a flank is cheap and therefore
+    why `narrow` and `tight` are free. Giving the flank a use is a mechanism good players would
+    exploit more, which is exactly the shape the correlation demands.
 
 - **2026-09-16 (3)** — **Line height is a choice again. One constant, and two rejected fixes recorded
   with their numbers.**
