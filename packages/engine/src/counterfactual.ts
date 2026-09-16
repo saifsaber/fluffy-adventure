@@ -93,9 +93,20 @@ export interface Measured {
 }
 
 /** Two standard errors either side is the convention this file commits to. */
-const CONFIDENCE_SIGMA = 2;
+export const CONFIDENCE_SIGMA = 2;
 
-function measure(differences: readonly number[]): Measured {
+/**
+ * The mean of a set of paired differences, with the standard error of that mean.
+ *
+ * Exported because this arithmetic is the honesty gate, and anything that compares two arrangements
+ * of the engine needs it — the counterfactual runner and the harness's dominance probe both do.
+ * Duplicating it would let the two drift into disagreeing about what counts as a finding.
+ *
+ * `differences` must be *paired*: entry `i` of each arm has to come from the same seed, or the
+ * spread being measured is the spread of football rather than the spread of the difference, and the
+ * error bars come out several times too wide.
+ */
+export function pairedDifference(differences: readonly number[]): Measured {
   const runs = differences.length;
   if (runs === 0) return { mean: 0, standardError: Number.POSITIVE_INFINITY, significant: false };
   const mean = differences.reduce((sum, d) => sum + d, 0) / runs;
@@ -195,10 +206,10 @@ export function counterfactual(input: CounterfactualInput): CounterfactualResult
     runs,
     baseline: distributionOf(baselineOutcomes),
     variant: distributionOf(variantOutcomes),
-    points: measure(points),
-    goalsFor: measure(goalsFor),
-    goalsAgainst: measure(goalsAgainst),
-    winRate: measure(wins),
+    points: pairedDifference(points),
+    goalsFor: pairedDifference(goalsFor),
+    goalsAgainst: pairedDifference(goalsAgainst),
+    winRate: pairedDifference(wins),
   };
 }
 

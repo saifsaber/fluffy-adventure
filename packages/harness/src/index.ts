@@ -10,3 +10,13 @@ export {
 } from './metrics.js';
 export type { Measurement, Threshold, Verdict } from './metrics.js';
 export { main, parseArgs } from './run.js';
+export {
+  DIALS,
+  goalDifference,
+  measure,
+  report,
+  verdictOf,
+  type Cell,
+  type Dial,
+  type DominanceVerdict,
+} from './dominance.js';

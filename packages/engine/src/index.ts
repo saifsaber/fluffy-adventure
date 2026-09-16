@@ -53,7 +53,9 @@ export {
   type MinuteState,
 } from './chain.js';
 export {
+  CONFIDENCE_SIGMA,
   counterfactual,
+  pairedDifference,
   replayCounterfactual,
   runsNeededFor,
   withoutDecision,

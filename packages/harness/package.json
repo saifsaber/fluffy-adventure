@@ -7,7 +7,8 @@
   "types": "./src/index.ts",
   "scripts": {
     "harness": "tsx src/cli.ts",
-    "harness:profile": "tsx src/profile.ts"
+    "harness:profile": "tsx src/profile.ts",
+    "dominance": "tsx src/dominance-main.ts"
   },
   "dependencies": {
     "@dakka/content": "workspace:*",

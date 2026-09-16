@@ -413,42 +413,83 @@ first built two days ago.
       what it cannot, in a single study. Verified by sabotage — breaking the seed pairing is caught
       by the no-op study, which is the strongest form of that check: comparing a thing with itself
       must give exactly zero.
-- [ ] **⚠️ The runner's first finding: sitting deep against a high line is punished far too hard.**
-      Found by the tool on its first real use, and **the 17,100-match gate cannot see it** — the
-      harness only ever plays each club's own fixed tactical identity, so it validates the league as
-      played, never the decision space a player can explore. That gap is the finding as much as the
-      numbers are.
+- [x] **Tactical dominance probe — `pnpm dominance`.** `packages/harness/src/dominance.ts`. For a
+      tactical dial it plays every setting against every opposing setting and asks the question
+      `dakka-engine-rules` §4 actually poses: *is any choice strictly better than another, whatever
+      the opponent does?* Nothing else in the project looked at that.
 
-      Forcing one club from `deep` to `very_high` at minute 1, 150 paired runs against five
-      different opponents:
+      **The gap it closes.** The balance harness plays each club's own fixed tactical identity, so it
+      measures the league **as played** — never the decision space a player can explore. A dial with
+      one right answer leaves all seven thresholds green while making the game a single correct
+      move, which is the same failure as a fabricated statistic in different clothes: the screen
+      offers a choice the engine does not really have.
 
-      | opponent's shape | goals for | goals against | points |
-      |---|---|---|---|
-      | very_high / moderate / long | 2.11 → 6.25 | 1.61 → 2.67 | **+0.83** |
-      | very_high / gegenpress / long | 2.28 → 5.99 | 1.29 → 2.33 | **+0.64** |
-      | high / gegenpress / direct | 1.35 → 4.45 | 0.85 → 1.01 | **+1.12** |
-      | high / moderate / mixed | 1.90 → 5.98 | 1.21 → 1.69 | **+0.99** |
-      | high / contain / short | 1.31 → 3.66 | 0.89 → 1.89 | **+0.51** |
+      It is a **probe, not a gate** — it always exits zero. The dials it indicts today are an open
+      box, and a permanently red check is one everyone learns to ignore.
 
-      Every one significant. Scoring roughly triples; conceding rises much less.
+      **It needed error bars, and finding that out was most of the work.** "Beaten in every column"
+      is a conjunction of several noisy comparisons, so at a small sample enough of them line up by
+      luck to convict a healthy dial. At 48 matches a cell it reported `compactness` dominance in the
+      **opposite direction** to the one it found at 480. Cells now keep their per-match goal
+      differences and are compared **paired, on the same fixtures and seeds**, through the engine's
+      `pairedDifference` — the same arithmetic the counterfactual runner uses, exported rather than
+      copied so the two cannot drift apart about what counts as a finding.
 
-      **It is narrower than it first looks, and that matters for the fix.** Between two sides that
-      both start `normal`, the trade is real and correct: going `very_high` gives **+0.46 for and
-      +0.39 against** — space bought, space conceded. The mechanism works. What is wrong is
-      specifically **deep against a high line**, where the full ladder reads for 1.35 → 2.73 → 3.25 →
-      3.55 while against moves only 0.85 → 1.13. Sitting deep costs 60% of your attack and buys
-      almost nothing.
+      **And the first significance rule was still wrong.** Requiring only that the loser is never
+      *significantly* better convicts on one significant column while most columns come back tied —
+      it reported `attacking` as dominated by `ultra_defensive` while attacking was plainly ahead
+      (0.80 vs 0.72) against a balanced opponent. Dominance now needs **both**: the raw average never
+      worse *and* a significant gap somewhere. That is the plain meaning of "beaten in every column",
+      with noise unable to manufacture it. Correcting it moved `mentality` from indicted to healthy.
+      Verified by sabotage, including the trap this file has now fallen into twice — a synthetic
+      "noise" case built by shifting both arms equally has a **constant** difference, which is
+      certainty, not noise, and tests nothing.
 
-      Football says the opposite: dropping off a high line is how you get space to counter into, and
-      `HIGH_LINE_VS_PACE` already exists as a cause. So the question for whoever takes this is
-      whether a deep block actually earns counter-attacking room in `space.ts` — `COUNTER_LAUNCH`
-      and `EntryPhase` are the machinery, and `bestAttackingZone` the likely place it is lost.
+- [ ] **⚠️ Five of six tactical dials have a dominated setting. The tactical layer is currently a
+      set of single correct answers.** Measured at 8 fixtures × 60 seeds a cell — 480 matches — with
+      paired significance. This replaces the narrower line-height finding the counterfactual runner
+      first turned up; it is the same bug, and it is nearly everywhere.
 
-      Caveats worth keeping: one home club, `attendance: 2500` regardless of capacity, and the five
-      opponents all play `high` or `very_high` because that is what `tacticsFor` gave them. Re-run
-      across opponents that sit deep before concluding how general it is. **Do not touch a balance
-      constant without a fresh gate run** — the current seven are 2.581 / 23.887 / 0.332 / 0.901 /
-      83.311 / 0.628 / 1.000.
+      | dial | verdict |
+      |---|---|
+      | `lineHeight` | **worst.** `deep` beaten by all three; `normal` beaten by `high` and `very_high`. `deep` and `normal` are the best answer to nothing |
+      | `pressingIntensity` | `high` and `gegenpress` beaten by `contain`; `gegenpress` also by `moderate` |
+      | `tempo` | `slow` and `balanced` beaten by `fast` |
+      | `width` | `balanced` and `wide` beaten by `narrow` |
+      | `compactness` | `balanced` and `loose` beaten by `tight` |
+      | `mentality` | **healthy** — every setting is worth choosing against something |
+
+      **The mechanism, measured rather than guessed.** Against a fixed opponent, a side that drops
+      from `normal` to `deep` sees its own chance rate per possession fall **0.1705 → 0.0997** while
+      the opponent's *rises* **0.1513 → 0.1681**. Sitting deep makes you worse at **both** ends,
+      which no football model should allow. The dominant term is **PROGRESSION, not the final
+      third**: the deep side's midfield space goes −0.85 → −4.10 while the opponent's goes +0.61 →
+      +3.95, and `PHASE_SLOPE.PROGRESSION` is the largest slope in the chain.
+
+      **Why the trade never lands: the clamps are asymmetric.** A deep block's two benefits are both
+      capped and its costs are not. Its own build-up advantage runs into `PHASE_CEILING.BUILD_UP`
+      (0.97, only 0.17 above a base of 0.8), and its crowding of its own third runs into
+      `PHASE_FLOOR.FINAL_THIRD` (0.18, only 0.15 below a base of 0.33). Meanwhile the final third has
+      0.37 of headroom *above* base. So buying final-third space is always worth more than selling
+      it, and every dial that trades territory for solidity loses the trade.
+
+      **An attempt that failed, so nobody repeats it.** `COUNTER_DEPTH` — scaling `exposure` by how
+      much room the attacker had to run into, so a deep block converts a high opponent line into
+      counter-attacks. Football-honest and it moved the right way: `deep` vs `very_high` goal
+      difference went **+0.30 → +0.53**. But `very_high` vs `very_high` is **+0.89**, so line height
+      stayed dominated. **Reverted** — exposure is simply too small a lever against a 4-unit midfield
+      deficit, and a constant table that does not fix the stated problem is the "plausible-looking
+      implementation that models nothing" the ⚠️ rule exists to stop.
+
+      **So the fix is in the response curves, not in a new bonus**, which makes it a re-fit: §7 wants
+      a fresh gate run, and the last structural change to these curves took a whole box. Start from
+      `PHASE_CEILING.BUILD_UP` and `PHASE_FLOOR.FINAL_THIRD` in `chain.ts` — the asymmetry is
+      arithmetic and visible without simulating anything. Keep `pnpm dominance` open beside the gate:
+      the seven thresholds and the dominance matrix have to come good **together**, and it is easy to
+      fix one by breaking the other.
+
+      Current gate, unchanged by any of this: 2.581 / 23.887 / 0.332 / 0.901 / 83.311 / 0.628 /
+      1.000.
 
 - [ ] **+MGR** — season re-simulated under a neutral baseline manager; the points difference is the player's contribution (global-strategy §4)
 
@@ -468,9 +509,10 @@ first built two days ago.
 
 ## Note for whoever runs next
 
-**Next box is the ⚠️ line-height finding above** — the counterfactual runner's first result, and a
-balance hole the gate structurally cannot see. Read that box before touching `space.ts`; it has the
-measurements, the caveats, and the reason the harness missed it.
+**Next box is the ⚠️ dominance re-fit above** — five of six tactical dials have a setting no context
+makes worth choosing. Read that box before touching the engine: it has the mechanism, the arithmetic
+behind it, and one attempted fix that failed and why, so the next run does not spend itself
+rediscovering any of the three.
 
 The runner now exists to check any such fix: change one thing, keep the seed, and the difference is
 attributable and comes with its own error bars. Note what it costs, though — a 0.1-point effect needs
@@ -494,6 +536,38 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-16 (2)** — **Took the line-height box. Did not fix it; found it was five times bigger, and
+  built the tool that measures it.**
+  - `pnpm dominance` plays every tactical setting against every opposing setting and asks §4's
+    question directly. The balance harness structurally cannot: it plays each club's fixed identity,
+    so it validates the league as played and never the decision space. 295 tests green, gate
+    identical — no engine behaviour changed.
+  - **The finding is now five dials, not one.** `lineHeight` (worst), `pressingIntensity`, `tempo`,
+    `width`, `compactness` all have a dominated setting; only `mentality` is healthy. The tactical
+    layer is currently a set of single correct answers.
+  - **Mechanism, measured:** dropping from `normal` to `deep` takes your own chance rate 0.1705 →
+    0.0997 *and* lifts the opponent's 0.1513 → 0.1681 — worse at both ends. The dominant term is
+    PROGRESSION, not the final third. The cause is clamp asymmetry: a deep block's build-up gain hits
+    a 0.97 ceiling and its crowding hits a 0.18 floor, while the final third has 0.37 of headroom
+    above base. Buying final-third space is always worth more than selling it.
+  - **One fix attempted and reverted.** `COUNTER_DEPTH` scaled exposure by the attacker's own depth —
+    football-honest, moved the right way (+0.30 → +0.53), nowhere near enough (+0.89 needed).
+    Exposure is too small a lever against a 4-unit midfield deficit. Reverted rather than shipped,
+    per the ⚠️ rule.
+  - **Two methodology corrections worth more than the probe itself.** The first version compared raw
+    averages and flipped `compactness`'s direction between sample sizes; it now pairs per match and
+    uses `pairedDifference`, exported from the engine so the probe and the counterfactual runner
+    cannot disagree about what a finding is. The second version required only "never *significantly*
+    better", which convicts on one significant column while the rest tie — it indicted `mentality`
+    while `attacking` was plainly ahead in a column. Dominance now needs the raw average never worse
+    **and** a significant gap somewhere.
+  - **The trap, twice now:** a synthetic "noise" test built by shifting both arms equally has a
+    *constant* paired difference, which is certainty. Both times the sabotage check caught it. If a
+    test about noise passes instantly, check that the difference actually varies.
+  - **Next:** the re-fit. Start at `PHASE_CEILING.BUILD_UP` and `PHASE_FLOOR.FINAL_THIRD` — the
+    asymmetry is arithmetic and needs no simulation to see. Run `pnpm dominance` beside `pnpm
+    harness`: the seven thresholds and the dominance matrix must come good together.
 
 - **2026-09-16** — **The counterfactual runner, and the first thing it found.**
   - `counterfactual.ts`: same seed, one decision changed, N paired runs, with the honesty gate built
