@@ -501,6 +501,64 @@ first built two days ago.
       **`deep` is still the best answer to nothing.** That is the honest remaining state of this
       dial, and `COUNTER_DEPTH` above is the most promising route to it.
 
+- [ ] **⚠️ Crossing, second attempt: two of the four blockers solved, two left and both measured.**
+      Still not shipped — the gate passes but three engine tests do not, and `chain.ts` is unchanged.
+      Read this box **and** the one below it before starting; between them they carry the whole
+      mechanism, so nothing needs re-deriving.
+
+      **Solved 1 — the shot-distance distribution, which was the headline blocker.** Crosses used to
+      push 35% of all shots into the six-to-eleven band against a published 22%. Re-fitting the
+      open-play geometry *with crosses in it* fixes every band at once:
+      **`PENETRATION_SKEW` 0.45 → 0.52** and **cross depth 5–24 m** (from 4–18). All five published
+      bands land inside tolerance and shots inside the box read **0.654** against a 0.5–0.72 window.
+      That was the sub-problem the last attempt could not see past.
+
+      **Solved 2 — the goals the re-fit costs.** Pushing shots further out took goals to 2.264.
+      **`SHOT_PRESSURE_BASE` 75 → 58** brings them back to 2.574 and costs no correlation. This is
+      the right constant to spend: the engine's own comment above it says it is "a 5–98 scale I made
+      up" and that a mean near 70 "may be covering for a curve that is slightly generous at these
+      geometries". It is the least anchored number in the file.
+
+      **Solved 3 — the trace's rate model.** `crossSurvival(map, side)` in
+      `shotChancePerPossession`: the share of final-third arrivals still ending in a shot, from the
+      `pickZone`-weighted chance of landing wide, the attempt rate for that width, and the find-rate.
+      The per-player delivery term is left out as the penalty branch is. At a half-rate it passes;
+      at the full rate the *asymmetry* check still fails (0.42 against 0.6), so it needs the delivery
+      term after all — use the mean `crossing` of the wide-band occupants.
+
+      **With all that, the gate is green at 12 seasons on a halved attempt rate**
+      (`{ narrow: 0.13, balanced: 0.23, wide: 0.35 }`, `CROSS_PER_SPACE` 0.02): goals 2.761, shots
+      23.495, home advantage 0.329, **xG correlation 0.914**, champion points 84.4, stronger side
+      0.634. Three tests still fail.
+
+      **⚠️ Left 1 — the crowd. This is the real one, and it is a genuine regression, not noise.**
+      Measured at 2,500 matches a side: a full house gives **0.253 ± 0.056** and an empty ground
+      **0.247 ± 0.055** — a crowd worth **0.006**, where the test wants at least 0.03 and it used to
+      clear it. Crossing adds an aerial channel to chance creation that none of the crowd's three
+      levers touch (stamina relief, the front-foot transfer, referee leniency), so the crowd's share
+      of what decides a match shrinks. **`CROWD_STAMINA_RELIEF`, `CROWD_REFEREE_BIAS` and
+      `CROWD_FITNESS_LIFT` need re-fitting with crosses in**, exactly as the shot geometry did. Note
+      the harness still reads home advantage in band — travel and pitch unfamiliarity carry it — so
+      only the crowd component collapsed, and only this test sees it.
+
+      **⚠️ Left 2 — the low block, and both misses are tiny.** "Pushes shots further out against a
+      low block" reads 15.97 m against 16.09 needed; "does not also take the shots away" reads 0.892
+      against 0.93. A cross is met at a distance that does not depend on the block, so crossing
+      dilutes the first, and cleared crosses remove shots, which is what the second forbids.
+
+      **Tried and rejected: a cleared cross going behind for a corner.** Football-honest, and it does
+      restore some volume — 0.822 → 0.837 on the shots test. But it took the crowd measurement from
+      0.268 to 0.118, roughly halving it again, so it makes the harder problem worse to nudge the
+      easier one. `CORNER_FROM_CLEARED_CROSS = 0.42` if anyone wants to re-test it after the crowd
+      is re-fitted.
+
+      **The order for the next run.** Re-fit the crowd constants first — it is the only genuine
+      regression and the other two are within a few percent. Then decide honestly whether the two
+      low-block thresholds are measuring a principle crossing has legitimately changed (a side now
+      *chooses* to cross into a packed box and can lose the ball, which is different from congestion
+      suppressing shots) or a real fault. **Re-basing a test to accommodate a change needs saying out
+      loud and justifying**; it is one step from lowering a threshold, which §7 forbids.
+
 - [ ] **⚠️ Crossing — built, measured, reverted. It is the first mechanism that *raises* the xG
       correlation, and that is the constraint that has blocked everything else.** Nothing shipped;
       `chain.ts` is unchanged and the gate is green. What follows is worth more than the code was.
@@ -777,12 +835,14 @@ blocked four structural changes in a row. It is built, measured and written down
 constant; it was reverted only because it moves the shot-distance distribution off its published
 shares.
 
-So the sequence is: **re-fit the open-play shot geometry with crosses in it** (`PENETRATION_*`,
-`DEPTH_*`, `SPREAD_*` and the cross geometry together, against the shares in `chain.test.ts`), teach
-`shotChancePerPossession` about the cross branch, and only then spend the correlation headroom on
-`DEFENCE_FOLLOWS_ATTACK = 0.6`, which with crossing reached three healthy dials and 7 dominated pairs
-against today's 13. Do not re-derive any of it, and do not try the stretch on its own again — that
-has now failed twice for the same reason.
+**The geometry re-fit is now done** — see the box above it for the constants. What is left is the
+crowd, which crossing dilutes to nothing, and two low-block thresholds that miss by a few percent.
+Re-fit the crowd first; it is the only genuine regression.
+
+After that the sequence is unchanged: teach `shotChancePerPossession` the delivery term it still
+needs, then spend the correlation headroom on `DEFENCE_FOLLOWS_ATTACK = 0.6`, which with crossing
+reached three healthy dials and 7 dominated pairs against today's 13. Do not re-derive any of it, and
+do not try the stretch on its own again — that has failed twice for the same reason.
 
 The runner now exists to check any such fix: change one thing, keep the seed, and the difference is
 attributable and comes with its own error bars. Note what it costs, though — a 0.1-point effect needs
@@ -816,6 +876,28 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-17 (2)** — **Crossing, second attempt. Solved the distribution problem that blocked it;
+  two blockers left, both measured. Still not shipped.**
+  - **The headline blocker is gone.** `PENETRATION_SKEW` 0.45 → 0.52 with cross depth 5–24 m puts all
+    five published shot-distance bands inside tolerance **with crosses in**, and inside-the-box at
+    0.654. `SHOT_PRESSURE_BASE` 75 → 58 restores the goals that pushing shots outward costs — the
+    right constant to spend, since the engine's own comment calls it the least anchored number it has.
+  - **Gate green at 12 seasons on a halved attempt rate**, correlation **0.914**. Three tests fail.
+  - **⚠️ The crowd is a real regression, measured at 2,500 matches a side: worth 0.006.** Full house
+    0.253 ± 0.056 against an empty ground 0.247 ± 0.055. Crossing adds an aerial channel none of the
+    crowd's three levers touch, so its share of the outcome shrinks. The crowd constants need
+    re-fitting with crosses in, the same way the shot geometry just did. Only that test sees it —
+    the harness still reads home advantage in band, because travel and pitch unfamiliarity carry it.
+  - **The two low-block misses are within a few percent** (15.97 m against 16.09; 0.892 against 0.93).
+  - **Rejected: a cleared cross going behind for a corner.** It restores a little volume and halves
+    the crowd effect again — it makes the hard problem worse to nudge the easy one.
+  - **A pre-existing test was passing on luck.** The crowd test compares two 400-match samples and
+    wants a 0.03 gap; the standard error at that size is ±0.14. It says it is paired, but changing
+    attendance diverges the RNG stream immediately, so almost nothing cancels. It passed before
+    because the effect was real *and* the sample happened to fall right. Worth fixing whatever
+    happens to crossing — same lesson as the five guards on this branch: **a threshold a noisy
+    sample clears is not a guard, it is a coin that has been landing the same way.**
 
 - **2026-09-17** — **Built crossing. Reverted it. It is the key to the whole dominance problem and it
   needs a re-fit to land.**
