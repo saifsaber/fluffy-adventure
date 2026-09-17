@@ -501,6 +501,69 @@ first built two days ago.
       **`deep` is still the best answer to nothing.** That is the honest remaining state of this
       dial, and `COUNTER_DEPTH` above is the most promising route to it.
 
+- [ ] **⚠️ Crossing — built, measured, reverted. It is the first mechanism that *raises* the xG
+      correlation, and that is the constraint that has blocked everything else.** Nothing shipped;
+      `chain.ts` is unchanged and the gate is green. What follows is worth more than the code was.
+
+      **What it is.** A chance worked down the flank is delivered into the middle instead of shot
+      from out there. Whether it finds a head depends on the crosser's `crossing`, the aerial contest
+      between the boxes, the room out wide (time to pick a cross) and the room in the middle
+      (somebody to aim at). Find nobody and the ball is gone — that downside is what makes it a
+      choice rather than a free upgrade. `crossing` sits on all ~500 players in this league and,
+      before this, **was read by nothing in the engine**.
+
+      **The prize: the xG correlation went 0.900 → 0.914 at 45 seasons, and 0.920 at 12.** It has
+      never had a margin before; it has sat at 0.900–0.904 against a floor of 0.9 all along, and it
+      has now killed four structural changes in a row — the shot-pressure split, `COUNTER_DEPTH`, the
+      defence-follows-attack stretch, twice. The reason crossing does the opposite is exactly the
+      property the last blocker note asked for: **a better side exploits it more.** Delivery is the
+      crosser's, the finish is the target's heading and jumping against the defenders'. Measured at
+      60 matches a side: a 20-rated crosser to a 90-rated one is **+13% shots**, a 20-rated aerial
+      side to a 90-rated one is **+32%**. That stratifies the league instead of levelling it.
+
+      **What it breaks, and why that makes it a re-fit rather than a tuning.** Nine tests, in three
+      groups. The shot-distance distribution is anchored to published top-flight shares, and crosses
+      move mass into the six-to-eleven band (0.22 expected, 0.35 measured) and out of the band
+      outside the box; **76% of shots end up inside the box against a ceiling of 72%**. The low-block
+      tests stop discriminating, because a cross is met at a similar distance whatever the block is
+      doing. And the trace's own rate model overstates every side's shots, because
+      `shotChancePerPossession` does not know a final-third arrival can end as a cleared cross.
+
+      **The finding that settles it:** the gain and the breakage come from the same place. Halving
+      the attempt rate takes the failures from nine to two — and the correlation straight back to
+      **0.899**. There is no rate at which crossing is both worth having and harmless. The open-play
+      shot geometry was fitted in a world with no crosses, so it has to be re-fitted **with** them:
+      `PENETRATION_SKEW`, `PENETRATION_DEPTH`, `DEPTH_NEAR`/`DEPTH_FAR`, `SPREAD_CENTRAL`/
+      `SPREAD_WIDE` and the cross geometry, together, against the published shares.
+
+      **Crossing alone does not fix the dominance** — 13 dominated pairs before and after, with
+      `pressingIntensity` going healthy and `tempo` getting worse. It is a **prerequisite**, not the
+      fix.
+
+      **But crossing + the stretch does.** `DEFENCE_FOLLOWS_ATTACK = 0.6` (see the box below) with
+      crossing in: **three dials fully healthy and 7 dominated pairs against 13**, the best state
+      this engine has reached. It failed 5 of 7 thresholds — but the correlation read 0.896, which is
+      the stretch's usual −0.02 applied to crossing's higher starting point rather than to a number
+      already on the floor. **That is the route.** Re-fit the geometry first, then re-apply the
+      stretch to the headroom crossing buys.
+
+      **The exact configuration, so none of this is re-derived.** In `chain.ts`:
+      `CROSS_ATTEMPT = { narrow: 0.25, balanced: 0.45, wide: 0.68 }` · `CROSS_BASE = 0.72` ·
+      `CROSS_PER_DELIVERY = 0.3` · `CROSS_PER_AERIAL = 0.25` · `CROSS_PER_WIDE_SPACE = 0.06` ·
+      `CROSS_PER_SPACE = 0.04` · `CROSS_FLOOR = 0.12` · `CROSS_CEILING = 0.92` ·
+      `CROSS_AERIAL = 0.68` · cross geometry depth 4–18 m, lateral ±5.5 m, penetration 0.75.
+      A `crosses` counter on `ChainStats`, incremented when the delivery is struck. `crossFinds()`
+      reads the wide zone the cross comes *from* for delivery and the central zone for the finish —
+      reading only the middle made crossing punish width, which is backwards.
+
+      **⚠️ Two traps found the hard way, both by sabotage.** `CROSS_BASE` was first set **above**
+      `CROSS_CEILING`, so `crossFinds` returned the clamp almost every time and no player attribute
+      moved it — football-shaped, coin-flip behaviour, and zeroing the aerial term changed nothing.
+      Then the test for it still passed with the term zeroed, because a bare `toBeGreaterThan` on two
+      noisy samples is carried by luck about half the time. Both guards need a **margin taken from a
+      measurement** (the +13% and +32% above). That is the fifth guard-that-guarded-nothing on this
+      branch and the sabotage check caught every one.
+
 - [ ] **⚠️ Four dials still have a dominated setting. The cause is found and the fix is found; the
       fix cannot pass the gate, and the reason it cannot is the most useful thing here.** Nothing
       shipped this run — `space.ts` is unchanged and the gate is where it was.
@@ -707,12 +770,19 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
 
 ## Note for whoever runs next
 
-**Next box is the remaining ⚠️ dominance work above.** Read it before writing any code: the cause is
-already found and measured, a fix that works is already written down, and the reason that fix cannot
-ship — it levels the league and the xG correlation notices — is the constraint every future attempt
-has to satisfy. The concrete lead is at the end of that box: **this engine has no crossing**, so a
-chance worked down the flank is finished from the flank, which is most of why conceding a flank is
-free. Do not re-derive any of that.
+**Next box is the crossing re-fit above, and the order matters.** The lead from two runs ago — this
+engine has no crossing — turned out to be right and to be bigger than a fix for the flanks: crossing
+is the only mechanism found so far that *raises* the xG correlation, which is the threshold that has
+blocked four structural changes in a row. It is built, measured and written down constant by
+constant; it was reverted only because it moves the shot-distance distribution off its published
+shares.
+
+So the sequence is: **re-fit the open-play shot geometry with crosses in it** (`PENETRATION_*`,
+`DEPTH_*`, `SPREAD_*` and the cross geometry together, against the shares in `chain.test.ts`), teach
+`shotChancePerPossession` about the cross branch, and only then spend the correlation headroom on
+`DEFENCE_FOLLOWS_ATTACK = 0.6`, which with crossing reached three healthy dials and 7 dominated pairs
+against today's 13. Do not re-derive any of it, and do not try the stretch on its own again — that
+has now failed twice for the same reason.
 
 The runner now exists to check any such fix: change one thing, keep the seed, and the difference is
 attributable and comes with its own error bars. Note what it costs, though — a 0.1-point effect needs
@@ -746,6 +816,34 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-17** — **Built crossing. Reverted it. It is the key to the whole dominance problem and it
+  needs a re-fit to land.**
+  - The engine had no crosses: a chance worked down the wing was *shot* from the wing, and `crossing`
+    sat unread on every player in the league. Built it as a real trade — delivery, aerial contest,
+    room wide for time on the ball, room central for a target, and a cleared cross loses you the ball.
+  - **The prize, and it is the big one: the xG correlation went 0.900 → 0.914.** That number has had
+    no margin at all since the gate first passed, and it has now killed four structural changes.
+    Crossing is the first mechanism that lifts it, for the exact reason the last blocker asked for —
+    a better side exploits it more. Measured: +13% shots from a 90-rated crosser over a 20, +32% from
+    a 90-rated aerial side.
+  - **Why it could not ship.** Nine tests. Crosses move the shot-distance distribution off its
+    published shares (76% inside the box against a 72% ceiling), stop the low-block tests
+    discriminating, and break the trace's rate model, which does not know a final-third arrival can
+    end as a cleared cross. **Halving the rate takes the failures to two and the correlation back to
+    0.899** — the gain and the breakage are the same thing, so this is a re-fit of the open-play shot
+    geometry with crosses in it, not a tuning.
+  - **Crossing alone does not fix the dominance** (13 pairs before and after). **Crossing plus the
+    stretch does**: `DEFENCE_FOLLOWS_ATTACK = 0.6` gives **three healthy dials and 7 dominated pairs
+    against 13**, the best this engine has reached. That is the route — re-fit the geometry, then
+    spend crossing's headroom on the stretch.
+  - Every constant is written into the box above so nothing is re-derived.
+  - **Fifth guard-that-guarded-nothing, and the worst one yet.** `CROSS_BASE` was set above
+    `CROSS_CEILING`, so the find-rate was clamped almost always and no attribute moved it — a coin
+    flip wearing a football word. The test written to catch exactly that passed anyway, because a
+    bare `toBeGreaterThan` on two noisy samples is carried by luck. Both now carry a margin taken
+    from a measurement. **If a test about a mechanism passes while the mechanism is switched off, the
+    test is the bug** — and only the sabotage pass ever finds it.
 
 - **2026-09-16 (4)** — **Found the cause of the width/compactness dominance and a fix that works.
   Shipped nothing: the fix levels the league and the gate says no.**
