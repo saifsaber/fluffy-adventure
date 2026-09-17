@@ -564,11 +564,18 @@ first built two days ago.
 > away, and the whole point of having the file is that the first screen sets the precedent. §2's
 > surface ladder and §4's "what earns a card" are the two that will get broken first.
 
-- [ ] Pick tactics → play match → derived stats → the trace → one counterfactual
-- [ ] **Both locales from this first screen** (ADR-003) — `ar-EG` and `en`, direction from the
-      locale, one layout. On paper surfaces; the live match is the one dark screen. The locale
-      switcher is part of the thinnest UI, because a second locale nobody can reach is a second
-      locale nobody tests.
+- [x] Pick tactics → play match → derived stats → the trace → one counterfactual — `apps/web`,
+      React 19 + Vite + Tailwind 4. Setup screen (club, opponent, venue, three dials, one in-match
+      call), result screen (score, openable numbers, trace, counterfactual, the seed). 200 paired
+      replays, `mean ± 2se`, "could be luck" printed as plainly as the other answer.
+- [x] **Both locales from this first screen** (ADR-003) — `ar-EG` and `en`, direction from the
+      locale, one layout, switcher on the header. `Messages` is one contract both dictionaries
+      implement, cause names are `Record<CauseTag, Record<Locale, string>>`, and the §4 guard walks
+      the TypeScript AST rather than pattern-matching JSX.
+- [ ] **Not in this box, and the screen says so out loud:** the eleven picks itself
+      (`baselineTactics`), the opponent is the neutral baseline with no decisions, and there is no
+      live matchday — so DESIGN.md's floodlight surface is defined and unused. Named here rather
+      than left to read as finished features.
 
 ### Weeks 2–6 — how the rest of the MVP is cut up
 
@@ -936,6 +943,15 @@ order — they are the same problem understood three times over, and later ones 
 
 ## Note for whoever runs next
 
+**Any test of the form "A differs from B only by X" needs a fixture where every field that is not
+X is off its default.** Three times now a guard has passed while the thing it guards was broken, for
+the same reason each time: the sabotage had nothing to change. The trace-polarity test passed under
+a revert; +MGR's baseline passed fourteen tests while keeping the player's in-match decisions,
+because every fixture had `decisions: []`; and this run, "the two arms differ by the decision and
+nothing else" passed while the without-call arm also reset the mentality, because the fixture's
+approach was already `balanced`. Neutral defaults make assertions vacuous. Assert the fixture is
+off-default in the test itself, the way `match.test.ts` now does.
+
 **Next box is the crossing re-fit above, and the order matters.** The lead from two runs ago — this
 engine has no crossing — turned out to be right and to be bigger than a fix for the flanks: crossing
 is the only mechanism found so far that *raises* the xG correlation, which is the threshold that has
@@ -964,6 +980,42 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-17 (5)** — **The thin UI is up. The product has a face, and the face argues.**
+  - `apps/web`: pick club, opponent, venue, three dials and one call after kickoff; play; then the
+    score, the numbers, where it turned, and what the call was worth. Both locales from this first
+    screen. 352 tests across 23 files, harness at 45 seasons still meets all seven.
+  - **The interesting decision was what "every stat opens" means.** Shots, xG and cards open the
+    events the engine recorded as they happened. Corners and fouls open a plain statement that the
+    counter was incremented at the moment it occurred and that no per-event detail exists — true and
+    checkable, rather than a number dressed as more than it is. Passes and offsides have no counter
+    at all and render as an em dash with a line saying why. A `0` there would be the competitor's
+    `shots = max(shots, goals + random())` in a nicer font.
+  - **A league stays data on the client.** `packages/content/src/pure.ts` holds validation and the
+    data-to-domain transforms with no I/O, so the browser reads the same JSON through the same
+    schema and the same `toClub` as the harness. A test asserts the two build an *identical* league
+    — not a similar one — because the moment they diverge, a match simulated on the client stops
+    being reproducible on the server and determinism buys nothing.
+  - **Eight guards verified by sabotage, and the eighth attempt found a real hole** — see the
+    standing rule now at the top of "Note for whoever runs next". That is the third time.
+  - **Three measurements the next boxes need:**
+    - **Bundle: 594 kB raw, 139 kB gzipped**, of which the league is 476 kB of JSON. The data
+      dominates the bundle, and the audience is on Egyptian mobile. Lazy-loading the league, or
+      shipping a squad only when a club is chosen, belongs in Step 11 with that number attached.
+    - **The xG ↔ goals correlation gate passes by nothing: 0.900 against a floor of 0.900** at 45
+      seasons, and **0.894 at 12 seasons**. The margin is inside the run-to-run noise, so that
+      threshold is effectively a coin flip on any given run. It strengthens the parked crossing
+      finding rather than changing it — crossing is still the only mechanism found that raises it.
+    - **Invariant 3 is met by clubs and not by players.** `matoubas-sporting` is a real Latin-script
+      transliteration; `matoubas-sporting-1` is a positional id, not a name. So the UI shows the
+      Arabic name in both locales — correct for a person's name, and fine for now — but the share
+      card in Step 12 cannot read outside Arabic until player data carries a Latin name. That is a
+      data box, and it needs to exist before Step 12.
+  - Not built, deliberately, and said on screen rather than implied: hand-picked XI, an opponent with
+    a manager, substitutions, and a live matchday — so the floodlight palette is defined and unused.
+  - **Next box is Step 7's first: `packages/ai` — the boundary, before any model call.** Read the
+    three rules at the head of the Weeks 2–6 section first; from here on the failure mode is a screen
+    that looks finished, and no harness catches that.
 
 - **2026-09-17 (4)** — **Design references studied properly; `DESIGN.md` gained the four rules it
   was missing.**
