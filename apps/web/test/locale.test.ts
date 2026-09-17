@@ -89,11 +89,30 @@ describe('the cause table', () => {
   });
 });
 
+describe('numbers stay out of sentences', () => {
+  it('interpolates only what is on this list, and nothing signed', () => {
+    // A signed number substituted into Arabic prose renders as `0.42+` — the sign detaches and
+    // lands on the wrong end of the value. `+0.42` shown as `0.42+` is not a typographic nit: it
+    // is a swing towards you displayed as one against you. The fix is that such numbers are their
+    // own isolated element, so every new placeholder has to justify itself here first.
+    const allowed: Record<string, string> = {
+      'stat.open': 'a translated word, no digits',
+      'cf.runs': 'an unsigned count, no sign to misplace',
+    };
+    const interpolating = LOCALES.flatMap((locale) =>
+      Object.entries(DICTIONARIES[locale])
+        .filter(([, value]) => /\{\w+\}/.test(value))
+        .map(([key]) => key),
+    );
+    expect([...new Set(interpolating)].sort()).toEqual(Object.keys(allowed).sort());
+  });
+});
+
 describe('the translator', () => {
   it('substitutes parameters and leaves unknown ones visible', () => {
     const t = translator('en');
     expect(t('cf.runs', { n: 200 })).toBe('200 replays');
-    expect(t('trace.swing', { delta: '+0.14' })).toBe('Odds moved +0.14');
+    expect(t('stat.open', { stat: 'Shots' })).toBe('Open Shots and see where it came from');
     // A placeholder left on screen is a bug someone will report. A silently empty one is not.
     expect(t('cf.runs')).toContain('{n}');
   });

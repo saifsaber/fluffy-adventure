@@ -96,10 +96,15 @@ export function Counterfactual({
             {t(result.points.significant ? 'cf.significant' : 'cf.notSignificant')}
           </p>
           <p className="text-small text-ink-soft">{t('cf.spread')}</p>
+          {/* `seq` isolates the whole before→after expression. Isolating each number on its own
+              is not enough: the *order* of the three parts still reverses in Arabic, and the arrow
+              then points from the new value back to the old one. */}
           <p className="label mt-2">
-            <span className="num">{dec(result.baseline.points, 2)}</span>
-            {' → '}
-            <span className="num">{dec(result.variant.points, 2)}</span>
+            <span className="seq">
+              <span className="num">{dec(result.baseline.points, 2)}</span>
+              {' → '}
+              <span className="num">{dec(result.variant.points, 2)}</span>
+            </span>
           </p>
         </>
       )}

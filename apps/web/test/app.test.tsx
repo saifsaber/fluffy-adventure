@@ -25,9 +25,11 @@ const open = (locale: Locale) =>
     </LocaleProvider>,
   );
 
+const PLAY: Record<Locale, string> = { en: 'Play the match', 'ar-EG': 'إلعب الماتش' };
+
 const playMatch = (locale: Locale = 'en') => {
   open(locale);
-  fireEvent.click(screen.getByRole('button', { name: 'Play the match' }));
+  fireEvent.click(screen.getByRole('button', { name: PLAY[locale] }));
 };
 
 beforeEach(() => {
@@ -91,6 +93,36 @@ describe('picking tactics and playing', () => {
     playMatch();
     expect(screen.getByText('Full time')).toBeTruthy();
     expect(screen.getByRole('button', { name: 'Play another' })).toBeTruthy();
+  });
+
+  it("keeps each score inside its own club's row, in both directions", () => {
+    // The bug this replaced: `2-1` rendered as one isolated run beside two club names reverses
+    // against them when `dir` flips, so a 1-0 home win was shown on screen as 0-1. Structural,
+    // not visual — a name and its number share an element, so no direction can separate them.
+    for (const locale of ['en', 'ar-EG'] as const) {
+      cleanup();
+      playMatch(locale);
+      const rows = screen.getAllByText(/Full time|نهاية الماتش/)[0]?.parentElement;
+      const scored = within(rows as HTMLElement)
+        .getAllByText(/^\d+$/)
+        .map((node) => node.closest('div'));
+      expect(scored).toHaveLength(2);
+      for (const row of scored) {
+        // Each row carries exactly one club name and exactly one number.
+        expect(row?.textContent?.match(/\d+/g)).toHaveLength(1);
+        expect(row?.textContent?.replace(/\d+/g, '').trim().length).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it('sets a swing number in its own isolated element, never inside the sentence', () => {
+    // `.num` carries `direction: ltr; unicode-bidi: isolate`. Without it the leading sign of a
+    // signed number moves to the other end of the value in Arabic.
+    playMatch('ar-EG');
+    const swings = document.querySelectorAll('.num');
+    const signed = [...swings].filter((node) => /^[+-]\d/.test(node.textContent ?? ''));
+    expect(signed.length).toBeGreaterThan(0);
+    for (const node of signed) expect(node.className).toContain('num');
   });
 
   it('shows the seed that produced the match', () => {

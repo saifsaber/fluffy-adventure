@@ -981,6 +981,39 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
 
 ## Log
 
+- **2026-09-17 (6)** — **Ran the app in a browser and it was showing the score to the wrong club.**
+  - Three bidi bugs, all the same species, and none of them reachable by a test or a typecheck:
+    **isolating each Latin run is not enough — the *order* of a sequence of runs reverses too.**
+    1. `2-1` as one isolated string beside two club names: a **1-0 home win rendered as 0-1 in
+       Arabic** and correctly in English, from the same markup. Confirmed against the engine rather
+       than guessed — `simulate` said `1 - 0`, goal at 43'. Fixed by pairing each club with its own
+       number inside one element, so no direction can separate them.
+    2. `1.42 → 1.48` in the counterfactual: the three parts reversed, so the arrow pointed from the
+       new value back to the old one and contradicted the signed difference printed above it. Fixed
+       with a `.seq` isolator around the whole expression.
+    3. A signed number substituted into a translated sentence: `+0.42` renders as `0.42+` in
+       Arabic — the sign detaches, and a swing towards you reads as one against you. The number is
+       now its own element and the sentence goes around it.
+  - A fourth, subtler one: **`.num` sets `direction: ltr`, so `padding-inline-end` on that same
+    element resolves to its right regardless of the page.** A table cell carrying both padded
+    towards the previous column and the numbers ran into the text beside them. Padding belongs on
+    the container, isolation on the number. All four are now rules in DESIGN.md §3.
+  - Three more guards, sabotage-verified — 11 of 11 across the two runs. The placeholder one is the
+    useful one: every interpolation in a locale file must sit on a short allowlist with a reason, so
+    putting a number back inside a sentence has to be argued for first.
+  - **A correction worth recording.** I read the first low-resolution screenshot as showing the sign
+    still detached after the fix, and was wrong — measuring the glyph boxes put `-` at x=215.3 with
+    the digits from x=223.7. Reading RTL layout off a downscaled screenshot is not evidence; the DOM
+    and the glyph positions are.
+  - **Possession is real but narrow.** Checked because the screen showed 50%/50%: across 40 fixtures
+    with deliberately opposed tactics it ranges **46.1–54.0%**, eight distinct rounded values. So the
+    counter works and that match was genuinely even — but real football swings 30–70%, and this
+    engine's possession barely answers tactics at all. A *new* item for the parked balance work,
+    not a restatement of the crossing finding.
+  - The screenshot rig is in the scratchpad, not the repo: Playwright against the dev server, with
+    the Google Fonts request served from disk because the browser does not trust this container's
+    proxy CA. Worth a project run-skill if anyone screenshots this again.
+
 - **2026-09-17 (5)** — **The thin UI is up. The product has a face, and the face argues.**
   - `apps/web`: pick club, opponent, venue, three dials and one call after kickoff; play; then the
     score, the numbers, where it turned, and what the call was worth. Both locales from this first

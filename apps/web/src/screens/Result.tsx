@@ -31,16 +31,25 @@ export function ResultScreen({
     <div className="grid gap-6">
       <section className="sheet">
         <p className="label m-0 mb-2">{t('result.fullTime')}</p>
-        <div className="flex items-center gap-4">
-          <span className="flex-1 text-h2 font-semibold">{home.shortName}</span>
-          <span className="num text-display font-semibold">
-            {int(result.homeScore)}-{int(result.awayScore)}
-          </span>
-          <span className="flex-1 text-h2 font-semibold text-end">{away.shortName}</span>
-        </div>
-        <p className="label mt-3 mb-0">
-          {you === 'home' ? home.shortName : away.shortName} · {t('result.you')}
-        </p>
+        {/*
+          One row per side, each carrying its own score.
+          Not a matter of taste. `2-1` written as a single isolated run reverses against the club
+          names when `dir` flips, so the same markup showed 1-0 to the home side in English and 0-1
+          in Arabic — the score attached to the wrong club, confidently. Pairing a name with its own
+          number inside one element makes that impossible in either direction.
+        */}
+        {(
+          [
+            [home.shortName, result.homeScore, you === 'home'],
+            [away.shortName, result.awayScore, you === 'away'],
+          ] as const
+        ).map(([name, score, mine]) => (
+          <div key={name} className={mine ? 'row row-mine' : 'row'}>
+            <span className="flex-1 text-h2 font-semibold">{name}</span>
+            {mine && <span className="label">{t('result.you')}</span>}
+            <span className="num text-display font-semibold">{int(score)}</span>
+          </div>
+        ))}
       </section>
 
       <Stats result={result} you={you} />

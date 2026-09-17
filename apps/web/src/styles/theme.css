@@ -112,6 +112,17 @@
     unicode-bidi: isolate;
   }
 
+  /*
+   * A run of numbers and symbols that must keep its left-to-right *order* — `1.42 → 1.48`, a
+   * scoreline, a range. `.num` isolates one number; this isolates the expression around it, which
+   * is a different bug and the one that actually misreports things.
+   */
+  .seq {
+    direction: ltr;
+    unicode-bidi: isolate;
+    display: inline-block;
+  }
+
   .label {
     font-size: var(--text-label);
     line-height: 1.4;
@@ -185,6 +196,15 @@
     border-color: var(--color-ink);
     background-color: var(--color-pitch-wash);
     font-weight: 600;
+  }
+
+  /* Table cells need a gutter on the trailing edge, or a number runs into the next column. */
+  .cell {
+    padding-block: 4px;
+    padding-inline-end: 12px;
+  }
+  .cell:last-child {
+    padding-inline-end: 0;
   }
 
   /* The one pill in the system. */

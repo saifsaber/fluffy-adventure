@@ -132,6 +132,18 @@ is a wall, not a headline.
   localised, treat uppercase as banned outright; hierarchy comes from size and weight.
 - **Never `letter-spacing` on Arabic.** It breaks the joins between letters. A Latin-only run — a
   `--font-num` label that is never localised — may use it; anything localised may not.
+- **Isolating each run is not enough — an ordered _sequence_ of runs needs its own isolation.**
+  `.num` keeps `-0.06` from becoming `0.06-`, but three inline pieces still order right-to-left
+  around each other, so `1.42 → 1.48` reads as `1.48 → 1.42` and a scoreline attaches to the wrong
+  club. Either wrap the whole expression (`.seq`), or pair each number with its own subject inside
+  one element so no direction can separate them. This shipped wrong once: a 1-0 home win rendered
+  as 0-1 in Arabic and correctly in English, from the same markup.
+- **Never put a number inside a translated sentence.** A substituted `+0.42` renders as `0.42+` in
+  Arabic — the sign detaches and lands on the wrong end, turning a swing towards you into one
+  against you. The number is its own element; the sentence goes around it.
+- **Never put `.num` and a logical padding on the same element.** `.num` sets `direction: ltr`, so
+  `padding-inline-end` on that element resolves to its _right_ regardless of the page — the gap
+  lands on the wrong side of the column. Padding belongs on the container, isolation on the number.
 - **Latin inside Arabic must be isolated**, or `4-3-3` and `2-1` reorder on screen:
   ```css
   .tech {

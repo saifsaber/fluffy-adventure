@@ -100,7 +100,7 @@ export const arEG: Dictionary = {
 
   'trace.title': 'الماتش اتقلب فين',
   'trace.empty': 'الماتش ما اتقلبش. مفيش لحظة حركت الحسبة بما فيه الكفاية.',
-  'trace.swing': 'الحسبة اتحركت {delta}',
+  'trace.swing': 'الحسبة اتحركت',
   'trace.favoured.you': 'ليك',
   'trace.favoured.them': 'عليك',
 

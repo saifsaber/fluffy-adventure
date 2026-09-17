@@ -100,7 +100,7 @@ export const en: Dictionary = {
 
   'trace.title': 'Where it turned',
   'trace.empty': 'Nothing turned it. No moment moved the odds far enough to name.',
-  'trace.swing': 'Odds moved {delta}',
+  'trace.swing': 'Odds moved',
   'trace.favoured.you': 'your way',
   'trace.favoured.them': 'their way',
 

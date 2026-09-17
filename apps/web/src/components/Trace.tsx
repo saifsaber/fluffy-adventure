@@ -38,8 +38,11 @@ export function Trace({ trace, you }: { readonly trace: MatchTrace; readonly you
               <span className="minute">{int(swing.minute)}</span>
               <span className="flex-1">
                 <span className="block">{CAUSE_LABEL[swing.cause][locale]}</span>
+                {/* The number is its own element rather than a value substituted into the
+                    sentence. Interpolated, `+0.42` inside Arabic prose renders as `0.42+` — the
+                    sign detaches and lands on the wrong end. */}
                 <span className="text-small text-ink-soft">
-                  {t('trace.swing', { delta: signed(yours, 2) })}{' '}
+                  {t('trace.swing')} <span className="num">{signed(yours, 2)}</span>{' '}
                   {t(yours >= 0 ? 'trace.favoured.you' : 'trace.favoured.them')}
                 </span>
               </span>

@@ -52,7 +52,7 @@ function ShotTable({ shots }: { readonly shots: readonly Shot[] }) {
               'shot.outcome',
             ] as const
           ).map((key) => (
-            <th key={key} className="label text-start py-1 font-semibold">
+            <th key={key} className="label text-start cell font-semibold">
               {t(key)}
             </th>
           ))}
@@ -61,12 +61,29 @@ function ShotTable({ shots }: { readonly shots: readonly Shot[] }) {
       <tbody>
         {shots.map((shot, i) => (
           <tr key={`${shot.minute}-${i}`} className="border-t border-rule">
-            <td className="num py-1">{int(shot.minute)}</td>
-            <td className="num py-1">{int(shot.distanceM)}</td>
-            <td className="num py-1">{int(shot.angleDeg)}</td>
-            <td className="num py-1">{int(shot.pressure)}</td>
-            <td className="num py-1">{dec(shot.xg, 2)}</td>
-            <td className="py-1">{t(OUTCOME_KEY[shot.outcome])}</td>
+            {/*
+              `cell` on the td, `num` on a span inside it — never both on one element. `num` sets
+              `direction: ltr`, which flips what `padding-inline-end` means for that element, so a
+              cell carrying both pads towards the previous column instead of the next one and the
+              numbers run into the text beside them. The container follows the page; only the
+              number isolates itself.
+            */}
+            <td className="cell">
+              <span className="num">{int(shot.minute)}</span>
+            </td>
+            <td className="cell">
+              <span className="num">{int(shot.distanceM)}</span>
+            </td>
+            <td className="cell">
+              <span className="num">{int(shot.angleDeg)}</span>
+            </td>
+            <td className="cell">
+              <span className="num">{int(shot.pressure)}</span>
+            </td>
+            <td className="cell">
+              <span className="num">{dec(shot.xg, 2)}</span>
+            </td>
+            <td className="cell">{t(OUTCOME_KEY[shot.outcome])}</td>
           </tr>
         ))}
       </tbody>
