@@ -1,24 +1,16 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { clubId, playerId, type Club, type Player } from '@dakka/engine';
+import type { Club } from '@dakka/engine';
+import { ContentError, parseOrThrow, toClub } from './pure.js';
 import { clubSchema, leagueSchema, type ClubData, type LeagueData } from './schema.js';
 
 /**
- * Reads and validates content, then hands typed domain objects to the engine.
+ * Reads content from disk, then hands typed domain objects to the engine.
  *
- * All I/O lives here so `@dakka/engine` can stay pure and run unchanged in a browser, on the
- * server, and inside the balance harness.
+ * All I/O lives here. The validation and the data-to-domain transforms live in `pure.ts`, which
+ * imports nothing from Node — that is what lets the browser load the same league files through the
+ * same schema rather than a second, generated copy of the data.
  */
-
-export class ContentError extends Error {
-  constructor(
-    public readonly file: string,
-    message: string,
-  ) {
-    super(`${file}: ${message}`);
-    this.name = 'ContentError';
-  }
-}
 
 function readJson(file: string): unknown {
   try {
@@ -26,68 +18,6 @@ function readJson(file: string): unknown {
   } catch (cause) {
     throw new ContentError(file, `is not valid JSON — ${(cause as Error).message}`);
   }
-}
-
-/** Turns a Zod failure into something a community contributor can actually act on. */
-function parseOrThrow<T>(
-  schema: {
-    safeParse: (v: unknown) =>
-      | { success: true; data: T }
-      | {
-          success: false;
-          error: { issues: readonly { path: readonly (string | number)[]; message: string }[] };
-        };
-  },
-  raw: unknown,
-  file: string,
-): T {
-  const result = schema.safeParse(raw);
-  if (result.success) return result.data;
-  const details = result.error.issues
-    .map((issue) => `  • ${issue.path.join('.') || '(root)'}: ${issue.message}`)
-    .join('\n');
-  throw new ContentError(file, `failed validation\n${details}`);
-}
-
-function toPlayer(data: ClubData['squad'][number], club: ClubData): Player {
-  const [first, ...rest] = data.positions;
-  /* c8 ignore next */
-  if (first === undefined)
-    throw new ContentError(club.slug, `player ${data.slug} has no positions`);
-  return {
-    id: playerId(`${club.slug}:${data.slug}`),
-    clubId: club.slug,
-    name: data.name,
-    shortName: data.shortName,
-    slug: data.slug,
-    age: data.age,
-    nationality: data.nationality,
-    positions: [first, ...rest],
-    preferredRoles: data.preferredRoles,
-    attributes: {
-      technical: data.technical,
-      physical: data.physical,
-      mental: data.mental,
-      ...(data.goalkeeping ? { goalkeeping: data.goalkeeping } : {}),
-    },
-    // Everyone starts a season fresh; condition is match state, not content.
-    condition: { fitness: 100, morale: 75, form: 70 },
-    ...(data.nickname ? { nickname: data.nickname } : {}),
-  };
-}
-
-export function toClub(data: ClubData): Club {
-  return {
-    id: clubId(data.slug),
-    name: data.name,
-    shortName: data.shortName,
-    slug: data.slug,
-    country: data.country,
-    region: data.region,
-    reputation: data.reputation,
-    stadium: data.stadium,
-    squad: data.squad.map((player) => toPlayer(player, data)),
-  };
 }
 
 export interface LoadedLeague {
