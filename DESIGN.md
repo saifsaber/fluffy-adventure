@@ -1,6 +1,6 @@
 # DESIGN.md — Dakka
 
-> **دكة — a manager's notebook under floodlights.** Warm ruled paper where the thinking happens, a
+> **Dakka (دكة) — a manager's notebook under floodlights.** Warm ruled paper where the thinking happens, a
 > dark ground where the match does, and one green so muted it could only be grass. Numbers are set
 > like a team sheet: monospaced, aligned, and every one of them answerable.
 
@@ -23,7 +23,9 @@ the blueprint, the blueprint wins.
    cause. A statistic that cannot be opened is a statistic we should not be showing.
 4. **No tile exists to fill space.** Every element either states a fact that changes or asks for a
    decision.
-5. **Arabic first, and set for reading.** RTL is the native direction, not a mirrored afterthought.
+5. **Two locales, one layout.** `ar-EG` and `en` ship together (ADR-003). Direction comes from the
+   locale at runtime; there is no RTL build and no LTR build. Arabic is set for real reading, not
+   mirrored from a Latin layout.
 
 ---
 
@@ -74,8 +76,9 @@ shape, a deficit also gets a sign. Contrast: 4.5:1 for body, 3:1 for large text 
 
 ## 3. Typography
 
-**One family.** `IBM Plex Sans Arabic` (OFL) for everything, `IBM Plex Mono` for figures and Latin
-technical terms. One family, two roles — no font soup, and Plex Arabic is deliberately not the Cairo
+**One family, both scripts.** `IBM Plex Sans Arabic` (OFL) covers Arabic _and_ Latin — its Latin is
+IBM Plex Sans — so both locales are set in one voice rather than two typefaces pretending to match.
+`IBM Plex Mono` for figures and Latin technical terms. Plex Arabic is also deliberately not the Cairo
 default that every Arabic app already looks like.
 
 ```css
@@ -83,22 +86,25 @@ default that every Arabic app already looks like.
 --font-num: 'IBM Plex Mono', ui-monospace, monospace;
 ```
 
-| Role    | Size | Line height | Weight | Notes                                   |
-| ------- | ---- | ----------- | ------ | --------------------------------------- |
-| display | 34   | 1.25        | 600    | screen titles, the scoreline            |
-| h1      | 26   | 1.35        | 600    |                                         |
-| h2      | 20   | 1.40        | 600    |                                         |
-| body    | 16   | **1.70**    | 400    | Arabic needs the leading; do not reduce |
-| small   | 14   | 1.60        | 400    |                                         |
-| label   | 12   | 1.40        | 600    | `ink-faint`, never uppercase            |
-| stat    | 30   | 1.10        | 500    | `--font-num`, tabular                   |
+| Role    | Size | Line height     | Weight | Notes                                                      |
+| ------- | ---- | --------------- | ------ | ---------------------------------------------------------- |
+| display | 34   | 1.25            | 600    | screen titles, the scoreline                               |
+| h1      | 26   | 1.35            | 600    |                                                            |
+| h2      | 20   | 1.40            | 600    |                                                            |
+| body    | 16   | **1.70 / 1.55** | 400    | Arabic / Latin. Arabic needs the leading; do not reduce it |
+| small   | 14   | 1.60            | 400    |                                                            |
+| label   | 12   | 1.40            | 600    | `ink-faint`, never uppercase                               |
+| stat    | 30   | 1.10            | 500    | `--font-num`, tabular                                      |
 
-**Arabic rules — these are the ones usually got wrong.**
+**Bidirectional rules — these are the ones usually got wrong.**
 
-- **Never `text-transform: uppercase`.** Arabic has no case, so it does nothing to Arabic and mangles
-  mixed strings. Hierarchy comes from size and weight only.
-- **Never `letter-spacing` on Arabic.** It breaks the joins between letters. Latin-only runs may use
-  it; Arabic runs may not.
+- **`dir` comes from the locale**, set once on `<html>`. Never hardcode `rtl`, never build a second
+  layout, never mirror one design into the other.
+- **Never `text-transform: uppercase` on a string that can be Arabic.** Arabic has no case, so it
+  does nothing there and mangles mixed strings. Since almost every string in this product is
+  localised, treat uppercase as banned outright; hierarchy comes from size and weight.
+- **Never `letter-spacing` on Arabic.** It breaks the joins between letters. A Latin-only run — a
+  `--font-num` label that is never localised — may use it; anything localised may not.
 - **Latin inside Arabic must be isolated**, or `4-3-3` and `2-1` reorder on screen:
   ```css
   .tech {
@@ -108,8 +114,8 @@ default that every Arabic app already looks like.
   }
   ```
   Apply to `xG`, `CDM`, `4-3-3`, `PvP`, scorelines, minutes, percentages.
-- **Digits are Latin** (`63`, `2-1`, `78%`), per `dakka-arabic-voice` rule 2. Never Arabic-Indic, never
-  spelled out in words.
+- **Digits are Latin in both locales** (`63`, `2-1`, `78%`), per `dakka-arabic-voice` rule 2. Never
+  Arabic-Indic, never spelled out in words. This is what lets one number component serve both.
 - **`font-variant-numeric: tabular-nums`** on every number that changes or is compared to another.
 
 ---
@@ -149,9 +155,10 @@ its own.
 
 ## 6. Layout
 
-`dir="rtl"` on `<html>`. **Logical properties only** — `margin-inline-start`, `padding-inline-end`,
-`inset-inline`. A single `margin-left` in this codebase is a bug, because it will be on the wrong
-side in the language the product ships in.
+`dir` on `<html>`, from the active locale. **Logical properties only** — `margin-inline-start`,
+`padding-inline-end`, `inset-inline`. A single `margin-left` in this codebase is a bug: it is correct
+in one of the two locales we ship and wrong in the other, and it will be found by a user rather than
+by us. This rule is what makes one layout serve both directions, so it is not negotiable.
 
 Mobile first, 400px baseline, single column. At ≥768px the dashboard may go two columns; nothing else
 needs to.
@@ -193,5 +200,10 @@ accessible name that says what it opens, not "more".
 - **Never a gradient**, except the single floodlight vignette on the matchday canvas.
 - **Never a card that exists to fill the grid.**
 - **Never Arabic-Indic digits, and never a number spelled out in words.**
-- **Never MSA in the interface.** UI copy follows `dakka-arabic-voice` like everything else the player
-  reads.
+- **Never MSA in the interface.** `ar-EG` copy follows `dakka-arabic-voice` like everything else the
+  player reads.
+- **Never a user-facing string outside a locale file** — not a label, not a placeholder, not an
+  error, not an `aria-label`. A test fails on it (ADR-003 §4), because two locales enforced by good
+  intentions become one locale within a month.
+- **Never translate the English from the Arabic.** Same rules, own register: a blunt assistant coach
+  in English, not a rendering of an Egyptian one. A translated debrief reads like a translation.

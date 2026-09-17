@@ -29,8 +29,9 @@ Full reasoning in `docs/01-product/05-global-strategy.md`.
    `packages/engine/src/types`. `Record<CauseTag, CauseMeta>` makes an unregistered cause a build
    error. Translating a locale is then a lookup table, not a rewrite — and the AI layer physically
    cannot narrate a cause the engine did not emit.
-2. **i18n structure exists from day one; one locale ships.** Egyptian Arabic is the only locale for
-   now (ADR-001 #2).
+2. **Two locales ship from the first screen** — `ar-EG` and `en`, neither a translation of the other
+   (ADR-003, superseding ADR-001 #2). One locale lets hardcoded strings hide; you find them on the
+   day you add the second, which is too late. The _content_ stays the Egyptian fourth division.
 3. **Every named entity carries a Latin-script `slug`** alongside its local name (the `Named`
    interface). A share card has to read in any locale.
 4. **A league is data, not code.** Adding a country is a seed file. If supporting a new league would

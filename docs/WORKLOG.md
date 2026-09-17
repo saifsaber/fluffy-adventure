@@ -531,7 +531,10 @@ first built two days ago.
 > away, and the whole point of having the file is that the first screen sets the precedent.
 
 - [ ] Pick tactics → play match → derived stats → the trace → one counterfactual
-- [ ] RTL-native and Egyptian Arabic, on paper surfaces; the live match is the one dark screen
+- [ ] **Both locales from this first screen** (ADR-003) — `ar-EG` and `en`, direction from the
+      locale, one layout. On paper surfaces; the live match is the one dark screen. The locale
+      switcher is part of the thinnest UI, because a second locale nobody can reach is a second
+      locale nobody tests.
 
 ### Weeks 2–6 — how the rest of the MVP is cut up
 
@@ -561,14 +564,16 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
 > through a typed, validated effect schema.
 
 - [ ] **`packages/ai` — the boundary, before any model call.** The typed effect schema, its
-      validator, and the rule that the only match input a prompt may read is `MatchTrace`. Pure, no
-      network, no keys. **Done means:** a test proves an effect the schema rejects cannot reach the
+      validator, the `Locale` union, and the rule that the only match input a prompt may read is
+      `MatchTrace`. Pure, no network, no keys. **Done means:** a test proves an effect the schema rejects cannot reach the
       engine, and a prompt builder cannot be handed a `MatchResult`.
-- [ ] **`CAUSE_REGISTRY` → Egyptian Arabic phrasing table.** `Record<CauseTag, Phrasing>`, so an
-      unregistered cause is a build error and adding a locale is a second table, not a rewrite
-      (global-strategy §3). Load `dakka-arabic-voice` first. **Faking it looks like:** free prose per
-      cause instead of a table, which is a rewrite per locale and lets the model narrate a cause the
-      engine never emitted.
+- [ ] **`CAUSE_REGISTRY` → phrasing table, both locales.**
+      `Record<CauseTag, Record<Locale, Phrasing>>` (ADR-003), so an unregistered cause **or an
+      unlocalised one** is a build error. Load `dakka-arabic-voice` for `ar-EG`; write `en` to the
+      same rules in its own register — blunt assistant coach, football vernacular, no hedging — and
+      **not** as a translation of the Arabic. **Faking it looks like:** free prose per cause instead
+      of a table (a rewrite per locale, and it lets the model narrate a cause the engine never
+      emitted), or running the Arabic through a translator and calling it English.
 - [ ] **The debrief prompt, built from a trace and nothing else.** Golden-file tested: every number
       in the prompt traceable to a trace field, every cause in `CAUSE_REGISTRY`, and a thin trace
       producing a short prompt rather than a padded one (`dakka-engine-rules` §6).
@@ -636,7 +641,8 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
 - [ ] **RTL design system consolidation** — promote what `DESIGN.md` describes into real tokens and
       components. The file is the specification; by Week 5 it should be enforceable rather than
       advisory (tokens in code, a lint rule for physical-direction properties, contrast checked in
-      CI). Touchline, not SaaS — explicitly not the dark-slate-and-neon-emerald dashboard Modareb
+      CI, and the ADR-003 test that fails on any user-facing string outside a locale file).
+      Touchline, not SaaS — explicitly not the dark-slate-and-neon-emerald dashboard Modareb
       already is.
 - [ ] **E2E tests** over the full loop: pick tactics → play → debrief → counterfactual → season end.
 - [ ] **Performance pass** on the client. `pnpm harness:profile` is the pattern: profile before

@@ -118,7 +118,9 @@ None of this is week-1 work. But four things must be *structurally* true from th
 global becomes a rewrite instead of a rollout:
 
 1. **Causes are a closed enum, never generated prose.** (Already an engine invariant.)
-2. **i18n structure from day 1, one locale shipped.** (Already ADR-001 #2.)
+2. **i18n structure from day 1, and two locales shipped** — `ar-EG` and `en` (ADR-003, which
+   supersedes ADR-001 #2; one locale lets hardcoded strings hide). Content stays Egyptian: this is an
+   interface decision, not the §6 expansion move.
 3. **Every club and player carries a Latin-script slug** alongside its local name, so a share card is
    legible in any locale.
 4. **Content is data, not code.** A league is a seed file. Adding Vietnam must never require a code
