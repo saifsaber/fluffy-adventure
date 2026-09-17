@@ -6,3 +6,9 @@ dist
 !.env.example
 .DS_Store
 coverage
+
+# MCP server config. `claude mcp add --scope project` writes the bearer token into this file in
+# plaintext, and this repository is public — so it is ignored rather than trusted to be redacted.
+# Server config belongs in local scope (`/root/.claude.json`), which is where `claude mcp add`
+# puts it by default.
+.mcp.json
