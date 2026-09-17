@@ -561,7 +561,8 @@ first built two days ago.
 > **Read `DESIGN.md` before writing a line of this.** It exists now — palette, type scale, the RTL
 > rules Arabic actually needs, and the never-list. "Thinnest" means the smallest set of screens that
 > proves the engine, **not** unstyled: a screen built without the system is work that gets thrown
-> away, and the whole point of having the file is that the first screen sets the precedent.
+> away, and the whole point of having the file is that the first screen sets the precedent. §2's
+> surface ladder and §4's "what earns a card" are the two that will get broken first.
 
 - [ ] Pick tactics → play match → derived stats → the trace → one counterfactual
 - [ ] **Both locales from this first screen** (ADR-003) — `ar-EG` and `en`, direction from the
@@ -920,7 +921,14 @@ order — they are the same problem understood three times over, and later ones 
 
 ## Blocked
 
-*(nothing yet)*
+- **Refero MCP — connected, but the account has no active plan.** The server is registered and
+  reachable; every tool call comes back `NO_SUBSCRIPTION` with
+  `https://refero.design/mcp/upgrade`. That is a plan-level refusal rather than a rejected key, so
+  the wiring is not the problem. Not blocking: the four style references in `DESIGN.md` §10 were
+  read from the public catalogue instead, which covers visual language. What the plan would add is
+  the part the public site does not have — real product **screens** and **flows**, searchable by
+  pattern. That is worth having before Step 7 onward, where screens stop being a single surface and
+  start being a journey. Needs the account holder.
 
 ---
 
@@ -956,6 +964,28 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-17 (4)** — **Design references studied properly; `DESIGN.md` gained the four rules it
+  was missing.**
+  - Read four systems from `styles.refero.design` in full: Steep, Hyer Aviation, Notion, Column.
+    Most of what they agree on, `DESIGN.md` had already reached independently — no shadows, one
+    accent, hierarchy from surface contrast. That agreement is the useful part of the exercise: it
+    means the file was not guessing.
+  - Four things were genuinely missing, and are now in: **the surface ladder** (§2 — four levels,
+    named, with level 2 an *edge* on night rather than a fill, because a green fill on a dark ground
+    is Modareb's exact surface); **the scale is closed** (§3 — seven roles, no eighth, and no ratio
+    to extrapolate from); **what earns a card** (§4 — a boundary around a target, not a rectangle
+    around unrelated facts); and **a measure cap** (§6 — 640px prose, 960px shell, against the
+    1200–1440px those systems use, because they are marketing pages).
+  - **The finding worth keeping.** All four buy display hierarchy with negative tracking, −0.02em to
+    −0.04em, tightening with size. We cannot: it breaks Arabic joins, and nearly every string here is
+    localised. So size, weight and surface carry the load alone — and that is the actual reason
+    `display` is 34px rather than the 44–90px those systems open with. An agent reading any of those
+    references will reach for tracking first, so §3 now says why it must not.
+  - §10 records where the file's *form* came from, since "every number is answerable" ought to apply
+    to our own design decisions too.
+  - Refero's MCP is connected but the account has no plan — logged under Blocked. Not on the
+    critical path for Step 6; it matters more from Step 7, where the UI becomes a journey.
 
 - **2026-09-17 (3)** — **+MGR shipped. The product has its headline number, and a measured reason not
   to trust one season of it.**

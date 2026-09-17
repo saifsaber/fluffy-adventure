@@ -72,6 +72,21 @@ Signal — earned, never decorative.
 lying about its urgency. Chromatic colour never carries meaning on its own — a card also gets a
 shape, a deficit also gets a sign. Contrast: 4.5:1 for body, 3:1 for large text and UI edges.
 
+**The surface ladder.** These are all the surfaces there are. Depth is a step along this list — never
+a shadow, never a new grey. If a screen seems to need a sixth surface, it needs fewer layers.
+
+| Level | Paper                    | Floodlight                   | What lives there              |
+| ----- | ------------------------ | ---------------------------- | ----------------------------- |
+| 0     | `paper` `#F4F0E8`        | `night` `#0D1210`            | the canvas                    |
+| 1     | `paper-raised` `#FBF8F2` | `night-raised` `#151D18`     | a card, a sheet, a panel      |
+| 2     | `pitch-wash` fill        | `pitch-lit` 2px leading edge | your own side, the active row |
+| 3     | `attention` `#B96C1E`    | `attention` `#B96C1E`        | the one decision card         |
+
+Level 2 is a fill on paper and an **edge** on night, not a fill. A green fill on a dark ground is
+precisely the surface Modareb has, and the resemblance would not be worth what it buys.
+
+Level 3 appears at most once per screen. Two of them and the screen has no priority, only colour.
+
 ---
 
 ## 3. Typography
@@ -95,6 +110,18 @@ default that every Arabic app already looks like.
 | small   | 14   | 1.60            | 400    |                                                            |
 | label   | 12   | 1.40            | 600    | `ink-faint`, never uppercase                               |
 | stat    | 30   | 1.10            | 500    | `--font-num`, tabular                                      |
+
+**The scale is closed.** Seven roles, no eighth. Every reference system studied generates its sizes
+from a ratio and a base; ours is hand-set and deliberately shorter, so there is no rule to
+extrapolate from. If a piece of text fits none of these seven, it is the wrong text, not a missing
+size.
+
+**Where the hierarchy comes from.** Those systems all buy display hierarchy the same way: negative
+tracking, −0.02em to −0.04em, tightening as the size grows. That device is closed to us — it breaks
+the joins between Arabic letters, so it cannot touch a string that gets localised, which is nearly
+every string we have. Size, weight and surface carry the whole load instead. That is also why
+`display` is 34 and not the 44–90px those systems open with: an untracked 90px line of Plex Arabic
+is a wall, not a headline.
 
 **Bidirectional rules — these are the ones usually got wrong.**
 
@@ -128,8 +155,14 @@ to 24 at ≥768px.
 Radius is small on purpose — print, not product. `3px` buttons and inputs, `8px` cards, **`0` on
 table rows and team-sheet rows**. The only pill in the system is the match-minute chip.
 
-**No shadows.** Separation comes from the `rule` hairline and from `paper-raised` against `paper`.
-A drop shadow is the fastest way to look like the dashboard we are not.
+**No shadows.** Separation comes from the `rule` hairline and from a step on the surface ladder. A
+drop shadow is the fastest way to look like the dashboard we are not. One exception: a layer that
+genuinely floats above the screen rather than lying on it — a modal, a bottom sheet — takes
+`0 8px 32px rgba(25, 21, 18, 0.18)`. Nothing else in the product does.
+
+**What earns a card.** A card is a boundary around something that can be opened or acted on as a
+unit. Unrelated facts sharing an edge are not a card, they are a rectangle. Prefer a hairline and a
+heading; reach for level 1 when the thing inside is a target.
 
 ---
 
@@ -161,7 +194,9 @@ in one of the two locales we ship and wrong in the other, and it will be found b
 by us. This rule is what makes one layout serve both directions, so it is not negotiable.
 
 Mobile first, 400px baseline, single column. At ≥768px the dashboard may go two columns; nothing else
-needs to.
+needs to. **Measure caps at 640px for prose and 960px for the shell.** The reference systems run to
+1200–1440px, but those are marketing pages; a line of Arabic that long loses the reader between the
+end of one line and the start of the next.
 
 The dashboard answers five questions, in this order (blueprint §6): what needs my decision today ·
 what changed since I last played · am I on track against the board · what is my biggest risk · what
@@ -207,3 +242,24 @@ accessible name that says what it opens, not "more".
   intentions become one locale within a month.
 - **Never translate the English from the Arabic.** Same rules, own register: a blunt assistant coach
   in English, not a rendering of an Egyptian one. A translated debrief reads like a translation.
+
+---
+
+## 10. Where this came from
+
+The claim this product makes about its numbers ought to hold for its own design decisions, so: the
+palette, the print-weight radii and the two-mode structure are ours, out of
+`docs/01-product/03-technical-blueprint.md` §6. The _form_ of this file — a descriptor in one line,
+then concrete values instead of mood words, then a list of nevers — is taken from
+`styles.refero.design`, which catalogues design systems written for coding agents to build from.
+
+Four were read closely: **Steep** (_serif analytics on warm paper_), **Hyer Aviation** (_cockpit
+twilight over parchment_), **Notion** (_a well-loved paper notebook under afternoon light_) and
+**Column** (_deep navy ledger under cool dawn_). Four independent systems converging is worth more
+than any one of them, and they converge on three things, all now rules above: one accent, used at
+most once per page; hierarchy from surface contrast rather than decoration; and no shadow on a
+content card — Steep, Hyer and Notion forbid it outright, while Column, which does use a shadow
+stack, confines it to marketing cards and forbids two on a page. The exception describes the shape of
+the rule.
+
+They converge on a fourth device too, and that one we cannot have, which is what §3 is about.
