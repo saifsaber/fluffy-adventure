@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dakka/ai": "workspace:*",
     "@dakka/content": "workspace:*",
     "@dakka/engine": "workspace:*",
     "react": "^19.0.0",

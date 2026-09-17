@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { ALL_CAUSES, CAUSE_REGISTRY } from '@dakka/engine';
+import { LOCALES as AI_LOCALES } from '@dakka/ai';
 import {
   CAUSE_LABEL,
   DICTIONARIES,
@@ -23,6 +24,13 @@ describe('both locales, from the first screen', () => {
     expect(LOCALES).toEqual(['ar-EG', 'en']);
     expect(isLocale('ar-EG')).toBe(true);
     expect(isLocale('fr')).toBe(false);
+  });
+
+  it('uses the one union, not a copy of it', () => {
+    // ADR-003's guarantees are all `Record<Locale, …>` exhaustiveness checks, so a second copy of
+    // the union would make them checks against a different list — agreeing right up until someone
+    // added a language to one of them.
+    expect(LOCALES).toBe(AI_LOCALES);
   });
 
   it('reads direction from the locale, not from a build', () => {

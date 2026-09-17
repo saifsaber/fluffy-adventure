@@ -1,22 +1,9 @@
 /**
- * The two locales, closed (ADR-003).
+ * The locale union, re-exported from the package that owns it.
  *
- * `ar-EG` and `en` ship together from the first screen, and neither is a translation of the other.
- * The union is closed so that every table keyed by locale — cause labels, dictionaries, anything
- * added later — fails the build rather than silently missing a language.
+ * Deliberately not declared here. ADR-003's guarantees are all `Record<Locale, …>` exhaustiveness
+ * checks, and a second copy of the union would make them checks against a different list — the two
+ * would agree right up until someone added a language to one of them. `@dakka/ai` owns it because
+ * that is the layer that writes the language.
  */
-export const LOCALES = ['ar-EG', 'en'] as const;
-
-export type Locale = (typeof LOCALES)[number];
-
-export const DEFAULT_LOCALE: Locale = 'ar-EG';
-
-/** Direction is a property of the locale, read at runtime. There is no RTL build and no LTR build. */
-export const DIRECTION: Record<Locale, 'rtl' | 'ltr'> = {
-  'ar-EG': 'rtl',
-  en: 'ltr',
-};
-
-export function isLocale(value: unknown): value is Locale {
-  return typeof value === 'string' && (LOCALES as readonly string[]).includes(value);
-}
+export { DEFAULT_LOCALE, DIRECTION, LOCALES, isLocale, type Locale } from '@dakka/ai';

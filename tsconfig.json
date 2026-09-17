@@ -8,6 +8,9 @@
       "path": "./packages/content"
     },
     {
+      "path": "./packages/ai"
+    },
+    {
       "path": "./packages/harness"
     },
     {

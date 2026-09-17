@@ -10,5 +10,15 @@
     "types": ["vite/client"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "test/**/*.ts", "test/**/*.tsx", "vite.config.ts"],
-  "references": [{ "path": "../../packages/engine" }, { "path": "../../packages/content" }]
+  "references": [
+    {
+      "path": "../../packages/engine"
+    },
+    {
+      "path": "../../packages/content"
+    },
+    {
+      "path": "../../packages/ai"
+    }
+  ]
 }

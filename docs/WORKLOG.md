@@ -572,10 +572,11 @@ first built two days ago.
       locale, one layout, switcher on the header. `Messages` is one contract both dictionaries
       implement, cause names are `Record<CauseTag, Record<Locale, string>>`, and the §4 guard walks
       the TypeScript AST rather than pattern-matching JSX.
-- [ ] **Not in this box, and the screen says so out loud:** the eleven picks itself
-      (`baselineTactics`), the opponent is the neutral baseline with no decisions, and there is no
-      live matchday — so DESIGN.md's floodlight surface is defined and unused. Named here rather
-      than left to read as finished features.
+> **Not in this box, and the screen says so out loud:** the eleven picks itself
+> (`baselineTactics`), the opponent is the neutral baseline with no decisions, and there is no live
+> matchday — so DESIGN.md's floodlight surface is defined and unused. A note, deliberately not a
+> checkbox: an autonomous run takes the first unchecked box as its work, and this is scope that was
+> decided, not scope that is waiting.
 
 ### Weeks 2–6 — how the rest of the MVP is cut up
 
@@ -604,10 +605,13 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
 > explains, converses and generates. Code decides.** No model output becomes a game number except
 > through a typed, validated effect schema.
 
-- [ ] **`packages/ai` — the boundary, before any model call.** The typed effect schema, its
-      validator, the `Locale` union, and the rule that the only match input a prompt may read is
-      `MatchTrace`. Pure, no network, no keys. **Done means:** a test proves an effect the schema rejects cannot reach the
-      engine, and a prompt builder cannot be handed a `MatchResult`.
+- [x] **`packages/ai` — the boundary, before any model call.** Typed effect schema and validator,
+      the `Locale` union (now single-sourced — the UI re-exports it), and `MatchEvidence`, which is
+      built from a `MatchTrace` and refuses a `MatchResult`. Pure: a guard fails on `fetch`, on
+      `process.env`, on anything that looks like a key or an endpoint. **Both "done means" clauses
+      are compile-time**, so both are tested by compiling the forbidden snippet and asserting the
+      compiler refused — `applyEffects` takes a branded batch no literal can produce, and
+      `evidenceFromTrace(result, …)` does not typecheck.
 - [ ] **`CAUSE_REGISTRY` → phrasing table, both locales.**
       `Record<CauseTag, Record<Locale, Phrasing>>` (ADR-003), so an unregistered cause **or an
       unlocalised one** is a build error. Load `dakka-arabic-voice` for `ar-EG`; write `en` to the
@@ -980,6 +984,41 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-17 (7)** — **The AI boundary exists, and the schema has nowhere to write a number.**
+  - **The design decision this box turned on.** The blueprint's split puts morale, form, board
+    confidence and sack risk in the *deterministic* column and conversation in the model's — so an
+    effect schema with a `delta: number` field would hand the model the one thing the split says is
+    code's. So **effects carry no magnitude at all.** An effect names what was said — backed him,
+    criticised him, said nothing — and `MORALE_FOR` in `effects.ts`, which nothing outside the
+    package can reach, decides what that is worth. A model that wants to award +50 morale has no
+    field to write the 50 in. That is a stricter reading of blueprint §2 than "validate the number",
+    and it is the one the table in §2 actually implies.
+  - `MORALE_FOR`'s values are **chosen, not derived** — design constants like the engine's, with
+    nothing measuring them yet. Criticism costs more than praise earns; that is a decision recorded
+    as a decision, and it gets fitted once there is a season loop to fit it against.
+  - **Both guarantees are compile-time, so both are tested by compiling.** `test/compile.ts` writes
+    a snippet, runs it through the TypeScript API and asserts the diagnostics. A runtime test would
+    have passed whether or not the guarantee held, and a comment saying "the types prevent this" is
+    a claim nobody checks. The door is tested alongside the wall: one case asserts the *parser's*
+    output still compiles, or a signature that rejected everything would pass the refusals.
+  - `Locale` now has one definition. `apps/web/src/i18n/locale.ts` re-exports `@dakka/ai`'s rather
+    than declaring its own, and a test asserts they are the same array — every ADR-003 guarantee is
+    a `Record<Locale, …>` exhaustiveness check, and two copies would be checks against two lists.
+  - **Two sabotage misses, both mine, both worth the time.** Removing `.strict()` from the effect
+    schema changed nothing, because `playerTarget` was strict *and* every member re-applied it —
+    two independent sources of one guarantee, so deleting either was a no-op. Strictness is single
+    -sourced now. And the structural "no numeric field" test could not see a member that accepts
+    junk, because it only inspects output from valid input; there is now a test that feeds junk to
+    all five kinds and a clean value to all five. 8 of 8 probes bite.
+  - `MatchEvidence` re-signs every swing to the manager being spoken to before the model sees it.
+    The engine signs `deltaWinProbability` for the home side; a model that forgets to flip it for an
+    away manager writes a debrief that is fluent, specific and exactly backwards.
+  - 392 tests across 27 files. Harness unchanged at 45 seasons, all seven met.
+  - **Next box: `CAUSE_REGISTRY` → phrasing table, both locales.** Note the boundary with what
+    already exists: `apps/web/src/i18n/causes.ts` holds the short *name* of each cause, which is all
+    the trace screen needs. This box is the *sentence* — the phrasing the model narrates with — and
+    it belongs in `packages/ai`. Do not duplicate the names; move them if that reads better.
 
 - **2026-09-17 (6)** — **Ran the app in a browser and it was showing the score to the wrong club.**
   - Three bidi bugs, all the same species, and none of them reachable by a test or a typecheck:
