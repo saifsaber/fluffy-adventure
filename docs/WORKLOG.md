@@ -25,7 +25,7 @@ unchecked item, and updates this file. Nothing else carries state between runs.
 ## Loop health — read this if the branch has gone quiet
 
 One routine drives this loop, `trig_01MiGgaizGR9rP72iPdkRo7e`, firing into a persistent session every
-six hours (`21 */6 * * *`). `.github/workflows/heartbeat.yml` watches it from outside and fails the
+**three** hours (`21 */3 * * *`). `.github/workflows/heartbeat.yml` watches it from outside and fails the
 job — which emails the owner — if the branch is stale ≥26h while boxes remain.
 
 ### What actually stopped it, 2026-09-08 → 2026-09-12
@@ -61,6 +61,26 @@ at 15:21 for seven minutes and **pushed nothing**, because a routine created thr
 repository attached — `sources` and `outcomes` are both empty — so the session can clone this public
 repo but has no credentials to push back. The routine could not do the one thing a build loop exists
 to do, and every fire spent weekly allowance to achieve nothing, so it was deleted.
+
+### The cadence, and when to back it off — 2026-09-17
+
+Raised from six hours to three (4 ticks a day → 8) because the owner said they would stop using
+their allowance elsewhere for the rest of the month and put it all here. That is the only reason it
+is safe: the binding constraint has always been the **weekly** allowance, not the schedule.
+
+**What doubling buys, honestly.** More attempts, not better ones. The hard engine boxes are hard
+because they are multi-constant re-fits, and a second attempt three hours later is the same attempt.
+Where it pays is the twenty-six boxes of Steps 7–12, which are mostly ordinary build work and are
+genuinely rate-limited by tick count.
+
+**What it costs.** This session's context grows with every tick, and that context is the largest cost
+per tick — so eight ticks a day is more than twice the burn of four, not exactly twice.
+
+**The back-off rule.** If the branch goes quiet for more than a day while boxes remain, the weekly
+window has almost certainly been exhausted; the heartbeat will say so. **Do not add runners** — that
+was tried and doubled the burn on the very budget that was the limit. Put the cron back to
+`21 */6 * * *`, note the date here, and let the window reset. A loop that runs slowly all month beats
+one that sprints for three days and stalls for four, which is exactly what happened 8–12 Sep.
 
 ### What this means for how the loop is run
 
