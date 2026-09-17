@@ -521,7 +521,40 @@ first built two days ago.
       **`deep` is still the best answer to nothing.** That is the honest remaining state of this
       dial, and `COUNTER_DEPTH` above is the most promising route to it.
 
-- [ ] **+MGR** — season re-simulated under a neutral baseline manager; the points difference is the player's contribution (global-strategy §4)
+- [x] **+MGR — how many points your decisions were worth.** `packages/engine/src/mgr.ts`. Replay the
+      same fixtures, same seeds and same squad with a manager who makes no decisions, and subtract.
+      This is the number global-strategy §4 wants the product known for, and it exists only because
+      the engine is deterministic: a random engine makes the baseline noise rather than a control.
+
+      **The baseline is specified, not improvised.** A flat 4-4-2 — deliberately not the 4-3-3 most
+      managers reach for, so it never coincides with a player's choice by accident — every tactical
+      dial neutral, no in-match decisions, and an XI chosen by the best available natural for each
+      slot. "Best" is `bandCompetence`, the engine's **own** reading of a player: inventing a second
+      rating here would mean the baseline was judged by a standard the match never uses, and the gap
+      between the two would end up inside +MGR.
+
+      **What it reads on the real league** — 38 fixtures, manager = the club's own `tacticsFor`
+      identity:
+
+      | club | +MGR | managed | baseline | per match ± 2se | called? |
+      |---|---|---|---|---|---|
+      | matoubas-sporting | **+11** | 41 | 30 | +0.289 ± 0.538 | no |
+      | abu-kabir-sporting | **−11** | 63 | 74 | −0.289 ± 0.612 | no |
+      | maghagha-cement | +3 | 70 | 67 | +0.079 ± 0.561 | no |
+      | naga-hammadi-sugar | +1 | 63 | 62 | +0.026 ± 0.577 | no |
+      | borg-elarab-industrial | **−23** | 45 | 68 | −0.605 ± 0.515 | **YES** |
+
+      **⚠️ Read that table before putting +MGR on a screen.** A season resolves roughly **±20 points**
+      — so `−23` is a real finding and `+11` is a coin. `PlusMgr.skill` carries the per-match spread
+      and says which it is, and a caller that shows `points` without reading it is publishing luck as
+      achievement. To call ±5 points takes about **17 seasons** of fixtures on this spread. The
+      season figure is still exact and worth showing — it is a true fact about that season — it is
+      the *skill* claim that needs the repetition.
+
+      Verified by sabotage, including the one that nearly got through: keeping the player's in-match
+      decisions in the baseline passed all fourteen tests, because every fixture had
+      `decisions: []` and asserting they were stripped was asserting nothing. The fixtures now carry
+      real decisions and a test proves +MGR prices them, not just the team sheet.
 
 ### Step 6 — thinnest UI
 
@@ -923,6 +956,30 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-17 (3)** — **+MGR shipped. The product has its headline number, and a measured reason not
+  to trust one season of it.**
+  - `mgr.ts`: replay the same fixtures, seeds and squad with a manager who makes no decisions, and
+    subtract. Baseline is a flat 4-4-2, every dial neutral, no in-match changes, XI by the engine's
+    own `bandCompetence` — no second rating invented, because the gap between two ratings would end
+    up inside the number. 312 tests green, gate unchanged.
+  - **The measurement that matters more than the feature.** On the real league a season resolves to
+    about **±20 points**: `borg-elarab-industrial` at **−23** is called, `matoubas-sporting` at
+    **+11** is not. So `PlusMgr.skill` carries the per-match standard error and a `significant` flag,
+    and the box above says plainly that showing `points` without it is publishing luck as
+    achievement. Calling ±5 points needs roughly 17 seasons.
+  - **Sixth guard-that-guarded-nothing, and it was the important one.** Sabotaging the baseline to
+    keep the player's in-match decisions passed all fourteen tests — every fixture had
+    `decisions: []`, so asserting they were stripped asserted nothing at all. +MGR would have priced
+    the team sheet and silently ignored everything the manager did after kick-off, which is most of
+    what the product claims to measure. The fixtures now carry real decisions and a test proves they
+    move the number. **Same lesson each time: if the test passes while the mechanism is off, the test
+    is the bug.**
+  - `makeTactics` in the fixtures now fields the first eleven and benches the rest instead of
+    demanding a squad of exactly eleven, which had quietly made selection untestable.
+  - **Next box is the thin UI** — and it is the first product surface. `DESIGN.md` and the three
+    rules at the head of the Weeks 2–6 section before writing a line, and two locales from that first
+    screen (ADR-003).
 
 - **2026-09-17 (2)** — **Crossing, second attempt. Solved the distribution problem that blocked it;
   two blockers left, both measured. Still not shipped.**

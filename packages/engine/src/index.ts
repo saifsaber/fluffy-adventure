@@ -53,6 +53,14 @@ export {
   type MinuteState,
 } from './chain.js';
 export {
+  baselineTactics,
+  neutralise,
+  plusMgr,
+  type ManagedMatch,
+  type PlusMgr,
+  type SeasonPoints,
+} from './mgr.js';
+export {
   CONFIDENCE_SIGMA,
   counterfactual,
   pairedDifference,

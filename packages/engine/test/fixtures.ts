@@ -127,8 +127,14 @@ export function makeClub(slug: string, overall: number): Club {
   };
 }
 
+/**
+ * The first eleven into a 4-3-3, everyone else on the bench.
+ *
+ * It used to demand a squad of exactly eleven, which quietly ruled out testing anything about
+ * *selection* — a manager with no reserves has no team sheet to get right.
+ */
 export function makeTactics(club: Club): Tactics {
-  const startingXI = club.squad.map((player, index) => {
+  const startingXI = club.squad.slice(0, SHAPE_433.length).map((player, index) => {
     const shape = SHAPE_433[index];
     /* c8 ignore next */
     if (shape === undefined) throw new Error('squad and shape lengths must match');
@@ -141,7 +147,7 @@ export function makeTactics(club: Club): Tactics {
   return {
     formation: '4-3-3',
     startingXI,
-    bench: [],
+    bench: club.squad.slice(SHAPE_433.length).map((player) => player.id),
     captain: keeper.id,
     mentality: 'balanced',
     lineHeight: 'normal',
