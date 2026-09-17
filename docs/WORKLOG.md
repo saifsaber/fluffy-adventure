@@ -524,8 +524,14 @@ first built two days ago.
 - [ ] **+MGR** — season re-simulated under a neutral baseline manager; the points difference is the player's contribution (global-strategy §4)
 
 ### Step 6 — thinnest UI
+
+> **Read `DESIGN.md` before writing a line of this.** It exists now — palette, type scale, the RTL
+> rules Arabic actually needs, and the never-list. "Thinnest" means the smallest set of screens that
+> proves the engine, **not** unstyled: a screen built without the system is work that gets thrown
+> away, and the whole point of having the file is that the first screen sets the precedent.
+
 - [ ] Pick tactics → play match → derived stats → the trace → one counterfactual
-- [ ] RTL-native, Arabic, no design system yet — this screen exists to prove the engine
+- [ ] RTL-native and Egyptian Arabic, on paper surfaces; the live match is the one dark screen
 
 ### Weeks 2–6 — how the rest of the MVP is cut up
 
@@ -627,8 +633,11 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
 
 ### Step 11 — polish (Week 5)
 
-- [ ] **RTL design system consolidation** — touchline, not SaaS (blueprint §6). Explicitly not the
-      dark-slate-and-neon-emerald dashboard Modareb already is.
+- [ ] **RTL design system consolidation** — promote what `DESIGN.md` describes into real tokens and
+      components. The file is the specification; by Week 5 it should be enforceable rather than
+      advisory (tokens in code, a lint rule for physical-direction properties, contrast checked in
+      CI). Touchline, not SaaS — explicitly not the dark-slate-and-neon-emerald dashboard Modareb
+      already is.
 - [ ] **E2E tests** over the full loop: pick tactics → play → debrief → counterfactual → season end.
 - [ ] **Performance pass** on the client. `pnpm harness:profile` is the pattern: profile before
       touching anything, and measure paired.

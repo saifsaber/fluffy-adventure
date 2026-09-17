@@ -39,6 +39,7 @@ Full reasoning in `docs/01-product/05-global-strategy.md`.
 ## Layout
 
 ```
+DESIGN.md           the visual system — load before writing any UI, no exceptions
 packages/engine     pure TS simulation — no I/O, seeded, runs on client and server
 apps/web            React 19 + Vite + Tailwind, RTL-native
 apps/api            Fastify service; auth and persistence via Supabase
@@ -46,6 +47,14 @@ docs/               source of truth — research, blueprint, ADRs
 .claude/agents/     the seven agents and their boundaries
 .claude/skills/     dakka-engine-rules · dakka-arabic-voice
 ```
+
+## Before you write UI
+
+Read `DESIGN.md` first and bound the task to one screen or one component family. It carries the
+palette, the type scale, the RTL rules Arabic actually needs, and a list of things never to build —
+including the two that matter most here: **never show a number whose cause cannot be reached**, and
+**never a skeleton loader shaped like content**, which is a fabricated statistic wearing a different
+costume.
 
 ## Before you finish
 
