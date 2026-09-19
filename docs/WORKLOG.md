@@ -627,9 +627,15 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
       `pnpm --filter @dakka/ai golden`, so a reviewer can read exactly what a model would be handed.
       A repeated cause collapses into its `many` form with its minutes beside it. A thin trace asks
       for fewer paragraphs; an empty one asks for a sentence or two and says the match was quiet.
-- [ ] **⚠️ The debrief itself, server-side.** Needs Step 8's API — do this after it, or stub the
-      transport and say so. **Faking it looks like:** calling the model from the client with a key in
-      the bundle, or letting the debrief mention a statistic the trace does not contain.
+- [x] **⚠️ The debrief itself — everything except the transport, which is stubbed and said so.**
+      `packages/ai/src/debrief.ts`. `DebriefTransport` is a seam, not an implementation: nothing here
+      opens a socket or reads a key, and the purity guard fails the build on either. Step 8 supplies
+      the real one. **The part that needed no API is the part that mattered** — a prompt made only of
+      trace facts does not guarantee a *reply* made only of trace facts, so `checkDebrief` refuses a
+      number the trace never produced, a statistic it does not carry, a cause that did not happen,
+      and a reply longer than the evidence supports. A reply that fails is not shown at all: the
+      trace is honest on its own, and a missing paragraph costs less than a fabricated one.
+      **Still open for Step 8:** the HTTP transport and where the key lives.
 - [ ] **Opponent briefing from scouting data**, same discipline: the model sees a derived scouting
       record, never the opponent's hidden attributes.
 - [ ] **⚠️ Dialect eval set and its scorer.** A held-out set of real Egyptian coach language, and a
@@ -1031,6 +1037,32 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-19 (11)** — **The debrief's return trip. The prompt was only half the problem.**
+  - `debrief.ts`: the transport is a typed seam and nothing more — Step 8 plugs in the real one. What
+    is built and tested is everything around it, and that is where the risk actually was. A prompt
+    containing only trace facts does not produce a reply containing only trace facts; a model adds a
+    plausible minute, or mentions possession because debriefs usually do. That is the competitor's
+    failure arriving through the back door in better prose.
+  - `checkDebrief` refuses four things: a number that is not a minute or a count the trace produced;
+    a statistic the trace never carries (possession, xG, passing — with or without a number on it);
+    a cause that did not happen in this match; and a reply longer than the evidence supports. It is
+    pure and synchronous, so a stored debrief can be re-checked after a prompt or model change.
+  - **A failed check shows nothing.** The trace is already honest on its own, so the screen's answer
+    to a bad reply is the same as its answer to a dead network: show the moments, say the debrief is
+    not available, do not guess. A transport failure is an outcome, never an exception.
+  - **`UNCARRIED` is deliberately short.** `shots` and `corners` are left off it: "dangerous from
+    corners" is a fair reading of a `SET_PIECE_ADVANTAGE` moment, and any count attached to one is
+    caught by the number rule instead. A guard with false positives gets switched off.
+  - **The guard caught a fabrication in its own test.** My "known-good" reply said the goal came at
+    61 — copied from a mock-up rather than from the fixture, where it is at 81 — and `checkDebrief`
+    refused it. Recorded in the test rather than quietly corrected.
+  - `debriefCacheKey` includes `ENGINE_VERSION`, because a rebalanced engine makes a different trace
+    from the same seed and last week's debrief would describe a match that no longer happens.
+  - 437 tests across 31 files. 6 of 6 sabotage probes bite.
+  - **Next box: the opponent briefing** — same discipline, and it needs no API either: the model sees
+    a derived scouting record, never the opponent's hidden attributes. UI boxes stay blocked until
+    the owner picks a direction from `docs/design/boards/`.
 
 - **2026-09-19 (10)** — **Three art-direction boards, because the first UI was not a football game.**
   - The owner sent `DESIGN_DIRECTION_G6_1` from another project of his. Its diagnosis matches what

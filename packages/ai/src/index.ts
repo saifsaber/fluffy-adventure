@@ -27,6 +27,9 @@ export type {
 export { PHRASINGS, causeLabel, isControllable } from './phrasing.js';
 export type { Phrasing } from './phrasing.js';
 
+export { checkDebrief, debriefCacheKey, requestDebrief } from './debrief.js';
+export type { DebriefOutcome, DebriefTransport } from './debrief.js';
+
 export { debriefPrompt, numbersInText, paragraphsFor } from './prompt.js';
 export type { ActorNames, DebriefPrompt } from './prompt.js';
 
