@@ -1,0 +1,124 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>B — Floodlight split</title>
+<style>
+:root{
+  --paper:#F4F0E8; --raised:#FBF8F2; --rule:#DCD3C1; --ink:#191512; --ink-soft:#574F45; --faint:#8A8175;
+  --night:#0D1210; --night-2:#151D18; --night-rule:#24302A; --lit:#F2EFE6; --lit-soft:#A8AFA6;
+  --pitch:#2F6B43; --pitch-lit:#4E9A63; --wash:#E3EBE2; --attn:#B96C1E; --danger:#9E2F26;
+  --ui:'IBM Plex Sans Arabic',system-ui,sans-serif; --num:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#2B2620;font-family:var(--ui);display:flex;gap:26px;padding:26px;align-items:flex-start}
+.frame{width:390px;height:844px;overflow:hidden;position:relative;border-radius:22px}
+.cap{font:600 13px var(--ui);color:#C7BCA8;padding-bottom:9px}
+.num,.dl,.mn,.g,.clk{font-family:var(--num);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+/* ===================== TACTICS — paper. The pitch is a plan drawn on the notebook. ===================== */
+.paper{background:var(--paper);color:var(--ink);height:100%}
+.phead{display:flex;align-items:baseline;gap:9px;padding:16px 18px 10px;border-bottom:1px solid var(--rule)}
+.phead h1{font:600 26px var(--ui)}
+.phead .s{font:500 12px var(--ui);color:var(--faint);flex:1}
+.plan{position:relative;height:430px;margin:12px 14px;background:var(--raised);border:1px solid var(--rule);border-radius:8px}
+.plan .grid{position:absolute;inset:0;opacity:.5}
+.shirt{position:absolute;transform:translate(50%,-50%);text-align:center;z-index:3}
+.disc{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:700 12px var(--num);
+  background:var(--wash);border:1.5px solid var(--pitch);color:var(--pitch)}
+.disc.gk{background:#F7E9D6;border-color:var(--attn);color:var(--attn)}
+.nmt{font:600 9.5px var(--ui);margin-top:2px;color:var(--ink-soft)}
+.ghost{position:absolute;width:13px;height:13px;border-radius:50%;transform:translate(50%,-50%);
+  border:1px dashed var(--danger);background:rgba(158,47,38,.07);z-index:2}
+.note{position:absolute;z-index:4;font:600 10px var(--ui);color:var(--danger);
+  background:var(--raised);border:1px solid var(--danger);border-radius:4px;padding:2px 6px}
+.dials{padding:0 18px}
+.dial{margin-bottom:10px}
+.lab{font:600 10px var(--ui);color:var(--faint);margin-bottom:4px}
+.seg{display:flex;gap:6px}
+.seg button{flex:1;font:600 12px var(--ui);color:var(--ink-soft);background:transparent;
+  border:1px solid var(--rule);border-radius:3px;padding:9px 0;cursor:pointer;min-height:40px}
+.seg button[aria-pressed=true]{border-color:var(--ink);background:var(--wash);color:var(--ink);font-weight:700}
+.kick{position:absolute;bottom:0;left:0;right:0;padding:12px 18px 18px;background:var(--paper)}
+.kick button{width:100%;font:700 15px var(--ui);color:var(--paper);background:var(--ink);
+  border:0;border-radius:3px;padding:15px;cursor:pointer}
+/* ===================== MATCHDAY — night. The one dark screen, and it is the match. ===================== */
+.night{background:var(--night);color:var(--lit);height:100%;position:relative}
+.nhead{padding:14px 16px 12px;border-bottom:1px solid var(--night-rule);
+  background:radial-gradient(120% 90% at 50% -20%,rgba(78,154,99,.22),transparent 65%)}
+.sc{display:flex;align-items:center;gap:12px}
+.sc .side{flex:1;display:flex;align-items:center;gap:9px}
+.sc .side.b{flex-direction:row-reverse}
+.bar{width:4px;height:26px;border-radius:2px}
+.sc .nm{font:600 15px var(--ui)}
+.g{font:700 32px var(--num);line-height:1}
+.clk{display:block;text-align:center;font:600 12px var(--num);color:var(--pitch-lit);margin-top:7px;letter-spacing:.5px}
+.mo{margin-top:11px}
+.mo .track{height:6px;background:var(--night-rule);border-radius:3px;overflow:hidden}
+.mo .fill{height:100%;background:var(--pitch-lit)}
+.mo .r{display:flex;justify-content:space-between;font:600 9px var(--ui);color:var(--lit-soft);margin-top:5px}
+.lit{position:relative;height:300px;background:#123123;overflow:hidden}
+.lit::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(70% 45% at 50% -8%,rgba(200,255,220,.3),transparent 60%),
+             radial-gradient(70% 45% at 50% 108%,rgba(200,255,220,.14),transparent 60%)}
+.lit .disc{background:var(--pitch-lit);border-color:#BEEFCE;color:#07160D}
+.lit .disc.gk{background:var(--attn);border-color:#F0C48A;color:#1C1003}
+.lit .nmt{color:#DCEFE2;text-shadow:0 1px 3px #000}
+.feed{padding:8px 16px}
+.ev{display:flex;gap:10px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--night-rule)}
+.ev:last-child{border:0}
+.mn{font:600 11px var(--num);color:var(--lit-soft);border:1px solid var(--night-rule);
+  border-radius:99px;padding:2px 7px;min-width:36px;text-align:center}
+.tx{flex:1;font:500 13px var(--ui)}
+.dl{font:600 11px var(--num)}
+.up{color:var(--pitch-lit)}.down{color:#D2685C}
+.ev.goal .tx{font-weight:700;font-size:14px}
+.ev.goal .mn{background:var(--pitch-lit);color:#07160D;border-color:var(--pitch-lit)}
+.call{position:absolute;bottom:0;left:0;right:0;background:var(--night-2);border-top:1px solid var(--night-rule);padding:12px 16px 18px}
+.call .h{font:600 10px var(--ui);color:var(--attn);margin-bottom:8px}
+.call .seg button{color:var(--lit-soft);border-color:var(--night-rule);background:transparent}
+.call .seg button[aria-pressed=true]{background:var(--attn);border-color:var(--attn);color:#1C1003}
+</style></head><body>
+
+<div><div class="cap">B · التكتيك — ورق تقرر عليه</div><div class="frame"><div class="paper">
+  <div class="phead"><h1>مطوبس</h1><div class="s">الجولة 14 · ضد أشمون · على أرضك</div><div class="num" style="font:600 12px var(--num);color:var(--faint)">4-4-2</div></div>
+  <div class="plan" id="p1"></div>
+  <div class="dials">
+    <div class="dial"><div class="lab">الأسلوب</div><div class="seg"><button>دفاعي</button><button aria-pressed="true">متوازن</button><button>هجومي</button></div></div>
+    <div class="dial"><div class="lab">الخط الدفاعي</div><div class="seg"><button>واطي</button><button>عادي</button><button aria-pressed="true">عالي</button></div></div>
+  </div>
+  <div class="kick"><button>إلعب الماتش</button></div>
+</div></div></div>
+
+<div><div class="cap">B · الماتش — كشافات تتفرج تحتها</div><div class="frame"><div class="night">
+  <div class="nhead">
+    <div class="sc">
+      <div class="side"><span class="bar" style="background:#4E9A63"></span><span class="nm">مطوبس</span><span class="g">1</span></div>
+      <div class="side b"><span class="bar" style="background:#9E2F26"></span><span class="nm">أشمون</span><span class="g">0</span></div>
+    </div>
+    <span class="clk">67'</span>
+    <div class="mo"><div class="track"><div class="fill" style="width:63%"></div></div>
+      <div class="r"><span>الضغط معاك</span><span class="num">63%</span></div></div>
+  </div>
+  <div class="lit" id="p2"></div>
+  <div class="feed">
+    <div class="ev goal"><span class="mn">61'</span><span class="tx">رزق — جول</span><span class="dl up">+0.42</span></div>
+    <div class="ev"><span class="mn">57'</span><span class="tx">الجول شال الفريق</span><span class="dl down">-0.02</span></div>
+    <div class="ev"><span class="mn">31'</span><span class="tx">الخط العالي اتاكل سرعة</span><span class="dl down">-0.13</span></div>
+  </div>
+  <div class="call"><div class="h">قرار جوه الماتش</div>
+    <div class="seg"><button>الخط</button><button aria-pressed="true">الأسلوب</button><button>الضغط</button><button>تبديل</button></div></div>
+</div></div></div>
+
+<script src="_pitch.js"></script><script>
+// Paper plan: the pitch as ink on the notebook, not a photograph of grass.
+const g=document.getElementById('p1');
+g.insertAdjacentHTML('afterbegin',`<div class="grid">${pitchSvg('#B9AE97','#FBF8F2',{w:.5,o:1})}</div>`);
+THEM.forEach(t=>{const d=document.createElement('div');d.className='ghost';d.style.right=t.x+'%';d.style.top=t.y+'%';g.appendChild(d)});
+const nt=document.createElement('div');nt.className='note';nt.style.right='8%';nt.style.top='10%';nt.textContent='سرعتهم على الجنب ده';g.appendChild(nt);
+XI.forEach(p=>{const s=document.createElement('div');s.className='shirt';s.style.right=p.x+'%';s.style.top=p.y+'%';
+  s.innerHTML=`<div class="disc ${p.pos==='GK'?'gk':''}">${p.n}</div><div class="nmt">${p.name}</div>`;g.appendChild(s)});
+
+// Night pitch: same geometry, lit.
+const n=document.getElementById('p2');
+n.insertAdjacentHTML('afterbegin',pitchSvg('rgba(225,255,236,.6)','#123123',{stripes:true,w:.45,o:.65}));
+XI.forEach(p=>{const s=document.createElement('div');s.className='shirt';s.style.right=p.x+'%';s.style.top=p.y+'%';
+  s.innerHTML=`<div class="disc ${p.pos==='GK'?'gk':''}">${p.n}</div><div class="nmt">${p.name}</div>`;n.appendChild(s)});
+</script></body></html>

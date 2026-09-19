@@ -1,0 +1,128 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>A — Stadium Control Room</title>
+<style>
+:root{
+  --shell:#0C1020; --shell-2:#141A2C; --panel:#1B2236; --edge:#2A3350;
+  --lit:#EEF1F8; --dim:#8C95B2;
+  --grass:#124C2E; --grass-hi:#2FBF6B; --gold:#E0B341; --hot:#E2574C;
+  --ui:'IBM Plex Sans Arabic',system-ui,sans-serif; --num:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#05070E;font-family:var(--ui);display:flex;gap:26px;padding:26px;align-items:flex-start}
+.frame{width:390px;height:844px;background:var(--shell);color:var(--lit);overflow:hidden;position:relative;border-radius:22px;box-shadow:0 0 0 1px #222c45}
+.cap{font:600 13px var(--ui);color:#9AA3C0;padding-bottom:9px;letter-spacing:.2px}
+.num{font-family:var(--num);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+/* Every mono run is isolated. Without this `-0.13` renders as `0.13-` in Arabic — the sign
+   detaches and a swing against you reads as one for you. Same rule as DESIGN.md §3. */
+.dl,.clock .m,.ev .mn,.score .g,.chip{direction:ltr;unicode-bidi:isolate}
+/* ---- chrome: compact and tactile, per Linear ---- */
+.top{display:flex;align-items:center;gap:10px;padding:14px 16px;background:linear-gradient(180deg,#141A2C,#0C1020);border-bottom:1px solid var(--edge)}
+.crest{width:30px;height:30px;border-radius:7px;display:grid;place-items:center;font:700 13px var(--ui);color:#0C1020}
+.top .nm{font:600 15px var(--ui)}
+.top .sub{font:500 11px var(--ui);color:var(--dim)}
+.spacer{flex:1}
+.chip{font:600 11px var(--ui);color:var(--dim);border:1px solid var(--edge);border-radius:5px;padding:4px 8px}
+/* ---- pitch is the main object ---- */
+.pitchwrap{position:relative;height:452px;background:var(--grass);overflow:hidden}
+.pitchwrap::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 70% at 50% 0%,rgba(190,255,215,.22),transparent 62%),radial-gradient(90% 60% at 50% 110%,rgba(0,0,0,.55),transparent)}
+.shirt{position:absolute;transform:translate(50%,-50%);text-align:center;z-index:3}
+.disc{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font:700 13px var(--num);color:#07130C;box-shadow:0 3px 8px rgba(0,0,0,.5);border:1.5px solid rgba(255,255,255,.55)}
+.nmt{font:600 10px var(--ui);margin-top:3px;color:#EAF6EE;text-shadow:0 1px 3px rgba(0,0,0,.9)}
+.ghost{position:absolute;width:15px;height:15px;border-radius:50%;transform:translate(50%,-50%);background:rgba(226,87,76,.26);border:1px solid rgba(226,87,76,.6);z-index:2}
+.zone{position:absolute;z-index:1;border-radius:4px}
+.badge{position:absolute;z-index:4;font:600 10px var(--ui);background:rgba(12,16,32,.85);border:1px solid var(--edge);border-radius:5px;padding:3px 7px;color:#CFE8DA}
+/* ---- dials ---- */
+.dials{padding:12px 16px 0}
+.dial{margin-bottom:11px}
+.dial .lab{font:600 10px var(--ui);color:var(--dim);margin-bottom:5px}
+.seg{display:flex;gap:5px}
+.seg button{flex:1;font:600 12px var(--ui);color:#B8C0DA;background:var(--panel);border:1px solid var(--edge);border-radius:6px;padding:8px 0;cursor:pointer}
+.seg button[aria-pressed=true]{background:linear-gradient(180deg,#2FBF6B,#1E9A53);border-color:#39D67B;color:#06180E;box-shadow:0 0 14px rgba(47,191,107,.35)}
+.go{position:absolute;bottom:0;left:0;right:0;padding:12px 16px 16px;background:linear-gradient(180deg,transparent,#0C1020 28%)}
+.go button{width:100%;font:700 15px var(--ui);color:#06180E;background:linear-gradient(180deg,#3BD97F,#1E9A53);border:0;border-radius:9px;padding:14px;cursor:pointer;box-shadow:0 6px 22px rgba(47,191,107,.3)}
+/* ---- matchday: broadcast ---- */
+.board{background:linear-gradient(180deg,#151C31,#0C1020);border-bottom:1px solid var(--edge);padding:12px 14px 11px}
+.score{display:flex;align-items:center;gap:10px}
+.score .t{flex:1;display:flex;align-items:center;gap:8px}
+.score .t.a{justify-content:flex-start}.score .t.b{justify-content:flex-end}
+.score .g{font:700 30px var(--num);font-variant-numeric:tabular-nums}
+.clock{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:8px}
+.clock .live{width:6px;height:6px;border-radius:50%;background:var(--hot);box-shadow:0 0 8px var(--hot)}
+.clock .m{font:600 13px var(--num);color:#FFF}
+.mom{margin-top:10px}
+.mom .bar{height:7px;border-radius:4px;background:#2A3350;overflow:hidden;display:flex}
+.mom .mine{background:linear-gradient(90deg,#1E9A53,#3BD97F)}
+.mom .row{display:flex;justify-content:space-between;font:600 9px var(--ui);color:var(--dim);margin-top:5px}
+.feed{padding:10px 14px}
+.ev{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #222A42}
+.ev:last-child{border:0}
+.ev .mn{font:600 11px var(--num);color:#9AA3C0;background:#1B2236;border:1px solid var(--edge);border-radius:20px;padding:2px 7px;min-width:34px;text-align:center}
+.ev .tx{flex:1;font:500 13px var(--ui)}
+.ev .dl{font:600 11px var(--num)}
+.up{color:#3BD97F}.down{color:#E2574C}
+.ev.goal .tx{font-weight:700}
+.ev.goal .mn{background:var(--gold);border-color:var(--gold);color:#241A02}
+.ev.call{background:rgba(224,179,65,.07);margin:0 -14px;padding:9px 14px;border-inline-start:2px solid var(--gold)}
+/* selective lighting on ONE floating overlay, per Authkit — not on every card */
+.overlay{position:absolute;bottom:0;left:0;right:0;background:rgba(22,28,48,.92);backdrop-filter:blur(14px);border-top:1px solid #39456C;box-shadow:0 -18px 44px rgba(0,0,0,.6);padding:13px 16px 18px;border-radius:16px 16px 0 0}
+.overlay .h{font:600 11px var(--ui);color:var(--gold);margin-bottom:9px}
+</style></head><body>
+
+<div><div class="cap">A · التكتيك — Stadium Control Room</div><div class="frame">
+  <div class="top">
+    <div class="crest" style="background:#3BD97F">مط</div>
+    <div><div class="nm">مطوبس</div><div class="sub">الجولة 14 · استاد مطوبس البلدي</div></div>
+    <div class="spacer"></div><div class="chip">4-4-2</div>
+  </div>
+  <div class="pitchwrap" id="p1"></div>
+  <div class="dials">
+    <div class="dial"><div class="lab">الأسلوب</div><div class="seg">
+      <button>دفاعي</button><button aria-pressed="true">متوازن</button><button>هجومي</button></div></div>
+    <div class="dial"><div class="lab">الخط الدفاعي</div><div class="seg">
+      <button>واطي</button><button>عادي</button><button aria-pressed="true">عالي</button></div></div>
+    <div class="dial"><div class="lab">الضغط</div><div class="seg">
+      <button>مستني</button><button aria-pressed="true">متوسط</button><button>عالي</button></div></div>
+  </div>
+  <div class="go"><button>إلعب الماتش · أشمون</button></div>
+</div></div>
+
+<div><div class="cap">A · الماتش</div><div class="frame">
+  <div class="board">
+    <div class="score">
+      <div class="t a"><div class="crest" style="background:#3BD97F;width:26px;height:26px;font-size:11px">مط</div><div style="font:600 14px var(--ui)">مطوبس</div></div>
+      <div class="g">1</div><div style="color:#4A557A;font:600 18px var(--num)">–</div><div class="g">0</div>
+      <div class="t b"><div style="font:600 14px var(--ui)">أشمون</div><div class="crest" style="background:#E2574C;width:26px;height:26px;font-size:11px;color:#fff">أش</div></div>
+    </div>
+    <div class="clock"><span class="live"></span><span class="m">67'</span></div>
+    <div class="mom"><div class="bar"><div class="mine" style="width:63%"></div></div>
+      <div class="row"><span>الضغط معاك</span><span class="num">63%</span></div></div>
+  </div>
+  <div class="pitchwrap" style="height:330px" id="p2"></div>
+  <div class="feed">
+    <div class="ev call"><div class="mn">67'</div><div class="tx">غيّرت الأسلوب لـ <b>هجومي</b></div></div>
+    <div class="ev goal"><div class="mn">61'</div><div class="tx">رزق — جول</div><div class="dl up">+0.42</div></div>
+    <div class="ev"><div class="mn">31'</div><div class="tx">الخط العالي اتاكل سرعة</div><div class="dl down">-0.13</div></div>
+  </div>
+  <div class="overlay">
+    <div class="h">قرار جوه الماتش</div>
+    <div class="seg"><button>الخط</button><button aria-pressed="true">الأسلوب</button><button>الضغط</button><button>تبديل</button></div>
+  </div>
+</div></div>
+
+<script src="_pitch.js"></script><script>
+function paint(el,{h}){
+  el.innerHTML = pitchSvg('rgba(235,255,242,.75)','#124C2E',{stripes:true,w:.45,o:.55});
+  THEM.forEach(g=>{const d=document.createElement('div');d.className='ghost';d.style.right=g.x+'%';d.style.top=g.y+'%';el.appendChild(d)});
+  const z=document.createElement('div');z.className='zone';
+  Object.assign(z.style,{right:'8%',top:'16%',width:'34%',height:'26%',background:'rgba(226,87,76,.16)',border:'1px dashed rgba(226,87,76,.55)'});
+  el.appendChild(z);
+  const b=document.createElement('div');b.className='badge';b.style.right='10%';b.style.top='9%';b.textContent='خطرهم من هنا';el.appendChild(b);
+  XI.forEach(p=>{const s=document.createElement('div');s.className='shirt';
+    s.style.right=p.x+'%';s.style.top=(p.y*(h/100)*(100/h))+'%';
+    s.innerHTML=`<div class="disc" style="background:${p.pos==='GK'?'#E0B341':'#3BD97F'}">${p.n}</div><div class="nmt">${p.name}</div>`;
+    el.appendChild(s)});
+}
+paint(document.getElementById('p1'),{h:452});
+paint(document.getElementById('p2'),{h:330});
+</script></body></html>

@@ -937,6 +937,22 @@ order — they are the same problem understood three times over, and later ones 
 
 ## Blocked
 
+- **⚠️ The visual direction is being re-decided. No UI box may be built until the owner picks one.**
+  The owner's verdict on the thin UI was that it does not look like a football game, and he is
+  right — it fails `DESIGN.md`'s own test (*"if a screen would look at home in a B2B analytics
+  product, it is wrong"*). No pitch, no matchday, no club identity, nothing in motion.
+  - Three art-direction boards are in `docs/design/boards/` with a README: **A Stadium Control
+    Room**, **B Floodlight split**, **C Matchday programme** — same two screens, same real content,
+    390px Arabic. The owner picks one or asks for a hybrid, then `DESIGN.md` is rewritten and
+    Tactics + Matchday are built properly before anything else is restyled.
+  - **The conflict the boards exist to settle:** the brief proposes a dark shell with grass accents,
+    and `DESIGN.md`'s never-list says *never dark-slate with neon-emerald, that is Modareb*. A is
+    that direction, B and C are the alternatives. Settled by looking, not arguing.
+  - **New data gap, and it blocks all three:** club data carries **no kit colours and no crest**.
+    The boards use invented placeholders and say so. Real kit identity is a data box that must exist
+    before any direction ships. Same species as the missing Latin player names.
+  - Non-UI boxes are unaffected and the loop should keep taking them.
+
 - **⚠️ The engine emits no `decision` cause at all. The product's central claim has nothing behind
   it.** Measured with `pnpm causes` (checked in this run, so it is reproducible): over 1,200 matches
   with tactics randomised across the whole dial space and both sides making in-match changes,
@@ -1015,6 +1031,27 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-19 (10)** — **Three art-direction boards, because the first UI was not a football game.**
+  - The owner sent `DESIGN_DIRECTION_G6_1` from another project of his. Its diagnosis matches what
+    the screenshots show: a football game has a pitch as its main object, a broadcast matchday, and
+    club identity. Dakka had none of the three. Its six acceptance questions are now the gate, and
+    they are in the boards' README.
+  - **The process point I had skipped:** *approve visual examples, not a taste adjective.* I wrote a
+    `DESIGN.md` from a descriptor and built straight from it. There was never a choice put in front
+    of anyone. The boards fix that.
+  - `docs/design/boards/` — three self-contained pages, one shared `_pitch.js` so they differ in art
+    direction only and never in what they show. Real XI (what `baselineTactics` actually picks for
+    مطوبس), real opponent, real match numbers: 1-0, goal at 61', swings at 31' and 57' with their
+    real deltas.
+  - **Board A had the bidi sign bug in its first render** — `-0.13` as `0.13-`, `67'` as `'67`. The
+    same defect I fixed in the app two ticks ago, reintroduced the moment I wrote CSS outside
+    `apps/web`. It is a rule in `DESIGN.md` §3 and it still did not travel. When the direction is
+    chosen, the isolation rule belongs in the shared stylesheet, not in each surface's discipline.
+  - **Data gap found while drawing shirts: clubs have no kit colours and no crest.** Every board uses
+    invented placeholders and labels them. Under Blocked; it gates all three directions.
+  - Nothing in `apps/web` was touched — the working UI stays until a replacement is chosen, per the
+    brief's own workflow.
 
 - **2026-09-19 (9)** — **The debrief prompt. A model can now be handed a match without being handed
   a way to invent one.**

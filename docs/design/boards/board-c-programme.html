@@ -1,0 +1,121 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>C — Matchday programme</title>
+<style>
+:root{
+  --news:#EFE7D6; --news-2:#E5DBC5; --card:#F7F1E4; --ink:#17140F; --ink-2:#4A4235; --faint:#8C8371;
+  --rule:#17140F; --hair:#C9BDA3; --red:#B3261E; --green:#1F5134; --gold:#A8772A;
+  --ui:'IBM Plex Sans Arabic',system-ui,sans-serif; --num:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#3A342A;font-family:var(--ui);display:flex;gap:26px;padding:26px;align-items:flex-start}
+.frame{width:390px;height:844px;overflow:hidden;position:relative;background:var(--news);color:var(--ink);
+  border-radius:4px;box-shadow:0 10px 40px rgba(0,0,0,.45)}
+.frame::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.5;
+  background-image:radial-gradient(#00000012 .5px,transparent .6px);background-size:3px 3px}
+.cap{font:600 13px var(--ui);color:#CDBFA2;padding-bottom:9px}
+.num,.mn,.dl,.g,.clk{font-family:var(--num);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+/* masthead */
+.mast{padding:12px 16px 8px;border-bottom:3px double var(--rule)}
+.mast .row{display:flex;align-items:baseline;gap:8px}
+.mast h1{font:700 19px var(--ui);letter-spacing:-.2px}
+.mast .meta{flex:1;font:500 10.5px var(--ui);color:var(--ink-2)}
+.mast .rnd{font:600 10px var(--num);border:1px solid var(--rule);padding:2px 6px}
+/* the fixture, printed big */
+.fixture{display:flex;align-items:stretch;border-bottom:2px solid var(--rule)}
+.club{flex:1;padding:13px 14px;display:flex;align-items:center;gap:10px}
+.club.away{flex-direction:row-reverse;text-align:end}
+.kit{width:22px;height:34px;border-radius:2px 2px 4px 4px;position:relative;flex:none}
+.kit::before,.kit::after{content:"";position:absolute;top:0;width:6px;height:9px;border-radius:2px}
+.kit::before{right:-5px}.kit::after{left:-5px}
+.club .n{font:700 17px var(--ui);line-height:1.1}
+.club .w{font:500 10px var(--ui);color:var(--faint)}
+.gbox{width:104px;flex:none;border-inline:2px solid var(--rule);display:flex;align-items:center;justify-content:center;gap:8px;background:var(--news-2)}
+.g{font:700 40px var(--num);line-height:1}
+.gd{font:700 22px var(--num);color:var(--faint)}
+.clk{display:block;text-align:center;font:700 11px var(--num);background:var(--red);color:var(--news);
+  padding:4px 0;letter-spacing:1.5px}
+/* pitch, printed as a two-colour diagram */
+.pitchbox{margin:12px 14px;border:2px solid var(--rule);background:var(--card);position:relative;height:404px}
+.shirt{position:absolute;transform:translate(50%,-50%);text-align:center;z-index:3}
+.disc{width:28px;height:28px;display:grid;place-items:center;font:700 12px var(--num);
+  background:var(--green);color:#F3EFE2;border-radius:3px}
+.disc.gk{background:var(--gold)}
+.nmt{font:700 9px var(--ui);margin-top:2px;color:var(--ink)}
+.ghost{position:absolute;width:12px;height:12px;transform:translate(50%,-50%) rotate(45deg);
+  border:1.5px solid var(--red);z-index:2}
+.stamp{position:absolute;z-index:4;font:700 9.5px var(--ui);color:var(--red);border:1.5px solid var(--red);
+  padding:2px 6px;transform:rotate(-3deg);background:rgba(239,231,214,.92)}
+/* controls, set like a form on a programme */
+.sect{padding:0 14px 2px}
+.sect h2{font:700 10px var(--ui);color:var(--ink);border-bottom:1px solid var(--rule);
+  padding-bottom:3px;margin-bottom:7px;display:flex;justify-content:space-between}
+.sect h2 span{font:500 10px var(--ui);color:var(--faint)}
+.seg{display:flex;gap:0;border:1.5px solid var(--rule)}
+.seg button{flex:1;font:600 12px var(--ui);color:var(--ink);background:transparent;border:0;
+  border-inline-start:1px solid var(--hair);padding:10px 0;cursor:pointer;min-height:42px}
+.seg button:first-child{border:0}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--news);font-weight:700}
+.kick{position:absolute;bottom:0;left:0;right:0;padding:12px 14px 16px;background:var(--news)}
+.kick > button{width:100%;font:700 16px var(--ui);color:var(--news);background:var(--red);border:0;
+  padding:16px;cursor:pointer;letter-spacing:.3px}
+/* event list, printed with leader rules */
+.list{padding:2px 14px}
+.li{display:flex;align-items:baseline;gap:9px;padding:9px 0;border-bottom:1px solid var(--hair)}
+.li:last-child{border-bottom:1px solid var(--rule)}
+.mn{font:700 12px var(--num);color:var(--news);background:var(--ink);padding:2px 6px;min-width:36px;text-align:center}
+.li .tx{flex:1;font:600 13px var(--ui)}
+.dl{font:700 12px var(--num)}
+.up{color:var(--green)}.down{color:var(--red)}
+.li.goal{background:var(--card);margin:0 -14px;padding:10px 14px}
+.li.goal .tx{font-weight:700;font-size:15px}
+.li.goal .mn{background:var(--green)}
+.band{background:var(--ink);color:var(--news);padding:9px 14px;display:flex;justify-content:space-between;align-items:center}
+.band .l{font:700 11px var(--ui)}
+.band .v{font:700 13px var(--num);color:#E8C36A}
+</style></head><body>
+
+<div><div class="cap">C · التكتيك — بروجرام الماتش</div><div class="frame">
+  <div class="mast"><div class="row"><h1>دكة</h1><div class="meta">الدوري المصري — القسم الرابع</div><div class="rnd">14</div></div></div>
+  <div class="fixture">
+    <div class="club"><span class="kit" style="background:#1F5134"></span><span><span class="n">مطوبس</span><br><span class="w">كفر الشيخ</span></span></div>
+    <div class="gbox"><span style="font:600 11px var(--ui);color:var(--faint)">اليوم<br>19:30</span></div>
+    <div class="club away"><span class="kit" style="background:#B3261E"></span><span><span class="n">أشمون</span><br><span class="w">المنوفية</span></span></div>
+  </div>
+  <div class="pitchbox" id="p1"></div>
+  <div class="sect"><h2>الأسلوب <span>اللي هتبدأ بيه</span></h2>
+    <div class="seg"><button>دفاعي</button><button aria-pressed="true">متوازن</button><button>هجومي</button></div></div>
+  <div class="kick"><button>إبدأ الماتش</button></div>
+</div></div>
+
+<div><div class="cap">C · الماتش</div><div class="frame">
+  <div class="fixture" style="border-top:0">
+    <div class="club"><span class="kit" style="background:#1F5134"></span><span class="n">مطوبس</span></div>
+    <div class="gbox"><span class="g">1</span><span class="gd">–</span><span class="g">0</span></div>
+    <div class="club away"><span class="kit" style="background:#B3261E"></span><span class="n">أشمون</span></div>
+  </div>
+  <span class="clk">67'</span>
+  <div class="band"><span class="l">الضغط معاك</span><span class="v">63%</span></div>
+  <div class="pitchbox" style="height:280px;margin:10px 14px" id="p2"></div>
+  <div class="list">
+    <div class="li goal"><span class="mn">61'</span><span class="tx">رزق — جول</span><span class="dl up">+0.42</span></div>
+    <div class="li"><span class="mn">57'</span><span class="tx">الجول شال الفريق</span><span class="dl down">-0.02</span></div>
+    <div class="li"><span class="mn">31'</span><span class="tx">الخط العالي اتاكل سرعة</span><span class="dl down">-0.13</span></div>
+  </div>
+  <div class="kick" style="padding-bottom:16px">
+    <div class="sect" style="padding:0 0 9px"><h2>قرار جوه الماتش <span>واحد بس</span></h2>
+      <div class="seg"><button>الخط</button><button aria-pressed="true">الأسلوب</button><button>الضغط</button><button>تبديل</button></div></div>
+  </div>
+</div></div>
+
+<script src="_pitch.js"></script><script>
+function print(el,h){
+  el.insertAdjacentHTML('afterbegin', pitchSvg('#1F5134','#F7F1E4',{w:.6,o:.55}));
+  THEM.forEach(t=>{const d=document.createElement('div');d.className='ghost';d.style.right=t.x+'%';d.style.top=t.y+'%';el.appendChild(d)});
+  const st=document.createElement('div');st.className='stamp';st.style.right='7%';st.style.top='11%';st.textContent='خطرهم من الجنب ده';el.appendChild(st);
+  XI.forEach(p=>{const s=document.createElement('div');s.className='shirt';s.style.right=p.x+'%';s.style.top=p.y+'%';
+    s.innerHTML=`<div class="disc ${p.pos==='GK'?'gk':''}">${p.n}</div><div class="nmt">${p.name}</div>`;el.appendChild(s)});
+}
+print(document.getElementById('p1'));
+print(document.getElementById('p2'));
+</script></body></html>
