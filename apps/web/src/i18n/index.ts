@@ -3,7 +3,6 @@ import { en } from './en.js';
 import type { Dictionary, MessageKey } from './messages.js';
 import type { Locale } from './locale.js';
 
-export { CAUSE_LABEL } from './causes.js';
 export { DEFAULT_LOCALE, DIRECTION, LOCALES, isLocale } from './locale.js';
 export type { Locale } from './locale.js';
 export type { Dictionary, MessageKey, Messages } from './messages.js';

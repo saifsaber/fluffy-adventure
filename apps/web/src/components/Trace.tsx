@@ -1,5 +1,5 @@
 import type { MatchTrace, Side } from '@dakka/engine';
-import { CAUSE_LABEL } from '../i18n/index.js';
+import { causeLabel } from '@dakka/ai';
 import { useLocale } from '../i18n/context.js';
 import { int, signed } from '../format.js';
 
@@ -37,7 +37,7 @@ export function Trace({ trace, you }: { readonly trace: MatchTrace; readonly you
             <li key={`${swing.minute}-${i}`} className="row items-start">
               <span className="minute">{int(swing.minute)}</span>
               <span className="flex-1">
-                <span className="block">{CAUSE_LABEL[swing.cause][locale]}</span>
+                <span className="block">{causeLabel(swing.cause, locale)}</span>
                 {/* The number is its own element rather than a value substituted into the
                     sentence. Interpolated, `+0.42` inside Arabic prose renders as `0.42+` — the
                     sign detaches and lands on the wrong end. */}

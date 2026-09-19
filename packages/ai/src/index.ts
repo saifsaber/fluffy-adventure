@@ -24,5 +24,8 @@ export type {
   MoraleChange,
 } from './effects.js';
 
+export { PHRASINGS, causeLabel, isControllable } from './phrasing.js';
+export type { Phrasing } from './phrasing.js';
+
 export { evidenceFromTrace, numbersIn } from './evidence.js';
 export type { EvidenceMoment, MatchEvidence } from './evidence.js';

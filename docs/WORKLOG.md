@@ -612,13 +612,14 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
       are compile-time**, so both are tested by compiling the forbidden snippet and asserting the
       compiler refused — `applyEffects` takes a branded batch no literal can produce, and
       `evidenceFromTrace(result, …)` does not typecheck.
-- [ ] **`CAUSE_REGISTRY` → phrasing table, both locales.**
-      `Record<CauseTag, Record<Locale, Phrasing>>` (ADR-003), so an unregistered cause **or an
-      unlocalised one** is a build error. Load `dakka-arabic-voice` for `ar-EG`; write `en` to the
-      same rules in its own register — blunt assistant coach, football vernacular, no hedging — and
-      **not** as a translation of the Arabic. **Faking it looks like:** free prose per cause instead
-      of a table (a rewrite per locale, and it lets the model narrate a cause the engine never
-      emitted), or running the Arabic through a translator and calling it English.
+- [x] **`CAUSE_REGISTRY` → phrasing table, both locales.** `packages/ai/src/phrasing.ts`, all 27
+      causes × 2 locales, each with a `label`, a `one` form, a `many` form and — for exactly the
+      `controllable` causes — a `lesson`. The web's duplicate label table is gone; `Trace.tsx` reads
+      `causeLabel()` from the one table. **`one`/`many` came out of a measurement, not a hunch:**
+      `pnpm causes` shows `WASTEFUL_FINISHING` in 85% of traces and up to **7 times in one match**,
+      so a repeated cause collapses into its `many` form with a count rather than firing three
+      wordings of "he missed" in a row. ⚠️ **But read the Blocked entry below before building on
+      this: 14 of the 27 phrasings describe causes the engine has never once emitted.**
 - [ ] **The debrief prompt, built from a trace and nothing else.** Golden-file tested: every number
       in the prompt traceable to a trace field, every cause in `CAUSE_REGISTRY`, and a thin trace
       producing a short prompt rather than a padded one (`dakka-engine-rules` §6).
@@ -932,6 +933,32 @@ order — they are the same problem understood three times over, and later ones 
 
 ## Blocked
 
+- **⚠️ The engine emits no `decision` cause at all. The product's central claim has nothing behind
+  it.** Measured with `pnpm causes` (checked in this run, so it is reproducible): over 1,200 matches
+  with tactics randomised across the whole dial space and both sides making in-match changes,
+  **14 of 27 registered causes never fire once** — and all five of the `decision` domain are among
+  them: `SUBSTITUTION_SWUNG_MOMENTUM`, `MISSED_SUBSTITUTION_WINDOW`, `MENTALITY_SHIFT_PAID_OFF`,
+  `MENTALITY_SHIFT_BACKFIRED`, `ROLE_MISFIT`. Also dead: both pressing causes, both condition
+  causes, `FORMATION_MISMATCH`, `KEEPER_ERROR`, `SET_PIECE_WEAKNESS`, `HOME_CROWD_LIFT`,
+  `PITCH_CONDITIONS`.
+  - **Why this is the most serious thing on this page.** Dakka's one sentence is *your decisions
+    were worth this*. 70% of the surveyed sides changed mentality and 80% made a substitution, and
+    the trace attributed a swing to **none** of it. A debrief today can only ever say they wasted
+    chances and the keeper saved — which is both repetitive and, worse, a systematic account of
+    football in which the manager does not appear.
+  - **What it is not.** Not a phrasing bug, not an AI-layer bug, and not the same thing as the
+    parked balance work: +MGR already proves decisions move *results* (`mgr.ts`), so the effect
+    exists and the **trace is failing to attribute it**. The swing detector picks the biggest
+    win-probability moves, and a substitution's effect is spread over twenty minutes rather than
+    landing in one — so it is always outbid by a shot. That is a detector design problem, in
+    `trace.ts`, and it is a real box, not a tweak.
+  - **Until it is fixed, do not build anything whose value depends on decision causes appearing** —
+    in particular the debrief prompt's "the lesson" section. Write the prompt so a trace with no
+    controllable cause produces a short debrief rather than a padded one, which
+    `dakka-engine-rules` §6 requires anyway.
+  - Verify with `pnpm causes`. A test in `packages/harness/test/causes.test.ts` stops the surviving
+    13 from shrinking further, and will fail loudly if an engine change loses one.
+
 - **Refero MCP — connected, but the account has no active plan.** The server is registered and
   reachable; every tool call comes back `NO_SUBSCRIPTION` with
   `https://refero.design/mcp/upgrade`. That is a plan-level refusal rather than a rejected key, so
@@ -984,6 +1011,32 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-19 (8)** — **The phrasing table is written. Measuring it first found something worse
+  than a missing phrasing.**
+  - `packages/ai/src/phrasing.ts`: 27 causes × 2 locales. `label` for the trace screen, `one` and
+    `many` for the narration, `lesson` for exactly the controllable causes — all four checked by
+    tests, including that English is never a copy of the Arabic and that the Arabic carries none of
+    the ten MSA markers that separate a news bulletin from a touchline. 8 of 8 sabotage probes bite.
+  - **`one` / `many` exists because of the survey, not because it seemed tidy.** The voice skill
+    forbids repeating a template within a match; the engine repeats `WASTEFUL_FINISHING` up to
+    **7 times** in one. Three variants would still have collided, and three wordings of "he missed"
+    is bad football writing anyway. A coach says *four clear chances went begging*, once.
+  - **The finding: 14 of 27 causes never fire.** Recorded under Blocked with the reproduction
+    (`pnpm causes`, now a checked-in harness command with its own tests). The whole `decision`
+    domain is dead, which is the product's own sentence failing. **It is a `trace.ts` detector
+    problem, not a balance problem** — +MGR already shows decisions move results, so the effect is
+    there and the trace is not attributing it. A substitution's effect spreads over twenty minutes;
+    the swing detector takes the biggest single-minute moves, so a shot outbids it every time.
+  - **The first survey I ran was wrong and I nearly wrote it up.** It used neutral tactics on both
+    sides, which structurally cannot produce a shape, pressing or decision cause — it would have
+    reported 17 dead causes for the wrong reason. The checked-in version randomises the dials and
+    makes in-match changes precisely so a missing cause means something.
+  - The web's duplicate `CAUSE_LABEL` table is deleted; there is one table now, and its tests live
+    beside it. 410 tests across 29 files.
+  - **Next box is the debrief prompt.** Write it so a trace with no controllable cause yields a
+    *short* debrief, not a padded one — that is `dakka-engine-rules` §6 and, until the detector is
+    fixed, it is also the normal case.
 
 - **2026-09-17 (7)** — **The AI boundary exists, and the schema has nowhere to write a number.**
   - **The design decision this box turned on.** The blueprint's split puts morale, form, board

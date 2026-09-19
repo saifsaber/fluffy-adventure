@@ -13,7 +13,8 @@
     "test": "vitest run",
     "harness": "pnpm --filter @dakka/harness harness",
     "harness:profile": "pnpm --filter @dakka/harness run harness:profile",
-    "dominance": "pnpm --filter @dakka/harness run dominance"
+    "dominance": "pnpm --filter @dakka/harness run dominance",
+    "causes": "pnpm --filter @dakka/harness run causes"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.0",

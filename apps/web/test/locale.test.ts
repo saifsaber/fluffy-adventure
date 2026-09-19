@@ -1,14 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { ALL_CAUSES, CAUSE_REGISTRY } from '@dakka/engine';
 import { LOCALES as AI_LOCALES } from '@dakka/ai';
-import {
-  CAUSE_LABEL,
-  DICTIONARIES,
-  DIRECTION,
-  LOCALES,
-  isLocale,
-  translator,
-} from '../src/i18n/index.js';
+import { DICTIONARIES, DIRECTION, LOCALES, isLocale, translator } from '../src/i18n/index.js';
 
 /**
  * ADR-003 is a structural decision, so these are structural tests.
@@ -75,27 +67,11 @@ describe('both locales, from the first screen', () => {
   });
 });
 
-describe('the cause table', () => {
-  it('names every cause the engine can emit, in both languages', () => {
-    expect(Object.keys(CAUSE_LABEL).sort()).toEqual([...ALL_CAUSES].sort());
-    for (const cause of ALL_CAUSES) {
-      for (const locale of LOCALES) {
-        expect(CAUSE_LABEL[cause][locale].trim(), `${cause}.${locale}`).not.toBe('');
-      }
-    }
-  });
-
-  it('gives each cause its own phrasing, so two reasons never read the same', () => {
-    for (const locale of LOCALES) {
-      const phrasings = Object.values(CAUSE_LABEL).map((entry) => entry[locale]);
-      expect(new Set(phrasings).size, locale).toBe(phrasings.length);
-    }
-  });
-
-  it('covers the registry exactly — an unregistered cause cannot be narrated', () => {
-    expect(Object.keys(CAUSE_LABEL).sort()).toEqual(Object.keys(CAUSE_REGISTRY).sort());
-  });
-});
+/*
+ * The cause table used to be checked here, against a copy that lived in this app. It has one home
+ * now — `packages/ai/src/phrasing.ts` — and its tests live beside it. Two tables would have been
+ * two lists that agree until someone adds a cause to one of them.
+ */
 
 describe('numbers stay out of sentences', () => {
   it('interpolates only what is on this list, and nothing signed', () => {
