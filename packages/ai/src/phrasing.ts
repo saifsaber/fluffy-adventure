@@ -46,7 +46,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'High line beaten for pace',
-      one: 'On {minute} they ran in behind your line.',
+      one: 'On {minute} minutes they ran in behind your line.',
       many: 'They got in behind you {count} times.',
       lesson: 'Against pace, drop the line or leave cover behind the full-back.',
     },
@@ -60,7 +60,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Deep block soaked it up',
-      one: 'On {minute} the block absorbed it and nothing came of it.',
+      one: 'On {minute} minutes the block absorbed it and nothing came of it.',
       many: 'Their block swallowed your pressure {count} times.',
       lesson: 'Against a low block, go wide and work set pieces. The middle is shut.',
     },
@@ -74,7 +74,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Extra man in midfield',
-      one: 'On {minute} you had the extra body in there and the ball stayed with you.',
+      one: 'On {minute} minutes you had the extra body in there and the ball stayed with you.',
       many: 'The midfield overload paid {count} times.',
       lesson: 'Midfield is yours. Push a full-back on and use it.',
     },
@@ -88,7 +88,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Outnumbered in midfield',
-      one: 'On {minute} the midfield gave way and they came straight through.',
+      one: 'On {minute} minutes the midfield gave way and they came straight through.',
       many: 'They came through the middle {count} times.',
       lesson: "You're a body short in there. Drop a forward in or narrow up.",
     },
@@ -102,7 +102,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Overload out wide',
-      one: 'On {minute} you got two against one out wide and it came off.',
+      one: 'On {minute} minutes you got two against one out wide and it came off.',
       many: 'The flank came off {count} times.',
       lesson: 'That side is open. Send the full-back up with the winger every time.',
     },
@@ -116,7 +116,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Narrow shape gave up the flanks',
-      one: 'On {minute} the narrow shape left the wing open and it cost you.',
+      one: 'On {minute} minutes the narrow shape left the wing open and it cost you.',
       many: 'They got down the outside {count} times.',
       lesson: 'Widen up, or make the winger track back with the full-back.',
     },
@@ -130,7 +130,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: "Shapes didn't match up",
-      one: 'On {minute} your shape was wrong against theirs.',
+      one: 'On {minute} minutes your shape was wrong against theirs.',
       many: 'Your shape was wrong against theirs {count} times.',
       lesson: 'Their formation beats yours. Change the shape, not the players.',
     },
@@ -145,7 +145,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Press played through',
-      one: 'On {minute} one pass took your press out of the game.',
+      one: 'On {minute} minutes one pass took your press out of the game.',
       many: 'They played through the press {count} times.',
       lesson: "The press isn't working. Commit more bodies or sit off.",
     },
@@ -159,7 +159,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Press won it back',
-      one: 'On {minute} the press won it high up the pitch.',
+      one: 'On {minute} minutes the press won it high up the pitch.',
       many: 'The press won it back {count} times.',
       lesson: "It's working. Keep it on and don't drop off early.",
     },
@@ -173,7 +173,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Open to the counter',
-      one: 'On {minute} you were wide open on the break.',
+      one: 'On {minute} minutes you were wide open on the break.',
       many: 'They broke on you {count} times.',
       lesson: 'Leave someone back when you go forward. The counter is hurting you.',
     },
@@ -188,7 +188,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Legs went',
-      one: 'On {minute} the legs were gone.',
+      one: 'On {minute} minutes the legs were gone.',
       many: 'Fatigue told {count} times.',
       lesson: 'Change earlier next time, or take the press off after the break.',
     },
@@ -202,7 +202,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Fresh legs off the bench',
-      one: 'On {minute} the change put fresh legs on and it showed.',
+      one: 'On {minute} minutes the change put fresh legs on and it showed.',
       many: 'The bench made the difference {count} times.',
       lesson: 'That worked. Remember when you made it.',
     },
@@ -217,7 +217,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Substitution swung it',
-      one: 'On {minute} your change turned the game.',
+      one: 'On {minute} minutes your change turned the game.',
       many: 'Your changes turned it {count} times.',
       lesson: 'That was the right call. Same timing next time.',
     },
@@ -231,7 +231,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Left the change too late',
-      one: 'On {minute} the change needed making and you sat on it.',
+      one: 'On {minute} minutes the change needed making and you sat on it.',
       many: 'You left it too late {count} times.',
       lesson: 'When the legs go, make the change. Waiting costs you.',
     },
@@ -245,7 +245,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'The switch paid off',
-      one: 'On {minute} the change of approach paid off.',
+      one: 'On {minute} minutes the change of approach paid off.',
       many: 'The switch paid off {count} times.',
       lesson: 'You read that right. Trust it again.',
     },
@@ -259,7 +259,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'The switch backfired',
-      one: 'On {minute} the change of approach backfired.',
+      one: 'On {minute} minutes the change of approach backfired.',
       many: 'The switch backfired {count} times.',
       lesson: 'Wrong moment. Wait until you actually need it.',
     },
@@ -273,7 +273,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Wrong role for him',
-      one: 'On {minute} {actor} was playing a role that is not his.',
+      one: 'On {minute} minutes {actor} was playing a role that is not his.',
       many: 'A player was in the wrong role {count} times.',
       lesson: 'Pick the role before the name. A good player in the wrong job is an average one.',
     },
@@ -287,7 +287,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Clinical in front of goal',
-      one: 'On {minute} {actor} took it first time and buried it.',
+      one: 'On {minute} minutes {actor} took it first time and buried it.',
       many: 'The finishing was clinical {count} times.',
     },
   },
@@ -299,7 +299,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Wasteful with the chances',
-      one: 'On {minute} {actor} missed one he should be scoring.',
+      one: 'On {minute} minutes {actor} missed one he should be scoring.',
       many: '{count} clear chances went begging.',
     },
   },
@@ -311,7 +311,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Keeper kept them in it',
-      one: 'On {minute} the keeper got a hand to one he had no right to.',
+      one: 'On {minute} minutes the keeper got a hand to one he had no right to.',
       many: 'The keeper saved them {count} times.',
     },
   },
@@ -323,7 +323,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Keeper error',
-      one: 'On {minute} the keeper made a mess of it.',
+      one: 'On {minute} minutes the keeper made a mess of it.',
       many: 'The keeper made {count} mistakes.',
     },
   },
@@ -335,7 +335,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'A moment of individual quality',
-      one: 'On {minute} {actor} did it on his own.',
+      one: 'On {minute} minutes {actor} did it on his own.',
       many: 'Individual quality decided it {count} times.',
     },
   },
@@ -348,7 +348,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Red card',
-      one: 'On {minute} a red card changed the game.',
+      one: 'On {minute} minutes a red card changed the game.',
       many: 'There were {count} red cards.',
     },
   },
@@ -361,7 +361,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Strong from set pieces',
-      one: 'On {minute} a set piece gave you something.',
+      one: 'On {minute} minutes a set piece gave you something.',
       many: 'Set pieces paid {count} times.',
       lesson: 'That is a weapon. Work on it more.',
     },
@@ -375,7 +375,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Soft from set pieces',
-      one: 'On {minute} a set piece hurt you.',
+      one: 'On {minute} minutes a set piece hurt you.',
       many: 'Set pieces hurt you {count} times.',
       lesson: 'Get the box covered and put height on the near post.',
     },
@@ -389,7 +389,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'Home crowd lifted them',
-      one: 'On {minute} the crowd got behind them.',
+      one: 'On {minute} minutes the crowd got behind them.',
       many: 'The crowd lifted them {count} times.',
     },
   },
@@ -401,7 +401,7 @@ export const PHRASINGS: Record<CauseTag, Record<Locale, Phrasing>> = {
     },
     en: {
       label: 'State of the pitch',
-      one: 'On {minute} the surface played its part.',
+      one: 'On {minute} minutes the surface played its part.',
       many: 'The pitch told {count} times.',
     },
   },

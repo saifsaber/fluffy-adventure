@@ -27,5 +27,8 @@ export type {
 export { PHRASINGS, causeLabel, isControllable } from './phrasing.js';
 export type { Phrasing } from './phrasing.js';
 
+export { debriefPrompt, numbersInText, paragraphsFor } from './prompt.js';
+export type { ActorNames, DebriefPrompt } from './prompt.js';
+
 export { evidenceFromTrace, numbersIn } from './evidence.js';
 export type { EvidenceMoment, MatchEvidence } from './evidence.js';

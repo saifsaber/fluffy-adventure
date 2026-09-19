@@ -8,5 +8,12 @@
   "dependencies": {
     "zod": "^3.24.1",
     "@dakka/engine": "workspace:*"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./test-fixtures": "./test/prompt-fixtures.ts"
+  },
+  "scripts": {
+    "golden": "tsx test/golden-main.ts"
   }
 }
