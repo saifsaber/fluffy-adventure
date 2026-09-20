@@ -9,10 +9,12 @@
     "harness": "tsx src/cli.ts",
     "harness:profile": "tsx src/profile.ts",
     "dominance": "tsx src/dominance-main.ts",
-    "causes": "tsx src/causes-main.ts"
+    "causes": "tsx src/causes-main.ts",
+    "prompt-size": "tsx src/prompt-size-main.ts"
   },
   "dependencies": {
     "@dakka/content": "workspace:*",
-    "@dakka/engine": "workspace:*"
+    "@dakka/engine": "workspace:*",
+    "@dakka/ai": "workspace:*"
   }
 }

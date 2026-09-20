@@ -206,6 +206,9 @@ importers:
 
   packages/harness:
     dependencies:
+      '@dakka/ai':
+        specifier: workspace:*
+        version: link:../ai
       '@dakka/content':
         specifier: workspace:*
         version: link:../content

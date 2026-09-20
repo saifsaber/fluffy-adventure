@@ -40,8 +40,14 @@ const UNCARRIED: Record<Locale, readonly string[]> = {
   en: ['possession', 'xG', 'pass completion', 'offside', 'expected goals'],
 };
 
-/** Roughly two lines per paragraph, per `dakka-arabic-voice`. Long output is a failure, not thoroughness. */
-const CHARS_PER_PARAGRAPH = 260;
+/**
+ * Roughly two lines per paragraph, per `dakka-arabic-voice`. Long output is a failure, not thoroughness.
+ *
+ * Exported because `cost.ts` sets `max_tokens` from it. A reply longer than this ceiling is thrown
+ * away by rule 4 below, so paying a model to keep writing past it buys nothing at all — the length
+ * rule and the spend cap have to be the same number or one of them is wrong.
+ */
+export const CHARS_PER_PARAGRAPH = 260;
 
 const paragraphsIn = (text: string): readonly string[] =>
   text

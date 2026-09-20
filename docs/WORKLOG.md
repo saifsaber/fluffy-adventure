@@ -652,9 +652,26 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
       rules*, not resemblance to real Egyptian coach speech. The corpus half needs source material —
       see Blocked. Until it exists, "the Arabic obeys the rules" is checkable and "the Arabic is
       good" is still an opinion.
-- [ ] **Cost controls.** Haiku for volume, a larger model for debriefs, prompt caching for the static
-      rules and club context, debrief on demand rather than automatic, hard per-career budget.
-      **Done means:** measured cost per match and per career, not an estimate.
+- [~] **Cost controls — the machinery is built and measured; the dollar figure needs the key.**
+      `packages/ai/src/cost.ts` + `pnpm prompt-size`. **ADR-004** records the decisions.
+      **Built and tested (32 tests, 14/14 sabotage probes bite):** routing (`ROUTING`), the
+      published price table with its date, `costOf(usage, call)` — the only multiplication, and it
+      does not double-count a cached token — an immutable per-career `Ledger`, a hard budget stop
+      with a **bounded** one-call overshoot, and the on-demand gate that refuses a debrief nobody
+      asked for and one for a match whose trace named nothing.
+      **The unknown discipline, applied to money.** A call that reports no usage is `unmetered`: it
+      adds no dollars, and it refuses all further spending on that career until reconciled. Zero
+      matches gives `unknown`, never `$0.00`.
+      **What the measurement found, and it changed the plan.** The debrief's cacheable prefix is
+      `[system]` alone — 688 bytes `ar-EG`, 468 `en` — and `claude-haiku-4-5`'s published minimum is
+      **4096 tokens**, the *highest* of the three models, on the one we route volume to. So
+      "prompt caching for the static rules" provably buys nothing today. And **92–94% of a debrief's
+      proved ceiling is the output cap, not the prompt**, which caching cannot touch at all. ADR-004
+      names the single condition that makes caching worth building: a static block over 4096 tokens,
+      verified by `cache_read_input_tokens` coming back non-zero — never by having placed a marker.
+      **What is NOT done, and must not be claimed:** the actual cost per match and per career.
+      `tokens ≤ bytes` bounds it from above and nothing bounds it from below, so `pnpm prompt-size`
+      prints byte counts and ceilings and says so at the bottom of its own output. See Blocked.
 
 ### Step 8 — persistence and the API (Week 3)
 
@@ -965,6 +982,23 @@ order — they are the same problem understood three times over, and later ones 
     of genuine Egyptian football speech — post-match interviews, touchline talk, commentary — held
     out and never shown to a prompt; (2) a separately licensed corpus. Either one turns the scorer
     into a similarity measure against real speech and finishes the box.
+
+- **⚠️ Cost per match cannot be measured without an Anthropic key — the same one Step 8 needs.**
+  The box says *measured, not an estimate*, and that is the right bar. A cost is
+  `tokens × published price`; the price half is in `PRICES` with the date it was read, and the token
+  half only exists in a real response's `usage`. There is no offline tokenizer that gives Claude's
+  counts — using a different model's tokenizer would produce a number that looks measured and is
+  wrong by an unknown factor, which is the exact failure this product refuses.
+  - **What was built instead** is everything that does not need the key: the ledger that will record
+    the real usage the moment a transport reports it, and a **ceiling** — `tokens ≤ bytes` plus the
+    `max_tokens` cap — which is an inequality that holds rather than an estimate. `pnpm prompt-size`
+    prints both and refuses to print a cost.
+  - **What unblocks it:** the key, in a server-side environment variable, reaching the transport
+    that Step 8 builds. The first real call closes this: `costPerCareer` and `costPerMatch` start
+    returning `{ measured: true }`, and `cacheHitShare` answers the one question bytes cannot —
+    whether a prefix is actually being hit.
+  - **Do not paste a key into the chat.** This repository is public, and a key that passes through a
+    message is a key that has to be rotated.
   - Until then, do not report a dialect-quality figure to anyone as if it measured quality.
 
 - **⚠️ The visual direction is being re-decided. No UI box may be built until the owner picks one.**
@@ -1061,6 +1095,33 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-20 (14)** — **Cost controls: the machinery, the measurement, and the number I refuse to print.**
+  - **The finding that changed the plan.** The blueprint pairs "Haiku for volume" with "prompt
+    caching for the static rules". Measured, those two sentences fight each other:
+    `claude-haiku-4-5`'s published minimum cacheable prefix is **4096 tokens** — higher than
+    Sonnet's 1024 and Opus's 512, on the *cheapest* model — and our only static block is the rules,
+    at 688 bytes in `ar-EG` and 468 in `en`. A prefix under the minimum does not cache and does not
+    say so; `cache_creation_input_tokens` simply comes back 0. So the saving we had written down as
+    a mitigation does not exist at today's prompt sizes. ADR-004 states the one condition that would
+    change it and the trap to avoid — never grow a prompt to make it cacheable.
+  - **And the input side is the wrong side anyway.** The proved worst case of one debrief is
+    $0.08722, of which **92%** is the output cap. Caching cannot touch output tokens. That single
+    ratio reorders every lever: on demand beats caching, determinism beats caching, and the output
+    cap — already derived from the length rule that throws long replies away — beats both at
+    bounding the worst case.
+  - **The unknown discipline applied to money.** A call whose response reported no usage adds no
+    dollars *and refuses further spending on that career*. A budget that silently ignores
+    unaccounted spend is a budget plus an unknown. `costPerMatch` of an unplayed career is
+    `unknown`, not `$0.00` — a confident zero is a back-filled statistic with a currency symbol.
+  - **What I will not do.** The box says *measured, not an estimate*. I can bound cost from above
+    (`tokens ≤ bytes`, which is sound because a BPE token covers at least one byte) and I cannot
+    bound it from below without Claude's tokenizer. Reaching for a different model's tokenizer would
+    produce a number indistinguishable from a measurement and wrong by an unknown factor. So
+    `pnpm prompt-size` prints bytes and ceilings, and prints a line saying the cost is not there.
+  - 32 tests, **14 of 14 sabotage probes bite** — including the two that matter most: folding a
+    cache read into the full-price term, and reporting a career total while a call is unaccounted
+    for. Branch green: lint, typecheck, and the full suite.
 
 - **2026-09-20 (13)** — **The dialect scorer, and an honest refusal on the half that needs a corpus.**
   - The box wanted a held-out set of **real** Egyptian coach language. I have none, nothing licensed,
