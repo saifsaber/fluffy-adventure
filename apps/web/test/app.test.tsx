@@ -195,3 +195,52 @@ describe('what your decision was worth', () => {
     expect(screen.getByText(/One match proves nothing/)).toBeTruthy();
   }, 30000);
 });
+
+describe('the tactics screen is a programme, not a form', () => {
+  const rgb = (hex: string): string => {
+    const [r, g, b] = [1, 3, 5].map((at) => Number.parseInt(hex.slice(at, at + 2), 16));
+    return `rgb(${r}, ${g}, ${b})`;
+  };
+
+  it('prints each club in its own colours, read from the data', () => {
+    // A hardcoded green would pass every visual check and be exactly the invented-at-render-time
+    // thing the kit box exists to prevent, so this asserts against the data file.
+    open('ar-EG');
+    const [home, away] = league.data;
+    const fills = [...document.querySelectorAll<HTMLElement>('[style*="background-color"]')].map(
+      (node) => node.style.backgroundColor,
+    );
+    expect(fills).toContain(rgb(home?.kit.primary ?? ''));
+    expect(fills).toContain(rgb(away?.kit.primary ?? ''));
+  });
+
+  it('draws eleven players and not one more', () => {
+    // Before kickoff we have played them no times, so there is nothing observed to draw. A
+    // generic opposition shape would be a scouting report we did not earn — the same refusal
+    // `scoutingFrom` makes, enforced on the screen that would be tempted to fake it.
+    //
+    // Counted rather than matched by name: the squad generator draws surnames from one pool, so
+    // both clubs genuinely share some, and a name-based check would fail on a real coincidence.
+    open('ar-EG');
+    const diagram = screen.getByRole('img', { name: /تشكيل/ });
+    const texts = within(diagram).queryAllByText(/.+/);
+    expect(texts).toHaveLength(22); // eleven positions, eleven names
+  });
+
+  it('says why their half of the diagram is empty instead of leaving it blank', () => {
+    open('ar-EG');
+    expect(screen.getByText(/مالعبناهمش قبل كده/)).toBeTruthy();
+  });
+
+  it('puts the home club on the home side of the fixture bar', () => {
+    // The bar is the fixture, not the two clubs in whatever order the form holds them. Switching
+    // to away has to move you across it.
+    open('en');
+    const order = () =>
+      [...document.querySelectorAll('[data-club]')].map((node) => node.getAttribute('data-club'));
+    const before = order();
+    expect(before).toHaveLength(2);
+    fireEvent.click(screen.getByRole('button', { name: 'Away' }));
+    expect(order()).toEqual([...before].reverse());
+  });
+});

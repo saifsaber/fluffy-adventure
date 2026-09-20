@@ -20,6 +20,19 @@ export interface Messages {
   'locale.ar-EG': string;
   'locale.en': string;
 
+  /** Section head over the pitch diagram. */
+  'setup.shape': string;
+  /** The note beside it: this is your side only, and why theirs is not drawn. */
+  'setup.shape.note': string;
+  /** Accessible name for the diagram — says whose shape it is, never just "pitch". */
+  'setup.shape.alt': string;
+  /**
+   * Why the opponent is absent from the pitch. Not a placeholder: we have played them no times, so
+   * there is nothing observed to draw, and drawing a generic shape would be inventing a scouting
+   * report.
+   */
+  'setup.opponent.unseen': string;
+
   'setup.title': string;
   'setup.yourClub': string;
   'setup.opponent': string;

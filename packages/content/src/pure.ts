@@ -2,6 +2,20 @@ import { clubId, playerId, type Club, type Player } from '@dakka/engine';
 import type { ClubData } from './schema.js';
 
 export { clubSchema, leagueSchema, playerSchema } from './schema.js';
+// The browser needs these too: a kit's colours are useless without the arithmetic that decides
+// which ink reads on them, and `colour.ts` has no I/O, so it belongs on the pure side.
+export {
+  MIN_CLUB_SEPARATION,
+  MIN_NUMBER_ON_SHIRT,
+  MIN_TRIM_ON_PRIMARY,
+  SHIRT_NUMBER_INK,
+  contrast,
+  deltaE76,
+  kitClashes,
+  kitProblems,
+  readableOn,
+} from './colour.js';
+export type { Kit, KitClash } from './colour.js';
 
 /**
  * Validation and data-to-domain transforms, with no I/O of any kind.

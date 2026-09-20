@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { simulate, type MatchResult } from '@dakka/engine';
 import { LocaleSwitcher } from './components/LocaleSwitcher.js';
-import { useT } from './i18n/context.js';
+import { Masthead } from './components/Masthead.js';
 import { ResultScreen } from './screens/Result.js';
 import { SetupScreen } from './screens/Setup.js';
 import type { BrowserLeague } from './data/league.js';
@@ -22,7 +22,6 @@ export function initialSetup(league: BrowserLeague): Setup {
 }
 
 export function App({ league }: { readonly league: BrowserLeague }) {
-  const t = useT();
   const [setup, setSetup] = useState<Setup>(() => initialSetup(league));
   const [played, setPlayed] = useState<MatchResult | null>(null);
 
@@ -32,13 +31,9 @@ export function App({ league }: { readonly league: BrowserLeague }) {
   return (
     <div className="min-h-screen">
       <div className="mx-auto max-w-[960px] px-4 md:px-6 py-6">
-        <header className="flex items-start gap-4 mb-6">
-          <div className="flex-1">
-            <h1 className="text-h1 font-semibold m-0">{t('app.name')}</h1>
-            <p className="text-small text-ink-soft m-0">{t('app.subtitle')}</p>
-          </div>
-          <LocaleSwitcher />
-        </header>
+        <div className="-mx-4 md:-mx-6 mb-6">
+          <Masthead competition={league.league.shortName} aside={<LocaleSwitcher />} />
+        </div>
 
         <main>
           {played === null ? (

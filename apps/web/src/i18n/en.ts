@@ -15,6 +15,11 @@ export const en: Dictionary = {
   'locale.ar-EG': 'مصري',
   'locale.en': 'English',
 
+  'setup.shape': 'Shape',
+  'setup.shape.note': 'Your side only',
+  'setup.shape.alt': '{club} on the pitch',
+  'setup.opponent.unseen':
+    'We have never played them, so there is nothing of theirs to draw. Play them once and their work shows up here.',
   'setup.title': 'Next match',
   'setup.yourClub': 'Your club',
   'setup.opponent': 'Opponent',

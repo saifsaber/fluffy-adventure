@@ -82,6 +82,7 @@ describe('numbers stay out of sentences', () => {
     const allowed: Record<string, string> = {
       'stat.open': 'a translated word, no digits',
       'cf.runs': 'an unsigned count, no sign to misplace',
+      'setup.shape.alt': 'a club name, and it never reaches the screen — this one is an aria-label',
     };
     const interpolating = LOCALES.flatMap((locale) =>
       Object.entries(DICTIONARIES[locale])

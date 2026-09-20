@@ -226,16 +226,24 @@ the smallest type on the screen that is not a caption.
 `news-deep` score box, each with its kit swatch on its own outer edge, the club at `h1` and its
 governorate at `label`. **The trim is printed inside the swatch**, as a stripe or a band — never as
 tabs breaking its outline, because a trim is validated against the shirt it sits on and not against
-the page, so a cream trim outside the swatch would vanish into the paper. Before kickoff the box holds the date and time; during and after, the
-`scoreline`. Closed top and bottom by `2px ink`. **Each club's name and its number live in one
+the page, so a cream trim outside the swatch would vanish into the paper. The box holds the fixture's standing fact: a kickoff time
+once a season provides one, the venue in a one-off match, the `scoreline` from kickoff onwards. It
+never holds a placeholder — a programme prints a time because it knows it. Closed top and bottom by `2px ink`. **Each club's name and its number live in one
 element** — that is the bidi rule in §3 made structural, and it is why the scoreline cannot detach
 from the wrong side.
 
 **Match clock.** A full-width reversed **red** strip under the fixture bar, `figure`, centred,
 letter-spaced (Latin-only, so tracking is allowed). The one element permitted to change on its own.
 
-**Pitch diagram.** Ink lines on `card`, inside a `2px ink` box. Your eleven are `green` discs with
-the shirt number in `news` and the name at `label` beneath. **The opposition is drawn as presence,
+**Pitch diagram.** Ink lines on `card`, inside a `2px ink` box, drawn as one SVG — a pitch is
+geometry, so its coordinates are genuinely physical and belong outside the layout system, where
+nothing about them flips with the locale. Markings are the real ones, in metres on a 68×105 pitch;
+the canvas is taller than the pitch by the margin a keeper's name needs under his own goal line.
+**Players stand where the engine's zone footprints put them**, so the diagram is a picture of the
+model rather than an illustration beside it. Your eleven are discs in the club's own kit colour,
+carrying the **position** in the readable ink — not a shirt number, because players carry no squad
+number in the data and eleven invented ones per club would be a fabricated fact in a small costume
+— with the name beneath. **The opposition is drawn as presence,
 never as identity** — outlined `red` diamonds and, where the trace supports it, one outlined-red
 annotation stamp naming where the threat is. The game does not scout individuals, and the diagram
 must not imply that it does.

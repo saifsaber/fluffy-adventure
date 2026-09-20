@@ -15,6 +15,11 @@ export const arEG: Dictionary = {
   'locale.ar-EG': 'مصري',
   'locale.en': 'English',
 
+  'setup.shape': 'شكل الملعب',
+  'setup.shape.note': 'فريقك بس',
+  'setup.shape.alt': 'تشكيل {club} على الملعب',
+  'setup.opponent.unseen':
+    'مالعبناهمش قبل كده، فمفيش حاجة نرسمهالك عنهم. أول ما تلعبهم هتشوف شغلهم هنا.',
   'setup.title': 'الماتش الجاي',
   'setup.yourClub': 'فريقك',
   'setup.opponent': 'الخصم',

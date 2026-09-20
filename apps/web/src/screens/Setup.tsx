@@ -2,8 +2,10 @@ import { baselineTactics } from '@dakka/engine';
 import type { MessageKey } from '../i18n/index.js';
 import { useT } from '../i18n/context.js';
 import { Dial } from '../components/Dial.js';
+import { FixtureBar } from '../components/FixtureBar.js';
+import { Pitch } from '../components/Pitch.js';
 import { TeamSheet } from '../components/TeamSheet.js';
-import { clubBySlug, type BrowserLeague } from '../data/league.js';
+import { clubBySlug, dataBySlug, type BrowserLeague } from '../data/league.js';
 import {
   APPROACHES,
   LINES,
@@ -69,15 +71,55 @@ export function SetupScreen({
 }) {
   const t = useT();
   const yourClub = clubBySlug(league, setup.yourSlug);
+  const theirClub = clubBySlug(league, setup.opponentSlug);
+  const yourData = dataBySlug(league, setup.yourSlug);
+  const theirData = dataBySlug(league, setup.opponentSlug);
   const sheet = baselineTactics(yourClub.squad);
   const context = buildMatch(league, setup).context;
   const callKind: CallKind = setup.call === null ? 'none' : setup.call.kind;
   const minute = setup.call?.minute ?? 60;
 
+  // Who is at home decides which side of the bar each club sits on — the bar is the fixture, not
+  // a list of the two clubs in the order the form happens to hold them.
+  const atHome = setup.venue === 'home';
+  const side = (club: typeof yourClub, data: typeof yourData) => ({
+    club,
+    kit: data.kit,
+    region: data.region,
+  });
+
   return (
     <div className="grid gap-6">
+      <div className="-mx-4 md:-mx-6">
+        <FixtureBar
+          home={atHome ? side(yourClub, yourData) : side(theirClub, theirData)}
+          away={atHome ? side(theirClub, theirData) : side(yourClub, yourData)}
+          standing={
+            <span className="text-label font-bold leading-tight">
+              {t(atHome ? 'setup.venue.home' : 'setup.venue.away')}
+            </span>
+          }
+        />
+      </div>
+
+      <section>
+        <p className="head">
+          <span>{t('setup.shape')}</span>
+          <span className="text-faint font-normal">{t('setup.shape.note')}</span>
+        </p>
+        <div className="panel p-0">
+          <Pitch
+            club={yourClub}
+            kit={yourData.kit}
+            startingXI={sheet.startingXI}
+            label={t('setup.shape.alt', { club: yourClub.shortName })}
+          />
+        </div>
+        <p className="text-small text-ink-soft mt-3">{t('setup.opponent.unseen')}</p>
+      </section>
+
       <section className="panel grid gap-4">
-        <h2 className="text-h2 font-semibold m-0">{t('setup.title')}</h2>
+        <h2 className="text-h2 font-bold m-0">{t('setup.title')}</h2>
 
         <label className="grid gap-2">
           <span className="label">{t('setup.yourClub')}</span>
@@ -219,7 +261,10 @@ export function SetupScreen({
         )}
       </section>
 
-      <section className="panel">
+      <section>
+        <p className="head">
+          <span>{t('setup.sheet')}</span>
+        </p>
         <TeamSheet club={yourClub} tactics={sheet} mine />
       </section>
 

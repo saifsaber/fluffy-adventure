@@ -703,11 +703,26 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
       **Crests are not in this box and were not attempted.** A crest is artwork, not a colour pair;
       nothing in the chosen direction needs one, and a generated crest would be the invented-at-
       render-time thing this box exists to prevent.
-- [ ] **⚠️ Tactics screen — the masthead, the fixture bar, the pitch diagram, the team sheet.**
-      `DESIGN.md` §5 names every component; build those and nothing else. The pitch is the centre of
-      the screen, the opposition is drawn as presence and never as named players, and the one action
-      is a solid red block at the bottom. **Done means:** at 390px in both locales, a stranger can
-      tell it is a football game before reading a word.
+- [x] **⚠️ Tactics screen — the masthead, the fixture bar, the pitch diagram, the team sheet.**
+      Built as components in `apps/web/src/components/` and assembled in `screens/Setup.tsx`.
+      **The pitch is derived, not drawn.** `src/pitch.ts` places each player at the centroid of the
+      zones their position *occupies*, read from the engine's own `FOOTPRINTS` — the same table the
+      simulation reads to decide who contests what. The diagram is a picture of the model, so a
+      wrong footprint looks wrong on screen. A test walks every position in `Record<Position, …>`
+      and checks its mark against the table, which a hand-placed formation could never pass.
+      **Two honest adaptations**, both of which a prettier screen would have faked. Players carry
+      **no squad number** in the data, so the disc prints the *position* — eleven invented numbers
+      per club is a fabricated fact in a small costume. And the **opposition is not drawn at all**:
+      before kickoff we have played them no times, so there is nothing observed to put on the pitch,
+      and the screen says that in one line instead of showing a generic shape. That is the same
+      refusal `scoutingFrom` makes, enforced where the temptation actually is.
+      **The one exception to the derivation, and why it is not a fudge.** The model's finest
+      resolution is `defensive_centre`, which a keeper shares with both centre-backs, so a faithful
+      centroid stands him in the middle of his own back line. He is moved to his goal line by a
+      property read off the table — the only position occupying one zone and contesting none — not
+      by testing for the string `'GK'`. If the engine ever gave a keeper a sweeping role, his
+      footprint would gain a contested zone and he would come out of goal here with no edit.
+      13 new tests; screenshotted at 390 and 1100 in both locales, `dir` correct, no console errors.
 - [ ] **⚠️ Matchday screen — score, minute, momentum, the one call, and its consequence.** Same
       stock, no dark mode: emphasis is the reversed clock strip and the pressure band. Events arrive
       in sequence as the clock reaches them (§7). **Done means:** you can see all five without
@@ -1131,7 +1146,29 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
 
 ## Log
 
-- **2026-09-20 (16)** — **Club colours, and a threshold set by measurement instead of by taste.**
+- **2026-09-20 (17)** — **The Tactics screen, and a pitch that is a picture of the engine.**
+  - **The thing worth copying from this box.** The formation is not drawn; it is *derived*. Each
+    player sits at the centroid of the zones his position occupies in `FOOTPRINTS`, which is the
+    table the simulation itself reads. So the diagram cannot drift from the model — a wrong
+    footprint produces a shape that looks wrong — and the test iterates
+    `Object.keys(FOOTPRINTS)`, which is every position the engine has, by construction.
+  - **Two things this screen refuses to fake**, and both would have looked better if it had.
+    Players carry no squad number, so the disc prints the position; and the opposition is absent
+    from the pitch entirely, because we have played them no times and a generic opposing shape is a
+    scouting report nobody earned. The screen says so in a line rather than leaving a blank half.
+  - **The keeper exception is derived too.** He shares `defensive_centre` with both centre-backs, so
+    the honest centroid stands him among his own defenders. He is moved by the one structural
+    property that identifies him — occupies one zone, contests none — rather than by a string
+    compare, so the rule survives a change to the model instead of outliving it.
+  - **Two defects found by looking, not by testing.** Every test passed while the keeper stood in
+    his own back line and the defenders' names ran into each other. Screens get judged by looking;
+    the fix was more room under the goal line, a taller canvas than the pitch, and a wider fan.
+  - **Where the masthead went.** It started on the Tactics screen and duplicated the shell's title —
+    two `h1`s with the same word, which the app test caught immediately. It belongs in the shell:
+    a programme has one masthead.
+  - **Next box: the Matchday screen** — score, minute, momentum, the one call and its consequence.
+    `FixtureBar` already takes a `standing` slot for the scoreline, and `.reversed` and the red
+    clock strip are in `theme.css` waiting for it. — **Club colours, and a threshold set by measurement instead of by taste.**
   - **The mistake worth recording first.** I wrote the twenty kits straight into the club JSON
     files. The generator's own idempotence test wiped every one of them within the minute — the
     club files are **generated** from `scripts/clubs.egy-d4.json`, and that identity file is where
