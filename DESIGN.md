@@ -158,6 +158,13 @@ tracking was never needed.
   club. Either wrap the whole expression (`.seq`), or pair each number with its own subject inside
   one element so no direction can separate them. This shipped wrong once: a 1-0 home win rendered
   as 0-1 in Arabic and correctly in English, from the same markup.
+- **`.seq` is wrong when the pair has to follow the page.** The rule above isolates an expression
+  whose order is fixed — `1.42 → 1.48` reads the same way in both locales. A scoreline inside the
+  fixture bar is the opposite case: the two clubs flip with `dir`, so a score pinned left-to-right
+  stays put while the names swap around it, and 1-0 to the home side reads as 0-1 in Arabic. There,
+  each number is isolated **on its own** and the row holding them is an ordinary flex row that flips
+  with everything else. Isolate the value, never the pairing, when the pairing is what has to move.
+  Check it by measuring: the home score's `x` must fall on the same side as the home club's.
 - **Never put a number inside a translated sentence.** A substituted `+0.42` renders as `0.42+` in
   Arabic — the sign detaches and lands on the wrong end, turning a swing towards you into one
   against you. The number is its own element; the sentence goes around it.

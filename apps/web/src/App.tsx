@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { simulate, type MatchResult } from '@dakka/engine';
 import { LocaleSwitcher } from './components/LocaleSwitcher.js';
 import { Masthead } from './components/Masthead.js';
+import { MatchdayScreen } from './screens/Matchday.js';
 import { ResultScreen } from './screens/Result.js';
 import { SetupScreen } from './screens/Setup.js';
 import type { BrowserLeague } from './data/league.js';
@@ -24,6 +25,12 @@ export function initialSetup(league: BrowserLeague): Setup {
 export function App({ league }: { readonly league: BrowserLeague }) {
   const [setup, setSetup] = useState<Setup>(() => initialSetup(league));
   const [played, setPlayed] = useState<MatchResult | null>(null);
+  /**
+   * Whether the replay has been left. Matchday reads the finished result back minute by minute;
+   * the result screen is the same match with nothing withheld. The match is decided before either
+   * is drawn, which is why skipping the replay is allowed to cost nothing.
+   */
+  const [atFullTime, setAtFullTime] = useState(false);
 
   const asPlayed = useMemo(() => buildMatch(league, setup, true), [league, setup]);
   const withoutCall = useMemo(() => buildMatch(league, setup, false), [league, setup]);
@@ -41,7 +48,19 @@ export function App({ league }: { readonly league: BrowserLeague }) {
               league={league}
               setup={setup}
               onChange={setSetup}
-              onPlay={() => setPlayed(simulate(asPlayed))}
+              onPlay={() => {
+                setAtFullTime(false);
+                setPlayed(simulate(asPlayed));
+              }}
+            />
+          ) : !atFullTime ? (
+            <MatchdayScreen
+              league={league}
+              result={played}
+              asPlayed={asPlayed}
+              you={yourSide(setup)}
+              call={setup.call}
+              onFullTime={() => setAtFullTime(true)}
             />
           ) : (
             <ResultScreen
@@ -51,7 +70,10 @@ export function App({ league }: { readonly league: BrowserLeague }) {
               withoutCall={withoutCall}
               you={yourSide(setup)}
               hasCall={setup.call !== null}
-              onBack={() => setPlayed(null)}
+              onBack={() => {
+                setPlayed(null);
+                setAtFullTime(false);
+              }}
             />
           )}
         </main>

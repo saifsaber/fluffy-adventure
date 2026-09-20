@@ -15,6 +15,13 @@ export const arEG: Dictionary = {
   'locale.ar-EG': 'مصري',
   'locale.en': 'English',
 
+  'match.kickoff': 'البداية',
+  'match.pressure': 'الحسبة معاك',
+  'match.skip': 'ودّيني على النهاية',
+  'match.call': 'قرارك',
+  'match.nothingYet': 'لسه مافيش حاجة تتقال.',
+  'match.replay': 'الماتش خلص وإحنا بنعيده عليك دقيقة بدقيقة. تعدّي على النهاية مش هيغيّر حاجة.',
+
   'setup.shape': 'شكل الملعب',
   'setup.shape.note': 'فريقك بس',
   'setup.shape.alt': 'تشكيل {club} على الملعب',

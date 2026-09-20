@@ -33,6 +33,19 @@ export interface Messages {
    */
   'setup.opponent.unseen': string;
 
+  /** The reversed clock strip before the first minute. */
+  'match.kickoff': string;
+  /** The pressure band's label: win probability from your side, as the engine sampled it. */
+  'match.pressure': string;
+  /** Leaves the replay and goes straight to full time. The result is already decided either way. */
+  'match.skip': string;
+  /** The beat that marks your own in-match call. */
+  'match.call': string;
+  /** Said while the clock is running and nothing has happened yet. Not a loader. */
+  'match.nothingYet': string;
+  /** One line saying the replay is a record being read back, not a match being played. */
+  'match.replay': string;
+
   'setup.title': string;
   'setup.yourClub': string;
   'setup.opponent': string;

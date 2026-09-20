@@ -15,6 +15,14 @@ export const en: Dictionary = {
   'locale.ar-EG': 'مصري',
   'locale.en': 'English',
 
+  'match.kickoff': 'Kick-off',
+  'match.pressure': 'Odds with you',
+  'match.skip': 'Take me to full time',
+  'match.call': 'Your call',
+  'match.nothingYet': 'Nothing to say yet.',
+  'match.replay':
+    'The match is played. This reads it back to you minute by minute — skipping to the end changes nothing.',
+
   'setup.shape': 'Shape',
   'setup.shape.note': 'Your side only',
   'setup.shape.alt': '{club} on the pitch',

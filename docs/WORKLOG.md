@@ -723,11 +723,30 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
       by testing for the string `'GK'`. If the engine ever gave a keeper a sweeping role, his
       footprint would gain a contested zone and he would come out of goal here with no edit.
       13 new tests; screenshotted at 390 and 1100 in both locales, `dir` correct, no console errors.
-- [ ] **⚠️ Matchday screen — score, minute, momentum, the one call, and its consequence.** Same
-      stock, no dark mode: emphasis is the reversed clock strip and the pressure band. Events arrive
-      in sequence as the clock reaches them (§7). **Done means:** you can see all five without
-      hunting a tab, and the consequence of your call is a trace moment with a real delta, not a
-      toast.
+- [~] **⚠️ Matchday screen — four of the five are built; the fifth is the `trace.ts` blocker.**
+      `src/matchday.ts` (pure) + `screens/Matchday.tsx`. The replay **reads the finished match
+      back**: the engine resolved it in one call, and this works out what a clock at minute N would
+      have shown. Nothing here can invent a goal or a swing, because nothing here has randomness or
+      an opinion — and skipping to full time changes nothing, which is the give-away that it is a
+      record rather than a performance.
+      **Score, minute, momentum and your call are all on screen at once.** The score is counted from
+      goal events up to the minute — a test asserts it moves on exactly the minutes the engine
+      recorded a goal and on no others, which is what separates a counted scoreline from an
+      interpolated one. Momentum is `winProbabilityTimeline`, the engine's own per-minute sample,
+      oriented to the side you manage.
+      **The fifth — what your call was worth — is deliberately not on this screen**, and that is the
+      honest part. The engine emits no cause in the `decision` domain (measured over 1,200 matches;
+      see Blocked), so there is no swing that can be attributed to a decision, and printing one
+      would be the competitor's failure exactly: a plausible reason attached to a number that did
+      not come from it. The call appears as its own beat at its own minute, carrying **no delta**,
+      and full time hands over to the counterfactual — a paired difference with a standard error,
+      which is a weaker claim per match and a much stronger one overall. A test asserts the call row
+      has no number in it, so the attribution cannot be quietly added later.
+      **This box closes properly when the `trace.ts` detector is fixed.** Not before, and not by
+      putting a number on that row.
+      24 tests (13 on the replay model). The scoreline was verified by **measuring glyph positions
+      in both locales**, not by reading a screenshot: the home score's `x` falls on the same side as
+      the home club's in `rtl` and in `ltr`.
 
 ### Step 8 — persistence and the API (Week 3)
 
@@ -1146,7 +1165,27 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
 
 ## Log
 
-- **2026-09-20 (17)** — **The Tactics screen, and a pitch that is a picture of the engine.**
+- **2026-09-20 (18)** — **Matchday, and the number I did not print.**
+  - **The replay reads the match back; it does not play one.** `simulate` resolves a whole match in
+    one call, so `matchday.ts` is pure and answers one question: what would a clock at minute N have
+    shown? The strongest test is that the score may only move on the minutes the engine recorded a
+    goal — an interpolated scoreline passes every other check and fails that one.
+  - **The box asked for something the engine cannot currently support**, and the right move was to
+    say so rather than to produce it. *"The consequence of your call is a trace moment with a real
+    delta"* presumes a swing attributable to a decision; the engine emits no `decision` cause at all
+    (measured, recorded under Blocked). So the call is its own beat with **no number on it**, and a
+    test asserts that row contains no `.num` — the attribution cannot be quietly added later. The
+    measured consequence stays where it is real: the counterfactual, a paired difference with a
+    standard error. Box is `[~]`, and it closes when the detector is fixed.
+  - **A third bidi rule, and it is the opposite of the second.** `.seq` exists to stop
+    `1.42 → 1.48` reversing. A scoreline in the fixture bar is the inverse case: the clubs flip with
+    `dir`, so a score pinned left-to-right stays put while the names swap around it — which is how
+    this product once shipped 1-0 as 0-1. Isolate each value, never the pairing, when the pairing is
+    what has to move. Verified by measuring glyph positions in both locales: home club at x=252 and
+    home score at x=213 in `rtl`; x=0 and x=163 in `ltr`. Same side both times.
+  - **For the next tick:** `theme.css`'s `.reversed` now has two real users (the clock strip and the
+    pressure band) and the red strip is inline rather than a class — if a third appears, promote it.
+    The Result screen is unchanged and still reachable through the replay's skip button. — **The Tactics screen, and a pitch that is a picture of the engine.**
   - **The thing worth copying from this box.** The formation is not drawn; it is *derived*. Each
     player sits at the centroid of the zones his position occupies in `FOOTPRINTS`, which is the
     table the simulation itself reads. So the diagram cannot drift from the model — a wrong

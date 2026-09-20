@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
-import { beforeEach, describe, expect, it } from 'vitest';
-import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { DATA_ROOT, loadLeague } from '@dakka/content';
 import { App } from '../src/App.js';
 import { LocaleProvider } from '../src/i18n/context.js';
@@ -26,11 +26,23 @@ const open = (locale: Locale) =>
   );
 
 const PLAY: Record<Locale, string> = { en: 'Play the match', 'ar-EG': 'إلعب الماتش' };
+const SKIP: Record<Locale, string> = { en: 'Take me to full time', 'ar-EG': 'ودّيني على النهاية' };
 
-const playMatch = (locale: Locale = 'en') => {
+/** Kicks off and stops on matchday, where the replay is running. */
+const kickOff = (locale: Locale = 'en') => {
   open(locale);
   fireEvent.click(screen.getByRole('button', { name: PLAY[locale] }));
 };
+
+/** Kicks off and leaves the replay immediately — the match is already decided either way. */
+const playMatch = (locale: Locale = 'en') => {
+  kickOff(locale);
+  fireEvent.click(screen.getByRole('button', { name: SKIP[locale] }));
+};
+
+afterEach(() => {
+  vi.useRealTimers();
+});
 
 beforeEach(() => {
   cleanup();
@@ -185,6 +197,7 @@ describe('what your decision was worth', () => {
     const calls = screen.getByRole('group', { name: 'One call in the match' });
     fireEvent.click(within(calls).getByRole('button', { name: 'Approach' }));
     fireEvent.click(screen.getByRole('button', { name: 'Play the match' }));
+    fireEvent.click(screen.getByRole('button', { name: SKIP.en }));
 
     fireEvent.click(screen.getByRole('button', { name: 'Run the comparison' }));
     await waitFor(() => expect(screen.getByText('Points')).toBeTruthy(), { timeout: 20000 });
@@ -242,5 +255,70 @@ describe('the tactics screen is a programme, not a form', () => {
     expect(before).toHaveLength(2);
     fireEvent.click(screen.getByRole('button', { name: 'Away' }));
     expect(order()).toEqual([...before].reverse());
+  });
+});
+
+describe('matchday shows the five things without hunting a tab', () => {
+  it('puts the score, the minute and the pressure on screen at once', () => {
+    kickOff('en');
+    expect(screen.getByText('Kick-off')).toBeTruthy();
+    expect(screen.getByText('Odds with you')).toBeTruthy();
+    expect(document.querySelectorAll('[data-score]')).toHaveLength(2);
+  });
+
+  it('keeps each score on the same side as its own club, in both directions', () => {
+    // The bug this guards has shipped here once: a scoreline pinned left-to-right while the two
+    // clubs flip with the page, so 1-0 to the home side reads as 0-1 in Arabic. The score row
+    // must lay out in the page's own direction, exactly like the bar around it.
+    for (const locale of ['en', 'ar-EG'] as const) {
+      cleanup();
+      kickOff(locale);
+      const clubs = [...document.querySelectorAll('[data-club]')].map((n) =>
+        n.getAttribute('data-club'),
+      );
+      const scores = [...document.querySelectorAll('[data-score]')].map((n) =>
+        n.getAttribute('data-score'),
+      );
+      // Home first in the DOM on both sides of the box, so neither can flip without the other.
+      expect(scores).toEqual(['home', 'away']);
+      expect(clubs).toHaveLength(2);
+      const seq = document.querySelector('[data-score]')?.closest('.seq');
+      expect(seq, 'the scoreline must not be pinned LTR while the clubs flip').toBeNull();
+    }
+  });
+
+  it('reveals nothing before the clock reaches it', () => {
+    // A call set for the 60th minute is not on screen at kick-off. The clock reveals; it does not
+    // summarise.
+    vi.useFakeTimers();
+    try {
+      open('en');
+      const calls = screen.getByRole('group', { name: 'One call in the match' });
+      fireEvent.click(within(calls).getByRole('button', { name: 'Approach' }));
+      fireEvent.click(screen.getByRole('button', { name: PLAY.en }));
+      expect(screen.queryByText('Your call')).toBeNull();
+
+      // The clock chains one timeout per minute from an effect, so each minute needs its own
+      // flush: advancing 61 minutes in one jump fires the first timer and nothing after it.
+      for (let tick = 0; tick < 61; tick++) act(() => void vi.advanceTimersByTime(200));
+      const yourCall = screen.getAllByText('Your call');
+      expect(yourCall).toHaveLength(1);
+
+      // The engine emits no `decision` cause (measured; see Blocked), so the call is its own beat
+      // and carries no swing number. A delta on this row would be an attribution nothing supports.
+      const row = yourCall[0]?.closest('li');
+      expect(row?.textContent).not.toMatch(/moved/);
+      expect(row?.querySelector('.num')).toBeNull();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('leaves the replay to a result that was already decided', () => {
+    // Skipping cannot change anything, and that is the give-away that this is a record being read
+    // back rather than a match being performed.
+    kickOff('en');
+    fireEvent.click(screen.getByRole('button', { name: SKIP.en }));
+    expect(screen.getByText('Full time')).toBeTruthy();
   });
 });
