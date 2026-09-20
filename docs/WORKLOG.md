@@ -673,6 +673,33 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
       `tokens ≤ bytes` bounds it from above and nothing bounds it from below, so `pnpm prompt-size`
       prints byte counts and ceilings and says so at the bottom of its own output. See Blocked.
 
+### Step 7b — the chosen direction, built (unblocked 2026-09-20)
+
+> **The owner chose board C, the matchday programme.** `DESIGN.md` is frozen on it and
+> `apps/web/src/styles/theme.css` now encodes it. ADR-005 is not needed — §10 of `DESIGN.md` *is*
+> the record of the decision and of the three board values that were measured and rejected.
+>
+> **Build order matters here.** The screens come before the restyle: the old screens are a stack of
+> panels, and re-inking them does not make a programme. Do **one box per run**, and do not restyle
+> anything the box does not name.
+
+- [ ] **⚠️ Kit colours and crest, as data.** `packages/content` — every club carries a primary and a
+      secondary colour with a contrast-checked pair, validated by the schema so a club without them
+      is a build error, not a blank swatch. **Done means:** the fixture bar and the pitch diagram
+      read a real colour, and `pnpm lint`-level validation refuses a pair that fails 3:1 against
+      `news`. **Faking it looks like:** a palette generated from the club's name hash. Until this
+      lands, any screen using a stand-in must say it is one.
+- [ ] **⚠️ Tactics screen — the masthead, the fixture bar, the pitch diagram, the team sheet.**
+      `DESIGN.md` §5 names every component; build those and nothing else. The pitch is the centre of
+      the screen, the opposition is drawn as presence and never as named players, and the one action
+      is a solid red block at the bottom. **Done means:** at 390px in both locales, a stranger can
+      tell it is a football game before reading a word.
+- [ ] **⚠️ Matchday screen — score, minute, momentum, the one call, and its consequence.** Same
+      stock, no dark mode: emphasis is the reversed clock strip and the pressure band. Events arrive
+      in sequence as the clock reaches them (§7). **Done means:** you can see all five without
+      hunting a tab, and the consequence of your call is a trace moment with a real delta, not a
+      toast.
+
 ### Step 8 — persistence and the API (Week 3)
 
 > ADR-002 deferred Postgres until the content existed. It exists. The blueprint §5 is explicit that
@@ -1001,21 +1028,15 @@ order — they are the same problem understood three times over, and later ones 
     message is a key that has to be rotated.
   - Until then, do not report a dialect-quality figure to anyone as if it measured quality.
 
-- **⚠️ The visual direction is being re-decided. No UI box may be built until the owner picks one.**
-  The owner's verdict on the thin UI was that it does not look like a football game, and he is
-  right — it fails `DESIGN.md`'s own test (*"if a screen would look at home in a B2B analytics
-  product, it is wrong"*). No pitch, no matchday, no club identity, nothing in motion.
-  - Three art-direction boards are in `docs/design/boards/` with a README: **A Stadium Control
-    Room**, **B Floodlight split**, **C Matchday programme** — same two screens, same real content,
-    390px Arabic. The owner picks one or asks for a hybrid, then `DESIGN.md` is rewritten and
-    Tactics + Matchday are built properly before anything else is restyled.
-  - **The conflict the boards exist to settle:** the brief proposes a dark shell with grass accents,
-    and `DESIGN.md`'s never-list says *never dark-slate with neon-emerald, that is Modareb*. A is
-    that direction, B and C are the alternatives. Settled by looking, not arguing.
-  - **New data gap, and it blocks all three:** club data carries **no kit colours and no crest**.
-    The boards use invented placeholders and say so. Real kit identity is a data box that must exist
-    before any direction ships. Same species as the missing Latin player names.
-  - Non-UI boxes are unaffected and the loop should keep taking them.
+- **Club data carries no kit colours and no crest, and the chosen direction needs them.**
+  `DESIGN.md` is now the **matchday programme** (board C), where the kit swatch is how you tell one
+  club from another on the fixture bar and green-versus-red is how you read the pitch diagram. Those
+  two colours are currently invented stand-ins. A fabricated club identity is a fabricated fact like
+  any other, so the screens must say a colour is a stand-in until the data carries a real one.
+  - **This is a data box, not a design one** — see the new box under Step 7. It does not block
+    building Tactics or Matchday, because a documented stand-in is honest; it blocks *shipping* them
+    as final.
+  - Same species as the missing Latin player names.
 
 - **⚠️ The engine emits no `decision` cause at all. The product's central claim has nothing behind
   it.** Measured with `pnpm causes` (checked in this run, so it is reproducible): over 1,200 matches
@@ -1095,6 +1116,35 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-20 (15)** — **The owner chose C. `DESIGN.md` is frozen on the matchday programme.**
+  - **What choosing C actually removes.** A and B both split the product into a paper mode and a
+    night mode — two of every colour token, two contrast audits, and a rule that existed only to
+    manage the split (*"level 2 is a fill on paper and an edge on night"*). C is one stock
+    throughout and emphasis is **reversed ink**: a black block with the paper knocked out of it.
+    The entire floodlight palette is gone. That is a smaller system, not just a different one.
+  - **It also settles the Modareb conflict by removing it.** The never-list said *never dark-slate
+    with neon-emerald*; board A was a dark shell with green accents, which is adjacent to the one
+    thing this product defined itself against. C cannot be mistaken for it.
+  - **Three of the board's own values did not survive, and were corrected rather than copied.** A
+    board is drawn to be looked at; a design file is built from. Measured: its `faint` `#8C8371` is
+    **3.05** on the page — below the 4.5 floor for a label — so `faint` is now `#6A6252` at **4.90**.
+    Its keeper disc puts paper on gold at **3.20**, so text on a gold fill is ink at **4.67**. And
+    its captions run at 9.5–11px, so `label` holds at 12. §8 now carries the whole measured table,
+    and a new token gets its ratio computed before it is used — the same rule a statistic lives under.
+  - **The masthead is small and the score is enormous.** That inversion is the signature and the
+    fastest way to tell this from a dashboard, which always opens with a big page title. `h2` is the
+    largest the product's own name is ever set in; `scoreline` at 40px mono is the biggest thing on
+    the screen.
+  - **The code was moved with the doc, not after it.** `theme.css` is the direction encoded —
+    reversed blocks, the rule-weight ladder, zero radius, the halftone paper screen — and the nine
+    call sites that referenced a deleted token were migrated. One consequence worth noting: three
+    buttons wore the primary fill, and *one action per screen* means only the verb that plays the
+    match keeps it. Screenshotted in both locales at 390 and 1100: renders, `dir` correct, no
+    console errors.
+  - **What this is not.** The old screens are still a stack of panels wearing new ink. There is no
+    masthead device, no fixture bar and no pitch, because those are screens rather than tokens —
+    they are the next two boxes, and re-inking is not a substitute for building them.
 
 - **2026-09-20 (14)** — **Cost controls: the machinery, the measurement, and the number I refuse to print.**
   - **The finding that changed the plan.** The blueprint pairs "Haiku for volume" with "prompt

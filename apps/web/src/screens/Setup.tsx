@@ -76,7 +76,7 @@ export function SetupScreen({
 
   return (
     <div className="grid gap-6">
-      <section className="sheet grid gap-4">
+      <section className="panel grid gap-4">
         <h2 className="text-h2 font-semibold m-0">{t('setup.title')}</h2>
 
         <label className="grid gap-2">
@@ -135,7 +135,7 @@ export function SetupScreen({
         <p className="text-small text-ink-soft m-0">{t('setup.opponent.baseline')}</p>
       </section>
 
-      <section className="sheet grid gap-4">
+      <section className="panel grid gap-4">
         <Dial
           label="setup.approach"
           value={setup.approach}
@@ -159,7 +159,7 @@ export function SetupScreen({
         />
       </section>
 
-      <section className="sheet grid gap-4">
+      <section className="panel grid gap-4">
         <p className="text-small text-ink-soft m-0">{t('setup.call.why')}</p>
         <Dial
           label="setup.call"
@@ -219,11 +219,11 @@ export function SetupScreen({
         )}
       </section>
 
-      <section className="sheet">
+      <section className="panel">
         <TeamSheet club={yourClub} tactics={sheet} mine />
       </section>
 
-      <button type="button" className="button" onClick={onPlay}>
+      <button type="button" className="action" onClick={onPlay}>
         {t('setup.play')}
       </button>
     </div>

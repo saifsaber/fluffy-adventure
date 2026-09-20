@@ -42,7 +42,7 @@ export function Counterfactual({
 
   if (!hasCall) {
     return (
-      <section className="sheet">
+      <section className="panel">
         <h2 className="text-h2 font-semibold m-0 mb-3">{t('cf.title')}</h2>
         <p className="text-small text-ink-soft m-0">{t('cf.none')}</p>
       </section>
@@ -62,12 +62,12 @@ export function Counterfactual({
   };
 
   return (
-    <section className="sheet">
+    <section className="panel">
       <h2 className="text-h2 font-semibold m-0 mb-3">{t('cf.title')}</h2>
       <p className="text-small text-ink-soft">{t('cf.why')}</p>
 
       {result === null ? (
-        <button type="button" className="button mt-2" disabled={running} onClick={run}>
+        <button type="button" className="button-quiet mt-2" disabled={running} onClick={run}>
           {t(running ? 'cf.running' : 'cf.run')}
         </button>
       ) : (
@@ -84,14 +84,12 @@ export function Counterfactual({
               <li key={label} className="row">
                 <span className="flex-1">{t(label)}</span>
                 <span className="num">{withSpread(measured.mean, measured.standardError, 2)}</span>
-                <span className="text-small w-8 text-center text-ink-faint">
-                  {t('cf.perMatch')}
-                </span>
+                <span className="text-small w-8 text-center text-faint">{t('cf.perMatch')}</span>
               </li>
             ))}
           </ul>
           <p
-            className={`text-small mt-3 ${result.points.significant ? 'text-attention' : 'text-ink-soft'}`}
+            className={`text-small mt-3 ${result.points.significant ? 'text-red' : 'text-ink-soft'}`}
           >
             {t(result.points.significant ? 'cf.significant' : 'cf.notSignificant')}
           </p>

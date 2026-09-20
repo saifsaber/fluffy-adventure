@@ -1,5 +1,10 @@
 # Art-direction boards — choose by looking, not by adjective
 
+> **Decided 2026-09-20: C, the matchday programme.** `DESIGN.md` is frozen on it and its §10 records
+> what choosing C removed and which three of C's own values failed a contrast measurement and were
+> changed rather than copied. These three files stay as the record of the decision; they are not the
+> specification, and a value here that disagrees with `DESIGN.md` loses.
+
 Three directions for the same two screens, with the same content: **tactics** (the pitch and the
 team sheet as one object) and **live matchday**. 390px, Arabic RTL.
 

@@ -60,7 +60,7 @@ function ShotTable({ shots }: { readonly shots: readonly Shot[] }) {
       </thead>
       <tbody>
         {shots.map((shot, i) => (
-          <tr key={`${shot.minute}-${i}`} className="border-t border-rule">
+          <tr key={`${shot.minute}-${i}`} className="border-t border-hair">
             {/*
               `cell` on the td, `num` on a span inside it — never both on one element. `num` sets
               `direction: ltr`, which flips what `padding-inline-end` means for that element, so a
@@ -218,7 +218,7 @@ export function Stats({ result, you }: { readonly result: MatchResult; readonly 
   ];
 
   return (
-    <section className="sheet">
+    <section className="panel">
       <h2 className="text-h2 font-semibold m-0 mb-4">{t('stats.title')}</h2>
 
       <div className="flex text-small label mb-1">
@@ -229,7 +229,7 @@ export function Stats({ result, you }: { readonly result: MatchResult; readonly 
 
       <ul className="list-none p-0 m-0">
         {rows.map((row) => (
-          <li key={row.kind} className="border-b border-rule last:border-b-0">
+          <li key={row.kind} className="border-b border-hair last:border-b-0">
             <button
               type="button"
               className="flex items-center w-full text-start py-2 min-h-11 bg-transparent border-0 cursor-pointer"
@@ -258,14 +258,14 @@ export function Stats({ result, you }: { readonly result: MatchResult; readonly 
         ))}
       </ul>
 
-      <div className="mt-6 pt-4 border-t border-rule">
+      <div className="mt-6 pt-4 border-t border-hair">
         <p className="label mb-2">{t('unmeasured.title')}</p>
         <ul className="list-none p-0 m-0">
           {(['unmeasured.passes', 'unmeasured.offsides'] as const).map((key) => (
             <li key={key} className="row text-small">
               <span className="flex-1">{t(key)}</span>
               {/* An em dash, not a zero. Absent is not zero — see `SideStats`. */}
-              <span className="num w-16 text-center text-ink-faint">—</span>
+              <span className="num w-16 text-center text-faint">—</span>
             </li>
           ))}
         </ul>

@@ -26,7 +26,7 @@ export function TeamSheet({
           const player = byId.get(selection.playerId);
           return (
             <li key={selection.playerId} className={mine ? 'row row-mine' : 'row'}>
-              <span className="tech text-small w-12 text-center text-ink-faint">
+              <span className="tech text-small w-12 text-center text-faint">
                 {selection.position}
               </span>
               <span className="flex-1">{player?.shortName ?? selection.playerId}</span>

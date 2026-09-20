@@ -29,7 +29,7 @@ export function ResultScreen({
 
   return (
     <div className="grid gap-6">
-      <section className="sheet">
+      <section className="panel">
         <p className="label m-0 mb-2">{t('result.fullTime')}</p>
         {/*
           One row per side, each carrying its own score.
@@ -47,7 +47,7 @@ export function ResultScreen({
           <div key={name} className={mine ? 'row row-mine' : 'row'}>
             <span className="flex-1 text-h2 font-semibold">{name}</span>
             {mine && <span className="label">{t('result.you')}</span>}
-            <span className="num text-display font-semibold">{int(score)}</span>
+            <span className="num text-scoreline font-semibold">{int(score)}</span>
           </div>
         ))}
       </section>
@@ -56,13 +56,13 @@ export function ResultScreen({
       <Trace trace={result.trace} you={you} />
       <Counterfactual asPlayed={asPlayed} withoutCall={withoutCall} you={you} hasCall={hasCall} />
 
-      <section className="sheet">
+      <section className="panel">
         <p className="label m-0 mb-2">{t('result.seed')}</p>
         <p className="tech text-small break-all m-0">{result.seed}</p>
         <p className="text-small text-ink-soft mt-3 mb-0">{t('result.seed.why')}</p>
       </section>
 
-      <button type="button" className="button" onClick={onBack}>
+      <button type="button" className="button-quiet" onClick={onBack}>
         {t('result.back')}
       </button>
     </div>

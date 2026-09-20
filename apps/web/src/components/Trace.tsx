@@ -19,7 +19,7 @@ export function Trace({ trace, you }: { readonly trace: MatchTrace; readonly you
 
   if (trace.swings.length === 0) {
     return (
-      <section className="sheet">
+      <section className="panel">
         <h2 className="text-h2 font-semibold m-0 mb-3">{t('trace.title')}</h2>
         <p className="text-small text-ink-soft m-0">{t('trace.empty')}</p>
       </section>
@@ -27,7 +27,7 @@ export function Trace({ trace, you }: { readonly trace: MatchTrace; readonly you
   }
 
   return (
-    <section className="sheet">
+    <section className="panel">
       <h2 className="text-h2 font-semibold m-0 mb-4">{t('trace.title')}</h2>
       <ol className="list-none p-0 m-0">
         {trace.swings.map((swing, i) => {
