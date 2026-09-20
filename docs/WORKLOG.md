@@ -772,9 +772,23 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
       (`buildLeague` over raw JSON) and through the service over HTTP, and requires the payloads to
       be identical strings. That covers the two real risks — two loaders producing different
       content, and floats surviving JSON differently than they survive memory.
-- [ ] **Postgres schema — core tables and migrations.** `users` · `managers` · `careers` · `seasons`
-      · `competitions` · `clubs` · `players` · `squads` · `tactics` · `fixtures` · `matches`.
-      Normalised, indexed per blueprint §5.
+- [x] **Postgres schema — core tables and migrations.** `packages/db`: plain SQL in
+      `migrations/0001_core.sql`, a runner that records what it applied, and **17 tests that run it
+      against a real Postgres** — PGlite is PostgreSQL 18.3 compiled to WebAssembly, so every
+      constraint is enforced by the engine that will enforce it in production. A migration nobody
+      has executed is a plausible-looking artifact, which is the one thing this project refuses.
+      **Thirteen tables, not the eleven named.** `player_attributes` and `competition_entries` are
+      both in the blueprint's own core list, and both are load-bearing: without the first,
+      "progression is inspectable" has nowhere to live; without the second, `pnpm db:seed` — the
+      very next box — cannot say which clubs are in the league.
+      **`player_attributes` is one row per attribute per version**, never a wide row rewritten. That
+      shape is what the claim means: *his finishing went 62 → 64, on this date, for this reason* is
+      one query. A wide row updated in place answers what he is and destroys how he got there.
+      **Append-only is enforced by the database, not documented.** A trigger refuses UPDATE and
+      DELETE on `matches` and `player_attributes`. 10 of 12 sabotage probes bite; the two that do
+      not are recorded in the Log with why.
+      `users` deliberately holds **no credential** — Supabase owns auth, and a second copy of a
+      secret is a second place to leak it from a public repository.
 - [ ] **`match_traces` and `decisions` as first-class tables**, not logs. Every match stores its
       seed so any match in history can be re-simulated or re-explained. This is what the
       counterfactual and the coaching arc are built on.
@@ -1179,6 +1193,29 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-20 (20)** — **The schema, and a rule that would have refused to forget someone.**
+  - **The test caught a real flaw in my own migration.** The append-only trigger refused DELETE on
+    `matches`, so the cascade from `users` could not run: a person asking to be forgotten would
+    have been told no by a rule meant to stop someone editing a scoreline. My SQL comment even
+    claimed the cascade still worked. It did not. **Rewriting history and erasing it are different
+    acts**, so a DELETE now passes only when the transaction has declared `dakka.erasing`, which
+    makes erasure explicit and greppable while refusal stays the default. Both sides are tested.
+  - **Run, not written.** PGlite is real PostgreSQL in-process, so the migration is executed by the
+    same engine that will run it in production and the tests are about rules biting rather than
+    tables existing: a club cannot play itself, `SW` is not a position, a kit colour must be
+    lowercase hex, a match cannot carry an empty seed.
+  - **Two sabotage probes stayed silent, and both are recorded rather than hidden.** One was a weak
+    probe of mine and was rewritten until it bit. The other is structural: removing the runner's
+    `begin`/`rollback` breaks nothing, because PGlite and node-postgres both run a multi-statement
+    `exec` in an implicit transaction anyway. It is kept for the seam — `SqlClient` is any client
+    with `exec` and `query` — and the comment in `migrate.ts` says so, so nobody later assumes the
+    tests prove it.
+  - **For the next tick (`pnpm db:seed`):** `competition_entries` exists for exactly that box, and
+    `loadLeague` already returns everything the insert needs. The seed must be idempotent — the
+    natural key is `clubs.slug`, which is unique, so `on conflict (slug) do update` is the shape.
+    Attribute rows go in with `source = 'content'` and `career_id = null`, which is the baseline
+    every career starts from and none owns.
 
 - **2026-09-20 (19)** — **The API, and a sabotage probe that could not bite.**
   - **The probe worth writing down.** I changed `seedOf` expecting the client and the server to
