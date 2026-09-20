@@ -1091,15 +1091,15 @@ order — they are the same problem understood three times over, and later ones 
     message is a key that has to be rotated.
   - Until then, do not report a dialect-quality figure to anyone as if it measured quality.
 
-- **Club data carries no kit colours and no crest, and the chosen direction needs them.**
-  `DESIGN.md` is now the **matchday programme** (board C), where the kit swatch is how you tell one
-  club from another on the fixture bar and green-versus-red is how you read the pitch diagram. Those
-  two colours are currently invented stand-ins. A fabricated club identity is a fabricated fact like
-  any other, so the screens must say a colour is a stand-in until the data carries a real one.
-  - **This is a data box, not a design one** — see the new box under Step 7. It does not block
-    building Tactics or Matchday, because a documented stand-in is honest; it blocks *shipping* them
-    as final.
-  - Same species as the missing Latin player names.
+- **Club identity is half-built: colours shipped, crests and Latin player names did not.**
+  Kit colours are authored data now (Step 7b), so this is no longer a blocker for the fixture bar or
+  the pitch diagram. Two pieces of the same species are still missing and neither is blocked on
+  anything but a decision about scope:
+  - **Crests.** Artwork, not a colour pair. Nothing in the chosen direction needs one, and a
+    generated crest would be invented-at-render-time in exactly the way the colours no longer are.
+  - **Latin player names.** Every club carries a `slug`; players carry an Arabic name only, so the
+    English locale prints Arabic surnames on the team sheet and the pitch. Global-strategy §8.3 says
+    every named entity carries a Latin-script name, and players are the one place it is not true.
 
 - **⚠️ The engine emits no `decision` cause at all. The product's central claim has nothing behind
   it.** Measured with `pnpm causes` (checked in this run, so it is reproducible): over 1,200 matches
