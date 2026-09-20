@@ -27,6 +27,9 @@ export type {
 export { PHRASINGS, causeLabel, isControllable } from './phrasing.js';
 export type { Phrasing } from './phrasing.js';
 
+export { scoreVoice } from './voice.js';
+export type { VoiceScore } from './voice.js';
+
 export { briefingPrompt, scoutingFrom } from './scouting.js';
 export type { BriefingPrompt, ScoutNames, ScoutingRecord } from './scouting.js';
 

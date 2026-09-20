@@ -643,9 +643,15 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
       a briefing that says so in one line. Shot shares are `undefined` rather than 0 until there is a
       shot to divide, because "they never shoot from range" and "we have not seen them shoot" are
       different claims.
-- [ ] **⚠️ Dialect eval set and its scorer.** A held-out set of real Egyptian coach language, and a
-      harness that scores generated debriefs against it. **Done means:** a number that moves when the
-      prompt gets worse. Without this, "the Arabic is good" is an opinion.
+- [~] **⚠️ Dialect eval — the scorer is built, the held-out set is blocked.** `scoreVoice` in
+      `packages/ai/src/voice.ts` scores MSA markers, Arabic-Indic digits, hedging, repetition and
+      sentence length, names a reason for every fall, and **demonstrably moves**: a sample degraded
+      one rule at a time scores strictly lower at each step, and 7 of 7 sabotage probes bite. It also
+      passes the phrasing table we already ship, which would otherwise mean one of the two was wrong.
+      **What is NOT done, and must not be claimed:** this measures conformance to *our own written
+      rules*, not resemblance to real Egyptian coach speech. The corpus half needs source material —
+      see Blocked. Until it exists, "the Arabic obeys the rules" is checkable and "the Arabic is
+      good" is still an opinion.
 - [ ] **Cost controls.** Haiku for volume, a larger model for debriefs, prompt caching for the static
       rules and club context, debrief on demand rather than automatic, hard per-career budget.
       **Done means:** measured cost per match and per career, not an estimate.
@@ -948,6 +954,19 @@ order — they are the same problem understood three times over, and later ones 
 
 ## Blocked
 
+- **⚠️ The dialect eval has no held-out set, and one cannot be invented.** The box asks for *real*
+  Egyptian coach language to score against. There is no corpus in this repo, nothing licensed to
+  hand, and writing 50 lines myself and labelling them "real" would be precisely the fabrication
+  this product exists to refuse — a plausible number measuring nothing.
+  - **What was built instead** is a rule-conformance scorer, named as such in the module's own first
+    paragraph so nobody mistakes it later. It answers "does this obey `dakka-arabic-voice`", which is
+    real and checkable; it cannot answer "does this sound like a coach in Kafr El Sheikh".
+  - **What unblocks it, in order of preference:** (1) the owner writes or collects 30–50 short lines
+    of genuine Egyptian football speech — post-match interviews, touchline talk, commentary — held
+    out and never shown to a prompt; (2) a separately licensed corpus. Either one turns the scorer
+    into a similarity measure against real speech and finishes the box.
+  - Until then, do not report a dialect-quality figure to anyone as if it measured quality.
+
 - **⚠️ The visual direction is being re-decided. No UI box may be built until the owner picks one.**
   The owner's verdict on the thin UI was that it does not look like a football game, and he is
   right — it fails `DESIGN.md`'s own test (*"if a screen would look at home in a B2B analytics
@@ -1042,6 +1061,30 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-20 (13)** — **The dialect scorer, and an honest refusal on the half that needs a corpus.**
+  - The box wanted a held-out set of **real** Egyptian coach language. I have none, nothing licensed,
+    and writing the lines myself and calling them real would be the fabrication this whole product
+    exists to refuse. That half is under Blocked with what unblocks it: 30–50 short lines of genuine
+    football speech, held out and never shown to a prompt.
+  - **What is built is real and does what the box's "done means" asks.** `scoreVoice` counts MSA
+    markers, Arabic-Indic digits, hedging, repeated sentences and sentence length; a sample degraded
+    one rule at a time scores **strictly lower at every step** (1.000 → 0.933 → 0.800 → 0.667), and
+    `findings` names the reason for each fall. 7 of 7 sabotage probes bite.
+  - **Two things it deliberately refuses to punish**, both of which a naive scorer would get wrong.
+    `ممكن يكون` is not hedging — "الفرق ده ممكن يكون صدفة" is this product telling the truth about a
+    measurement, and scoring it down would push the copy towards false confidence. And vernacular is
+    **reported but never counted into `overall`**, because a short plain correct debrief uses none of
+    it and penalising that would push the writing towards slang for its own sake.
+  - An inapplicable rule is **absent, not 1**: English has no MSA or Arabic-Indic sub-score at all,
+    because scoring a rule that does not apply as a pass would inflate the English average. Same
+    discipline as `SideStats`.
+  - It passes the phrasing table we already ship at 1.000 across all 27 causes — if it had not, one
+    of the two was wrong.
+  - 460 tests across 33 files.
+  - **Next box: cost controls** — model per task, prompt caching, debrief on demand, a per-career
+    budget. **Done means measured cost, not an estimate**, so expect it to be partly blocked on the
+    same key Step 8 needs. UI boxes stay blocked until the owner picks a direction.
 
 - **2026-09-20 (12)** — **The opponent briefing. The guard is that you scout by watching.**
   - `scoutingFrom(results, clubId)` counts goals, shots, on-target, xG, cards, where their shots came
