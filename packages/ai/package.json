@@ -15,5 +15,8 @@
   },
   "scripts": {
     "golden": "tsx test/golden-main.ts"
+  },
+  "devDependencies": {
+    "@dakka/content": "workspace:*"
   }
 }

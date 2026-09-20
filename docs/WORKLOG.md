@@ -636,8 +636,13 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
       and a reply longer than the evidence supports. A reply that fails is not shown at all: the
       trace is honest on its own, and a missing paragraph costs less than a fabricated one.
       **Still open for Step 8:** the HTTP transport and where the key lives.
-- [ ] **Opponent briefing from scouting data**, same discipline: the model sees a derived scouting
-      record, never the opponent's hidden attributes.
+- [x] **Opponent briefing from scouting data.** `packages/ai/src/scouting.ts`. **You scout by
+      watching:** `scoutingFrom` takes `MatchResult[]` and counts everything from matches actually
+      played — a `Club` does not typecheck in a record's place, so the opponent's hidden attribute
+      values have no route to a prompt. A side you have never met produces an almost empty record and
+      a briefing that says so in one line. Shot shares are `undefined` rather than 0 until there is a
+      shot to divide, because "they never shoot from range" and "we have not seen them shoot" are
+      different claims.
 - [ ] **⚠️ Dialect eval set and its scorer.** A held-out set of real Egyptian coach language, and a
       harness that scores generated debriefs against it. **Done means:** a number that moves when the
       prompt gets worse. Without this, "the Arabic is good" is an opinion.
@@ -1037,6 +1042,31 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-20 (12)** — **The opponent briefing. The guard is that you scout by watching.**
+  - `scoutingFrom(results, clubId)` counts goals, shots, on-target, xG, cards, where their shots came
+    from and who scored — all from matches actually played. It takes `MatchResult[]`, and a
+    compile-refusal test proves a `Club` cannot be passed in a record's place. A fourth-division
+    manager cannot open a rival's attribute values, so neither can the model; that is the box's whole
+    point and it is now a type error rather than a convention.
+  - **A side you have never played gets an almost empty record, and the briefing says so** in one
+    sentence instead of producing a confident paragraph about nobody. Same rule as the thin trace.
+  - **Shot shares are absent, not zero, until there is a shot to divide.** The `SideStats` discipline
+    again: *they never shoot from range* and *we have not seen them shoot* are different claims and
+    only one is true before kickoff.
+  - Opponent facts live in one block for the same reason the debrief's do — so "every number here was
+    counted from a match we watched" is testable about that block while the instructions stay free to
+    carry numbers of their own. A scorer with no resolved name is **dropped**, never written as a
+    placeholder.
+  - `@dakka/content` is a **devDependency** of `@dakka/ai` now, test-only: the record is built from a
+    real simulated league because "it adds up to what the results say" is only worth asserting
+    against results the engine actually produced. `src/` never imports it and the purity guard scans
+    `src/`.
+  - 449 tests across 32 files. 6 of 6 sabotage probes bite.
+  - **Next box: ⚠️ the dialect eval set and its scorer** — a held-out set of real Egyptian coach
+    language and a number that moves when the prompt gets worse. That one needs real source material;
+    if it cannot be done honestly, push a blocker rather than a plausible scorer. UI boxes stay
+    blocked until the owner picks a direction from `docs/design/boards/`.
 
 - **2026-09-19 (11)** — **The debrief's return trip. The prompt was only half the problem.**
   - `debrief.ts`: the transport is a typed seam and nothing more — Step 8 plugs in the real one. What
