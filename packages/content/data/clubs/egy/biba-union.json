@@ -2,6 +2,10 @@
   "name": "اتحاد ببا",
   "shortName": "ببا",
   "slug": "biba-union",
+  "kit": {
+    "primary": "#5f054b",
+    "secondary": "#f2ede0"
+  },
   "country": "EGY",
   "region": "بني سويف",
   "location": {

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { kitProblems } from './colour.js';
 
 /**
  * The on-disk content schema.
@@ -116,7 +117,33 @@ export const playerSchema = named.extend({
     .optional(),
 });
 
+/**
+ * The club's colours.
+ *
+ * Authored content, like the club's name, not a number derived from anything — these clubs are
+ * fictional, so giving one a green shirt is writing content rather than claiming a fact about the
+ * world. What this field exists to prevent is the other thing: a colour picked at a call site
+ * because a screen needed one, or generated from a hash of the slug. Both of those are invented at
+ * render time, unreviewable, and change when the renderer does.
+ *
+ * Required, with no default. A club with no colours is a build error rather than a blank swatch,
+ * because a blank swatch is how a missing fact gets shipped as a design choice.
+ */
+const kitSchema = z
+  .object({
+    /** The shirt. Dark enough that a paper-coloured number reads on it — see `colour.ts`. */
+    primary: z.string(),
+    /** The trim, printed inside the swatch. Must separate from the shirt or it says nothing. */
+    secondary: z.string(),
+  })
+  .superRefine((kit, ctx) => {
+    for (const problem of kitProblems(kit)) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: problem });
+    }
+  });
+
 export const clubSchema = named.extend({
+  kit: kitSchema,
   country: z.string().length(3),
   region: z.string().min(1),
   /** Decimal degrees. Used for real travel distance, which is a genuine lower-league fatigue input. */

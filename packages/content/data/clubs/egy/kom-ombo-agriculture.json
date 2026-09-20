@@ -2,6 +2,10 @@
   "name": "زراعة كوم أمبو",
   "shortName": "كوم أمبو",
   "slug": "kom-ombo-agriculture",
+  "kit": {
+    "primary": "#4e7215",
+    "secondary": "#f2ede0"
+  },
   "country": "EGY",
   "region": "أسوان",
   "location": {

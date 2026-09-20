@@ -2,6 +2,10 @@
   "name": "مركز شباب سنهور",
   "shortName": "سنهور",
   "slug": "sanhour-youth",
+  "kit": {
+    "primary": "#6f6648",
+    "secondary": "#f2ede0"
+  },
   "country": "EGY",
   "region": "الفيوم",
   "location": {

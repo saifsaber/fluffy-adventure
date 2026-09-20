@@ -2,6 +2,10 @@
   "name": "عمال شبين الكوم",
   "shortName": "شبين",
   "slug": "shibin-elkom-workers",
+  "kit": {
+    "primary": "#1e0000",
+    "secondary": "#d8b24a"
+  },
   "country": "EGY",
   "region": "المنوفية",
   "location": {

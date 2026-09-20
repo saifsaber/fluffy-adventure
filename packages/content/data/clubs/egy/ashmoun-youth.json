@@ -2,6 +2,10 @@
   "name": "مركز شباب أشمون",
   "shortName": "أشمون",
   "slug": "ashmoun-youth",
+  "kit": {
+    "primary": "#a41f22",
+    "secondary": "#f2ede0"
+  },
   "country": "EGY",
   "region": "المنوفية",
   "location": {

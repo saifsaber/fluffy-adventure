@@ -2,6 +2,10 @@
   "name": "نادي بني مزار",
   "shortName": "بني مزار",
   "slug": "beni-mazar-sporting",
+  "kit": {
+    "primary": "#9c543c",
+    "secondary": "#f2ede0"
+  },
   "country": "EGY",
   "region": "المنيا",
   "location": {

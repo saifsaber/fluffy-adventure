@@ -2,6 +2,10 @@
   "name": "سكر نجع حمادي",
   "shortName": "نجع حمادي",
   "slug": "naga-hammadi-sugar",
+  "kit": {
+    "primary": "#462805",
+    "secondary": "#f2ede0"
+  },
   "country": "EGY",
   "region": "قنا",
   "location": {

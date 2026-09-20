@@ -75,8 +75,11 @@ fill is a thing you press, a red rule is a thing you watch. Never a red fill on 
 | `gold`     | `#A8772A` | **fill only**, rare: the keeper, a notable figure. Text on it is `ink`, never paper |
 | `gold-lit` | `#E8C36A` | the same ink **on a reversed block only**                                           |
 
-Club kit colours override `green` and `red` on the fixture bar and the pitch once the data carries
-them. Until then those two are stand-ins and the screens say so — see §9.
+**Club kit colours come from the data and override `green` and `red`** on the fixture bar and the
+pitch. Every club in `@dakka/content` carries a `kit` — a shirt and a trim — validated so that a
+shirt number in `news` reads on it at 4.5:1 and no two clubs in a league print alike. `green` and
+`red` stay as the defaults for a side with no club behind it, and for the _reading_ of a swing:
+towards you, against you.
 
 **Rules.** Chromatic colour never carries meaning on its own: a card also gets a shape, a deficit
 also gets a sign, the opposition is also on the other side of the bar. Contrast minimums and the
@@ -221,7 +224,9 @@ the smallest type on the screen that is not a caption.
 
 **Fixture bar.** The object the whole product hangs off. Two clubs facing each other across a
 `news-deep` score box, each with its kit swatch on its own outer edge, the club at `h1` and its
-governorate at `label`. Before kickoff the box holds the date and time; during and after, the
+governorate at `label`. **The trim is printed inside the swatch**, as a stripe or a band — never as
+tabs breaking its outline, because a trim is validated against the shirt it sits on and not against
+the page, so a cream trim outside the swatch would vanish into the paper. Before kickoff the box holds the date and time; during and after, the
 `scoreline`. Closed top and bottom by `2px ink`. **Each club's name and its number live in one
 element** — that is the bidi rule in §3 made structural, and it is why the scoreline cannot detach
 from the wrong side.
@@ -340,8 +345,9 @@ statistic gets a cause before it is shown.
 - **Never a chart with invented, smoothed, or placeholder data.** No sparkline without a series.
 - **Never name an opposition player on the pitch diagram.** The game does not scout individuals; the
   opposition is presence, not identity.
-- **Never ship a stand-in kit colour without saying it is one.** Club data carries no colours yet
-  (§2), and a fabricated club identity is a fabricated fact like any other.
+- **Never pick a club's colour at a call site**, and never derive one from a hash of its slug. Kit
+  colours are authored content in the club file, reviewed like its name. A colour invented where a
+  screen happened to need one is unreviewable and changes when the renderer does.
 - **Never a shadow, never a gradient** — the halftone screen in §4 is the one texture and it is not a
   gradient anything is separated by.
 - **Never a rounded corner** except the two ink marks named in §4.

@@ -2,6 +2,10 @@
   "name": "ميناء دمياط الجديدة",
   "shortName": "دمياط الجديدة",
   "slug": "new-damietta-port",
+  "kit": {
+    "primary": "#2d416e",
+    "secondary": "#d8b24a"
+  },
   "country": "EGY",
   "region": "دمياط",
   "location": {

@@ -2,6 +2,10 @@
   "name": "نجم ههيا",
   "shortName": "ههيا",
   "slug": "hehia-star",
+  "kit": {
+    "primary": "#0f0028",
+    "secondary": "#d8b24a"
+  },
   "country": "EGY",
   "region": "الشرقية",
   "location": {

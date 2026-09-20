@@ -268,6 +268,9 @@ function build(club) {
     name: club.name,
     shortName: club.shortName,
     slug: club.slug,
+    // `note` stays in the authoring file: it is why a colour was chosen, which a reviewer needs
+    // and a renderer does not. The two colours themselves are validated by `clubSchema`.
+    kit: { primary: club.kit.primary, secondary: club.kit.secondary },
     country: 'EGY',
     region: club.region,
     location: { lat: club.lat, lon: club.lon },

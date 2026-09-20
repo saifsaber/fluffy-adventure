@@ -2,6 +2,10 @@
   "name": "السكة الحديد سوهاج",
   "shortName": "سوهاج",
   "slug": "sohag-railway",
+  "kit": {
+    "primary": "#4b0014",
+    "secondary": "#d8b24a"
+  },
   "country": "EGY",
   "region": "سوهاج",
   "location": {

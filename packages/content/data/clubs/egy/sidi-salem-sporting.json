@@ -2,6 +2,10 @@
   "name": "نادي سيدي سالم",
   "shortName": "سيدي سالم",
   "slug": "sidi-salem-sporting",
+  "kit": {
+    "primary": "#007284",
+    "secondary": "#f2ede0"
+  },
   "country": "EGY",
   "region": "كفر الشيخ",
   "location": {

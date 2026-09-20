@@ -2,6 +2,10 @@
   "name": "نادي أرمنت",
   "shortName": "أرمنت",
   "slug": "armant-sporting",
+  "kit": {
+    "primary": "#7a5a12",
+    "secondary": "#f2ede0"
+  },
   "country": "EGY",
   "region": "الأقصر",
   "location": {

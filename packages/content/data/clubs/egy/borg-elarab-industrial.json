@@ -2,6 +2,10 @@
   "name": "صناعة برج العرب",
   "shortName": "برج العرب",
   "slug": "borg-elarab-industrial",
+  "kit": {
+    "primary": "#931845",
+    "secondary": "#f2ede0"
+  },
   "country": "EGY",
   "region": "الإسكندرية",
   "location": {

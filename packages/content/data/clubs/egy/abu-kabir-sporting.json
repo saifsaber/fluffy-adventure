@@ -2,6 +2,10 @@
   "name": "نادي أبو كبير الرياضي",
   "shortName": "أبو كبير",
   "slug": "abu-kabir-sporting",
+  "kit": {
+    "primary": "#845493",
+    "secondary": "#f2ede0"
+  },
   "country": "EGY",
   "region": "الشرقية",
   "location": {

@@ -683,12 +683,26 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
 > panels, and re-inking them does not make a programme. Do **one box per run**, and do not restyle
 > anything the box does not name.
 
-- [ ] **⚠️ Kit colours and crest, as data.** `packages/content` — every club carries a primary and a
-      secondary colour with a contrast-checked pair, validated by the schema so a club without them
-      is a build error, not a blank swatch. **Done means:** the fixture bar and the pitch diagram
-      read a real colour, and `pnpm lint`-level validation refuses a pair that fails 3:1 against
-      `news`. **Faking it looks like:** a palette generated from the club's name hash. Until this
-      lands, any screen using a stand-in must say it is one.
+- [x] **⚠️ Kit colours, as data.** `packages/content/src/colour.ts` + `kit` on `clubSchema`, and the
+      twenty kits authored in `scripts/clubs.egy-d4.json` — the club files are **generated**, so
+      that identity file is the only place a human writes one. Each kit carries a `note` saying why
+      that colour (cement grey for مغاغة, indigo for غزل كفر الدوار, cane green for كوم أمبو); the
+      note stays in the authoring file because a reviewer needs it and a renderer does not.
+      **Validated, with the design coupling named rather than hidden:** a shirt number is printed in
+      `news`, so the rule is *a paper-coloured number reads on the shirt at 4.5:1* — one rule giving
+      two guarantees, since the number's ink and the page are the same colour. A club with no kit is
+      a build error, not a blank swatch. 14 tests, 12/12 sabotage probes bite.
+      **What the measurement changed.** The separation gate is **ΔE 22**, not the 25 it started at,
+      and the number came from a search rather than a preference: over the 75,069 sRGB colours that
+      are both plausible as a kit and dark enough to take a number, the best achievable separation
+      for twenty clubs is **ΔE 24.8**. A gate set at its own ceiling is one the twenty-first club
+      could never pass. The shipped palette's closest pair is 24.8, so the margin is real.
+      **And it is honest about what it protects:** colour never carries meaning alone here — on the
+      pitch your side is a filled disc and theirs an outlined diamond — so two clubs printing alike
+      costs polish, not correctness. It is a quality gate and says so.
+      **Crests are not in this box and were not attempted.** A crest is artwork, not a colour pair;
+      nothing in the chosen direction needs one, and a generated crest would be the invented-at-
+      render-time thing this box exists to prevent.
 - [ ] **⚠️ Tactics screen — the masthead, the fixture bar, the pitch diagram, the team sheet.**
       `DESIGN.md` §5 names every component; build those and nothing else. The pitch is the centre of
       the screen, the opposition is drawn as presence and never as named players, and the one action
@@ -1116,6 +1130,38 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-20 (16)** — **Club colours, and a threshold set by measurement instead of by taste.**
+  - **The mistake worth recording first.** I wrote the twenty kits straight into the club JSON
+    files. The generator's own idempotence test wiped every one of them within the minute — the
+    club files are **generated** from `scripts/clubs.egy-d4.json`, and that identity file is where
+    a human authors a club. The test caught it immediately, which is the argument for having it.
+  - **The honesty question this box actually turns on**, since "never fabricate" is the project's
+    first rule: these clubs are **fictional** — Matoubas Sporting is a club placed in a real town,
+    not a real club — so giving one a green shirt is *authoring content*, exactly like naming it.
+    What the rule forbids is a number assigned rather than counted, and the thing this box replaces
+    is its true analogue: a colour chosen at a call site because a screen needed one, or generated
+    from a hash of the slug. Both are invented at render time and unreviewable. Colours now live in
+    the identity file with a `note` saying why, and get overwritten the day a real league is
+    licensed.
+  - **I lowered a threshold, and that needs justifying rather than mentioning.** The separation gate
+    started at ΔE 25 and ships at 22. Not because the palette could not reach 25 — because **nothing
+    can**: a farthest-point search over the 75,069 colours that are both plausible as a kit and dark
+    enough to carry a paper-coloured number puts the ceiling for twenty clubs at **24.8**. Setting a
+    gate at its own ceiling means the twenty-first club can never be added. The distinction from the
+    harness thresholds, which do not get lowered, is that those encode football realism — a claim
+    about the world — while this encodes a visual judgement, and the measurement is what turned the
+    judgement into a number.
+  - **Contrast is the wrong measure here and the test says so.** A red and a green of the same
+    darkness have a contrast ratio of ~1 — by that measure they are the same colour, and they are
+    the one pair a fixture bar must never print together. ΔE in Lab is what sees it. That is the
+    only place in this codebase where a WCAG ratio is the wrong tool.
+  - **One design token reached into the content package** — the colour a shirt number is printed in.
+    I named it `SHIRT_NUMBER_INK` and wrote down why, rather than hiding it behind "contrast against
+    white", which would have been a looser rule wearing a universal's clothes and would have shipped
+    four clubs whose numbers measured 3.89:1.
+  - **Next box: the Tactics screen.** The fixture bar and the pitch diagram now have real colours to
+    read, and `readableOn` picks the number's ink so no call site guesses it.
 
 - **2026-09-20 (15)** — **The owner chose C. `DESIGN.md` is frozen on the matchday programme.**
   - **What choosing C actually removes.** A and B both split the product into a paper mode and a

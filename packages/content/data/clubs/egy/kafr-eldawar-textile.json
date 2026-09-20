@@ -2,6 +2,10 @@
   "name": "غزل كفر الدوار",
   "shortName": "كفر الدوار",
   "slug": "kafr-eldawar-textile",
+  "kit": {
+    "primary": "#332a7a",
+    "secondary": "#f2ede0"
+  },
   "country": "EGY",
   "region": "البحيرة",
   "location": {

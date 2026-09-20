@@ -8,3 +8,17 @@ export { generateFixtures, roundRobinRounds, roundsInSeason } from './fixtures.j
 export type { Fixture } from './fixtures.js';
 export { distanceKm, estimatedRoadKm, travelBurden } from './travel.js';
 export type { Coordinates } from './travel.js';
+export {
+  HEX,
+  MIN_CLUB_SEPARATION,
+  MIN_NUMBER_ON_SHIRT,
+  MIN_TRIM_ON_PRIMARY,
+  SHIRT_NUMBER_INK,
+  contrast,
+  deltaE76,
+  kitClashes,
+  kitProblems,
+  luminance,
+  readableOn,
+} from './colour.js';
+export type { Kit, KitClash } from './colour.js';

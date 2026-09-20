@@ -2,6 +2,10 @@
   "name": "أسمنت مغاغة",
   "shortName": "مغاغة",
   "slug": "maghagha-cement",
+  "kit": {
+    "primary": "#3a3a38",
+    "secondary": "#f2ede0"
+  },
   "country": "EGY",
   "region": "المنيا",
   "location": {

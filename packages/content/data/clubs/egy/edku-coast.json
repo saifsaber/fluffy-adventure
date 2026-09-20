@@ -2,6 +2,10 @@
   "name": "نادي إدكو الساحلي",
   "shortName": "إدكو",
   "slug": "edku-coast",
+  "kit": {
+    "primary": "#0066ba",
+    "secondary": "#f2ede0"
+  },
   "country": "EGY",
   "region": "البحيرة",
   "location": {

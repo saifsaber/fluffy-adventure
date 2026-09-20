@@ -2,6 +2,10 @@
   "name": "نادي مطوبس الرياضي",
   "shortName": "مطوبس",
   "slug": "matoubas-sporting",
+  "kit": {
+    "primary": "#1f5134",
+    "secondary": "#f2ede0"
+  },
   "country": "EGY",
   "region": "كفر الشيخ",
   "location": {

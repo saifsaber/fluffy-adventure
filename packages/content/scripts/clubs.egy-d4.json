@@ -3,6 +3,11 @@
     "slug": "matoubas-sporting",
     "name": "نادي مطوبس الرياضي",
     "shortName": "مطوبس",
+    "kit": {
+      "primary": "#1f5134",
+      "secondary": "#f2ede0",
+      "note": "أخضر الدلتا"
+    },
     "region": "كفر الشيخ",
     "lat": 31.2667,
     "lon": 30.8333,
@@ -16,6 +21,11 @@
     "slug": "ashmoun-youth",
     "name": "مركز شباب أشمون",
     "shortName": "أشمون",
+    "kit": {
+      "primary": "#a41f22",
+      "secondary": "#f2ede0",
+      "note": "قرمزي"
+    },
     "region": "المنوفية",
     "lat": 30.2986,
     "lon": 30.9761,
@@ -29,6 +39,11 @@
     "slug": "tokh-union",
     "name": "اتحاد طوخ",
     "shortName": "طوخ",
+    "kit": {
+      "primary": "#905466",
+      "secondary": "#f2ede0",
+      "note": "وردي داكن"
+    },
     "region": "القليوبية",
     "lat": 30.3547,
     "lon": 31.2003,
@@ -42,6 +57,11 @@
     "slug": "abu-kabir-sporting",
     "name": "نادي أبو كبير الرياضي",
     "shortName": "أبو كبير",
+    "kit": {
+      "primary": "#845493",
+      "secondary": "#f2ede0",
+      "note": "بنفسجي"
+    },
     "region": "الشرقية",
     "lat": 30.7286,
     "lon": 31.6706,
@@ -55,6 +75,11 @@
     "slug": "hehia-star",
     "name": "نجم ههيا",
     "shortName": "ههيا",
+    "kit": {
+      "primary": "#0f0028",
+      "secondary": "#d8b24a",
+      "note": "ليلي ونجمة دهب"
+    },
     "region": "الشرقية",
     "lat": 30.6667,
     "lon": 31.6167,
@@ -68,6 +93,11 @@
     "slug": "sidi-salem-sporting",
     "name": "نادي سيدي سالم",
     "shortName": "سيدي سالم",
+    "kit": {
+      "primary": "#007284",
+      "secondary": "#f2ede0",
+      "note": "تركوازي البحيرة"
+    },
     "region": "كفر الشيخ",
     "lat": 31.2667,
     "lon": 30.7833,
@@ -81,6 +111,11 @@
     "slug": "shibin-elkom-workers",
     "name": "عمال شبين الكوم",
     "shortName": "شبين",
+    "kit": {
+      "primary": "#1e0000",
+      "secondary": "#d8b24a",
+      "note": "أسود ودهب"
+    },
     "region": "المنوفية",
     "lat": 30.5525,
     "lon": 31.0094,
@@ -94,6 +129,11 @@
     "slug": "kafr-eldawar-textile",
     "name": "غزل كفر الدوار",
     "shortName": "كفر الدوار",
+    "kit": {
+      "primary": "#332a7a",
+      "secondary": "#f2ede0",
+      "note": "نيلي الغزل"
+    },
     "region": "البحيرة",
     "lat": 31.1342,
     "lon": 30.1289,
@@ -107,6 +147,11 @@
     "slug": "edku-coast",
     "name": "نادي إدكو الساحلي",
     "shortName": "إدكو",
+    "kit": {
+      "primary": "#0066ba",
+      "secondary": "#f2ede0",
+      "note": "أزرق البحر"
+    },
     "region": "البحيرة",
     "lat": 31.3081,
     "lon": 30.2933,
@@ -120,6 +165,11 @@
     "slug": "sanhour-youth",
     "name": "مركز شباب سنهور",
     "shortName": "سنهور",
+    "kit": {
+      "primary": "#6f6648",
+      "secondary": "#f2ede0",
+      "note": "كاكي الفيوم"
+    },
     "region": "الفيوم",
     "lat": 29.4667,
     "lon": 30.7333,
@@ -133,6 +183,11 @@
     "slug": "beni-mazar-sporting",
     "name": "نادي بني مزار",
     "shortName": "بني مزار",
+    "kit": {
+      "primary": "#9c543c",
+      "secondary": "#f2ede0",
+      "note": "طوبي"
+    },
     "region": "المنيا",
     "lat": 28.5053,
     "lon": 30.8006,
@@ -146,6 +201,11 @@
     "slug": "maghagha-cement",
     "name": "أسمنت مغاغة",
     "shortName": "مغاغة",
+    "kit": {
+      "primary": "#3a3a38",
+      "secondary": "#f2ede0",
+      "note": "رمادي الأسمنت"
+    },
     "region": "المنيا",
     "lat": 28.6461,
     "lon": 30.8433,
@@ -159,6 +219,11 @@
     "slug": "biba-union",
     "name": "اتحاد ببا",
     "shortName": "ببا",
+    "kit": {
+      "primary": "#5f054b",
+      "secondary": "#f2ede0",
+      "note": "بنفسجي غامق"
+    },
     "region": "بني سويف",
     "lat": 28.9236,
     "lon": 30.9822,
@@ -172,6 +237,11 @@
     "slug": "sohag-railway",
     "name": "السكة الحديد سوهاج",
     "shortName": "سوهاج",
+    "kit": {
+      "primary": "#4b0014",
+      "secondary": "#d8b24a",
+      "note": "أحمر داكن ودهب"
+    },
     "region": "سوهاج",
     "lat": 26.5569,
     "lon": 31.6947,
@@ -185,6 +255,11 @@
     "slug": "tahta-sporting",
     "name": "نادي طهطا الرياضي",
     "shortName": "طهطا",
+    "kit": {
+      "primary": "#363f00",
+      "secondary": "#f2ede0",
+      "note": "زيتوني"
+    },
     "region": "سوهاج",
     "lat": 26.7686,
     "lon": 31.5017,
@@ -198,6 +273,11 @@
     "slug": "naga-hammadi-sugar",
     "name": "سكر نجع حمادي",
     "shortName": "نجع حمادي",
+    "kit": {
+      "primary": "#462805",
+      "secondary": "#f2ede0",
+      "note": "بني العسل الأسود"
+    },
     "region": "قنا",
     "lat": 26.05,
     "lon": 32.25,
@@ -211,6 +291,11 @@
     "slug": "armant-sporting",
     "name": "نادي أرمنت",
     "shortName": "أرمنت",
+    "kit": {
+      "primary": "#7a5a12",
+      "secondary": "#f2ede0",
+      "note": "أصفر مغرة"
+    },
     "region": "الأقصر",
     "lat": 25.6167,
     "lon": 32.5333,
@@ -224,6 +309,11 @@
     "slug": "kom-ombo-agriculture",
     "name": "زراعة كوم أمبو",
     "shortName": "كوم أمبو",
+    "kit": {
+      "primary": "#4e7215",
+      "secondary": "#f2ede0",
+      "note": "أخضر القصب"
+    },
     "region": "أسوان",
     "lat": 24.4764,
     "lon": 32.945,
@@ -237,6 +327,11 @@
     "slug": "borg-elarab-industrial",
     "name": "صناعة برج العرب",
     "shortName": "برج العرب",
+    "kit": {
+      "primary": "#931845",
+      "secondary": "#f2ede0",
+      "note": "نبيتي"
+    },
     "region": "الإسكندرية",
     "lat": 30.9167,
     "lon": 29.5333,
@@ -250,6 +345,11 @@
     "slug": "new-damietta-port",
     "name": "ميناء دمياط الجديدة",
     "shortName": "دمياط الجديدة",
+    "kit": {
+      "primary": "#2d416e",
+      "secondary": "#d8b24a",
+      "note": "كحلي الميناء"
+    },
     "region": "دمياط",
     "lat": 31.4444,
     "lon": 31.6544,
