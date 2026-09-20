@@ -754,9 +754,24 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
 > a JSON blob is the anti-pattern being corrected — Modareb's 1.2 MB `localStorage` career cannot be
 > queried, shared, leaderboarded or recovered.
 
-- [ ] **`apps/api` — Fastify skeleton.** Health, error shape, config, and `@dakka/engine` wired as
-      server-authoritative resolution. **Done means:** the same seed resolves identically on client
-      and server, asserted by a test that runs both.
+- [x] **`apps/api` — Fastify skeleton.** Health, one typed error shape, validated config, and
+      `POST /match` resolving server-side. 17 API tests + a structural guard; 11/11 sabotage probes
+      bite once the eleventh was made bite-able — see the Log for why the first version of it could
+      not.
+      **The line this box actually draws: choices cross it, capabilities never do.** A `MatchInput`
+      carries squads and attributes, so accepting one over the wire would let a client field an
+      eleven it invented and call the result server-authoritative. The body names clubs by slug and
+      says which way three dials point; the server builds the fixture from its own content. Every
+      object in the schema is `.strict()`, so a body carrying `squad` or `reputation` is **refused**
+      rather than accepted-and-ignored — which would read, to whoever wrote the client, as though
+      the field did something.
+      **New package `@dakka/fixture`**, because the client plays offline and the server is
+      authoritative: `buildFixture` and `seedOf` now live in one place that both run. `apps/web`
+      re-exports it and is otherwise unchanged.
+      **Done means, met:** a test plays the same choices through the **browser's** assembly path
+      (`buildLeague` over raw JSON) and through the service over HTTP, and requires the payloads to
+      be identical strings. That covers the two real risks — two loaders producing different
+      content, and floats surviving JSON differently than they survive memory.
 - [ ] **Postgres schema — core tables and migrations.** `users` · `managers` · `careers` · `seasons`
       · `competitions` · `clubs` · `players` · `squads` · `tactics` · `fixtures` · `matches`.
       Normalised, indexed per blueprint §5.
@@ -1164,6 +1179,28 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-20 (19)** — **The API, and a sabotage probe that could not bite.**
+  - **The probe worth writing down.** I changed `seedOf` expecting the client and the server to
+    disagree. Nothing failed — because they import the same module, so the change moved both. That
+    is the guarantee working, and it means the determinism test **cannot** catch the failure it is
+    named after: it proves the two loaders agree and that JSON survives the trip, and it can never
+    prove nobody wrote a second builder, because a second builder would never reach it.
+  - **So the property is held structurally instead.** `packages/fixture/test/one-builder.test.ts`
+    scans every application source for `matchId` or `competitionId` — the two constructors you
+    cannot assemble a `MatchInput` without — and fails if an app imports either. Same shape as the
+    AI package's purity guard. Verified by adding one import to a screen and watching it fail.
+  - **The boundary rule, stated once so the next endpoint inherits it:** a client sends what it is
+    entitled to **decide**, never what it is **made of**. `.strict()` is what enforces it, and
+    accepting-and-ignoring would be worse than refusing, because it looks like it worked.
+  - **Config refuses rather than falls back.** A service that boots with half its configuration
+    missing fails later, somewhere less obvious, in front of a user. No secrets in the file and no
+    `process.env` outside it — when a model key arrives it arrives as a required field.
+  - **A TypeScript trap for the next tick:** `app.inject` is overloaded three ways and the bare call
+    resolves to an intersection with none of the response's properties on it. Name the types
+    (`InjectOptions`, `Response`) from `light-my-request`, which `apps/api` now declares.
+  - **Next box: the Postgres schema.** `@dakka/fixture` is where a stored career's choices will be
+    rehydrated from, and `seedOf` is already the natural primary key for a match.
 
 - **2026-09-20 (18)** — **Matchday, and the number I did not print.**
   - **The replay reads the match back; it does not play one.** `simulate` resolves a whole match in

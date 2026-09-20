@@ -13,7 +13,8 @@
     "@dakka/content": "workspace:*",
     "@dakka/engine": "workspace:*",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "@dakka/fixture": "workspace:*"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.0.0",
