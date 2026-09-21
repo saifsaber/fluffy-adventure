@@ -4,21 +4,9 @@
     "rootDir": ".",
     "outDir": "dist",
     "composite": true,
+    "lib": ["ES2023", "DOM"],
     "types": ["node"]
   },
   "include": ["src/**/*.ts", "test/**/*.ts"],
-  "references": [
-    {
-      "path": "../engine"
-    },
-    {
-      "path": "../content"
-    },
-    {
-      "path": "../fixture"
-    },
-    {
-      "path": "../sync"
-    }
-  ]
+  "references": [{ "path": "../engine" }, { "path": "../fixture" }]
 }

@@ -845,9 +845,25 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
       and shadow theirs with something that can drift, and what it decides is who reads whose
       career. `src/local-auth.ts` stands one up for the tests and the local database, outside
       `migrations/`. 8/8 sabotage probes bite.
-- [ ] **⚠️ Cloud save and offline sync.** IndexedDB replayable write-queue, server authoritative,
-      client writes carry their seeds. **Done means:** a test that plays offline, reconnects, and
-      ends with the server and client agreeing. **Faking it looks like:** last-write-wins.
+- [x] **⚠️ Cloud save and offline sync.** `packages/sync` + `packages/db/src/apply.ts` +
+      migration 0005. **Done means** is met by a test that plays three matches offline, fails a
+      reconnection, reconnects, and ends with the database holding exactly what the client saw —
+      seeds, scores, traces and the decision.
+      **Last-write-wins never comes up, because nothing here queues state.** A generic app queues a
+      *row*: two clients send their version and somebody loses. This queues **intents** — the
+      choices a manager made — and the server replays them through the same deterministic engine
+      and keeps its own result. There is no version to choose between.
+      **The client's score travels as a claim, not as data.** The server compares its derivation
+      and, when they differ, reports a **divergence** and keeps its own answer. With a
+      deterministic engine that can only mean the two sides ran different engine versions or
+      different content — a bug that wants a person, not a merge.
+      **Three outcomes and no fourth.** Applied, already (a retry after a lost acknowledgement costs
+      nothing — `applied_intents` is keyed by the *client's* uuid), and rejected, which **stays
+      queued**. A transport that throws leaves the whole batch queued, so a dropped connection costs
+      a player nothing.
+      **The queue's rules are tested against both stores** — in memory and in real IndexedDB via
+      `fake-indexeddb` — so a rule that holds in a test holds in the browser. 11/11 sabotage probes
+      bite.
 
 ### Step 9 — the season loop (Week 3)
 
@@ -1241,6 +1257,31 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-21 (24)** — **Sync without a merge, because there is nothing to merge.**
+  - **The box names the failure — *faking it looks like last-write-wins* — and the design makes it
+    unaskable.** The queue holds the manager's choices, not the client's state; the server replays
+    them deterministically and keeps its own answer. A "conflict" would require two versions of the
+    same fact, and there is only ever one: the server's derivation.
+  - **A divergence is a first-class outcome, not a conflict.** The client's score is checked and
+    discarded. When it disagrees the server stores what it derived and says so, because with this
+    engine disagreement can only mean different engine versions or different content — something a
+    person should see, not something to quietly resolve.
+  - **An intent played on another engine is refused, not replayed.** Replaying it here would
+    produce a different match and silently rewrite what the player watched. It stays queued for a
+    client that has updated, which is the honest outcome of an engine that moved underneath
+    somebody.
+  - **A uuid intent id is a real constraint, and the test found out the hard way.** My first test
+    used readable ids like `match-1` and Postgres refused them. Keeping the column as `uuid` is
+    right: a client numbering its intents 1, 2, 3 collides with every other client, and the second
+    player's match would be swallowed as *already applied*. Two devices have to mint ids without
+    talking to each other.
+  - **`fake-indexeddb` is a real implementation, not a mock**, so the queue's rules run against both
+    stores — ordering by an autoincrement key rather than the client's clock, because a device whose
+    clock jumps must not reorder its own history.
+  - **For the next tick (Step 9, the season loop):** `applyIntent` currently takes `careerId` and
+    `seasonId` from the caller and inserts a fixture per match. Once a season exists, fixtures are
+    generated up front and the intent should name the fixture it played rather than create one.
 
 - **2026-09-21 (23)** — **The database refuses, not the handler.**
   - **The test is written so it can only pass for the right reason.** No query in it filters by
