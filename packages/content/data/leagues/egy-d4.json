@@ -5,9 +5,19 @@
   "country": "EGY",
   "tier": 4,
   "roundRobin": 2,
-  "promotion": { "automatic": 2, "playoff": 2 },
-  "relegation": { "automatic": 2 },
-  "points": { "win": 3, "draw": 1, "loss": 0 },
+  "promotion": {
+    "automatic": 2,
+    "playoff": 2
+  },
+  "relegation": {
+    "automatic": 2
+  },
+  "points": {
+    "win": 3,
+    "draw": 1,
+    "loss": 0
+  },
+  "tieBreak": ["goal_difference", "goals_for", "wins"],
   "clubs": [
     "matoubas-sporting",
     "ashmoun-youth",

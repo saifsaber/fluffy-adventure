@@ -45,8 +45,8 @@ beforeAll(async () => {
 
   const competition = await one(
     `insert into competitions (slug, name, short_name, country, tier, round_robin,
-       promotion_automatic, promotion_playoff, relegation_automatic, points_win, points_draw, points_loss)
-     values ('egy-d4', 'د4', 'د4', 'EGY', 4, 2, 2, 2, 2, 3, 1, 0) returning id`,
+       promotion_automatic, promotion_playoff, relegation_automatic, points_win, points_draw, points_loss, tie_break)
+     values ('egy-d4', 'د4', 'د4', 'EGY', 4, 2, 2, 2, 2, 3, 1, 0, '{goal_difference,goals_for}') returning id`,
   );
   const clubIds = new Map<string, string>();
   for (const club of league.data.slice(0, 2)) {

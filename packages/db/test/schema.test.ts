@@ -43,8 +43,8 @@ beforeAll(async () => {
     `insert into competitions
        (slug, name, short_name, country, tier, round_robin,
         promotion_automatic, promotion_playoff, relegation_automatic,
-        points_win, points_draw, points_loss)
-     values ('egy-d4', 'الدرجة الرابعة', 'د4', 'EGY', 4, 2, 2, 2, 2, 3, 1, 0)
+        points_win, points_draw, points_loss, tie_break)
+     values ('egy-d4', 'الدرجة الرابعة', 'د4', 'EGY', 4, 2, 2, 2, 2, 3, 1, 0, '{goal_difference,goals_for}')
      returning id`,
   );
   const club = async (slug: string, primary: string) =>
@@ -138,8 +138,8 @@ describe('a league is data, not code', () => {
       `insert into competitions
          (slug, name, short_name, country, tier, round_robin,
           promotion_automatic, promotion_playoff, relegation_automatic,
-          points_win, points_draw, points_loss)
-       values ('xyz-cup', 'Cup', 'Cup', 'XYZ', 1, 1, 0, 0, 0, 2, 1, 0)`,
+          points_win, points_draw, points_loss, tie_break)
+       values ('xyz-cup', 'Cup', 'Cup', 'XYZ', 1, 1, 0, 0, 0, 2, 1, 0, '{head_to_head}')`,
     );
     const row = await db.query<{ points_win: number }>(
       `select points_win from competitions where slug = 'xyz-cup'`,

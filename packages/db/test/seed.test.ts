@@ -182,6 +182,22 @@ describe('the season is queryable', () => {
     }
   });
 
+  it('carries the competition\u2019s tie-break rules across', async () => {
+    // Content gained the field for the season state machine; without it here a table loaded from
+    // the database would have to be ordered by a rule in code, and "a league is data" would stop
+    // being true the first time that happened.
+    //
+    // An array of a *custom enum* comes back from this driver as the raw Postgres literal —
+    // `{goal_difference,goals_for,wins}` — because there is no registered parser for the type.
+    // Worth knowing before somebody reads one of these columns and gets a string where they
+    // expected an array.
+    const rules = await db.query<{ tie_break: string }>(
+      `select tie_break::text from competitions where slug = 'egy-d4'`,
+    );
+    const stored = (rules.rows[0]?.tie_break ?? '').replace(/^\{|\}$/g, '').split(',');
+    expect(stored).toEqual([...league.league.tieBreak]);
+  });
+
   it('keeps the kit colours a screen will read', async () => {
     const kits = await db.query<{ n: number }>(
       `select count(*)::int as n from clubs where kit_primary ~ '^#[0-9a-f]{6}$'`,

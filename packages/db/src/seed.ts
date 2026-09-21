@@ -54,8 +54,8 @@ export async function seedLeague(
   const competition = await client.query<{ id: string }>(
     `insert into competitions (slug, name, short_name, country, tier, round_robin,
        promotion_automatic, promotion_playoff, relegation_automatic,
-       points_win, points_draw, points_loss)
-     values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+       points_win, points_draw, points_loss, tie_break)
+     values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
      on conflict (slug) do update set
        name = excluded.name, short_name = excluded.short_name, country = excluded.country,
        tier = excluded.tier, round_robin = excluded.round_robin,
@@ -63,7 +63,7 @@ export async function seedLeague(
        promotion_playoff = excluded.promotion_playoff,
        relegation_automatic = excluded.relegation_automatic,
        points_win = excluded.points_win, points_draw = excluded.points_draw,
-       points_loss = excluded.points_loss
+       points_loss = excluded.points_loss, tie_break = excluded.tie_break
      returning id`,
     [
       league.slug,
@@ -78,6 +78,7 @@ export async function seedLeague(
       league.points.win,
       league.points.draw,
       league.points.loss,
+      `{${league.tieBreak.join(',')}}`,
     ],
   );
   const competitionId = competition.rows[0]?.id as string;

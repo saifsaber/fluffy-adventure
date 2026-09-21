@@ -867,8 +867,20 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
 
 ### Step 9 — the season loop (Week 3)
 
-- [ ] **Season state machine** — fixtures → matchday → result → standings → season end. Pure and
-      deterministic, in a package, not in a component.
+- [x] **Season state machine** — `packages/season`, pure and deterministic: no clock, no
+      randomness, no I/O. `startSeason` → `nextRound` → `record` → `standings` → `seasonEnd`.
+      **The table is never stored.** Every column is recomputed from the results, so there is no
+      second source of truth to drift the first time a result is corrected — the same rule the rest
+      of the product lives under, applied to the one number football players stare at most.
+      **`tieBreak` is now a league field**, because this is exactly where a hardcoded rule would
+      make "a league is data" false: England and Germany go to goal difference, Italy and Spain
+      settle it head-to-head first. Added to `leagueSchema`, to the Egyptian file, and to
+      `competitions` (migration 0006) so content and database still agree.
+      **Level clubs share a position** — 1, 2, 2, 4. An index-based rank prints 1, 2, 3, 4 and
+      claims a separation the competition's own rules did not make.
+      **`seasonEnd` answers only when the season is over.** Telling somebody they are relegated in
+      March is how a product loses a player. 17 tests, 10/10 sabotage probes bite — after three of
+      them found real holes (see the Log).
 - [ ] **Board objectives, confidence and sack risk.** Derived from results the way everything else
       here is derived. **Faking it looks like:** a confidence bar that moves by a hand-tuned amount
       per result instead of being computed from the objective and the table.
@@ -1257,6 +1269,29 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-21 (25)** — **The season, and three tests that were passing for the wrong reason.**
+  - **The sabotage pass earned its keep.** Three probes stayed silent, and all three were my tests
+    being weak rather than the code being right:
+    1. *The tie-break order is hardcoded* — my test played a season where every club finished level,
+       so swapping `tieBreak` changed nothing. Rewritten around four clubs who all end on one win
+       and one defeat, where goal difference and goals scored **disagree**; the two orders now differ
+       at second place. Writing it also caught my own arithmetic: I asserted the wrong club first,
+       having forgotten one of them wins a match too.
+    2. *Points come from a constant* — the Egyptian file uses 3-1-0, so a hardcoded 3-1-0 agreed
+       with it. Now a competition worth two for a win separates them.
+    3. *A league may omit its tie-break rules* — nothing asserted the field was required. It is now.
+  - **`tieBreak` is a field, not a branch.** A standings function that picks its own order is a rule
+    in code where the schema promised data, and it is the exact thing global-strategy §8.4 forbids.
+    It travels all the way through: schema → league file → `competitions` column → seed.
+  - **A driver detail worth remembering:** an array of a *custom enum* comes back from PGlite as the
+    raw Postgres literal, `{goal_difference,goals_for,wins}`, not as an array. Anyone reading one of
+    those columns will get a string where they expect a list.
+  - **For the next tick (board objectives, ⚠️):** `standings()` already gives position, points and
+    games remaining, which is everything an objective needs to be *derived* rather than hand-tuned.
+    The box's own warning — a confidence bar that moves by a fixed amount per result — is avoided by
+    computing from the objective and the table, and `seasonEnd` is the shape to copy: answer nothing
+    until the answer exists.
 
 - **2026-09-21 (24)** — **Sync without a merge, because there is nothing to merge.**
   - **The box names the failure — *faking it looks like last-write-wins* — and the design makes it

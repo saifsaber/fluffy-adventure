@@ -2,7 +2,34 @@ import { execFileSync } from 'node:child_process';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { DATA_ROOT, listLeagues, loadLeague, ContentError, clubSchema } from '../src/index.js';
+import {
+  DATA_ROOT,
+  ContentError,
+  clubSchema,
+  leagueSchema,
+  listLeagues,
+  loadLeague,
+} from '../src/index.js';
+
+describe('a competition carries its own rules', () => {
+  it('refuses a league that does not say how a tie is broken', () => {
+    // Without the field a standings function has to pick, and picking is a rule in code where the
+    // schema promised data. England and Germany go to goal difference; Italy and Spain settle it
+    // head-to-head first.
+    const { tieBreak, ...without } = loadLeague(DATA_ROOT, 'egy-d4').league;
+    expect(tieBreak.length).toBeGreaterThan(0);
+    expect(leagueSchema.safeParse(without).success).toBe(false);
+  });
+
+  it('refuses the same tie-break twice', () => {
+    const league = loadLeague(DATA_ROOT, 'egy-d4').league;
+    const result = leagueSchema.safeParse({
+      ...league,
+      tieBreak: ['goal_difference', 'goal_difference'],
+    });
+    expect(result.success).toBe(false);
+  });
+});
 
 describe('the Egyptian fourth division loads', () => {
   const { league, clubs } = loadLeague(DATA_ROOT, 'egy-d4');

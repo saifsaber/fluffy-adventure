@@ -176,6 +176,21 @@ export const leagueSchema = named.extend({
   }),
   relegation: z.object({ automatic: z.number().int().min(0) }),
   points: z.object({ win: z.number().int(), draw: z.number().int(), loss: z.number().int() }),
+  /**
+   * How a tie on points is broken, in order.
+   *
+   * A field rather than a branch, because this is exactly where football cultures differ and
+   * exactly where a hardcoded rule would make "a league is data" false: England and Germany go to
+   * goal difference, Italy and Spain settle it head-to-head first. A country whose league needs a
+   * different order is a different array here, not an `if` in a standings function.
+   *
+   * Points always come first and are not listed. Anything still level after the whole list is
+   * level, and the table says so rather than inventing a separator.
+   */
+  tieBreak: z
+    .array(z.enum(['goal_difference', 'goals_for', 'wins', 'head_to_head']))
+    .min(1)
+    .refine((order) => new Set(order).size === order.length, 'each tie-break may appear only once'),
   /** Club slugs, resolved against data/clubs/<country>/. */
   clubs: z.array(slug).min(2),
 });
