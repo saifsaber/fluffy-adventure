@@ -84,6 +84,18 @@ export {
   type TraceInput,
 } from './trace.js';
 
+export {
+  ROLE_DEMANDS,
+  ROLE_FIT_SPREAD,
+  YARDSTICK,
+  attribute,
+  isKeeperRole,
+  roleFit,
+  roleRating,
+  yardstickRating,
+} from './roles.js';
+export type { AttributeName } from './roles.js';
+
 export { PENALTY_XG, XG_ANCHORS, expectedGoals, isOnTarget, resolveShot } from './xg.js';
 export type { XgAnchor } from './xg.js';
 export type {

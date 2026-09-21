@@ -1,5 +1,6 @@
 import { pairedDifference, type Measured } from './counterfactual.js';
 import { simulate } from './simulate.js';
+import { roleFit } from './roles.js';
 import { bandCompetence } from './space.js';
 import type { Side } from './chain.js';
 import type { PlayerId } from './types/ids.js';
@@ -94,9 +95,13 @@ export function baselineTactics(squad: readonly Player[]): Tactics {
 
     const natural = available.filter((player) => naturalIn(player, position));
     const pool = natural.length > 0 ? natural : available;
+    // What a player is worth in this slot is his quality in the band **times his fit for the job**.
+    // Picking on band competence alone put the squad's best passer in front of the back four and
+    // called it an anchor — the selection that role fit exists to price.
+    const worth = (player: Player): number => bandCompetence(player, band) * roleFit(player, role);
     let best = pool[0] as Player;
     for (const player of pool) {
-      if (bandCompetence(player, band) > bandCompetence(best, band)) best = player;
+      if (worth(player) > worth(best)) best = player;
     }
     taken.add(best.id);
     startingXI.push({ playerId: best.id, position, role });

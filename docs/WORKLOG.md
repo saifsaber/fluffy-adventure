@@ -931,7 +931,41 @@ intents that would fix it. That is a persistence box, not a season box.
 
 ### Step 10 — squad depth (Week 4)
 
-- [ ] **Roles and traits** — beyond the role fit the engine already reads.
+- [x] **Roles — the fit the engine did not read.** `packages/engine/src/roles.ts`. The box said
+      *beyond the role fit the engine already reads*; the survey found there was none. A role moved
+      a player (`ROLE_DRIFT`) and tired him (`ROLE_EFFORT`) — both about the **instruction** — and
+      nothing anywhere asked the manager's actual question: *can this player do this job?*
+      **Fit is a ratio of two means of the same player's own attributes**, so it is scale-free: a
+      uniformly better player has the same fit, and role fit therefore cannot become a second copy
+      of squad quality. `ROLE_DEMANDS` names the five attributes each role is judged on; the
+      yardstick it is measured against is the **union of what every role of that kind demands**,
+      which is what centres the whole model — measured at **1.004** over 6,600 player-role pairs of
+      the real league.
+      **`preferredRoles` is deliberately still not read.** The squad generator writes it from the
+      slot and biases no attribute to match, so a player labelled `stopper` has no more tackling
+      than the `ball_playing_defender` beside him. A game number derived from that label would be
+      assigned rather than counted. Recorded under "## Blocked" as a content box.
+      **The baseline manager now picks for the job**, `bandCompetence × roleFit`, because the team
+      sheet is the first place a role decides anything.
+      Harness paired over **100 seasons / 38,000 matches**, role fit off vs on: goals 2.726 → 2.742,
+      shots 24.713 → 24.781, home 0.333 → 0.332, xG corr 0.903 → 0.905, champion 82.24 → 82.08,
+      stronger-side wins **0.631 → 0.625**. All seven thresholds met both ways.
+      16 engine tests + 5 measured against the real league, **9/9 sabotage probes bite** — after
+      three of them found tests passing for the wrong reason.
+- [ ] **⚠️ Traits — the second axis, and the one that is easy to fake.** A trait is not a bonus and
+      not a rating: it is a named thing a player *does* in a specific context — cuts inside, shoots
+      from distance, dives into tackles, stays up at corners. **Done means** each trait changes a
+      transition the chain already computes, in a context the chain can already see, and the same
+      trait can cost as well as pay. **Faking it looks like:** a list of adjectives that resolve to
+      `+3 finishing`, which is a rating with a nicer name.
+      **What roles left you.** `packages/engine/src/roles.ts` is the pattern to copy: a
+      `Record<PlayerRole, …>` table so an unregistered entry is a build error, a scale-free
+      construction so the axis cannot become a second copy of squad quality, a measurement over the
+      real league *before* the constant is chosen, and a paired 100-season harness run either side.
+      The harder part here is the one roles did not have: a trait has to reach the **chain**, not
+      just the presence grid, and the chain is where a careless multiplier would be invisible.
+      **A trait must also be content**, authored per player — and today nothing in the schema
+      carries one, so this box starts in `packages/content` and not in the engine.
 - [ ] **Personality**, and how it reaches the dressing room without deciding an outcome.
 - [ ] **⚠️ Training and development.** Player progression must be inspectable: attribute history is
       versioned (blueprint §5) so a rise can be explained. **Faking it looks like:** a random walk
@@ -1256,6 +1290,38 @@ order — they are the same problem understood three times over, and later ones 
     `dakka-engine-rules` §6 requires anyway.
   - Verify with `pnpm causes`. A test in `packages/harness/test/causes.test.ts` stops the surviving
     13 from shrinking further, and will fail loudly if an engine change loses one.
+  - **`ROLE_MISFIT` is now the cheapest of the five to emit, and it is a different problem from the
+    other four.** Since the roles box there is a real number behind it: `roleFit` is computed per
+    player per selection, so a side's misfit is a standing property of its presence map — exactly
+    like `MIDFIELD_OUTNUMBERED`, which fires in a quarter of matches. The reason the other four are
+    hard (an effect spread over twenty minutes, always outbid by a shot) **does not apply to it at
+    all**. What emitting it would take, in order:
+    1. `causesFor()` in `space.ts` adds it when the **attacking** side's own role-fit loss is large
+       enough to name, with the magnitude that produced it, next to the other shape causes.
+    2. `CAUSE_REGISTRY.ROLE_MISFIT.favours` changes from `neither` to `defence`. That is the
+       decision, and it is a real one: `neither` currently means *direction-blind, so nothing may be
+       attributed to it*, and `strongestFavouring` skips it for that reason. It becomes directional
+       only because the cause would be emitted for **one side's own misfit** — which can cut exactly
+       one way — and the code has to make that restriction structural rather than remembered.
+    3. Threshold and phrasing: `OVERLOAD`/`MISMATCH` are in weighted bodies; a misfit loss is in the
+       same units, so it needs its own measured floor from `pnpm causes`, not a guess.
+    **The cost of getting it wrong** is a debrief that blames a manager's team sheet for a shot that
+    was blocked for a different reason — a confident, specific, fluent lie, which is worse here than
+    silence. That is why this is written down rather than done in the same tick as the model.
+
+- **`preferredRoles` is a label with nothing behind it.** Every player carries one, the schema
+  validates it, and `scripts/generate-squads.mjs` writes it straight from the squad slot in `SHAPE`
+  — while `attr()` biases attributes by position group and club style and **never by the role**. So
+  the `stopper` and the `ball_playing_defender` in the same back four are drawn from one
+  distribution, and the label describes nothing about either of them.
+  - **Why the engine does not read it.** Role fit is computed from attributes for exactly this
+    reason. Reading the label instead would be deriving a game number from an assignment rather
+    than from something counted, which is the one pattern this product exists to refuse.
+  - **What fixes it** is a content box, not an engine one: bias each player's attributes toward the
+    demands of his slot's role in the generator, by a stated amount, then regenerate. That changes
+    every squad in the league, so it needs its own paired harness run — and it would make
+    `preferredRoles` true, at which point a *declared* preference is worth reading as a second
+    signal beside the attributes.
 
 - **Refero MCP — connected, but the account has no active plan.** The server is registered and
   reachable; every tool call comes back `NO_SUBSCRIPTION` with
@@ -1309,6 +1375,45 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-21 (28)** — **Role fit: can this player do this job?**
+  - **The box's premise was wrong, and that was the finding.** It said "beyond the role fit the
+    engine already reads". There was none. `ROLE_DRIFT` moved a player and `ROLE_EFFORT` tired him —
+    both properties of the *instruction* — and no line of the engine asked whether the man could
+    carry it out. The blueprint has listed role fit as a matchup input since §3 was written.
+  - **Scale-free is the property that makes it a model.** Fit is `roleRating / yardstick`, two means
+    of the same player's own attributes, so multiplying every attribute he has by any factor leaves
+    it unchanged. Without that it would have been a second copy of squad quality, and every harness
+    threshold would have moved for a reason nobody could name. The paired 100-season run says it
+    worked: stronger-side wins went **down**, 0.631 → 0.625, because a weaker squad can now get more
+    out of what it has.
+  - **Centred by construction, not by tuning.** The yardstick is the union of what every role of
+    that kind demands, so the mean fit over the league is 1 by arithmetic rather than by choosing a
+    constant until it looked right. Measured: **1.004** over 6,600 pairs. Any hand-listed reference
+    would drift off 1 the first time a role was added.
+  - **Measured first, then chosen.** The ratio runs 0.77–1.27 across the real league with a 5th–95th
+    of 0.909–1.105. `ROLE_FIT_SPREAD = 0.5` was picked against that distribution, the way
+    `COMPETENCE_SPREAD` was, and a harness test now holds role fit narrower than the spread between
+    the players themselves — the line between a tactical choice worth optimising and a second squad
+    rating.
+  - **Three tests were passing for the wrong reason, and the probes found all three.** The presence
+    test twice: `anchor`'s demands overlap the middle band through `decisions`, and the CDM's
+    footprint reaches the defensive band where four more overlap — so a shaping meant to change only
+    *fit* was changing band competence, and the test would have passed with role fit deleted. It now
+    shapes on `crossing` versus `heading`, which **no band reads**, and asserts all three band
+    competences equal first. The keeper test likewise: a flat fixture keeper reads the same either
+    way, so judging a keeper on the outfield yardstick was invisible until a test used a keeper who
+    is genuinely poor outside his area. **This is the named anti-pattern in its fourth and fifth
+    costumes** — a case that matches the only thing under test is invisible to it.
+  - **`preferredRoles` stays unread, on purpose**, and that is now written down where it will be
+    found: the generator writes the label from the slot and biases no attribute to match it.
+  - **`ROLE_MISFIT` still never fires**, and for the first time there is something real behind it —
+    see the note under "## Blocked" for exactly what emitting it would take and what it would cost
+    to get wrong.
+  - 748 tests across 50 files. Harness green at 20 and at 100 seasons, paired both ways. `pnpm
+    causes` unchanged: the surviving 13 are all still there.
+  - **For the next tick:** the box was split, because it was two. Roles are done; **traits** are
+    their own box and start in `packages/content`, since no player carries one today.
 
 - **2026-09-21 (27)** — **The dashboard, and the career loop that makes it honest.**
   - **The five questions are answered by `packages/dashboard`, and four of them can decline.** A

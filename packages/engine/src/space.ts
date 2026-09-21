@@ -1,6 +1,7 @@
 import type { Player } from './types/player.js';
 import type { PlayerId } from './types/ids.js';
 import type { PlayerRole } from './types/player.js';
+import { roleFit } from './roles.js';
 import type {
   Compactness,
   LineHeight,
@@ -495,14 +496,18 @@ export function tacticalPresence(side: SideSetup): Grid {
       throw new Error(`tacticalPresence: ${selection.playerId} is selected but was not supplied`);
     }
     const footprint = FOOTPRINTS[selection.position];
-    const fitness = fitnessFactor(player.condition.fitness);
+    // Two multipliers, and they are different kinds of thing. Fitness is how much of himself he has
+    // left; role fit is how much of himself the job he was given actually uses. Neither moves
+    // presence around — both change how much there is, which is why they sit here rather than among
+    // the conserved transfers below.
+    const carried = fitnessFactor(player.condition.fitness) * roleFit(player, selection.role);
 
     let own = emptyGrid();
     for (const zone of footprint.occupies) {
-      own[zone] += bandCompetence(player, bandOf(zone)) * fitness;
+      own[zone] += bandCompetence(player, bandOf(zone)) * carried;
     }
     for (const zone of footprint.contests) {
-      own[zone] += CONTEST_WEIGHT * bandCompetence(player, bandOf(zone)) * fitness;
+      own[zone] += CONTEST_WEIGHT * bandCompetence(player, bandOf(zone)) * carried;
     }
 
     const drift = ROLE_DRIFT[selection.role];
