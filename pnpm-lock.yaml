@@ -218,6 +218,19 @@ importers:
         specifier: workspace:*
         version: link:../content
 
+  packages/board:
+    dependencies:
+      '@dakka/engine':
+        specifier: workspace:*
+        version: link:../engine
+      '@dakka/season':
+        specifier: workspace:*
+        version: link:../season
+    devDependencies:
+      '@dakka/content':
+        specifier: workspace:*
+        version: link:../content
+
   packages/content:
     dependencies:
       '@dakka/engine':

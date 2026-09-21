@@ -881,9 +881,26 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
       **`seasonEnd` answers only when the season is over.** Telling somebody they are relegated in
       March is how a product loses a player. 17 tests, 10/10 sabotage probes bite — after three of
       them found real holes (see the Log).
-- [ ] **Board objectives, confidence and sack risk.** Derived from results the way everything else
-      here is derived. **Faking it looks like:** a confidence bar that moves by a hand-tuned amount
-      per result instead of being computed from the objective and the table.
+- [x] **Board objectives, confidence and sack risk.** `packages/board` — and **there is no
+      confidence bar in it**, deliberately. The box names the failure (*a bar that moves by a
+      hand-tuned amount per result*), and a bar is tempting precisely because it looks like
+      knowledge while being a constant somebody picked. `43%` after a defeat is the same species as
+      the competitor's invented shot count.
+      **The outlook has three values and two of them are proofs.** `certain`: the best club below
+      the line cannot catch you even winning every remaining match while you win none.
+      `impossible`: you cannot reach the line even winning out. `undecided`: arithmetic does not
+      settle it, so neither do we — what is reported instead is the gap, the games left, the points
+      still winnable, and the rate the gap implies. *You need 2.1 a game and you are getting 1.2* is
+      a fact; *confidence 43%* is a decoration. A test asserts the shape has no `confidence` or
+      `sackRisk` field to tune.
+      **Sack risk is the board's own rule, evaluated.** A board's patience is not something to model
+      from outside — it is authored beside the objective (`until_impossible`, or `adrift_by` N
+      points from game M) and every verdict carries the condition it was judged against, so a player
+      can always ask what would have to change. A `warned` band exists where you are within one win
+      of the threshold: a fact about distance, not a colour.
+      **A test caught a real bug in the model.** Holding the objective line, the club that can take
+      your place is the best one *below* it; my first version compared you with yourself, giving a
+      margin of nought and a certainty that never arrived. 15 tests, 10/10 sabotage probes bite.
 - [ ] **⚠️ The dashboard — the five questions, answered in under three seconds** (blueprint §6):
       what needs a decision today · what changed since last time · am I on track · what is my biggest
       risk · what does my assistant think, and why. **Done means:** every tile states a fact that
@@ -1269,6 +1286,30 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-21 (26)** — **The board, with no confidence bar in it.**
+  - **The refusal is the design.** Any 0–1 confidence needs a mapping from a points margin to a
+    percentage, and that mapping is a constant somebody chose. So the module says `certain` only
+    when the rival cannot catch you winning out, `impossible` only when you cannot catch them
+    winning out, and `undecided` otherwise — with the gap, the games left and the required rate
+    beside it. Two of the three are proofs; the third admits it is not one.
+  - **Sack risk is the board's rule, not our model of a board.** Patience is authored data
+    (`until_impossible`, or `adrift_by` N from game M) and the verdict carries its own condition.
+    That keeps it in the same family as `tieBreak` and kit colours: the thing that varies is a
+    field, and the code evaluates it.
+  - **The test found a real bug, not a typo.** When you already hold the objective line, comparing
+    your points with the club *on* the line means comparing you with yourself: margin nought, and
+    `certain` unreachable even after winning the league. The rival above the line is the best club
+    *below* it. `assess` now reports which club it measured against, so the number can be traced.
+  - **Two probes stayed silent for the same reason as last tick** — the Egyptian file is 3-1-0, so a
+    hardcoded 3 agrees with it. A competition worth two for a win separates them, and that test now
+    exists. Worth noting as a pattern: **any constant that matches the only league we ship is
+    invisible to every test over that league.**
+  - **For the next tick (⚠️ the dashboard, blueprint §6):** the five questions now have real
+    sources — `assess()` answers *am I on track* and *what is my biggest risk* with a condition
+    attached, `standings()` answers where you are, and the trace answers *what does my assistant
+    think, and why*. The one with nothing behind it yet is *what changed since I last played*,
+    which needs a notion of a visit; the honest version is a marker on the career, not a guess.
 
 - **2026-09-21 (25)** — **The season, and three tests that were passing for the wrong reason.**
   - **The sabotage pass earned its keep.** Three probes stayed silent, and all three were my tests

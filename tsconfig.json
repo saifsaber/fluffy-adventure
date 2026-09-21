@@ -20,6 +20,9 @@
       "path": "./packages/season"
     },
     {
+      "path": "./packages/board"
+    },
+    {
       "path": "./packages/sync"
     },
     {
