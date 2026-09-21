@@ -805,8 +805,26 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
       **A decision is stored whole or not at all:** a CHECK ties the shape to the kind, so half a
       substitution — a row nobody can read back into an `InMatchDecision` — cannot exist.
       12/12 sabotage probes bite, after two of them exposed real defects (see the Log).
-- [ ] **`pnpm db:seed`** — the Egyptian fourth division into Postgres from the existing data files.
-      **Done means:** a queryable season, and the seed is idempotent.
+- [x] **`pnpm db:seed`** — the Egyptian fourth division into Postgres, and it **runs**.
+      First run: 3 migrations applied, **20 clubs, 420 players, 10,380 attribute rows**. Second run:
+      *schema already current, 0 new attribute rows.* Idempotence shown end to end, not only in a
+      test. It writes to a file-backed Postgres under `.dakka/db` by default, which is a real
+      database you can query today.
+      **Migration 0003 came out of building it**, which is what migrations are for: the attribute
+      baseline is append-only, so `on conflict do update` is refused by the trigger and a second run
+      would otherwise append a duplicate. A partial unique index — one baseline row per player per
+      attribute, only where `career_id is null and source = 'content'` — gives the seed an
+      `on conflict do nothing` that needs no UPDATE, and leaves a career's own history free to grow.
+      **Idempotent is not inert:** an edited club file reaches the database on the next run, and a
+      test holds that separately from "a second run changes nothing".
+      **A queryable season, precisely:** the seed stops at content. A season here belongs to a
+      career — the league exists as something someone is playing through — so fixtures are generated
+      when a career starts, and what the seed must guarantee is that they *can* be. A test generates
+      the 38 rounds from the seeded entries and the competition's own `round_robin` column and
+      checks every club appears in every round.
+      **With `DATABASE_URL` set the command refuses**, and says why: a server client this repository
+      has never run against a server is a code path nobody has executed. It arrives with the
+      Supabase box, tested against something real. 6/6 sabotage probes bite.
 - [ ] **⚠️ Auth and row-level security.** Supabase. **Done means:** a test proves one career cannot
       read another's rows. **Faking it looks like:** filtering by `career_id` in application code
       only.
@@ -1206,6 +1224,30 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-21 (22)** — **The seed runs, twice, and the second time does nothing.**
+  - **A command nobody can run is not done**, so `pnpm db:seed` writes to a file-backed Postgres
+    under `.dakka/db` rather than requiring a server that does not exist here. Output of the two
+    runs, verbatim: `applied 0001_core, 0002_trace_and_decisions, 0003_content_baseline_once` /
+    `20 clubs, 420 players, 10380 new attribute rows`, then `schema already current (3 migrations)`
+    / `0 new attribute rows`.
+  - **Building it needed a schema change, and that is the point of migrations.** `on conflict do
+    update` is refused on an append-only table, and without a constraint a re-run appends a second
+    baseline. 0003 adds a partial unique index so the seed can say `do nothing` — no UPDATE, one
+    baseline per player per attribute, and a career's own attribute history still free to grow.
+  - **I read the output instead of trusting it, and caught my own query.** A first sanity check
+    printed `squad: 519` per club; the data was right and the query was wrong — joining players to
+    attributes multiplies rows, so `count(p.id)` was counting attribute rows. With
+    `count(distinct p.id)` every club has 21. Worth recording because the number looked plausible
+    enough to report.
+  - **What "a queryable season" honestly means here.** Seasons are career-scoped by design, so a
+    content seed cannot create one without inventing a user. The seed guarantees the ingredients
+    instead, and a test generates the full 38-round double round-robin from the seeded entries and
+    the competition's own `round_robin` column.
+  - **For the next tick (auth and RLS, ⚠️):** `users` holds no credential on purpose, and the
+    server client is deliberately unwritten — that box is where both get done against something
+    real. The RLS test the box asks for has a natural shape here: seed two careers, then prove a
+    query as one manager cannot see the other's matches.
 
 - **2026-09-21 (21)** — **Traces as rows, and two enums that had already drifted.**
   - **The failure that mattered.** The first insert of real content was rejected:

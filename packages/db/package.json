@@ -9,9 +9,14 @@
     ".": "./src/index.ts"
   },
   "devDependencies": {
-    "@electric-sql/pglite": "^0.5.8",
     "@dakka/engine": "workspace:*",
-    "@dakka/content": "workspace:*",
     "@dakka/fixture": "workspace:*"
+  },
+  "scripts": {
+    "db:seed": "tsx src/seed-main.ts"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.5.8",
+    "@dakka/content": "workspace:*"
   }
 }

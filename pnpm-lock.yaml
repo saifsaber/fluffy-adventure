@@ -228,19 +228,20 @@ importers:
         version: 3.25.76
 
   packages/db:
-    devDependencies:
+    dependencies:
       '@dakka/content':
         specifier: workspace:*
         version: link:../content
+      '@electric-sql/pglite':
+        specifier: ^0.5.8
+        version: 0.5.8
+    devDependencies:
       '@dakka/engine':
         specifier: workspace:*
         version: link:../engine
       '@dakka/fixture':
         specifier: workspace:*
         version: link:../fixture
-      '@electric-sql/pglite':
-        specifier: ^0.5.8
-        version: 0.5.8
 
   packages/engine: {}
 

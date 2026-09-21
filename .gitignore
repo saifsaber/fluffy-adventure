@@ -12,3 +12,6 @@ coverage
 # Server config belongs in local scope (`/root/.claude.json`), which is where `claude mcp add`
 # puts it by default.
 .mcp.json
+
+# The local file-backed Postgres that `pnpm db:seed` writes to.
+.dakka/
