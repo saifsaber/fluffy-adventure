@@ -789,9 +789,22 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
       not are recorded in the Log with why.
       `users` deliberately holds **no credential** — Supabase owns auth, and a second copy of a
       secret is a second place to leak it from a public repository.
-- [ ] **`match_traces` and `decisions` as first-class tables**, not logs. Every match stores its
-      seed so any match in history can be re-simulated or re-explained. This is what the
-      counterfactual and the coaching arc are built on.
+- [x] **`match_traces` and `decisions` as first-class tables**, not logs.
+      `migrations/0002_trace_and_decisions.sql`. **One row per swing moment**, cause in an enum,
+      `(match_id, minute)` indexed as blueprint §5 names — plus `trace_actors`,
+      `match_win_probability` (one row a minute, so the momentum of a season is a query), and
+      `decision_valuations`. Storing the trace as JSON on `matches` would have been three lines and
+      would have made the coaching arc a migration away.
+      **The test that carries the box is a round trip:** a real simulated match's whole trace goes
+      in as rows and comes back out equal to the trace the engine produced. A blob would pass that
+      trivially and answer none of the queries beside it.
+      **A valuation stores the measurement, never the verdict.** There is no `significant` column —
+      significance is a conclusion drawn from a delta and its error at a chosen threshold, and a
+      stored conclusion drifts away from the numbers it came from. `engine_version` is on it because
+      a rebalanced engine values the same decision differently.
+      **A decision is stored whole or not at all:** a CHECK ties the shape to the kind, so half a
+      substitution — a row nobody can read back into an `InMatchDecision` — cannot exist.
+      12/12 sabotage probes bite, after two of them exposed real defects (see the Log).
 - [ ] **`pnpm db:seed`** — the Egyptian fourth division into Postgres from the existing data files.
       **Done means:** a queryable season, and the seed is idempotent.
 - [ ] **⚠️ Auth and row-level security.** Supabase. **Done means:** a test proves one career cannot
@@ -1193,6 +1206,29 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-21 (21)** — **Traces as rows, and two enums that had already drifted.**
+  - **The failure that mattered.** The first insert of real content was rejected:
+    `invalid input value for enum role_code: "touchline_winger"`. I had written `role_code` and
+    `attribute_code` in migration 0001 **from memory** — inventing four roles that do not exist,
+    missing one that does, and omitting all five goalkeeper attributes. The schema had been wrong
+    since the moment it was written and every test passed, because nothing compared the two lists.
+  - **So now something does.** Four enum-agreement tests read the source of truth at runtime —
+    `roleSchema.options`, `positionSchema.options`, the keys of `playerSchema`'s attribute groups,
+    `ALL_CAUSES`, `ALL_DECISION_KINDS` — and require the database's enums to match exactly. An enum
+    nobody compares is an enum that has already drifted; this one had, on day one.
+  - **One engine change, additive only:** `ALL_DECISION_KINDS`, built from
+    `Record<InMatchDecision['kind'], true>` so a new kind is a build error. It exists because a
+    union cannot be enumerated outside TypeScript and the database needs to. No simulation logic
+    touched; `pnpm harness` still meets all 7 thresholds.
+  - **A test of mine was passing for the wrong reason.** The win-probability check used minute 200
+    *and* probability 1.4, so the minute rule refused it and the probability rule could be deleted
+    without anything failing. Split into two tests, each with only one thing wrong.
+  - **For the next tick (`pnpm db:seed`):** every enum the seed will touch is now verified against
+    the content, so an insert that typechecks should load. `competition_entries` is waiting.
+    Attribute rows go in with `source = 'content'` and `career_id = null`; goalkeeper attributes are
+    optional in the content, so a non-keeper simply has no row for them — which is the schema's
+    difference between *not measured* and *zero*, kept.
 
 - **2026-09-20 (20)** — **The schema, and a rule that would have refused to forget someone.**
   - **The test caught a real flaw in my own migration.** The append-only trigger refused DELETE on

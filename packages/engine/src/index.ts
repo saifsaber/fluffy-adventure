@@ -142,6 +142,8 @@ export type {
 
 export type { Club, Stadium } from './types/club.js';
 
+export { ALL_DECISION_KINDS } from './types/tactics.js';
+
 export type {
   Compactness,
   InMatchDecision,

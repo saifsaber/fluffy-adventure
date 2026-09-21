@@ -18,12 +18,15 @@ create type position_code as enum (
   'GK', 'RB', 'LB', 'CB', 'RWB', 'LWB', 'CDM', 'CM', 'CAM', 'RM', 'LM', 'RW', 'LW', 'ST', 'CF'
 );
 
+-- Read off `roleSchema` in packages/content, not written from memory. The first version of this
+-- file was written from memory and invented four roles while missing `touchline_winger`, which
+-- the very first insert of real content rejected. A test now compares the two lists.
 create type role_code as enum (
   'sweeper_keeper', 'shot_stopper', 'ball_playing_defender', 'stopper', 'covering_defender',
   'attacking_fullback', 'inverted_fullback', 'defensive_fullback', 'anchor',
-  'deep_lying_playmaker', 'box_to_box', 'ball_winner', 'mezzala', 'advanced_playmaker',
-  'shadow_striker', 'winger', 'inside_forward', 'wide_playmaker', 'target_man', 'poacher',
-  'complete_forward', 'false_nine', 'pressing_forward'
+  'deep_lying_playmaker', 'box_to_box', 'ball_winner', 'advanced_playmaker', 'shadow_striker',
+  'inside_forward', 'touchline_winger', 'target_man', 'poacher', 'false_nine',
+  'complete_forward'
 );
 
 create type mentality as enum (
@@ -43,12 +46,13 @@ create type fixture_status as enum ('scheduled', 'played', 'abandoned');
 -- Why a row of attribute history exists. `content` is the dataset baseline a career starts from.
 create type attribute_source as enum ('content', 'training', 'match', 'ageing');
 
+-- The 29 attributes `playerSchema` actually carries, keeper attributes included, spelled exactly
+-- as the content spells them so the mapping is identity and there is nowhere for a typo to hide.
 create type attribute_code as enum (
-  'finishing', 'long_shots', 'passing', 'vision', 'crossing', 'dribbling', 'first_touch',
-  'heading', 'tackling', 'marking',
-  'pace', 'acceleration', 'strength', 'stamina', 'agility', 'jumping',
-  'positioning', 'decisions', 'composure', 'concentration', 'work_rate', 'leadership',
-  'teamwork', 'aggression'
+  'finishing', 'longShots', 'passing', 'vision', 'crossing', 'dribbling', 'firstTouch',
+  'heading', 'tackling', 'marking', 'pace', 'acceleration', 'strength', 'stamina', 'agility',
+  'jumping', 'positioning', 'decisions', 'composure', 'workRate', 'aggression', 'anticipation',
+  'teamwork', 'leadership', 'handling', 'reflexes', 'aerialReach', 'distribution', 'oneOnOnes'
 );
 
 -- ---------------------------------------------------------------------------------------------

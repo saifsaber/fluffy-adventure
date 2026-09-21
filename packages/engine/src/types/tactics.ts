@@ -77,3 +77,27 @@ export type InMatchDecision =
       readonly playerId: PlayerId;
       readonly to: PlayerRole;
     };
+
+/**
+ * Every kind of in-match decision, as a value rather than only a type.
+ *
+ * `InMatchDecision` is a union, so nothing outside TypeScript can enumerate it — and the database
+ * needs to, because `decisions` is a first-class table with an enum column. Two lists that must
+ * agree and cannot be compared are two lists that will drift; this one exists so a test can hold
+ * the schema to the engine.
+ *
+ * `Record<InMatchDecision['kind'], true>` is what makes it exhaustive: a new kind of decision that
+ * is not added here is a build error, the same guard `CAUSE_REGISTRY` gives the trace.
+ */
+const DECISION_KINDS: Record<InMatchDecision['kind'], true> = {
+  substitution: true,
+  mentality: true,
+  line_height: true,
+  pressing: true,
+  tempo: true,
+  width: true,
+  compactness: true,
+  role_change: true,
+};
+
+export const ALL_DECISION_KINDS = Object.keys(DECISION_KINDS) as readonly InMatchDecision['kind'][];
