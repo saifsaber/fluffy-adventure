@@ -4,7 +4,7 @@ import { ALL_CAUSES, ALL_DECISION_KINDS, baselineTactics, simulate } from '@dakk
 import type { MatchResult } from '@dakka/engine';
 import { DATA_ROOT, loadLeague, playerSchema, positionSchema, roleSchema } from '@dakka/content';
 import { buildFixture } from '@dakka/fixture';
-import { loadMigrations, migrate, type SqlClient } from '../src/index.js';
+import { SUPABASE_AUTH_SHIM, loadMigrations, migrate, type SqlClient } from '../src/index.js';
 
 /**
  * The trace and the decisions, stored as rows you can ask questions of.
@@ -33,6 +33,9 @@ let ids: Record<string, string>;
 let played: MatchResult;
 
 beforeAll(async () => {
+  // 0004's policies resolve `auth.uid()` as they are created, so the stand-in for Supabase's
+  // auth schema goes up first — the same order as a real deployment, where it already exists.
+  await db.exec(SUPABASE_AUTH_SHIM);
   await migrate(client, loadMigrations());
 
   const one = async (sql: string, params: readonly unknown[] = []): Promise<string> => {

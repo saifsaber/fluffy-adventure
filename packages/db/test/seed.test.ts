@@ -3,6 +3,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { DATA_ROOT, generateFixtures, loadLeague } from '@dakka/content';
 import type { ClubId } from '@dakka/engine';
 import {
+  SUPABASE_AUTH_SHIM,
   loadMigrations,
   migrate,
   seedLeague,
@@ -27,6 +28,9 @@ const league = loadLeague(DATA_ROOT, 'egy-d4');
 let first: SeedCounts;
 
 beforeAll(async () => {
+  // 0004's policies resolve `auth.uid()` as they are created, so the stand-in for Supabase's
+  // auth schema goes up first — the same order as a real deployment, where it already exists.
+  await db.exec(SUPABASE_AUTH_SHIM);
   await migrate(client, loadMigrations());
   first = await seedLeague(client, league.league, league.data);
 });

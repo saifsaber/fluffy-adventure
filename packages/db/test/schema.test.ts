@@ -1,6 +1,6 @@
 import { PGlite } from '@electric-sql/pglite';
 import { beforeAll, describe, expect, it } from 'vitest';
-import { loadMigrations, migrate, type SqlClient } from '../src/index.js';
+import { SUPABASE_AUTH_SHIM, loadMigrations, migrate, type SqlClient } from '../src/index.js';
 
 /**
  * The schema, run against a real Postgres rather than described.
@@ -29,6 +29,9 @@ const fails = async (sql: string, params: readonly unknown[] = []): Promise<stri
 let ids: Record<string, string>;
 
 beforeAll(async () => {
+  // 0004's policies resolve `auth.uid()` as they are created, so the stand-in for Supabase's
+  // auth schema goes up first — the same order as a real deployment, where it already exists.
+  await db.exec(SUPABASE_AUTH_SHIM);
   await migrate(client, migrations);
 
   const one = async (sql: string, params: readonly unknown[] = []): Promise<string> => {

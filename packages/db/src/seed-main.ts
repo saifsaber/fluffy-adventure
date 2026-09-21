@@ -3,6 +3,7 @@ import { mkdirSync } from 'node:fs';
 import { isAbsolute, join, resolve } from 'node:path';
 import { PGlite } from '@electric-sql/pglite';
 import { DATA_ROOT, loadLeague } from '@dakka/content';
+import { SUPABASE_AUTH_SHIM } from './local-auth.js';
 import { loadMigrations, migrate } from './migrate-entry.js';
 import { seedLeague } from './seed.js';
 import type { SqlClient } from './migrate.js';
@@ -40,6 +41,11 @@ mkdirSync(dir, { recursive: true });
 
 const db = new PGlite(dir);
 const client = db as unknown as SqlClient;
+
+// Supabase's `auth` schema exists before any migration runs there; the local database has to be
+// given one, because 0004's policies resolve `auth.uid()` the moment they are created. This is the
+// only place the stand-in is applied, and it is never part of a migration.
+await db.exec(SUPABASE_AUTH_SHIM);
 
 const applied = await migrate(client, loadMigrations());
 console.log(

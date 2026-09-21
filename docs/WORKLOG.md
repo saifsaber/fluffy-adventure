@@ -825,9 +825,26 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
       **With `DATABASE_URL` set the command refuses**, and says why: a server client this repository
       has never run against a server is a code path nobody has executed. It arrives with the
       Supabase box, tested against something real. 6/6 sabotage probes bite.
-- [ ] **⚠️ Auth and row-level security.** Supabase. **Done means:** a test proves one career cannot
-      read another's rows. **Faking it looks like:** filtering by `career_id` in application code
-      only.
+- [x] **⚠️ Auth and row-level security.** `migrations/0004_row_level_security.sql` — real Postgres
+      RLS, policies written against Supabase's `auth.uid()`, tested against real Postgres.
+      **The box names the failure and the test is built to catch it.** *Faking it looks like
+      filtering by `career_id` in application code only* — so **every query in the test runs with no
+      ownership filter at all**. `select seed from matches` as manager A returns A's match and
+      nothing else because Postgres will not hand over the other rows, not because a handler
+      remembered a `where`.
+      **Two things stop it being a comfortable test.** It runs as the `authenticated` role, because
+      a table's owner — and PGlite's superuser — bypasses RLS and would make every policy look like
+      it worked; and `force row level security` is on every user table, with a catalogue query
+      asserting it. Writes are covered too: `with check` on every policy, so one manager cannot
+      append a decision to another's history.
+      **The split that matters:** content is public (the league is the league), and
+      `player_attributes` is *both* — the dataset baseline reads publicly, a career's own
+      progression does not. A signed-out caller is refused the personal tables at the **grant**
+      level, before any policy is consulted, which is the stronger of the two outcomes.
+      **`auth.uid()` is deliberately not in the migration.** A copy would be deployed to Supabase
+      and shadow theirs with something that can drift, and what it decides is who reads whose
+      career. `src/local-auth.ts` stands one up for the tests and the local database, outside
+      `migrations/`. 8/8 sabotage probes bite.
 - [ ] **⚠️ Cloud save and offline sync.** IndexedDB replayable write-queue, server authoritative,
       client writes carry their seeds. **Done means:** a test that plays offline, reconnects, and
       ends with the server and client agreeing. **Faking it looks like:** last-write-wins.
@@ -1224,6 +1241,32 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-21 (23)** — **The database refuses, not the handler.**
+  - **The test is written so it can only pass for the right reason.** No query in it filters by
+    ownership. If `select seed from matches` needed a `where career_id = $1` to return one row, the
+    test would be checking the query rather than the schema — which is the exact failure the box
+    names.
+  - **Two ways this kind of test fools people, both closed.** A table's owner bypasses RLS, and
+    PGlite connects as superuser, so the suite `set role authenticated` and every user table carries
+    `force row level security`, asserted from `pg_class` rather than assumed. And reading is only
+    half: `with check` on every policy, with a test that one manager cannot append a decision to
+    another's history.
+  - **A better-than-expected result, kept.** A signed-out caller does not get zero rows from
+    `careers` — it gets `permission denied`, because `anon` holds no grant on it at all. That is the
+    outer defence and does not depend on a policy being right; the test now asserts the refusal
+    rather than the empty result.
+  - **`auth.uid()` is not in the migration, on purpose.** Defining it there would deploy a copy to
+    Supabase that shadows theirs and can drift, and what it decides is who may read whose career.
+    It lives in `src/local-auth.ts`, outside `migrations/`. Ordering matters and cost me a failing
+    run: Postgres resolves `auth.uid()` when a policy is *created*, so the stand-in has to be up
+    before 0004 — which mirrors Supabase, where the `auth` schema predates every migration.
+  - **`pnpm db:seed` still runs**, and I checked rather than assumed: adding 0004 broke it first,
+    because the local database had no `auth` schema. Both runs verified again, 4 migrations applied
+    then `0 new attribute rows`.
+  - **For the next tick (cloud save and offline sync, ⚠️):** the server client is still unwritten
+    and still deliberate. That box needs one, and it is the first place a real connection can be
+    tested — `signIn`/`signOut` in `src/local-auth.ts` are the shape a session takes.
 
 - **2026-09-21 (22)** — **The seed runs, twice, and the second time does nothing.**
   - **A command nobody can run is not done**, so `pnpm db:seed` writes to a file-backed Postgres
