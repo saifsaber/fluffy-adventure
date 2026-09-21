@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
-import { DATA_ROOT, loadLeague } from '@dakka/content';
+import { DATA_ROOT, generateFixtures, loadLeague } from '@dakka/content';
 import { App } from '../src/App.js';
 import { LocaleProvider } from '../src/i18n/context.js';
 import type { BrowserLeague } from '../src/data/league.js';
@@ -25,20 +25,49 @@ const open = (locale: Locale) =>
     </LocaleProvider>,
   );
 
+const TAKE: Record<Locale, string> = { en: 'Take the job', 'ar-EG': 'يلا نبدأ' };
+const SET_UP: Record<Locale, string> = { en: 'Set up the match', 'ar-EG': 'جهّز الماتش' };
 const PLAY: Record<Locale, string> = { en: 'Play the match', 'ar-EG': 'إلعب الماتش' };
 const SKIP: Record<Locale, string> = { en: 'Take me to full time', 'ar-EG': 'ودّيني على النهاية' };
+const RECORD: Record<Locale, string> = {
+  en: 'Record it and carry on',
+  'ar-EG': 'سجّل النتيجة وكمّل',
+};
+
+const click = (name: string) => fireEvent.click(screen.getByRole('button', { name }));
+
+/** Takes the first club on offer, which lands on the dashboard. */
+const takeTheJob = (locale: Locale = 'en') => {
+  open(locale);
+  click(TAKE[locale]);
+};
+
+/** Takes the job and goes on to the fixture the dashboard names. */
+const toSetup = (locale: Locale = 'en') => {
+  takeTheJob(locale);
+  click(SET_UP[locale]);
+};
 
 /** Kicks off and stops on matchday, where the replay is running. */
 const kickOff = (locale: Locale = 'en') => {
-  open(locale);
-  fireEvent.click(screen.getByRole('button', { name: PLAY[locale] }));
+  toSetup(locale);
+  click(PLAY[locale]);
 };
 
 /** Kicks off and leaves the replay immediately — the match is already decided either way. */
 const playMatch = (locale: Locale = 'en') => {
   kickOff(locale);
-  fireEvent.click(screen.getByRole('button', { name: SKIP[locale] }));
+  click(SKIP[locale]);
 };
+
+/** Plays the fixture and records it, which plays out the rest of the round and returns. */
+const playRound = (locale: Locale = 'en') => {
+  playMatch(locale);
+  click(RECORD[locale]);
+};
+
+const drawnTiles = (): readonly string[] =>
+  [...document.querySelectorAll('[data-tile]')].map((node) => node.getAttribute('data-tile') ?? '');
 
 afterEach(() => {
   vi.useRealTimers();
@@ -63,7 +92,7 @@ describe('two locales, one layout', () => {
     fireEvent.click(screen.getByRole('button', { name: 'English' }));
     expect(document.documentElement.dir).toBe('ltr');
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Dakka');
-    expect(screen.getByRole('button', { name: 'Play the match' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: TAKE.en })).toBeTruthy();
   });
 
   it('offers both languages named in themselves, from the first screen', () => {
@@ -82,7 +111,7 @@ describe('two locales, one layout', () => {
 
 describe('picking tactics and playing', () => {
   it('offers the three dials and records a choice', () => {
-    open('en');
+    toSetup('en');
     const approach = screen.getByRole('group', { name: 'Approach' });
     const attacking = within(approach).getByRole('button', { name: 'Attacking' });
     expect(attacking.getAttribute('aria-pressed')).toBe('false');
@@ -96,7 +125,7 @@ describe('picking tactics and playing', () => {
 
   it('says plainly that the eleven is picked for you and the opponent has no manager', () => {
     // Both are true and both would otherwise read as finished features.
-    open('en');
+    toSetup('en');
     expect(screen.getByText(/picks itself for now/)).toBeTruthy();
     expect(screen.getByText(/no manager yet/)).toBeTruthy();
   });
@@ -104,7 +133,7 @@ describe('picking tactics and playing', () => {
   it('plays the match and reports it', () => {
     playMatch();
     expect(screen.getByText('Full time')).toBeTruthy();
-    expect(screen.getByRole('button', { name: 'Play another' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: RECORD.en })).toBeTruthy();
   });
 
   it("keeps each score inside its own club's row, in both directions", () => {
@@ -193,11 +222,11 @@ describe('what your decision was worth', () => {
   });
 
   it('measures the call and reports it with its spread', async () => {
-    open('en');
+    toSetup('en');
     const calls = screen.getByRole('group', { name: 'One call in the match' });
     fireEvent.click(within(calls).getByRole('button', { name: 'Approach' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Play the match' }));
-    fireEvent.click(screen.getByRole('button', { name: SKIP.en }));
+    click(PLAY.en);
+    click(SKIP.en);
 
     fireEvent.click(screen.getByRole('button', { name: 'Run the comparison' }));
     await waitFor(() => expect(screen.getByText('Points')).toBeTruthy(), { timeout: 20000 });
@@ -217,14 +246,21 @@ describe('the tactics screen is a programme, not a form', () => {
 
   it('prints each club in its own colours, read from the data', () => {
     // A hardcoded green would pass every visual check and be exactly the invented-at-render-time
-    // thing the kit box exists to prevent, so this asserts against the data file.
-    open('ar-EG');
-    const [home, away] = league.data;
+    // thing the kit box exists to prevent, so this asserts against the data file — and against the
+    // two clubs the calendar actually paired, rather than the first two in the league file.
+    toSetup('ar-EG');
+    const drawn = [...document.querySelectorAll('[data-club]')].map((node) =>
+      node.getAttribute('data-club'),
+    );
+    expect(drawn).toHaveLength(2);
     const fills = [...document.querySelectorAll<HTMLElement>('[style*="background-color"]')].map(
       (node) => node.style.backgroundColor,
     );
-    expect(fills).toContain(rgb(home?.kit.primary ?? ''));
-    expect(fills).toContain(rgb(away?.kit.primary ?? ''));
+    for (const slug of drawn) {
+      const club = league.data.find((entry) => entry.slug === slug);
+      expect(club, `the bar names a club the league does not have: ${slug}`).toBeDefined();
+      expect(fills).toContain(rgb(club?.kit.primary ?? ''));
+    }
   });
 
   it('draws eleven players and not one more', () => {
@@ -234,27 +270,37 @@ describe('the tactics screen is a programme, not a form', () => {
     //
     // Counted rather than matched by name: the squad generator draws surnames from one pool, so
     // both clubs genuinely share some, and a name-based check would fail on a real coincidence.
-    open('ar-EG');
+    toSetup('ar-EG');
     const diagram = screen.getByRole('img', { name: /تشكيل/ });
     const texts = within(diagram).queryAllByText(/.+/);
     expect(texts).toHaveLength(22); // eleven positions, eleven names
   });
 
   it('says why their half of the diagram is empty instead of leaving it blank', () => {
-    open('ar-EG');
+    toSetup('ar-EG');
     expect(screen.getByText(/مالعبناهمش قبل كده/)).toBeTruthy();
   });
 
-  it('puts the home club on the home side of the fixture bar', () => {
-    // The bar is the fixture, not the two clubs in whatever order the form holds them. Switching
-    // to away has to move you across it.
-    open('en');
-    const order = () =>
-      [...document.querySelectorAll('[data-club]')].map((node) => node.getAttribute('data-club'));
-    const before = order();
-    expect(before).toHaveLength(2);
-    fireEvent.click(screen.getByRole('button', { name: 'Away' }));
-    expect(order()).toEqual([...before].reverse());
+  it('puts the home club on the home side of the fixture bar, from the calendar', () => {
+    // The bar is the fixture, and the fixture is now the season's rather than a dial's: where a
+    // match is played is not something a manager chooses, so there is no control here to flip. The
+    // claim survives the change — the order on the bar has to be the order in the fixture list.
+    toSetup('en');
+    const order = [...document.querySelectorAll('[data-club]')].map((node) =>
+      node.getAttribute('data-club'),
+    );
+    const first = league.league.clubs[0];
+    const opening = generateFixtures(
+      league.league,
+      league.clubs.map((club) => club.id),
+    ).find(
+      (fixture) =>
+        fixture.round === 1 &&
+        (fixture.home === league.clubs[0]?.id || fixture.away === league.clubs[0]?.id),
+    );
+    const slugOf = (id: string) => league.clubs.find((club) => club.id === id)?.slug;
+    expect(first).toBeDefined();
+    expect(order).toEqual([slugOf(opening?.home ?? ''), slugOf(opening?.away ?? '')]);
   });
 });
 
@@ -292,7 +338,7 @@ describe('matchday shows the five things without hunting a tab', () => {
     // summarise.
     vi.useFakeTimers();
     try {
-      open('en');
+      toSetup('en');
       const calls = screen.getByRole('group', { name: 'One call in the match' });
       fireEvent.click(within(calls).getByRole('button', { name: 'Approach' }));
       fireEvent.click(screen.getByRole('button', { name: PLAY.en }));
@@ -320,5 +366,79 @@ describe('matchday shows the five things without hunting a tab', () => {
     kickOff('en');
     fireEvent.click(screen.getByRole('button', { name: SKIP.en }));
     expect(screen.getByText('Full time')).toBeTruthy();
+  });
+});
+
+describe('the dashboard answers five questions and draws nothing else', () => {
+  it('draws only the question it can answer on the first day', () => {
+    // DESIGN.md §1.4 and blueprint §6: no tile exists to fill space. Nothing has been played and
+    // nobody has looked before, so four of the five questions have no answer and no card.
+    takeTheJob('en');
+    expect(drawnTiles()).toEqual(['decision']);
+    expect(screen.getByText('Your decision today')).toBeTruthy();
+    expect(screen.queryByText('Since you last looked')).toBeNull();
+  });
+
+  it('keeps the tiles in the order blueprint §6 asks the questions', () => {
+    playRound('en');
+    const order = ['decision', 'since', 'onTrack', 'risk', 'assistant'];
+    const drawn = drawnTiles();
+    expect(drawn.length).toBeGreaterThan(1);
+    expect(drawn).toEqual(order.filter((question) => drawn.includes(question)));
+  });
+
+  it('earns the tiles by playing rather than by arriving', () => {
+    // "What changed since I last played" cannot be answered on a first visit, and the honest
+    // answer is silence rather than a card reporting that nothing happened. One career, carried
+    // through a whole round, so the two states are the same manager before and after.
+    takeTheJob('en');
+    expect(drawnTiles()).not.toContain('since');
+    expect(drawnTiles()).not.toContain('onTrack');
+
+    click(SET_UP.en);
+    click(PLAY.en);
+    click(SKIP.en);
+    click(RECORD.en);
+
+    expect(drawnTiles()).toContain('since');
+    expect(drawnTiles()).toContain('onTrack');
+    expect(screen.getByText('Matches played in the division')).toBeTruthy();
+  });
+
+  it('carries one action, and it belongs to the only question that asks for a decision', () => {
+    // DESIGN.md §2: one solid red per screen. A second means the screen has no priority.
+    playRound('en');
+    const actions = document.querySelectorAll('.action');
+    expect(actions).toHaveLength(1);
+    expect(actions[0]?.textContent).toBe('Set up the match');
+  });
+
+  it('records the whole round, so the table is played rather than assumed', () => {
+    // The other nine fixtures are simulated by the same engine on the neutral baseline. A league
+    // table filled in by a plausible random draw would look identical here and mean nothing.
+    playRound('en');
+    const played = screen.getByText('Matches played in the division').closest('div');
+    expect(played?.textContent).toContain('10');
+  });
+
+  it('gives every tile it draws a figure that can change', () => {
+    // The box's own "done means": every tile states a fact that changes or asks for a decision. A
+    // tile with no number in it is a tile made of adjectives, which is the thing to delete.
+    playRound('en');
+    const drawn = [...document.querySelectorAll('[data-tile]')];
+    expect(drawn.length).toBeGreaterThan(1);
+    for (const tile of drawn) {
+      const figures = tile.querySelectorAll('.num');
+      expect(figures.length, `${tile.getAttribute('data-tile')} states no figure`).toBeGreaterThan(
+        0,
+      );
+    }
+  });
+
+  it('prints the round only once there is a season behind it', () => {
+    open('en');
+    expect(screen.queryByText('Round')).toBeNull();
+    click(TAKE.en);
+    expect(screen.getByText('Round')).toBeTruthy();
   });
 });

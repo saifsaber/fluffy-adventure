@@ -24,7 +24,7 @@ export type {
   MoraleChange,
 } from './effects.js';
 
-export { PHRASINGS, causeLabel, isControllable } from './phrasing.js';
+export { PHRASINGS, causeLabel, causeLesson, isControllable } from './phrasing.js';
 export type { Phrasing } from './phrasing.js';
 
 export { scoreVoice } from './voice.js';

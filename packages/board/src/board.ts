@@ -92,7 +92,14 @@ function matchesOf(season: Season, club: ClubId) {
   return season.results.filter((result) => result.home === club || result.away === club);
 }
 
-function pointsFrom(season: Season, club: ClubId, take: number): number | undefined {
+/**
+ * Points per game a club has actually taken over its last `take` matches.
+ *
+ * Counted, never smoothed, and exported because the dashboard measures a chasing club against the
+ * one it is chasing over the same window. Two copies of this would be two answers to one question
+ * the first time either changed.
+ */
+export function pointsPerGame(season: Season, club: ClubId, take: number): number | undefined {
   const played = matchesOf(season, club);
   if (played.length === 0) return undefined;
   const window = played.slice(-take);
@@ -165,7 +172,7 @@ export function assess(season: Season, club: ClubId, brief: BoardBrief): Assessm
     gamesRemaining,
     available,
     neededPerGame,
-    recentPerGame: pointsFrom(season, club, FORM_WINDOW),
+    recentPerGame: pointsPerGame(season, club, FORM_WINDOW),
     outlook,
     standing,
     condition,

@@ -28,10 +28,67 @@ export const en: Dictionary = {
   'setup.shape.alt': '{club} on the pitch',
   'setup.opponent.unseen':
     'We have never played them, so there is nothing of theirs to draw. Play them once and their work shows up here.',
+  'start.title': 'Pick the club you are taking over',
+  'start.why':
+    'Everything else follows from this: the table, what the board asks of you, and who you face next.',
+  'start.begin': 'Take the job',
+
+  'masthead.round': 'Round',
+
+  'dash.decision': 'Your decision today',
+  'dash.decision.table': 'Where the two of you stand',
+  'dash.play': 'Set up the match',
+
+  'dash.since': 'Since you last looked',
+  'dash.since.matches': 'Matches played in the division',
+  'dash.since.yours': 'Yours',
+  'dash.since.position': 'Your position',
+  'dash.since.points': 'Your points',
+
+  'dash.onTrack': 'Against the board',
+  'dash.onTrack.position': 'You are',
+  'dash.onTrack.line': 'They asked for',
+  'dash.onTrack.rival': 'Gap to',
+  'dash.onTrack.games': 'Matches left',
+  'dash.onTrack.available': 'Points still winnable',
+  'dash.outlook.certain': 'Settled',
+  'dash.outlook.undecided': 'Open',
+  'dash.outlook.impossible': 'Gone',
+  'dash.outlook.why.certain':
+    'They cannot reach you winning every match left while you win none. Arithmetic, not a forecast.',
+  'dash.outlook.why.undecided':
+    'The arithmetic does not settle it, so neither do we. What is below is what there is.',
+  'dash.outlook.why.impossible':
+    'Winning every match left would still not get you there. Arithmetic, not an opinion.',
+
+  'dash.risk': 'Biggest risk',
+  'dash.risk.sack.at_risk': 'The board is at the line it set',
+  'dash.risk.sack.warned': 'One win from the line the board set',
+  'dash.risk.sack.untilImpossible':
+    'The board said it acts once the objective is arithmetically out of reach.',
+  'dash.risk.sack.adriftBy': 'The board named a distance from the line, and a match to count from.',
+  'dash.risk.sack.threshold': 'The board acts at',
+  'dash.risk.sack.fromGame': 'Counting from match',
+  'dash.risk.adrift': 'Behind the line by',
+  'dash.risk.slack': 'You can still drop',
+  'dash.risk.beforeWindow': 'Matches before the board starts counting',
+  'dash.risk.pace.yours': 'Your rate',
+  'dash.risk.pace.chasing': 'Rate of the club you are chasing',
+  'dash.risk.pace.chased': 'Rate of the club chasing you',
+  'dash.risk.pace.behind': 'Behind by, per match',
+  'dash.risk.pace.window': 'Matches counted',
+  'dash.risk.pace.why': 'Both rates are counted over the same matches. Nothing here is projected.',
+
+  'dash.assistant': 'Your assistant',
+  'dash.assistant.cost': 'Cost you',
+  'dash.assistant.matches': 'Matches it hurt you in',
+  'dash.assistant.read': 'Matches read',
+  'dash.assistant.evidence': 'Minutes',
+  'dash.assistant.counted':
+    'Counted from your own match traces. The reason came out of the match; nobody wrote it for you.',
+
   'setup.title': 'Next match',
   'setup.yourClub': 'Your club',
-  'setup.opponent': 'Opponent',
-  'setup.venue': 'Venue',
   'setup.venue.home': 'At home',
   'setup.venue.away': 'Away',
   'setup.approach': 'Approach',
@@ -61,9 +118,9 @@ export const en: Dictionary = {
   'press.high': 'High',
 
   'result.fullTime': 'Full time',
-  'result.back': 'Play another',
   'result.you': 'You',
   'result.them': 'Them',
+  'result.record': 'Record it and carry on',
   'result.seed': 'Seed',
   'result.seed.why':
     'This is the number that produced the match. Put it back with the same choices and you get the same match again — same goals, same minutes.',

@@ -5,8 +5,11 @@ cause we can point at.** Read `docs/` before changing anything; `docs/decisions/
 
 ## Status
 
-Planning complete. No product code yet. Build order is in
-`docs/01-product/04-build-plan-and-team.md`.
+Steps 1–9 of the build plan are done: content, the engine and its harness, the AI boundary, the
+thin client, persistence and the API, the season, the board, and the dashboard. The loop runs end
+to end in the browser but does not yet survive a reload. Build order is in
+`docs/01-product/04-build-plan-and-team.md`; what happens next is in `docs/WORKLOG.md`, which is
+the single source of truth for it.
 
 ## The three rules that outrank everything
 

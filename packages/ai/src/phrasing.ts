@@ -414,3 +414,13 @@ export const causeLabel = (cause: CauseTag, locale: Locale): string =>
 /** Advice exists only where the manager had a choice. Read from the registry, never duplicated. */
 export const isControllable = (cause: CauseTag): boolean =>
   CAUSE_REGISTRY[cause].agency === 'controllable';
+
+/**
+ * What to do about a cause next time, in this locale, or nothing.
+ *
+ * `undefined` for exactly the causes nobody chose. A screen that wants a lesson for a miss has to
+ * cope with not getting one, which is the point: the absence is the honest answer, and inventing a
+ * sentence to fill the gap is how a debrief starts blaming a manager for luck.
+ */
+export const causeLesson = (cause: CauseTag, locale: Locale): string | undefined =>
+  PHRASINGS[cause][locale].lesson;

@@ -23,6 +23,9 @@
       "path": "./packages/board"
     },
     {
+      "path": "./packages/dashboard"
+    },
+    {
       "path": "./packages/sync"
     },
     {

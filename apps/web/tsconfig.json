@@ -22,6 +22,15 @@
     },
     {
       "path": "../../packages/fixture"
+    },
+    {
+      "path": "../../packages/board"
+    },
+    {
+      "path": "../../packages/season"
+    },
+    {
+      "path": "../../packages/dashboard"
     }
   ]
 }

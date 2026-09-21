@@ -63,7 +63,7 @@ export function ResultScreen({
       </section>
 
       <button type="button" className="button-quiet" onClick={onBack}>
-        {t('result.back')}
+        {t('result.record')}
       </button>
     </div>
   );

@@ -161,15 +161,24 @@ importers:
       '@dakka/ai':
         specifier: workspace:*
         version: link:../../packages/ai
+      '@dakka/board':
+        specifier: workspace:*
+        version: link:../../packages/board
       '@dakka/content':
         specifier: workspace:*
         version: link:../../packages/content
+      '@dakka/dashboard':
+        specifier: workspace:*
+        version: link:../../packages/dashboard
       '@dakka/engine':
         specifier: workspace:*
         version: link:../../packages/engine
       '@dakka/fixture':
         specifier: workspace:*
         version: link:../../packages/fixture
+      '@dakka/season':
+        specifier: workspace:*
+        version: link:../../packages/season
       react:
         specifier: ^19.0.0
         version: 19.3.0
@@ -239,6 +248,22 @@ importers:
       zod:
         specifier: ^3.24.1
         version: 3.25.76
+
+  packages/dashboard:
+    dependencies:
+      '@dakka/board':
+        specifier: workspace:*
+        version: link:../board
+      '@dakka/engine':
+        specifier: workspace:*
+        version: link:../engine
+      '@dakka/season':
+        specifier: workspace:*
+        version: link:../season
+    devDependencies:
+      '@dakka/content':
+        specifier: workspace:*
+        version: link:../content
 
   packages/db:
     dependencies:

@@ -901,10 +901,33 @@ Nothing here is new scope: if a box is not traceable to one of those, it does no
       **A test caught a real bug in the model.** Holding the objective line, the club that can take
       your place is the best one *below* it; my first version compared you with yourself, giving a
       margin of nought and a certainty that never arrived. 15 tests, 10/10 sabotage probes bite.
-- [ ] **⚠️ The dashboard — the five questions, answered in under three seconds** (blueprint §6):
-      what needs a decision today · what changed since last time · am I on track · what is my biggest
-      risk · what does my assistant think, and why. **Done means:** every tile states a fact that
-      changes or requests a decision. A tile that exists to fill space gets deleted.
+- [x] **⚠️ The dashboard — the five questions, answered in under three seconds.** `packages/dashboard`
+      (pure) + `apps/web/src/screens/Dashboard.tsx` + the career loop that makes it true.
+      **Silence is a value, and that is the whole design.** Every question returns an `Answer`:
+      a derived value, or a named `Silence`. `tiles()` draws only the answered ones, so a fresh
+      career shows **one** tile and four questions are simply not there. A dashboard whose five
+      cards must be filled every visit is a dashboard that will one day fill one with something
+      invented — the rule "no tile exists to fill space" is only enforceable if *nothing to say* is
+      representable.
+      **"Since I last played" is a marker, not a memory.** The career stores one number, how many
+      results had been recorded when the manager last looked. Because `record` only appends, the
+      table he saw is `standings(results.slice(0, n))` — **re-derived**, never stored. A first visit
+      says `first_visit`, which is a different thing from `nothing_changed` and a test says so.
+      **The biggest risk is ordered by consequence, not by a score.** Two risks: the board's own
+      patience rule being approached, and going slower than the club your objective turns on. Which
+      is live is arithmetic; only their ranking is a claim, and it is a claim about which outcome is
+      worse rather than coefficients anybody can tune.
+      **The assistant's opinion is counted, then phrased.** The `controllable` cause that cost the
+      most win probability over the recent window, from the manager's own traces, named through
+      `PHRASINGS` — code decides what to raise, language only says it. Circumstantial causes are
+      excluded: advice about a miss implies a control that does not exist.
+      20 dashboard tests + 31 app tests, **16/16 sabotage probes bite** — two after they found real
+      holes in the tests (see the Log).
+
+**Step 9 is complete.** The loop runs end to end in the browser: take a club → dashboard → set up
+the fixture the calendar names → play → record → the whole round is simulated → dashboard again.
+**It does not survive a reload** — the career is React state, and `@dakka/sync` already holds the
+intents that would fix it. That is a persistence box, not a season box.
 
 ### Step 10 — squad depth (Week 4)
 
@@ -1286,6 +1309,48 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-21 (27)** — **The dashboard, and the career loop that makes it honest.**
+  - **The five questions are answered by `packages/dashboard`, and four of them can decline.** A
+    question returns `{answered:true,value}` or `{answered:false,silent}` where `Silence` is a
+    closed union — `first_visit`, `nothing_changed`, `nothing_played`, `no_live_risk`,
+    `no_controllable_cause`, `season_complete`, `no_fixture`. `tiles()` filters, so a silent
+    question has no markup at all: no empty state, no "no data yet", no skeleton. On day one of a
+    career the screen draws exactly one tile.
+  - **What changed since I last played is re-derived, not remembered.** The only thing stored is a
+    count of results seen. Everything else — the position then, the points then — is
+    `standings()` over that prefix, which is sound *because* `record` only appends. Storing the
+    table instead would be a second copy of the standings in the save file, disagreeing with the
+    first the day a result was corrected.
+  - **Two tests were passing for the wrong reason, and the probes found both.** The "before" test
+    used the bottom club of a runaway season, whose points and position never move — so taking the
+    *current* table instead of the prefix gave identical output. The "next fixture" test used a club
+    that happened to be first in its round, so "the fixture this club is in" and "the round's first
+    fixture" were the same thing. **This is the named anti-pattern again** (a constant that matches
+    the only case under test is invisible to it), in its third distinct costume.
+  - **A real modelling error, caught by walking a real career.** The pace risk first measured a
+    manager against `assess`'s `neededPerGame` — which assumes the club on the line takes nothing
+    more. Eight rounds into the Egyptian fourth division that told a club sitting **19th** it needed
+    0.2 points a game and had no risk at all. True, and useless. It now compares two **counted**
+    rates over the same window: yours, and the club your objective actually turns on. *You are
+    taking 1.2 a game and طوخ is taking 1.8* is a fact; *you need 0.2* was an artefact of an
+    assumption printed somewhere else.
+  - **The career loop is real, including the ninety per cent of it the manager is not at.** Playing
+    a fixture records it *and simulates the other nine* through the same engine with both sides on
+    the neutral baseline. A table filled in by a plausible random draw would look identical on
+    screen and mean nothing — that difference is the entire product.
+  - **The screen lost a control, which is an improvement.** Venue was a dial; inside a season it is
+    the calendar's, so it is gone, and `SetupScreen` now hands back only the three dials and the
+    call. A control that cannot change anything is the costume a fake product wears.
+  - **The masthead prints the round now.** It deliberately did not before — there was no season
+    behind it, and `1` would have been the smallest possible fabricated statistic. There is one now.
+  - 726 tests across 48 files. `pnpm lint && pnpm format && pnpm typecheck && pnpm test` green. No
+    engine change, so no harness run.
+  - **For the next tick:** Step 9 is complete. Step 10 opens with **roles and traits**. Two things
+    this box leaves for whoever picks up persistence: the career lives in React state only — a
+    reload starts over, and `@dakka/sync` already has the intents to fix that — and the board brief
+    is derived from the competition's promotion places rather than authored per club, which is
+    honest but blunt (a bottom side is told to go up). Both are noted in the code where they bite.
 
 - **2026-09-21 (26)** — **The board, with no confidence bar in it.**
   - **The refusal is the design.** Any 0–1 confidence needs a mapping from a points margin to a

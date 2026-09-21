@@ -18,6 +18,7 @@ import {
   type Setup,
 } from '../match.js';
 import { int } from '../format.js';
+import type { Dials } from '../career.js';
 
 const APPROACH_KEY: Record<Approach, MessageKey> = {
   defensive: 'mentality.defensive',
@@ -65,11 +66,20 @@ export function SetupScreen({
   onPlay,
 }: {
   readonly league: BrowserLeague;
+  /** The fixture as the season states it, with the manager's dials on top. */
   readonly setup: Setup;
-  readonly onChange: (next: Setup) => void;
+  readonly onChange: (next: Dials) => void;
   readonly onPlay: () => void;
 }) {
   const t = useT();
+  // Only these four travel back. Who, where and which round are facts of the calendar, and a screen
+  // that could send them back is a screen that could quietly change the fixture it was given.
+  const dials: Dials = {
+    approach: setup.approach,
+    line: setup.line,
+    press: setup.press,
+    call: setup.call,
+  };
   const yourClub = clubBySlug(league, setup.yourSlug);
   const theirClub = clubBySlug(league, setup.opponentSlug);
   const yourData = dataBySlug(league, setup.yourSlug);
@@ -120,57 +130,6 @@ export function SetupScreen({
 
       <section className="panel grid gap-4">
         <h2 className="text-h2 font-bold m-0">{t('setup.title')}</h2>
-
-        <label className="grid gap-2">
-          <span className="label">{t('setup.yourClub')}</span>
-          <select
-            className="control"
-            value={setup.yourSlug}
-            onChange={(e) => {
-              const yourSlug = e.target.value;
-              onChange({
-                ...setup,
-                yourSlug,
-                opponentSlug:
-                  yourSlug === setup.opponentSlug
-                    ? (league.clubs.find((c) => c.slug !== yourSlug)?.slug ?? setup.opponentSlug)
-                    : setup.opponentSlug,
-              });
-            }}
-          >
-            {league.clubs.map((club) => (
-              <option key={club.slug} value={club.slug}>
-                {club.shortName}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="grid gap-2">
-          <span className="label">{t('setup.opponent')}</span>
-          <select
-            className="control"
-            value={setup.opponentSlug}
-            onChange={(e) => onChange({ ...setup, opponentSlug: e.target.value })}
-          >
-            {league.clubs
-              .filter((club) => club.slug !== setup.yourSlug)
-              .map((club) => (
-                <option key={club.slug} value={club.slug}>
-                  {club.shortName}
-                </option>
-              ))}
-          </select>
-        </label>
-
-        <Dial
-          label="setup.venue"
-          value={setup.venue}
-          options={['home', 'away'] as const}
-          optionKey={(option) => (option === 'home' ? 'setup.venue.home' : 'setup.venue.away')}
-          onChange={(venue) => onChange({ ...setup, venue })}
-        />
-
         <p className="text-small text-ink-soft m-0">
           {t('setup.attendance')} <span className="num">{int(context.attendance)}</span>
         </p>
@@ -183,21 +142,21 @@ export function SetupScreen({
           value={setup.approach}
           options={APPROACHES}
           optionKey={(option) => APPROACH_KEY[option]}
-          onChange={(approach) => onChange({ ...setup, approach })}
+          onChange={(approach) => onChange({ ...dials, approach })}
         />
         <Dial
           label="setup.line"
           value={setup.line}
           options={LINES}
           optionKey={(option) => LINE_KEY[option]}
-          onChange={(line) => onChange({ ...setup, line })}
+          onChange={(line) => onChange({ ...dials, line })}
         />
         <Dial
           label="setup.press"
           value={setup.press}
           options={PRESSES}
           optionKey={(option) => PRESS_KEY[option]}
-          onChange={(press) => onChange({ ...setup, press })}
+          onChange={(press) => onChange({ ...dials, press })}
         />
       </section>
 
@@ -209,7 +168,7 @@ export function SetupScreen({
           options={CALL_KINDS}
           optionKey={(option) => CALL_KEY[option]}
           onChange={(kind) =>
-            onChange({ ...setup, call: kind === 'none' ? null : defaultCall(kind, minute) })
+            onChange({ ...dials, call: kind === 'none' ? null : defaultCall(kind, minute) })
           }
         />
 
@@ -225,7 +184,7 @@ export function SetupScreen({
                 value={setup.call.minute}
                 onChange={(e) => {
                   const next = Math.min(89, Math.max(1, Number(e.target.value) || 1));
-                  onChange({ ...setup, call: { ...setup.call, minute: next } as Call });
+                  onChange({ ...dials, call: { ...setup.call, minute: next } as Call });
                 }}
               />
             </label>
@@ -236,7 +195,7 @@ export function SetupScreen({
                 value={setup.call.to as Approach}
                 options={APPROACHES}
                 optionKey={(option) => APPROACH_KEY[option]}
-                onChange={(to) => onChange({ ...setup, call: { kind: 'mentality', minute, to } })}
+                onChange={(to) => onChange({ ...dials, call: { kind: 'mentality', minute, to } })}
               />
             )}
             {setup.call.kind === 'line_height' && (
@@ -245,7 +204,7 @@ export function SetupScreen({
                 value={setup.call.to as Line}
                 options={LINES}
                 optionKey={(option) => LINE_KEY[option]}
-                onChange={(to) => onChange({ ...setup, call: { kind: 'line_height', minute, to } })}
+                onChange={(to) => onChange({ ...dials, call: { kind: 'line_height', minute, to } })}
               />
             )}
             {setup.call.kind === 'pressing' && (
@@ -254,7 +213,7 @@ export function SetupScreen({
                 value={setup.call.to as Press}
                 options={PRESSES}
                 optionKey={(option) => PRESS_KEY[option]}
-                onChange={(to) => onChange({ ...setup, call: { kind: 'pressing', minute, to } })}
+                onChange={(to) => onChange({ ...dials, call: { kind: 'pressing', minute, to } })}
               />
             )}
           </>

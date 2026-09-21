@@ -46,10 +46,73 @@ export interface Messages {
   /** One line saying the replay is a record being read back, not a match being played. */
   'match.replay': string;
 
+  /** Choosing the club you take over. The first real decision, and the career cannot start
+   * without it — so it is a screen, not a default. */
+  'start.title': string;
+  'start.why': string;
+  'start.begin': string;
+
+  /** The round, in the masthead. A season fact, so it only appears once there is a season. */
+  'masthead.round': string;
+
+  /* ---- The dashboard. Blueprint §6: five questions, and no tile that exists to fill space. ---- */
+
+  /** 1. What needs my decision today. The only section allowed a call to action. */
+  'dash.decision': string;
+  'dash.decision.table': string;
+  'dash.play': string;
+
+  /** 2. What changed since I last played. Every line is a count, re-derived from the results. */
+  'dash.since': string;
+  'dash.since.matches': string;
+  'dash.since.yours': string;
+  'dash.since.position': string;
+  'dash.since.points': string;
+
+  /** 3. Am I on track. The outlook is one of three words, two of which are proofs. */
+  'dash.onTrack': string;
+  'dash.onTrack.position': string;
+  'dash.onTrack.line': string;
+  'dash.onTrack.rival': string;
+  'dash.onTrack.games': string;
+  'dash.onTrack.available': string;
+  'dash.outlook.certain': string;
+  'dash.outlook.undecided': string;
+  'dash.outlook.impossible': string;
+  /** What each word rests on. Said out loud, because the alternative is a percentage. */
+  'dash.outlook.why.certain': string;
+  'dash.outlook.why.undecided': string;
+  'dash.outlook.why.impossible': string;
+
+  /** 4. What is my biggest risk. One risk, or none — never a card that must be filled. */
+  'dash.risk': string;
+  'dash.risk.sack.at_risk': string;
+  'dash.risk.sack.warned': string;
+  /** The board's own rule, said without numbers; the numbers are their own rows beneath it. */
+  'dash.risk.sack.untilImpossible': string;
+  'dash.risk.sack.adriftBy': string;
+  'dash.risk.sack.threshold': string;
+  'dash.risk.sack.fromGame': string;
+  'dash.risk.adrift': string;
+  'dash.risk.slack': string;
+  'dash.risk.beforeWindow': string;
+  'dash.risk.pace.yours': string;
+  'dash.risk.pace.chasing': string;
+  'dash.risk.pace.chased': string;
+  'dash.risk.pace.behind': string;
+  'dash.risk.pace.window': string;
+  'dash.risk.pace.why': string;
+
+  /** 5. What does my assistant think, and why. Chosen by counting, phrased from the table. */
+  'dash.assistant': string;
+  'dash.assistant.cost': string;
+  'dash.assistant.matches': string;
+  'dash.assistant.read': string;
+  'dash.assistant.evidence': string;
+  'dash.assistant.counted': string;
+
   'setup.title': string;
   'setup.yourClub': string;
-  'setup.opponent': string;
-  'setup.venue': string;
   'setup.venue.home': string;
   'setup.venue.away': string;
   'setup.approach': string;
@@ -79,9 +142,9 @@ export interface Messages {
   'press.high': string;
 
   'result.fullTime': string;
-  'result.back': string;
   'result.you': string;
   'result.them': string;
+  'result.record': string;
   'result.seed': string;
   /** Why the seed is on screen rather than hidden. */
   'result.seed.why': string;

@@ -10,11 +10,14 @@
   },
   "dependencies": {
     "@dakka/ai": "workspace:*",
+    "@dakka/board": "workspace:*",
     "@dakka/content": "workspace:*",
+    "@dakka/dashboard": "workspace:*",
     "@dakka/engine": "workspace:*",
+    "@dakka/fixture": "workspace:*",
+    "@dakka/season": "workspace:*",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "@dakka/fixture": "workspace:*"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.0.0",
