@@ -4,6 +4,7 @@ import { ALL_CAUSES, ALL_DECISION_KINDS, baselineTactics, simulate } from '@dakk
 import type { MatchResult } from '@dakka/engine';
 import { DATA_ROOT, loadLeague, playerSchema, positionSchema, roleSchema } from '@dakka/content';
 import { buildFixture } from '@dakka/fixture';
+import type { Cause } from '@dakka/development';
 import { SUPABASE_AUTH_SHIM, loadMigrations, migrate, type SqlClient } from '../src/index.js';
 
 /**
@@ -169,6 +170,20 @@ describe('every enum in the schema agrees with the code it mirrors', () => {
 
   it('names the same positions', async () => {
     expect(await labels('position_code')).toEqual([...positionSchema.options].sort());
+  });
+
+  it('can name every reason an attribute moved', async () => {
+    // `attribute_source` is what makes a rise inspectable at all: a value with no source is a
+    // number in a history table that nobody can explain. `@dakka/development` emits two of these —
+    // a player ages, and a player plays — and a source it emitted that the column refused would
+    // fail after the season had already been played, which is the worst moment to find out.
+    const causes: readonly Cause[] = ['ageing', 'match'];
+    const stored = await labels('attribute_source');
+    for (const cause of causes) expect(stored, cause).toContain(cause);
+    // The other two are the ones nothing emits yet, and they are named rather than assumed:
+    // `content` is the dataset baseline every career starts from, and `training` waits for a
+    // coaching system that does not exist.
+    expect(stored).toEqual(['ageing', 'content', 'match', 'training']);
   });
 
   it('names the same attributes, keeper attributes included', async () => {

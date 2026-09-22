@@ -136,6 +136,48 @@ export function attribute(a: PlayerAttributes, name: AttributeName): number {
 }
 
 /**
+ * Which of the four groups an attribute belongs to.
+ *
+ * The flat vocabulary above is this file's because roles are what first needed it; the *grouping*
+ * is needed by anything that treats a footballer's body differently from his head — development
+ * most of all, because pace leaves a player and composure does not. One map, so the two readings
+ * cannot disagree.
+ */
+export const ATTRIBUTE_GROUP: Record<AttributeName, keyof PlayerAttributes> = {
+  finishing: 'technical',
+  longShots: 'technical',
+  passing: 'technical',
+  vision: 'technical',
+  crossing: 'technical',
+  dribbling: 'technical',
+  firstTouch: 'technical',
+  heading: 'technical',
+  tackling: 'technical',
+  marking: 'technical',
+  pace: 'physical',
+  acceleration: 'physical',
+  strength: 'physical',
+  stamina: 'physical',
+  agility: 'physical',
+  jumping: 'physical',
+  positioning: 'mental',
+  decisions: 'mental',
+  composure: 'mental',
+  workRate: 'mental',
+  aggression: 'mental',
+  anticipation: 'mental',
+  teamwork: 'mental',
+  leadership: 'mental',
+  handling: 'goalkeeping',
+  reflexes: 'goalkeeping',
+  aerialReach: 'goalkeeping',
+  distribution: 'goalkeeping',
+  oneOnOnes: 'goalkeeping',
+};
+
+export const ALL_ATTRIBUTES = Object.keys(ATTRIBUTE_GROUP) as readonly AttributeName[];
+
+/**
  * What each role is judged on.
  *
  * `Record<PlayerRole, ...>` so a role added without a decided set of demands is a build error — the

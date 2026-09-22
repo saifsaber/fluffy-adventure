@@ -282,6 +282,20 @@ importers:
       '@electric-sql/pglite':
         specifier: ^0.5.8
         version: 0.5.8
+    devDependencies:
+      '@dakka/development':
+        specifier: workspace:*
+        version: link:../development
+
+  packages/development:
+    dependencies:
+      '@dakka/engine':
+        specifier: workspace:*
+        version: link:../engine
+    devDependencies:
+      '@dakka/content':
+        specifier: workspace:*
+        version: link:../content
 
   packages/engine: {}
 

@@ -85,6 +85,8 @@ export {
 } from './trace.js';
 
 export {
+  ALL_ATTRIBUTES,
+  ATTRIBUTE_GROUP,
   ROLE_DEMANDS,
   ROLE_FIT_SPREAD,
   YARDSTICK,

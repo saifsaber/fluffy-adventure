@@ -994,9 +994,27 @@ intents that would fix it. That is a persistence box, not a season box.
       scale-free), and regenerating the squads moved **no attribute at all**. 134 of 420 carry one.
       15 tests + 2 on the shipped content + 2 in the engine's purity suite, **8/8 sabotage probes
       bite** after three found weak tests.
-- [ ] **⚠️ Training and development.** Player progression must be inspectable: attribute history is
-      versioned (blueprint §5) so a rise can be explained. **Faking it looks like:** a random walk
-      with a plausible curve.
+- [x] **⚠️ Training and development.** `packages/development`. **There is no random number in the
+      package at all** — not seeded, not anywhere, and a test reads the source to say so. The named
+      failure was *a random walk with a plausible curve*, and the only way to refuse it is to have
+      no walk: an attribute moves by an amount that is a function of two things that happened to
+      him, and every change comes back with both attached and their arithmetic showing.
+      **Two causes, and they are the ones the database already named.** `ageing` — four curves, not
+      one, because a footballer's legs and his head keep different calendars and pace is gone by
+      the mid-thirties while composure is still rising. `match` — the attributes his season *asked
+      of him*, from `ROLE_DEMANDS`, which is not a new table: a season of `ball_winner` sharpens
+      tackling because that is what a ball-winner is judged on, and finishing by nothing at all.
+      `attribute_source` in migration 0001 is `('content','training','match','ageing')`, and a test
+      now holds the two together.
+      **The same nineteen-year-old becomes a different footballer depending on the job**, at the
+      same overall: six seasons as a box-to-box gives stamina/workRate/passing/tackling 52/56/54/58
+      against a poacher's 45/49/47/52, and the poacher's finishing/anticipation/positioning
+      36 → 45 / 49 → 56 / 47 → 55 the other way. `acceleration` lands on 53 either way, because
+      both roles read it — the model reading the table rather than telling a story.
+      **A career is summed and rounded once**, which is not a nicety: see the Log for the silent
+      bug that found.
+      19 tests, one of them ten seasons of the real division to prove the league neither inflates
+      nor empties, **11/11 sabotage probes bite**.
 - [ ] **⚠️ Adaptive opponent managers.** They must make decisions through the same `InMatchDecision`
       path a human uses, and the counterfactual runner must be able to price those decisions. An
       opponent that cheats is the fastest way to lose the product's whole claim.
@@ -1423,6 +1441,44 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-22 (31)** — **Development, and a rounding bug that made a whole cohort stand still.**
+  - **The box named the failure, so the model refuses it structurally.** *A random walk with a
+    plausible curve* — so there is no draw in `packages/development`, and the first test reads the
+    source for `Math.random`, `Date.now` and even the word `Rng`. Everything an attribute does is a
+    function of the player's age and the minutes he spent being asked for it.
+  - **`ROLE_DEMANDS` turned out to be the whole of "training".** The roles tick built a table of
+    what each job is judged on so role fit could read it; development reads the same table, and
+    that is what makes *what the manager asked him to do* the thing that decides what he becomes.
+    No second table, so the two readings cannot disagree.
+  - **The measurement found a bug that would never have shown up in a test I thought to write.**
+    Attributes are whole numbers, so the first version rounded each season on its own — and threw
+    the remainder away every year. A nineteen-year-old who did not play gained about a quarter of a
+    point a season, rounded to nothing, and therefore **stood still forever**. Silent, total, and
+    only visible because the ten-season run printed him. `develop` now takes the whole career and
+    rounds once, which also makes `develop(player, seasons.slice(0, k))` exactly *him after k
+    seasons* — the history is the thing that is true, and nothing has to be stored to ask it.
+  - **The first constants made the role decorative, and the measurement said so.** At the original
+    sizes the age curve dominated: six seasons turned the same teenager into 49.5 as a box-to-box
+    and 49.6 as a poacher. Growing up should give a general lift and *the job* should decide what he
+    is good at, so the rises were cut and `FULL_SEASON_GAIN` went 1.1 → 2.2. The table in the module
+    shows the before and after; the two players now differ by six to nine points on the attributes
+    their roles read, at the same overall.
+  - **Ten seasons of the real division is now a test.** The league mean goes 45.8 → 46.3 → 45.4 with
+    no youth intake, which is right: the young rise, the old fall, and nobody arrives. A development
+    system that drifts a division upward year on year is inflation wearing a progression curve, and
+    it is the check these systems least often get.
+  - **A probe that could not bite, recorded rather than hidden.** Deleting the 1–99 clamp changes
+    nothing, because `headroom` is zero at 99 and the gain is multiplied by it — a maxed player is
+    already immovable before anything is trimmed. The test now says that, and isolates it on the
+    mental group, which never declines; the clamp stays as a guard against malformed content.
+  - 806 tests across 53 files. Harness green at the new 50-season default; no engine change.
+  - **For the next tick:** development computes but nothing **calls** it — the career loop in
+    `apps/web` plays a season and never ages anybody, and `player_attributes` gets no rows. Wiring
+    it needs two things this box deliberately did not invent: a notion of a **season ending** in a
+    career (the season package knows when one is complete), and **appearances**, which are already
+    in `MatchResult.players[].minutesPlayed` paired with the role from the team sheet. Neither is
+    hard; both are a different box from the model.
 
 - **2026-09-22 (30)** — **Personality, and a gate that was measuring the wrong thing.**
   - **The box's own condition became a property of the build.** *How does personality reach the

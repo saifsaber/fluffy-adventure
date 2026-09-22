@@ -26,6 +26,9 @@
       "path": "./packages/dashboard"
     },
     {
+      "path": "./packages/development"
+    },
+    {
       "path": "./packages/sync"
     },
     {
