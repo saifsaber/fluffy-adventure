@@ -352,7 +352,8 @@
         "leadership": 46
       },
       "nickname": "الدينامو",
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "أحمد الديب",
@@ -529,7 +530,8 @@
         "teamwork": 47,
         "leadership": 38
       },
-      "traits": []
+      "traits": [],
+      "personality": "volatile"
     },
     {
       "name": "سامح رزق",
@@ -574,7 +576,8 @@
         "leadership": 36
       },
       "nickname": "الحاوي",
-      "traits": []
+      "traits": [],
+      "personality": "volatile"
     },
     {
       "name": "أنس الحلواني",
@@ -794,7 +797,8 @@
         "teamwork": 47,
         "leadership": 39
       },
-      "traits": []
+      "traits": [],
+      "personality": "volatile"
     },
     {
       "name": "صلاح السقا",

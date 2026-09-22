@@ -14,6 +14,24 @@ import { playSeason } from './season.js';
  * enough to run after every engine change and `--seasons` takes it up to the full number when a
  * balance decision actually rests on it. The report prints the count it used, because a threshold
  * met over twenty seasons and one met over ten thousand are not the same claim.
+ *
+ * **The default was twenty and had to be raised, because twenty was measuring the seeds rather than
+ * the engine.** Nothing here is random — the seasons are `season-0` onwards — so a run gives the
+ * same answer every time, and the answer moves only with the *count*. On the tightest threshold,
+ * xG↔goals against a floor of 0.900, it converges:
+ *
+ * ```
+ * 20 seasons  0.896   ← fails, and the engine is not the reason
+ * 50 seasons  0.902
+ * 100 seasons 0.904
+ * 200 seasons 0.904
+ * ```
+ *
+ * The first twenty seeds simply happen to be a below-average sample of the engine's own behaviour,
+ * and CLAUDE.md says a failing harness blocks the merge — so the default was blocking merges over
+ * a sampling artefact, which is a gate reporting something other than what it claims to measure.
+ * Fifty seasons costs eighty seconds and lands on the converged answer. **The threshold was not
+ * moved; the measurement was made honest.**
  */
 
 interface Options {
@@ -22,7 +40,7 @@ interface Options {
 }
 
 export function parseArgs(argv: readonly string[]): Options {
-  let seasons = 20;
+  let seasons = 50;
   let league = 'egy-d4';
   for (const arg of argv) {
     const seasonsMatch = /^--seasons=(\d+)$/.exec(arg);

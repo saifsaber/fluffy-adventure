@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { playerId, type Player, type PlayerId } from '@dakka/engine';
+import { moraleFor } from './personality.js';
 
 /**
  * The boundary. Nothing a model says becomes a game number except through here.
@@ -148,6 +149,14 @@ export interface MoraleChange {
   readonly from: number;
   readonly to: number;
   readonly because: EffectKind;
+  /**
+   * What it was worth to this player, before the 0–100 clamp.
+   *
+   * Reported separately from `from`/`to` because personality makes the same sentence worth
+   * different amounts to different men, and a screen that showed only the new number would be
+   * showing a figure whose cause cannot be reached — which is the one thing this product refuses.
+   */
+  readonly worth: number;
 }
 
 export interface AppliedEffects {
@@ -184,10 +193,12 @@ export function applyEffects(squad: readonly Player[], batch: EffectBatch): Appl
     if (because === null || because === undefined) return player;
 
     const from = player.condition.morale;
-    const to = clamp(from + MORALE_FOR[because]);
+    // What it was worth to *him*. `MORALE_FOR` prices the thing said; personality prices the man.
+    const worth = moraleFor(because, player.personality);
+    const to = clamp(from + worth);
     if (to === from) return player;
 
-    changes.push({ playerId: player.id, from, to, because });
+    changes.push({ playerId: player.id, from, to, because, worth });
     return { ...player, condition: { ...player.condition, morale: to } };
   });
 

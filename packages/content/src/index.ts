@@ -4,6 +4,7 @@ export type { LoadedLeague } from './load.js';
 export {
   clubSchema,
   leagueSchema,
+  personalitySchema,
   playerSchema,
   positionSchema,
   roleSchema,

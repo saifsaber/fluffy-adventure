@@ -81,6 +81,7 @@ function toPlayer(data: ClubData['squad'][number], club: ClubData): Player {
     },
     // Everyone starts a season fresh; condition is match state, not content.
     condition: { fitness: 100, morale: 75, form: 70 },
+    ...(data.personality ? { personality: data.personality } : {}),
     ...(data.nickname ? { nickname: data.nickname } : {}),
   };
 }

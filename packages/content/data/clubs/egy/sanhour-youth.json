@@ -121,7 +121,8 @@
         "distribution": 45,
         "oneOnOnes": 45
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "رجب مطاوع",
@@ -172,7 +173,8 @@
         "distribution": 46,
         "oneOnOnes": 45
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "رجب عبدالعال",
@@ -216,7 +218,8 @@
         "teamwork": 40,
         "leadership": 39
       },
-      "traits": []
+      "traits": [],
+      "personality": "volatile"
     },
     {
       "name": "عمر شحاتة",
@@ -437,7 +440,8 @@
         "leadership": 39
       },
       "nickname": "الطيارة",
-      "traits": []
+      "traits": [],
+      "personality": "volatile"
     },
     {
       "name": "سامح بدوي",
@@ -481,7 +485,8 @@
         "teamwork": 32,
         "leadership": 34
       },
-      "traits": []
+      "traits": [],
+      "personality": "volatile"
     },
     {
       "name": "عماد عوض",
@@ -525,7 +530,8 @@
         "teamwork": 35,
         "leadership": 41
       },
-      "traits": []
+      "traits": [],
+      "personality": "proud"
     },
     {
       "name": "فتحي بدوي",
@@ -745,7 +751,8 @@
         "teamwork": 43,
         "leadership": 41
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "صلاح سليم",

@@ -121,7 +121,8 @@
         "distribution": 55,
         "oneOnOnes": 54
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "تامر العجمي",
@@ -172,7 +173,8 @@
         "distribution": 49,
         "oneOnOnes": 53
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "صلاح بركات",
@@ -217,7 +219,8 @@
         "leadership": 49
       },
       "nickname": "الفنان",
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "هيثم صادق",
@@ -351,7 +354,8 @@
         "teamwork": 50,
         "leadership": 53
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "سامح سويلم",
@@ -529,7 +533,8 @@
         "teamwork": 50,
         "leadership": 54
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "محمد الفولي",
@@ -664,7 +669,8 @@
         "leadership": 46
       },
       "nickname": "الجوكر",
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "أحمد شلبي",
@@ -932,7 +938,8 @@
         "teamwork": 36,
         "leadership": 34
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "حسين رزق",
@@ -979,7 +986,8 @@
       "traits": [
         "gets_into_the_box",
         "runs_the_channels"
-      ]
+      ],
+      "personality": "steady"
     }
   ]
 }

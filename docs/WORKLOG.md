@@ -975,7 +975,25 @@ intents that would fix it. That is a persistence box, not a season box.
       14 engine tests + 2 measured on the shipped content, **8/8 sabotage probes bite** after two
       found tests passing for the wrong reason.
 
-- [ ] **Personality**, and how it reaches the dressing room without deciding an outcome.
+- [x] **Personality, and how it reaches the dressing room without deciding an outcome.**
+      `Personality` on `Player` in `@dakka/engine`; what one *means* in
+      `packages/ai/src/personality.ts`. **The box's condition is the dependency graph, not a
+      promise:** `@dakka/ai` depends on the engine and not the other way round, so a personality
+      has no path to a match result — the engine could not read one if it wanted to. Two tests hold
+      it from both sides: the engine's purity suite proves the field is mentioned in exactly two
+      files, the one that declares it and the one that re-exports the *type*; and the AI suite plays
+      a real fixture with every personality in turn and gets the same match byte for byte.
+      **`MORALE_FOR` prices the thing said; personality prices the man.** `steady` is hard to lift
+      and hard to break, `volatile` is both in a sentence, `proud` takes praise as his due and
+      criticism as a slight. A test refuses a personality that is **strictly easier to manage** —
+      praise landing harder *and* criticism landing lighter is a bonus with a character note on it.
+      **`MoraleChange` now carries `worth`**, because after personality the new number alone no
+      longer says what happened to him.
+      **Derived, never assigned** — the `preferredRoles` lesson, applied for the second tick running:
+      each personality is one attribute running six points ahead of another (a difference, so it is
+      scale-free), and regenerating the squads moved **no attribute at all**. 134 of 420 carry one.
+      15 tests + 2 on the shipped content + 2 in the engine's purity suite, **8/8 sabotage probes
+      bite** after three found weak tests.
 - [ ] **⚠️ Training and development.** Player progression must be inspectable: attribute history is
       versioned (blueprint §5) so a rise can be explained. **Faking it looks like:** a random walk
       with a plausible curve.
@@ -1333,7 +1351,9 @@ order — they are the same problem understood three times over, and later ones 
     signal beside the attributes.
 
 - **⚠️ The engine has no xG-correlation headroom, so nothing may widen the shot-quality
-  distribution.** The blueprint's floor is 0.900 and the engine sits at **0.903–0.905**. The traits
+  distribution.** The blueprint's floor is 0.900 and the engine sits at **0.904**, measured over
+  200 seasons and 76,000 matches — a margin of 0.004. Paired at that size, the whole trait axis
+  costs **0.001** (0.905 → 0.904), so traits are not what is tight; the engine is. The traits
   box found out what that costs: a trait that biased the chain's penetration skew — shots from
   further out, which is the *right* hook for a player who shoots on sight — took the correlation to
   **0.881**, and survived being shrunk to a quarter of its size (0.895). Isolated over 30 seasons:
@@ -1403,6 +1423,47 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-22 (30)** — **Personality, and a gate that was measuring the wrong thing.**
+  - **The box's own condition became a property of the build.** *How does personality reach the
+    dressing room without deciding an outcome* has an answer that needs no discipline to maintain:
+    the union is declared in `@dakka/engine` and every meaning lives in `@dakka/ai`, which the
+    engine cannot import. A match cannot see a personality because the code that knows what one
+    means is downstream of the code that plays the match. The purity suite pins the field to two
+    files; the AI suite plays a real fixture with each personality and gets an identical match.
+  - **No free lunch, enforced.** A personality that took praise harder and criticism more lightly
+    would be a strictly better player to manage, which is a bonus wearing a character note. The
+    registry is checked for one. What is allowed is the real trade — hard to lift is also hard to
+    break — and it is why `proud` exists and its mirror does not.
+  - **Three probes were weak, and rewriting them found something.** `steady` and `volatile` are
+    symmetric by design, so neither can tell `toPraise` from `toCriticism`: a version that applied
+    the praise multiplier to everything passed. Only `proud` separates them, and the test now says
+    so. A third probe could not bite at all — `moraleFor` floors the magnitude at one so a man who
+    was reached always moves, and nothing on today's `MORALE_FOR` table scales below one. Recorded
+    as a guard for when those constants are fitted, with a test that starts failing the day it
+    becomes live rather than leaving an untestable branch.
+  - **`pnpm harness` had been red by default since the traits commit, and the engine was not the
+    reason.** The run is deterministic, so the number moves only with the season *count*, and the
+    first twenty seeds are a below-average sample: xG↔goals reads **0.896 at 20 seasons, 0.902 at
+    50, 0.904 at 100, 0.904 at 200**. The default was twenty, so the gate was blocking merges over
+    which seeds it happened to take. Verified it had nothing to do with this tick by stashing the
+    whole change and getting the identical 0.896 — which is also the strongest statement of the
+    boundary this box was about.
+  - **The threshold was not moved; the measurement was made honest.** The default is fifty seasons,
+    eighty seconds, and it lands on the converged answer. A paired 200-season run settles the other
+    question the traits tick left open: the whole trait axis costs **0.001** of correlation, not the
+    margin. The blocker note now carries the measured figure.
+  - **The lesson for the loop, and it is about me rather than the code:** last tick I validated at
+    100 seasons and shipped, while the gate a contributor runs is the default. A measurement taken
+    at a sample size the gate does not use is not the gate.
+  - 786 tests across 52 files. `pnpm harness` green at the new default.
+  - **For the next tick:** personality reaches morale, and **morale still reaches nothing**. The
+    engine reads neither `condition.morale` nor `condition.form` — `PlayerCondition.morale`'s own
+    doc-comment says it "affects composure and decisions under pressure" and no line of the engine
+    honours it. So the dressing room ends at the dressing-room door. That is an engine-input box
+    with the harness in front of it, and it is now the thing that would make both personality and
+    the whole conversation layer matter. Traits and personality also still miss the **database**
+    and have no **phrasing** in `@dakka/ai`.
 
 - **2026-09-22 (29)** — **Traits, and the design the harness refused.**
   - **The first design was right about the hook and wrong for this engine.** `shoots_on_sight`

@@ -173,7 +173,8 @@
         "distribution": 43,
         "oneOnOnes": 43
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "تامر سويلم",
@@ -439,7 +440,8 @@
         "teamwork": 31,
         "leadership": 40
       },
-      "traits": []
+      "traits": [],
+      "personality": "proud"
     },
     {
       "name": "حسن السقا",
@@ -527,7 +529,8 @@
         "teamwork": 43,
         "leadership": 33
       },
-      "traits": []
+      "traits": [],
+      "personality": "volatile"
     },
     {
       "name": "عمرو رزق",
@@ -571,7 +574,8 @@
         "teamwork": 43,
         "leadership": 37
       },
-      "traits": []
+      "traits": [],
+      "personality": "volatile"
     },
     {
       "name": "عبدالله بدوي",

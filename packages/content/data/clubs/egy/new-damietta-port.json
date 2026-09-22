@@ -70,7 +70,8 @@
         "distribution": 62,
         "oneOnOnes": 61
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "سامح سويلم",
@@ -121,7 +122,8 @@
         "distribution": 61,
         "oneOnOnes": 56
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "زياد الحلواني",
@@ -260,7 +262,8 @@
         "teamwork": 53,
         "leadership": 52
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "صلاح منصور",
@@ -526,7 +529,8 @@
         "teamwork": 51,
         "leadership": 47
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "عبدالله نصار",
@@ -923,7 +927,8 @@
         "teamwork": 35,
         "leadership": 41
       },
-      "traits": []
+      "traits": [],
+      "personality": "proud"
     },
     {
       "name": "تامر شحاتة",

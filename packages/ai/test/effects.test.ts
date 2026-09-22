@@ -104,7 +104,14 @@ describe('what applying does', () => {
     expect(after[0]?.condition.morale).toBe(60 + MORALE_FOR.player_backed);
     expect(after[1]?.condition.morale).toBe(60);
     expect(changes).toEqual([
-      { playerId: 'one', from: 60, to: 60 + MORALE_FOR.player_backed, because: 'player_backed' },
+      {
+        playerId: 'one',
+        from: 60,
+        to: 60 + MORALE_FOR.player_backed,
+        because: 'player_backed',
+        // These fixtures have no personality, so what it was worth to him is what the table says.
+        worth: MORALE_FOR.player_backed,
+      },
     ]);
   });
 

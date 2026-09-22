@@ -70,7 +70,8 @@
         "distribution": 61,
         "oneOnOnes": 58
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "عمر قابيل",
@@ -121,7 +122,8 @@
         "distribution": 59,
         "oneOnOnes": 55
       },
-      "traits": []
+      "traits": [],
+      "personality": "proud"
     },
     {
       "name": "مصطفى فرغلي",
@@ -216,7 +218,8 @@
         "teamwork": 47,
         "leadership": 44
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "وليد نصار",
@@ -970,7 +973,8 @@
         "teamwork": 42,
         "leadership": 46
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     }
   ]
 }

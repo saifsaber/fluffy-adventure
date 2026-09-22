@@ -70,7 +70,8 @@
         "distribution": 61,
         "oneOnOnes": 62
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "شريف سرحان",
@@ -216,7 +217,8 @@
         "teamwork": 54,
         "leadership": 59
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "حسن سرحان",
@@ -436,7 +438,8 @@
         "teamwork": 60,
         "leadership": 58
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "شريف زهران",
@@ -480,7 +483,8 @@
         "teamwork": 54,
         "leadership": 58
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "نادر عفيفي",
@@ -613,7 +617,8 @@
         "leadership": 53
       },
       "nickname": "السد العالي",
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "عمرو خميس",
@@ -657,7 +662,8 @@
         "teamwork": 60,
         "leadership": 52
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "عماد قنديل",
@@ -701,7 +707,8 @@
         "teamwork": 57,
         "leadership": 52
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "مينا عوض",
@@ -834,7 +841,8 @@
         "teamwork": 52,
         "leadership": 45
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "شادي فرغلي",
@@ -924,7 +932,8 @@
         "leadership": 49
       },
       "nickname": "القناص",
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "باسم الحلواني",
@@ -968,7 +977,8 @@
         "teamwork": 48,
         "leadership": 45
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     }
   ]
 }

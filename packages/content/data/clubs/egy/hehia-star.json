@@ -174,7 +174,8 @@
         "distribution": 48,
         "oneOnOnes": 52
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "حسين الشربيني",
@@ -263,7 +264,8 @@
         "leadership": 46
       },
       "nickname": "الطيارة",
-      "traits": []
+      "traits": [],
+      "personality": "proud"
     },
     {
       "name": "ياسر الشربيني",
@@ -485,7 +487,8 @@
         "teamwork": 39,
         "leadership": 42
       },
-      "traits": []
+      "traits": [],
+      "personality": "volatile"
     },
     {
       "name": "فارس عوض",
@@ -529,7 +532,8 @@
         "teamwork": 37,
         "leadership": 44
       },
-      "traits": []
+      "traits": [],
+      "personality": "proud"
     },
     {
       "name": "كريم دياب",
@@ -801,7 +805,8 @@
         "teamwork": 49,
         "leadership": 44
       },
-      "traits": []
+      "traits": [],
+      "personality": "volatile"
     },
     {
       "name": "عبدالله بركات",
@@ -893,7 +898,8 @@
       },
       "traits": [
         "runs_the_channels"
-      ]
+      ],
+      "personality": "steady"
     },
     {
       "name": "بلال غنيم",
@@ -940,7 +946,8 @@
       "traits": [
         "gets_into_the_box",
         "runs_the_channels"
-      ]
+      ],
+      "personality": "steady"
     },
     {
       "name": "تامر عبدالعال",

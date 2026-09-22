@@ -146,6 +146,7 @@ export type {
   Player,
   PlayerAttributes,
   PlayerCondition,
+  Personality,
   PlayerRole,
   PlayerTrait,
   Position,

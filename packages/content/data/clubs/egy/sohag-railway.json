@@ -71,7 +71,8 @@
         "distribution": 61,
         "oneOnOnes": 59
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "طارق الشربيني",
@@ -122,7 +123,8 @@
         "distribution": 58,
         "oneOnOnes": 57
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "إسلام سرحان",
@@ -173,7 +175,8 @@
         "distribution": 62,
         "oneOnOnes": 55
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "فتحي رزق",
@@ -395,7 +398,8 @@
         "teamwork": 51,
         "leadership": 51
       },
-      "traits": []
+      "traits": [],
+      "personality": "volatile"
     },
     {
       "name": "مروان مطاوع",
@@ -439,7 +443,8 @@
         "teamwork": 51,
         "leadership": 57
       },
-      "traits": []
+      "traits": [],
+      "personality": "proud"
     },
     {
       "name": "عادل زهران",
@@ -755,7 +760,8 @@
       },
       "traits": [
         "gets_into_the_box"
-      ]
+      ],
+      "personality": "steady"
     },
     {
       "name": "خالد الجندي",
@@ -799,7 +805,8 @@
         "teamwork": 53,
         "leadership": 49
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "بيشوي الشناوي",
@@ -845,7 +852,8 @@
       },
       "traits": [
         "runs_the_channels"
-      ]
+      ],
+      "personality": "steady"
     },
     {
       "name": "محمد العجمي",
@@ -891,7 +899,8 @@
       },
       "traits": [
         "runs_the_channels"
-      ]
+      ],
+      "personality": "steady"
     },
     {
       "name": "رجب رزق",
@@ -983,7 +992,8 @@
       },
       "traits": [
         "runs_the_channels"
-      ]
+      ],
+      "personality": "steady"
     }
   ]
 }

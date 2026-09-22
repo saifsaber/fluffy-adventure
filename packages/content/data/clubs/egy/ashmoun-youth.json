@@ -71,7 +71,8 @@
         "distribution": 50,
         "oneOnOnes": 53
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "خالد مطاوع",
@@ -123,7 +124,8 @@
         "distribution": 53,
         "oneOnOnes": 56
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "عمرو دياب",
@@ -174,7 +176,8 @@
         "distribution": 56,
         "oneOnOnes": 56
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "عمرو خميس",
@@ -441,7 +444,8 @@
         "teamwork": 49,
         "leadership": 48
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "طارق سويلم",
@@ -529,7 +533,8 @@
         "teamwork": 47,
         "leadership": 49
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "عصام الشاذلي",
@@ -794,7 +799,8 @@
         "teamwork": 52,
         "leadership": 47
       },
-      "traits": []
+      "traits": [],
+      "personality": "volatile"
     },
     {
       "name": "كريم الحلواني",
@@ -838,7 +844,8 @@
         "teamwork": 52,
         "leadership": 46
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "ياسر منصور",
@@ -882,7 +889,8 @@
         "teamwork": 43,
         "leadership": 41
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "نادر عبدربه",
@@ -926,7 +934,8 @@
         "teamwork": 45,
         "leadership": 42
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "خالد قنديل",

@@ -70,7 +70,8 @@
         "distribution": 64,
         "oneOnOnes": 64
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "خالد زهران",
@@ -172,7 +173,8 @@
         "distribution": 66,
         "oneOnOnes": 63
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "ياسر الطوخي",
@@ -217,7 +219,8 @@
         "leadership": 54
       },
       "nickname": "الحاوي",
-      "traits": []
+      "traits": [],
+      "personality": "proud"
     },
     {
       "name": "طارق السقا",
@@ -526,7 +529,8 @@
         "teamwork": 47,
         "leadership": 55
       },
-      "traits": []
+      "traits": [],
+      "personality": "proud"
     },
     {
       "name": "خالد حمدي",
@@ -746,7 +750,8 @@
         "teamwork": 60,
         "leadership": 49
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "فارس حمدي",
@@ -835,7 +840,8 @@
         "leadership": 49
       },
       "nickname": "الجوكر",
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "عمرو رزق",
@@ -967,7 +973,8 @@
         "teamwork": 50,
         "leadership": 43
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     }
   ]
 }

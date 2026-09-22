@@ -79,6 +79,14 @@ export const roleSchema = z.enum([
  */
 export const traitSchema = z.enum(['gets_into_the_box', 'runs_the_channels', 'attacks_the_cross']);
 
+/**
+ * Who a player is in the dressing room. The same closed list `@dakka/ai` keys its meanings on.
+ *
+ * Optional rather than defaulted: absent means nothing about him stands out, which is a different
+ * statement from a personality called "normal" and is true of two thirds of the league.
+ */
+export const personalitySchema = z.enum(['steady', 'volatile', 'proud']);
+
 export const playerSchema = named.extend({
   age: z.number().int().min(15).max(45),
   /** ISO-3166 alpha-3. */
@@ -86,6 +94,7 @@ export const playerSchema = named.extend({
   positions: z.array(positionSchema).min(1),
   preferredRoles: z.array(roleSchema).min(1),
   traits: z.array(traitSchema).default([]),
+  personality: personalitySchema.optional(),
   nickname: z.string().optional(),
   technical: z.object({
     finishing: rating,

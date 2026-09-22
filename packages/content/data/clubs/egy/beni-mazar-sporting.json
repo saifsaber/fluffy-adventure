@@ -70,7 +70,8 @@
         "distribution": 54,
         "oneOnOnes": 58
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "سيد سويلم",
@@ -121,7 +122,8 @@
         "distribution": 53,
         "oneOnOnes": 57
       },
-      "traits": []
+      "traits": [],
+      "personality": "proud"
     },
     {
       "name": "أنس فرغلي",
@@ -172,7 +174,8 @@
         "distribution": 57,
         "oneOnOnes": 55
       },
-      "traits": []
+      "traits": [],
+      "personality": "proud"
     },
     {
       "name": "إسلام عفيفي",
@@ -400,7 +403,8 @@
       },
       "traits": [
         "attacks_the_cross"
-      ]
+      ],
+      "personality": "steady"
     },
     {
       "name": "عادل النجار",
@@ -490,7 +494,8 @@
       },
       "traits": [
         "attacks_the_cross"
-      ]
+      ],
+      "personality": "proud"
     },
     {
       "name": "أحمد غنيم",
@@ -980,7 +985,8 @@
       },
       "traits": [
         "runs_the_channels"
-      ]
+      ],
+      "personality": "steady"
     }
   ]
 }

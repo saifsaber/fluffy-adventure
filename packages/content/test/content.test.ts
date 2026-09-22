@@ -10,6 +10,7 @@ import {
   leagueSchema,
   listLeagues,
   loadLeague,
+  personalitySchema,
   traitSchema,
 } from '../src/index.js';
 
@@ -157,6 +158,46 @@ describe('traits are one list, held by both sides of the boundary', () => {
         const facet = names.reduce((sum, name) => sum + (flat[name] ?? 0), 0) / names.length;
         expect(facet - level, `${player.slug} / ${trait}`).toBeGreaterThanOrEqual(5);
       }
+    }
+  });
+});
+
+describe('personality is authored, and it is true of the man it is on', () => {
+  it('validates exactly the personalities the dressing room has decided the meaning of', () => {
+    // The engine declares the union and refuses an unregistered one at build time; `@dakka/ai`
+    // holds what each means. This is the third corner: content that validated a personality nobody
+    // had a meaning for would reach `toClub` and then `applyEffects`, where it would do nothing.
+    expect([...personalitySchema.options].sort()).toEqual(['proud', 'steady', 'volatile']);
+  });
+
+  it('gives one only where the attributes say so, and leaves most of the league without', () => {
+    // Each personality is one attribute running ahead of another by six — a difference, so it is
+    // scale-free and a good player is no likelier to be a character than a poor one. Measured on
+    // the shipped data rather than trusted from the script.
+    const GAPS: Record<string, readonly [string, string]> = {
+      volatile: ['aggression', 'composure'],
+      steady: ['composure', 'aggression'],
+      proud: ['leadership', 'teamwork'],
+    };
+    const players = loadLeague(DATA_ROOT, 'egy-d4').clubs.flatMap((club) => club.squad);
+    const characters = players.filter((player) => player.personality !== undefined);
+
+    expect(characters.length).toBeGreaterThan(50);
+    // Two thirds of a dressing room are professionals. A room where everybody is a character has
+    // no characters in it.
+    expect(characters.length).toBeLessThan(players.length / 2);
+
+    for (const player of characters) {
+      const flat: Record<string, number> = {
+        ...player.attributes.technical,
+        ...player.attributes.physical,
+        ...player.attributes.mental,
+      };
+      const [over, under] = GAPS[player.personality as string] as readonly [string, string];
+      expect(
+        (flat[over] ?? 0) - (flat[under] ?? 0),
+        `${player.slug} / ${player.personality}`,
+      ).toBeGreaterThanOrEqual(6);
     }
   });
 });

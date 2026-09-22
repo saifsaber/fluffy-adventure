@@ -61,3 +61,38 @@ describe('engine purity', () => {
     expect(violations, `${file} breaks the engine purity contract`).toEqual([]);
   });
 });
+
+describe('the engine knows a player has a personality and nothing more', () => {
+  /**
+   * The box's own condition — *how it reaches the dressing room without deciding an outcome* — as a
+   * property of the code rather than a promise. `Personality` is declared on `Player` because the
+   * engine owns the type; what one *means* lives in `@dakka/ai`, which the engine cannot import.
+   * This is the other half: nothing in here may read the field either, or the meaning could be
+   * re-derived where it must never be.
+   */
+  const DECLARED = join(SRC, 'types', 'player.ts');
+  const BARREL = join(SRC, 'index.ts');
+
+  it('mentions it in two files: the one that declares it and the one that re-exports it', () => {
+    const mentions = sourceFiles(SRC).filter((file) =>
+      /personality|Personality/.test(readFileSync(file, 'utf8')),
+    );
+    expect([...mentions].sort()).toEqual([BARREL, DECLARED].sort());
+  });
+
+  it('re-exports the type and nothing else, so the dressing room can read it', () => {
+    // `@dakka/ai` needs the union to key its meanings on. What it must never find here is a value.
+    const source = readFileSync(BARREL, 'utf8');
+    expect(source).toMatch(/export type \{[^}]*\bPersonality\b/s);
+    expect(source).not.toMatch(/export \{[^}]*\bPersonality/s);
+  });
+
+  it('declares it rather than using it', () => {
+    // Even there: a type and a field. A `switch` on a personality inside the engine would be a
+    // match result that turns on a man's temperament, which is the thing this refuses.
+    const source = readFileSync(DECLARED, 'utf8');
+    expect(source).toContain('export type Personality');
+    expect(source).toContain('readonly personality?: Personality;');
+    expect(source.match(/personality/gi)?.length).toBeLessThan(8);
+  });
+});

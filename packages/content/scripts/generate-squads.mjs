@@ -253,6 +253,46 @@ const TRAIT_EDGE = 5;
 
 const mean = (values) => values.reduce((total, value) => total + value, 0) / values.length;
 
+/**
+ * Who a player is when somebody talks to him, read off the same attributes as everything else.
+ *
+ * Each personality is **one attribute running ahead of another** rather than a facet standing above
+ * his level, because that is what these three actually are: aggression ahead of composure is a man
+ * who runs hot, composure ahead of aggression is a man who does not, and leadership ahead of
+ * teamwork is a man who leads without fitting in. A difference is also scale-free by construction,
+ * so a good player is no likelier to have a personality than a poor one.
+ *
+ * `volatile` and `steady` are exact mirrors, so nothing about the rule can tilt a league one way.
+ * What *does* tilt it is the content: the generated division comes out calm — 22% steady against 5%
+ * volatile at this threshold — because `GROUP_BIAS` and `STYLE_BIAS` lift composure more often than
+ * aggression. That is a fact about the squads, reported rather than corrected; bending the
+ * threshold per personality until the split looked even would be choosing the answer first.
+ */
+const PERSONALITY_GAPS = [
+  ['volatile', 'aggression', 'composure'],
+  ['steady', 'composure', 'aggression'],
+  ['proud', 'leadership', 'teamwork'],
+];
+
+/**
+ * How far ahead, in rating points.
+ *
+ * Six, measured: it leaves **two thirds of the league with no personality at all**, which is what
+ * "he is a professional" means. At four it is over half, and a dressing room where everybody is a
+ * character has no characters in it.
+ */
+const PERSONALITY_GAP = 6;
+
+function personalityOf(player) {
+  const flat = { ...player.technical, ...player.physical, ...player.mental };
+  // First match wins, and the order is declared: the aggression–composure axis is the louder one,
+  // so a man who is both hot-headed and aloof reads as the first before the second.
+  const found = PERSONALITY_GAPS.find(
+    ([, over, under]) => flat[over] - flat[under] >= PERSONALITY_GAP,
+  );
+  return found === undefined ? undefined : found[0];
+}
+
 function traitsOf(player) {
   // Keepers get none: not one of the three is something a goalkeeper does.
   if (player.goalkeeping !== undefined) return [];
@@ -311,6 +351,8 @@ function build(club) {
       player.goalkeeping = Object.fromEntries(KEEPING.map((k) => [k, clamp(base + 8 + spread(6))]));
     }
     player.traits = traitsOf(player);
+    const personality = personalityOf(player);
+    if (personality !== undefined) player.personality = personality;
     return player;
   });
 

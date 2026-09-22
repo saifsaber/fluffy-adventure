@@ -70,7 +70,8 @@
         "distribution": 47,
         "oneOnOnes": 49
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "ياسر سويلم",
@@ -121,7 +122,8 @@
         "distribution": 41,
         "oneOnOnes": 47
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "فتحي سويلم",
@@ -355,7 +357,8 @@
       },
       "traits": [
         "attacks_the_cross"
-      ]
+      ],
+      "personality": "proud"
     },
     {
       "name": "مروان قابيل",
@@ -537,7 +540,8 @@
       },
       "traits": [
         "attacks_the_cross"
-      ]
+      ],
+      "personality": "steady"
     },
     {
       "name": "فارس عوض",
@@ -757,7 +761,8 @@
         "teamwork": 43,
         "leadership": 42
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "فتحي هلال",
@@ -935,7 +940,8 @@
         "teamwork": 24,
         "leadership": 30
       },
-      "traits": []
+      "traits": [],
+      "personality": "proud"
     },
     {
       "name": "رمضان الجزار",

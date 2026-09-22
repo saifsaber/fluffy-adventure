@@ -121,7 +121,8 @@
         "distribution": 61,
         "oneOnOnes": 58
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "إسلام عوض",
@@ -172,7 +173,8 @@
         "distribution": 57,
         "oneOnOnes": 60
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "طارق عفيفي",
@@ -613,7 +615,8 @@
         "teamwork": 57,
         "leadership": 51
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "طارق الحلواني",
@@ -657,7 +660,8 @@
         "teamwork": 53,
         "leadership": 45
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "باسم شلبي",
@@ -701,7 +705,8 @@
         "teamwork": 51,
         "leadership": 46
       },
-      "traits": []
+      "traits": [],
+      "personality": "volatile"
     },
     {
       "name": "محمد زهران",
@@ -880,7 +885,8 @@
         "leadership": 44
       },
       "nickname": "الحاوي",
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "شريف حمدي",

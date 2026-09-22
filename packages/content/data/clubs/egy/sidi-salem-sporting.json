@@ -71,7 +71,8 @@
         "distribution": 53,
         "oneOnOnes": 53
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "عادل السقا",
@@ -173,7 +174,8 @@
         "distribution": 53,
         "oneOnOnes": 49
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "هيثم الحلواني",
@@ -263,7 +265,8 @@
       },
       "traits": [
         "attacks_the_cross"
-      ]
+      ],
+      "personality": "volatile"
     },
     {
       "name": "تامر عفيفي",
@@ -446,7 +449,8 @@
       },
       "traits": [
         "attacks_the_cross"
-      ]
+      ],
+      "personality": "steady"
     },
     {
       "name": "كريم عبدالعال",
@@ -490,7 +494,8 @@
         "teamwork": 40,
         "leadership": 41
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "هشام منصور",
@@ -845,7 +850,8 @@
       },
       "traits": [
         "runs_the_channels"
-      ]
+      ],
+      "personality": "steady"
     },
     {
       "name": "شريف قنديل",
@@ -889,7 +895,8 @@
         "teamwork": 33,
         "leadership": 33
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "حسين عفيفي",
@@ -936,7 +943,8 @@
       "nickname": "المايسترو",
       "traits": [
         "runs_the_channels"
-      ]
+      ],
+      "personality": "volatile"
     },
     {
       "name": "محمود عثمان",
@@ -982,7 +990,8 @@
       },
       "traits": [
         "runs_the_channels"
-      ]
+      ],
+      "personality": "steady"
     }
   ]
 }

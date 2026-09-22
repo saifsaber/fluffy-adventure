@@ -57,6 +57,20 @@ export type PlayerRole =
  */
 export type PlayerTrait = 'gets_into_the_box' | 'runs_the_channels' | 'attacks_the_cross';
 
+/**
+ * Who a player is when somebody talks to him.
+ *
+ * **Declared here and read nowhere in this package.** The engine knows a player *has* a
+ * personality and is structurally incapable of knowing what one does: the meanings live in
+ * `@dakka/ai`, which depends on the engine and not the other way round, so a personality cannot
+ * reach a match result even by accident. That is the box's own condition — *how it reaches the
+ * dressing room without deciding an outcome* — made a property of the dependency graph rather than
+ * a promise somebody has to keep.
+ *
+ * Optional, because most players have none: "he is a professional" is the baseline, not a type.
+ */
+export type Personality = 'steady' | 'volatile' | 'proud';
+
 /** Attributes are 1–99. Higher is better, always. */
 export type Rating = number;
 
@@ -135,6 +149,8 @@ export interface Player extends Named {
    * stands out, so a squad where everyone has one describes nobody.
    */
   readonly traits: readonly PlayerTrait[];
+  /** Absent means nothing about him stands out in the dressing room. See `Personality`. */
+  readonly personality?: Personality;
   readonly attributes: PlayerAttributes;
   readonly condition: PlayerCondition;
   /** Street nickname, e.g. "الأخطبوط". Flavour, never a game input. */

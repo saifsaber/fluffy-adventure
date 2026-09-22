@@ -15,6 +15,8 @@ export { DEFAULT_LOCALE, DIRECTION, LOCALES, isLocale } from './locale.js';
 export type { Locale } from './locale.js';
 
 export { MAX_EFFECTS, MORALE_FOR, applyEffects, parseEffects } from './effects.js';
+export { ALL_PERSONALITIES, PERSONALITY_REGISTRY, isPraise, moraleFor } from './personality.js';
+export type { PersonalityMeta } from './personality.js';
 export type {
   AppliedEffects,
   Effect,

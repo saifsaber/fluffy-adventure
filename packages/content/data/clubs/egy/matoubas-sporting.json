@@ -122,7 +122,8 @@
         "distribution": 49,
         "oneOnOnes": 55
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "عادل هلال",
@@ -217,7 +218,8 @@
         "teamwork": 45,
         "leadership": 53
       },
-      "traits": []
+      "traits": [],
+      "personality": "proud"
     },
     {
       "name": "رمضان الطوخي",
@@ -356,7 +358,8 @@
       },
       "traits": [
         "attacks_the_cross"
-      ]
+      ],
+      "personality": "proud"
     },
     {
       "name": "حسن قابيل",
@@ -581,7 +584,8 @@
         "leadership": 35
       },
       "nickname": "الصخرة",
-      "traits": []
+      "traits": [],
+      "personality": "volatile"
     },
     {
       "name": "إسلام الشاذلي",
@@ -626,7 +630,8 @@
         "leadership": 38
       },
       "nickname": "المايسترو",
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "هشام الشناوي",
@@ -848,7 +853,8 @@
       },
       "traits": [
         "runs_the_channels"
-      ]
+      ],
+      "personality": "proud"
     },
     {
       "name": "أحمد السقا",
@@ -938,7 +944,8 @@
       },
       "traits": [
         "runs_the_channels"
-      ]
+      ],
+      "personality": "proud"
     },
     {
       "name": "بيشوي رزق",

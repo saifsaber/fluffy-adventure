@@ -70,7 +70,8 @@
         "distribution": 51,
         "oneOnOnes": 49
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "عصام نصار",
@@ -172,7 +173,8 @@
         "distribution": 45,
         "oneOnOnes": 47
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "إسلام قابيل",
@@ -396,7 +398,8 @@
       },
       "traits": [
         "attacks_the_cross"
-      ]
+      ],
+      "personality": "volatile"
     },
     {
       "name": "حسين سويلم",
@@ -528,7 +531,8 @@
         "teamwork": 37,
         "leadership": 44
       },
-      "traits": []
+      "traits": [],
+      "personality": "proud"
     },
     {
       "name": "يوسف الجزار",
@@ -661,7 +665,8 @@
         "teamwork": 42,
         "leadership": 37
       },
-      "traits": []
+      "traits": [],
+      "personality": "volatile"
     },
     {
       "name": "وليد منصور",
@@ -705,7 +710,8 @@
         "teamwork": 43,
         "leadership": 41
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "سيد هلال",
@@ -838,7 +844,8 @@
         "teamwork": 36,
         "leadership": 44
       },
-      "traits": []
+      "traits": [],
+      "personality": "proud"
     },
     {
       "name": "رجب بركات",

@@ -172,7 +172,8 @@
         "distribution": 61,
         "oneOnOnes": 66
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "باسم منصور",
@@ -216,7 +217,8 @@
         "teamwork": 51,
         "leadership": 57
       },
-      "traits": []
+      "traits": [],
+      "personality": "proud"
     },
     {
       "name": "عصام الفولي",
@@ -305,7 +307,8 @@
         "teamwork": 51,
         "leadership": 61
       },
-      "traits": []
+      "traits": [],
+      "personality": "proud"
     },
     {
       "name": "سيد الفولي",
@@ -393,7 +396,8 @@
         "teamwork": 50,
         "leadership": 55
       },
-      "traits": []
+      "traits": [],
+      "personality": "volatile"
     },
     {
       "name": "هيثم الشاذلي",
@@ -526,7 +530,8 @@
         "teamwork": 60,
         "leadership": 51
       },
-      "traits": []
+      "traits": [],
+      "personality": "volatile"
     },
     {
       "name": "هشام شحاتة",
@@ -880,7 +885,8 @@
         "teamwork": 48,
         "leadership": 51
       },
-      "traits": []
+      "traits": [],
+      "personality": "steady"
     },
     {
       "name": "حسين عبدالعال",
