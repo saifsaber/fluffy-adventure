@@ -69,12 +69,23 @@ export const roleSchema = z.enum([
   'complete_forward',
 ]);
 
+/**
+ * What a player does, as authored content.
+ *
+ * The same closed list the engine's `TRAIT_REGISTRY` keys on — a test holds the two together,
+ * because two lists that must agree and cannot be compared are two lists that will drift.
+ * Defaulted to empty rather than required: most players have none, and a squad where everybody has
+ * a trait describes nobody.
+ */
+export const traitSchema = z.enum(['gets_into_the_box', 'runs_the_channels', 'attacks_the_cross']);
+
 export const playerSchema = named.extend({
   age: z.number().int().min(15).max(45),
   /** ISO-3166 alpha-3. */
   nationality: z.string().length(3),
   positions: z.array(positionSchema).min(1),
   preferredRoles: z.array(roleSchema).min(1),
+  traits: z.array(traitSchema).default([]),
   nickname: z.string().optional(),
   technical: z.object({
     finishing: rating,

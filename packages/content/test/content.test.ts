@@ -2,6 +2,7 @@ import { execFileSync } from 'node:child_process';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { ALL_TRAITS } from '@dakka/engine';
 import {
   DATA_ROOT,
   ContentError,
@@ -9,6 +10,7 @@ import {
   leagueSchema,
   listLeagues,
   loadLeague,
+  traitSchema,
 } from '../src/index.js';
 
 describe('a competition carries its own rules', () => {
@@ -116,5 +118,45 @@ describe('the squad generator is deterministic', () => {
     const before = readFileSync(file, 'utf8');
     execFileSync('node', [join(DATA_ROOT, '..', 'scripts', 'generate-squads.mjs')]);
     expect(readFileSync(file, 'utf8')).toBe(before);
+  });
+});
+
+describe('traits are one list, held by both sides of the boundary', () => {
+  it('validates exactly the traits the engine has decided the effect of', () => {
+    // Two lists that must agree and cannot be compared are two lists that will drift. The engine
+    // refuses a trait with no entry in `TRAIT_REGISTRY` at build time; this is the other half —
+    // content that validated a trait the engine had never heard of would reach `toClub` and then
+    // the chain, where it would silently do nothing at all.
+    expect([...traitSchema.options].sort()).toEqual([...ALL_TRAITS].sort());
+  });
+
+  it('gives a trait only to a player the attributes agree with', () => {
+    // The lesson from `preferredRoles`, applied before the same mistake could be made twice: a
+    // label the generator writes beside a player, rather than out of him, describes nothing. Each
+    // trait is a facet of his own attributes standing clear of his own level, so the engine can
+    // read it — measured here on the shipped data rather than trusted from the script.
+    const league = loadLeague(DATA_ROOT, 'egy-d4');
+    const FACETS: Record<string, readonly string[]> = {
+      gets_into_the_box: ['finishing', 'anticipation', 'positioning'],
+      runs_the_channels: ['pace', 'acceleration', 'stamina'],
+      attacks_the_cross: ['heading', 'jumping', 'strength'],
+    };
+    const players = league.clubs.flatMap((club) => club.squad);
+    const traited = players.filter((player) => player.traits.length > 0);
+    expect(traited.length).toBeGreaterThan(30);
+    // And most of the league has none: a trait is a thing that stands out.
+    expect(traited.length).toBeLessThan(players.length / 2);
+
+    for (const player of traited) {
+      const { technical, physical, mental } = player.attributes;
+      const flat: Record<string, number> = { ...technical, ...physical, ...mental };
+      const level =
+        Object.values(flat).reduce((sum, value) => sum + value, 0) / Object.values(flat).length;
+      for (const trait of player.traits) {
+        const names = FACETS[trait] as readonly string[];
+        const facet = names.reduce((sum, name) => sum + (flat[name] ?? 0), 0) / names.length;
+        expect(facet - level, `${player.slug} / ${trait}`).toBeGreaterThanOrEqual(5);
+      }
+    }
   });
 });

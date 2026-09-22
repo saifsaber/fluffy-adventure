@@ -1,4 +1,5 @@
 import type { Player, PlayerRole } from './types/player.js';
+import { traitEffect } from './traits.js';
 import type { Mentality, PressingIntensity, Tempo } from './types/tactics.js';
 
 /**
@@ -106,6 +107,9 @@ export function drainPerTick(
   return (
     BASE_DRAIN_PER_TICK *
     ROLE_EFFORT[role] *
+    // What he does on top of what he was asked to do. Running in behind all afternoon is work, and
+    // the player who does it is the one who fades for it.
+    traitEffect(player.traits).effort *
     PRESS_EFFORT[intensity.pressing] *
     TEMPO_EFFORT[intensity.tempo] *
     MENTALITY_EFFORT[intensity.mentality] *

@@ -29,6 +29,7 @@ import {
   type Channel,
   type Zone,
 } from './zones.js';
+import { traitEffect } from './traits.js';
 import { bandCompetence, resolveBoth, type SideSetup, type SpaceMap } from './space.js';
 
 /**
@@ -451,9 +452,15 @@ function pickShooter(side: SideSetup, zone: Zone, rng: Rng): PlayerId | undefine
     if (!occupies && !contests) continue;
     const player = side.players.get(selection.playerId);
     if (player === undefined) continue;
+    // What a player does decides whose chance this is, not how good the chance is. The weights are
+    // a share of one draw the chain already makes, so a trait moves the shot between teammates —
+    // it never conjures one, and it never changes how many numbers are drawn.
+    const doing = traitEffect(player.traits);
+    const pull =
+      channelOf(zone) === 'centre' ? doing.shooterWeight.centre : doing.shooterWeight.flank;
     present.push({
       id: selection.playerId,
-      weight: (occupies ? 1 : 0.45) * bandCompetence(player, 'attacking'),
+      weight: (occupies ? 1 : 0.45) * bandCompetence(player, 'attacking') * pull,
     });
   }
   if (present.length === 0) return undefined;
@@ -596,7 +603,10 @@ function pickBodyPart(
   rng: Rng,
 ): BodyPart {
   const heading = (shooter?.attributes.technical.heading ?? 50) / 100;
-  const aerial = situation === 'set_piece' ? 0.55 : channelOf(zone) === 'centre' ? 0.08 : 0.22;
+  const base = situation === 'set_piece' ? 0.55 : channelOf(zone) === 'centre' ? 0.08 : 0.22;
+  // A player who attacks every cross meets more of them with his head — which is how he gets on
+  // the end of them, and why the chances he gets on the end of are worth less.
+  const aerial = clamp(base * traitEffect(shooter?.traits ?? []).aerial, 0, 1);
   if (rng.bool(aerial * (0.6 + heading))) return 'head';
   return rng.bool() ? 'right_foot' : 'left_foot';
 }

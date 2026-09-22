@@ -72,6 +72,7 @@ function toPlayer(data: ClubData['squad'][number], club: ClubData): Player {
     nationality: data.nationality,
     positions: [first, ...rest],
     preferredRoles: data.preferredRoles,
+    traits: data.traits,
     attributes: {
       technical: data.technical,
       physical: data.physical,

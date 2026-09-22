@@ -69,7 +69,8 @@
         "aerialReach": 54,
         "distribution": 54,
         "oneOnOnes": 58
-      }
+      },
+      "traits": []
     },
     {
       "name": "سيد سويلم",
@@ -119,7 +120,8 @@
         "aerialReach": 55,
         "distribution": 53,
         "oneOnOnes": 57
-      }
+      },
+      "traits": []
     },
     {
       "name": "أنس فرغلي",
@@ -169,7 +171,8 @@
         "aerialReach": 55,
         "distribution": 57,
         "oneOnOnes": 55
-      }
+      },
+      "traits": []
     },
     {
       "name": "إسلام عفيفي",
@@ -212,7 +215,10 @@
         "anticipation": 43,
         "teamwork": 48,
         "leadership": 47
-      }
+      },
+      "traits": [
+        "attacks_the_cross"
+      ]
     },
     {
       "name": "مروان سويلم",
@@ -255,7 +261,10 @@
         "anticipation": 45,
         "teamwork": 43,
         "leadership": 48
-      }
+      },
+      "traits": [
+        "attacks_the_cross"
+      ]
     },
     {
       "name": "أنس الشاذلي",
@@ -298,7 +307,8 @@
         "anticipation": 43,
         "teamwork": 48,
         "leadership": 49
-      }
+      },
+      "traits": []
     },
     {
       "name": "أيمن العجمي",
@@ -341,7 +351,10 @@
         "anticipation": 41,
         "teamwork": 46,
         "leadership": 41
-      }
+      },
+      "traits": [
+        "attacks_the_cross"
+      ]
     },
     {
       "name": "شادي العجمي",
@@ -384,7 +397,10 @@
         "anticipation": 44,
         "teamwork": 48,
         "leadership": 44
-      }
+      },
+      "traits": [
+        "attacks_the_cross"
+      ]
     },
     {
       "name": "عادل النجار",
@@ -427,7 +443,8 @@
         "anticipation": 48,
         "teamwork": 47,
         "leadership": 47
-      }
+      },
+      "traits": []
     },
     {
       "name": "محمد فرغلي",
@@ -470,7 +487,10 @@
         "anticipation": 41,
         "teamwork": 36,
         "leadership": 42
-      }
+      },
+      "traits": [
+        "attacks_the_cross"
+      ]
     },
     {
       "name": "أحمد غنيم",
@@ -514,7 +534,8 @@
         "teamwork": 44,
         "leadership": 45
       },
-      "nickname": "الصخرة"
+      "nickname": "الصخرة",
+      "traits": []
     },
     {
       "name": "هيثم عبدربه",
@@ -557,7 +578,8 @@
         "anticipation": 46,
         "teamwork": 53,
         "leadership": 44
-      }
+      },
+      "traits": []
     },
     {
       "name": "عصام دياب",
@@ -600,7 +622,8 @@
         "anticipation": 43,
         "teamwork": 49,
         "leadership": 44
-      }
+      },
+      "traits": []
     },
     {
       "name": "عبدالله النجار",
@@ -643,7 +666,8 @@
         "anticipation": 43,
         "teamwork": 48,
         "leadership": 37
-      }
+      },
+      "traits": []
     },
     {
       "name": "يوسف بركات",
@@ -686,7 +710,8 @@
         "anticipation": 39,
         "teamwork": 51,
         "leadership": 43
-      }
+      },
+      "traits": []
     },
     {
       "name": "هشام عبدربه",
@@ -730,7 +755,8 @@
         "teamwork": 46,
         "leadership": 41
       },
-      "nickname": "الفنان"
+      "nickname": "الفنان",
+      "traits": []
     },
     {
       "name": "هيثم صادق",
@@ -773,7 +799,8 @@
         "anticipation": 41,
         "teamwork": 44,
         "leadership": 45
-      }
+      },
+      "traits": []
     },
     {
       "name": "عمرو دياب",
@@ -816,7 +843,8 @@
         "anticipation": 38,
         "teamwork": 39,
         "leadership": 38
-      }
+      },
+      "traits": []
     },
     {
       "name": "رمضان الطوخي",
@@ -859,7 +887,10 @@
         "anticipation": 39,
         "teamwork": 35,
         "leadership": 40
-      }
+      },
+      "traits": [
+        "runs_the_channels"
+      ]
     },
     {
       "name": "عمر سليم",
@@ -902,7 +933,8 @@
         "anticipation": 35,
         "teamwork": 38,
         "leadership": 42
-      }
+      },
+      "traits": []
     },
     {
       "name": "سيد رزق",
@@ -945,7 +977,10 @@
         "anticipation": 35,
         "teamwork": 39,
         "leadership": 37
-      }
+      },
+      "traits": [
+        "runs_the_channels"
+      ]
     }
   ]
 }

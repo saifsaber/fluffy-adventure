@@ -47,6 +47,16 @@ export type PlayerRole =
   | 'false_nine'
   | 'complete_forward';
 
+/**
+ * What a player *does*, as distinct from how good he is at it.
+ *
+ * A closed enum for the same reason `CauseTag` is one: `TRAIT_REGISTRY` is
+ * `Record<PlayerTrait, TraitMeta>`, so a trait nobody has decided the effect of is a build error,
+ * and a locale is a lookup table rather than a rewrite. Adding one is a deliberate act — the chain
+ * must already make the decision it changes.
+ */
+export type PlayerTrait = 'gets_into_the_box' | 'runs_the_channels' | 'attacks_the_cross';
+
 /** Attributes are 1–99. Higher is better, always. */
 export type Rating = number;
 
@@ -120,6 +130,11 @@ export interface Player extends Named {
   /** Positions the player covers without penalty. First entry is the natural one. */
   readonly positions: readonly [Position, ...Position[]];
   readonly preferredRoles: readonly PlayerRole[];
+  /**
+   * What he does anyway. Usually empty, and empty is the honest default — a trait is a thing that
+   * stands out, so a squad where everyone has one describes nobody.
+   */
+  readonly traits: readonly PlayerTrait[];
   readonly attributes: PlayerAttributes;
   readonly condition: PlayerCondition;
   /** Street nickname, e.g. "الأخطبوط". Flavour, never a game input. */

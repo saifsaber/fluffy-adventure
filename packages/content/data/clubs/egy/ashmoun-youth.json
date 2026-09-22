@@ -70,7 +70,8 @@
         "aerialReach": 55,
         "distribution": 50,
         "oneOnOnes": 53
-      }
+      },
+      "traits": []
     },
     {
       "name": "خالد مطاوع",
@@ -121,7 +122,8 @@
         "aerialReach": 52,
         "distribution": 53,
         "oneOnOnes": 56
-      }
+      },
+      "traits": []
     },
     {
       "name": "عمرو دياب",
@@ -171,7 +173,8 @@
         "aerialReach": 55,
         "distribution": 56,
         "oneOnOnes": 56
-      }
+      },
+      "traits": []
     },
     {
       "name": "عمرو خميس",
@@ -214,7 +217,10 @@
         "anticipation": 50,
         "teamwork": 51,
         "leadership": 52
-      }
+      },
+      "traits": [
+        "attacks_the_cross"
+      ]
     },
     {
       "name": "عمر الشناوي",
@@ -257,7 +263,8 @@
         "anticipation": 45,
         "teamwork": 47,
         "leadership": 49
-      }
+      },
+      "traits": []
     },
     {
       "name": "هيثم العجمي",
@@ -300,7 +307,8 @@
         "anticipation": 52,
         "teamwork": 43,
         "leadership": 44
-      }
+      },
+      "traits": []
     },
     {
       "name": "محمود سويلم",
@@ -344,7 +352,8 @@
         "teamwork": 47,
         "leadership": 48
       },
-      "nickname": "الحريف"
+      "nickname": "الحريف",
+      "traits": []
     },
     {
       "name": "فارس عثمان",
@@ -387,7 +396,8 @@
         "anticipation": 48,
         "teamwork": 49,
         "leadership": 49
-      }
+      },
+      "traits": []
     },
     {
       "name": "وليد زهران",
@@ -430,7 +440,8 @@
         "anticipation": 52,
         "teamwork": 49,
         "leadership": 48
-      }
+      },
+      "traits": []
     },
     {
       "name": "طارق سويلم",
@@ -473,7 +484,8 @@
         "anticipation": 46,
         "teamwork": 49,
         "leadership": 44
-      }
+      },
+      "traits": []
     },
     {
       "name": "عمر منصور",
@@ -516,7 +528,8 @@
         "anticipation": 44,
         "teamwork": 47,
         "leadership": 49
-      }
+      },
+      "traits": []
     },
     {
       "name": "عصام الشاذلي",
@@ -559,7 +572,8 @@
         "anticipation": 39,
         "teamwork": 41,
         "leadership": 41
-      }
+      },
+      "traits": []
     },
     {
       "name": "فارس عفيفي",
@@ -602,7 +616,8 @@
         "anticipation": 38,
         "teamwork": 46,
         "leadership": 38
-      }
+      },
+      "traits": []
     },
     {
       "name": "يوسف النجار",
@@ -645,7 +660,8 @@
         "anticipation": 47,
         "teamwork": 54,
         "leadership": 44
-      }
+      },
+      "traits": []
     },
     {
       "name": "بيشوي دياب",
@@ -689,7 +705,8 @@
         "teamwork": 53,
         "leadership": 51
       },
-      "nickname": "الحريف"
+      "nickname": "الحريف",
+      "traits": []
     },
     {
       "name": "عمر صادق",
@@ -732,7 +749,8 @@
         "anticipation": 43,
         "teamwork": 53,
         "leadership": 46
-      }
+      },
+      "traits": []
     },
     {
       "name": "صلاح الديب",
@@ -775,7 +793,8 @@
         "anticipation": 39,
         "teamwork": 52,
         "leadership": 47
-      }
+      },
+      "traits": []
     },
     {
       "name": "كريم الحلواني",
@@ -818,7 +837,8 @@
         "anticipation": 50,
         "teamwork": 52,
         "leadership": 46
-      }
+      },
+      "traits": []
     },
     {
       "name": "ياسر منصور",
@@ -861,7 +881,8 @@
         "anticipation": 36,
         "teamwork": 43,
         "leadership": 41
-      }
+      },
+      "traits": []
     },
     {
       "name": "نادر عبدربه",
@@ -904,7 +925,8 @@
         "anticipation": 42,
         "teamwork": 45,
         "leadership": 42
-      }
+      },
+      "traits": []
     },
     {
       "name": "خالد قنديل",
@@ -947,7 +969,8 @@
         "anticipation": 35,
         "teamwork": 38,
         "leadership": 37
-      }
+      },
+      "traits": []
     }
   ]
 }

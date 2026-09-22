@@ -69,7 +69,8 @@
         "aerialReach": 47,
         "distribution": 45,
         "oneOnOnes": 44
-      }
+      },
+      "traits": []
     },
     {
       "name": "رجب شحاتة",
@@ -119,7 +120,8 @@
         "aerialReach": 47,
         "distribution": 45,
         "oneOnOnes": 45
-      }
+      },
+      "traits": []
     },
     {
       "name": "رجب مطاوع",
@@ -169,7 +171,8 @@
         "aerialReach": 50,
         "distribution": 46,
         "oneOnOnes": 45
-      }
+      },
+      "traits": []
     },
     {
       "name": "رجب عبدالعال",
@@ -212,7 +215,8 @@
         "anticipation": 41,
         "teamwork": 40,
         "leadership": 39
-      }
+      },
+      "traits": []
     },
     {
       "name": "عمر شحاتة",
@@ -255,7 +259,8 @@
         "anticipation": 42,
         "teamwork": 40,
         "leadership": 45
-      }
+      },
+      "traits": []
     },
     {
       "name": "شادي الطوخي",
@@ -298,7 +303,8 @@
         "anticipation": 41,
         "teamwork": 35,
         "leadership": 38
-      }
+      },
+      "traits": []
     },
     {
       "name": "كريم عثمان",
@@ -341,7 +347,8 @@
         "anticipation": 46,
         "teamwork": 43,
         "leadership": 42
-      }
+      },
+      "traits": []
     },
     {
       "name": "فتحي فرغلي",
@@ -384,7 +391,8 @@
         "anticipation": 41,
         "teamwork": 43,
         "leadership": 37
-      }
+      },
+      "traits": []
     },
     {
       "name": "هيثم الطوخي",
@@ -428,7 +436,8 @@
         "teamwork": 39,
         "leadership": 39
       },
-      "nickname": "الطيارة"
+      "nickname": "الطيارة",
+      "traits": []
     },
     {
       "name": "سامح بدوي",
@@ -471,7 +480,8 @@
         "anticipation": 34,
         "teamwork": 32,
         "leadership": 34
-      }
+      },
+      "traits": []
     },
     {
       "name": "عماد عوض",
@@ -514,7 +524,8 @@
         "anticipation": 39,
         "teamwork": 35,
         "leadership": 41
-      }
+      },
+      "traits": []
     },
     {
       "name": "فتحي بدوي",
@@ -557,7 +568,8 @@
         "anticipation": 36,
         "teamwork": 41,
         "leadership": 40
-      }
+      },
+      "traits": []
     },
     {
       "name": "مروان حمدي",
@@ -600,7 +612,8 @@
         "anticipation": 38,
         "teamwork": 46,
         "leadership": 42
-      }
+      },
+      "traits": []
     },
     {
       "name": "وليد شلبي",
@@ -643,7 +656,8 @@
         "anticipation": 37,
         "teamwork": 42,
         "leadership": 34
-      }
+      },
+      "traits": []
     },
     {
       "name": "أحمد العجمي",
@@ -686,7 +700,8 @@
         "anticipation": 33,
         "teamwork": 36,
         "leadership": 25
-      }
+      },
+      "traits": []
     },
     {
       "name": "كريم قنديل",
@@ -729,7 +744,8 @@
         "anticipation": 32,
         "teamwork": 43,
         "leadership": 41
-      }
+      },
+      "traits": []
     },
     {
       "name": "صلاح سليم",
@@ -772,7 +788,8 @@
         "anticipation": 36,
         "teamwork": 40,
         "leadership": 33
-      }
+      },
+      "traits": []
     },
     {
       "name": "محمود العجمي",
@@ -815,7 +832,10 @@
         "anticipation": 31,
         "teamwork": 35,
         "leadership": 36
-      }
+      },
+      "traits": [
+        "gets_into_the_box"
+      ]
     },
     {
       "name": "عبدالله الجندي",
@@ -859,7 +879,8 @@
         "teamwork": 34,
         "leadership": 32
       },
-      "nickname": "البلدوزر"
+      "nickname": "البلدوزر",
+      "traits": []
     },
     {
       "name": "زياد مطاوع",
@@ -902,7 +923,8 @@
         "anticipation": 26,
         "teamwork": 32,
         "leadership": 27
-      }
+      },
+      "traits": []
     },
     {
       "name": "محمد الحلواني",
@@ -945,7 +967,8 @@
         "anticipation": 30,
         "teamwork": 31,
         "leadership": 28
-      }
+      },
+      "traits": []
     }
   ]
 }

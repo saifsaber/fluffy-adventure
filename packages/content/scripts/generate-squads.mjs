@@ -221,6 +221,55 @@ const KEEPING = ['handling', 'reflexes', 'aerialReach', 'distribution', 'oneOnOn
 
 const clamp = (n) => Math.max(1, Math.min(99, Math.round(n)));
 
+/**
+ * What a player *does*, derived from what he is — never assigned beside it.
+ *
+ * `preferredRoles` is the cautionary tale sitting two fields above this: it is written straight
+ * from the squad slot and no attribute is biased to match, so the label describes nothing about the
+ * player and the engine is not allowed to read it. A trait is read by the engine, so it has to be
+ * **true of the player it is on**. Each one is a facet of his own attributes standing clear of his
+ * own general level — scale-free, so a fourth-division winger who attacks every cross is still one,
+ * however ordinary he is beside a first-division winger.
+ *
+ * No random draw happens here. Traits are a function of attributes that were already drawn, which
+ * is what lets this be added to a generator whose output is already committed without moving a
+ * single rating.
+ */
+const TRAIT_FACETS = {
+  gets_into_the_box: ['finishing', 'anticipation', 'positioning'],
+  runs_the_channels: ['pace', 'acceleration', 'stamina'],
+  attacks_the_cross: ['heading', 'jumping', 'strength'],
+};
+
+/**
+ * How far clear of his own level a facet has to stand before it is something he does.
+ *
+ * Five, measured rather than guessed. Over the 360 outfield players already generated, five points
+ * leaves **three quarters of the squad with no trait at all** and one player in thirty with two —
+ * which is what a trait is for. Four points traits two players in five, and a squad where everybody
+ * has one describes nobody.
+ */
+const TRAIT_EDGE = 5;
+
+const mean = (values) => values.reduce((total, value) => total + value, 0) / values.length;
+
+function traitsOf(player) {
+  // Keepers get none: not one of the three is something a goalkeeper does.
+  if (player.goalkeeping !== undefined) return [];
+  const level = mean([
+    ...Object.values(player.technical),
+    ...Object.values(player.physical),
+    ...Object.values(player.mental),
+  ]);
+  const facet = (names) =>
+    mean(
+      names.map((name) => player.technical[name] ?? player.physical[name] ?? player.mental[name]),
+    );
+  return Object.entries(TRAIT_FACETS)
+    .filter(([, names]) => facet(names) - level >= TRAIT_EDGE)
+    .map(([trait]) => trait);
+}
+
 function build(club) {
   const rand = rng(`dakka-v1:${club.slug}`);
   const pick = (arr) => arr[Math.floor(rand() * arr.length)];
@@ -261,6 +310,7 @@ function build(club) {
     if (group === 'gk') {
       player.goalkeeping = Object.fromEntries(KEEPING.map((k) => [k, clamp(base + 8 + spread(6))]));
     }
+    player.traits = traitsOf(player);
     return player;
   });
 

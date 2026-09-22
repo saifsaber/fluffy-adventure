@@ -147,10 +147,14 @@ export type {
   PlayerAttributes,
   PlayerCondition,
   PlayerRole,
+  PlayerTrait,
   Position,
   Rating,
   TechnicalAttributes,
 } from './types/player.js';
+
+export { ALL_TRAITS, NO_TRAITS, TRAIT_REGISTRY, traitEffect } from './traits.js';
+export type { TraitEffect, TraitMeta } from './traits.js';
 
 export type { Club, Stadium } from './types/club.js';
 

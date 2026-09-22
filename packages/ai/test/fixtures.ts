@@ -40,6 +40,7 @@ export function player(slug: string, morale: number): Player {
     nationality: 'EGY',
     positions: ['CM'],
     preferredRoles: ['box_to_box'],
+    traits: [],
     attributes: {
       technical: {
         finishing: 50,

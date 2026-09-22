@@ -1,7 +1,14 @@
 export { listLeagues, loadClub, loadClubData, loadLeague } from './load.js';
 export { ContentError, parseOrThrow, toClub } from './pure.js';
 export type { LoadedLeague } from './load.js';
-export { clubSchema, leagueSchema, playerSchema, positionSchema, roleSchema } from './schema.js';
+export {
+  clubSchema,
+  leagueSchema,
+  playerSchema,
+  positionSchema,
+  roleSchema,
+  traitSchema,
+} from './schema.js';
 export type { ClubData, LeagueData, PlayerData } from './schema.js';
 export { DATA_ROOT } from './paths.js';
 export { generateFixtures, roundRobinRounds, roundsInSeason } from './fixtures.js';

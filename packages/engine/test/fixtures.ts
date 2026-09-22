@@ -12,6 +12,7 @@ import {
   type PlayerAttributes,
   type Position,
   type PlayerRole,
+  type PlayerTrait,
   type SideSetup,
   type Tactics,
   type TechnicalAttributes,
@@ -74,6 +75,7 @@ export function makePlayer(
   position: Position,
   role: PlayerRole,
   overall: number,
+  traits: readonly PlayerTrait[] = [],
 ): Player {
   return {
     id: playerId(slug),
@@ -85,6 +87,7 @@ export function makePlayer(
     nationality: 'EGY',
     positions: [position],
     preferredRoles: [role],
+    traits,
     attributes: position === 'GK' ? keeperAttributes(overall) : flat(overall),
     condition: { fitness: 100, morale: 75, form: 70 },
   };

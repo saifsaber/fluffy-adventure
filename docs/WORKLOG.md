@@ -952,20 +952,29 @@ intents that would fix it. That is a persistence box, not a season box.
       stronger-side wins **0.631 → 0.625**. All seven thresholds met both ways.
       16 engine tests + 5 measured against the real league, **9/9 sabotage probes bite** — after
       three of them found tests passing for the wrong reason.
-- [ ] **⚠️ Traits — the second axis, and the one that is easy to fake.** A trait is not a bonus and
-      not a rating: it is a named thing a player *does* in a specific context — cuts inside, shoots
-      from distance, dives into tackles, stays up at corners. **Done means** each trait changes a
-      transition the chain already computes, in a context the chain can already see, and the same
-      trait can cost as well as pay. **Faking it looks like:** a list of adjectives that resolve to
-      `+3 finishing`, which is a rating with a nicer name.
-      **What roles left you.** `packages/engine/src/roles.ts` is the pattern to copy: a
-      `Record<PlayerRole, …>` table so an unregistered entry is a build error, a scale-free
-      construction so the axis cannot become a second copy of squad quality, a measurement over the
-      real league *before* the constant is chosen, and a paired 100-season harness run either side.
-      The harder part here is the one roles did not have: a trait has to reach the **chain**, not
-      just the presence grid, and the chain is where a careless multiplier would be invisible.
-      **A trait must also be content**, authored per player — and today nothing in the schema
-      carries one, so this box starts in `packages/content` and not in the engine.
+- [x] **⚠️ Traits — the second axis, and the one that is easy to fake.** `packages/engine/src/traits.ts`
+      + `traits` on every player in `@dakka/content`. Three traits — `gets_into_the_box`,
+      `runs_the_channels`, `attacks_the_cross` — each changing one of the three per-player decisions
+      a possession actually makes: who takes the shot, and how he meets the ball, plus what he
+      spends doing it.
+      **Every trait declares a cost, and a test refuses one that does not.** `TRAIT_REGISTRY` holds
+      the effects as data, and `costsOf()` reads them: a trait whose declared effects are all
+      favourable fails the suite. That is the mechanical form of *faking it looks like a list of
+      adjectives that resolve to `+3 finishing`* — without it, "trait" is the word for a bonus you
+      liked the sound of.
+      **No trait changes how many random numbers are drawn.** Every effect is a weight on a value
+      the chain already computes from a draw it already makes, and a test counts the draws with and
+      without traits — through the forks, because `simulateChain` forks immediately and a wrapper
+      that missed that would report zero and pass whatever the engine did.
+      **The trait is derived from the player, never written beside him.** Last tick's finding about
+      `preferredRoles` applied before the same mistake could be made twice: each trait is a facet of
+      a player's own attributes standing five points clear of his own level. 71 of 420 players carry
+      one, and **not one attribute moved** when the generator was re-run.
+      **The harness refused the first design, and that is the real finding** — see the Log. Paired
+      over 100 seasons / 38,000 matches: all seven thresholds met, xG↔goals 0.904.
+      14 engine tests + 2 measured on the shipped content, **8/8 sabotage probes bite** after two
+      found tests passing for the wrong reason.
+
 - [ ] **Personality**, and how it reaches the dressing room without deciding an outcome.
 - [ ] **⚠️ Training and development.** Player progression must be inspectable: attribute history is
       versioned (blueprint §5) so a rise can be explained. **Faking it looks like:** a random walk
@@ -1323,6 +1332,25 @@ order — they are the same problem understood three times over, and later ones 
     `preferredRoles` true, at which point a *declared* preference is worth reading as a second
     signal beside the attributes.
 
+- **⚠️ The engine has no xG-correlation headroom, so nothing may widen the shot-quality
+  distribution.** The blueprint's floor is 0.900 and the engine sits at **0.903–0.905**. The traits
+  box found out what that costs: a trait that biased the chain's penetration skew — shots from
+  further out, which is the *right* hook for a player who shoots on sight — took the correlation to
+  **0.881**, and survived being shrunk to a quarter of its size (0.895). Isolated over 30 seasons:
+  weights and aerial share together cost 0.002; the distance bias alone cost 0.024.
+  - **The mechanism is not the magnitude.** `resolveShot` adds the shooter's finishing in log-odds
+    on top of xG, and a low-xG shot is exactly where that term moves the answer most. Push shots
+    down the convex part of the xG curve and a club's goals stop tracking its own xG — which is what
+    the correlation measures, per club-season.
+  - **What this blocks.** Any feature that moves shots along the distance spectrum: a `shoots_on_sight`
+    trait, a long-shots instruction, a tempo setting that trades chance count for chance quality.
+    All three are real football and none of them can ship while the margin is 0.003.
+  - **What would unblock it**, in order of honesty: (1) let `finishingEdge` read `longShots` at range
+    rather than `finishing` everywhere, so conversion tracks xG better on the shots the feature
+    creates — a change to `xg.ts` that needs its own paired run; (2) establish whether 0.900 is the
+    right floor at all, which means finding a published club-season xG↔goals figure rather than
+    arguing from the engine. **Do not do (2) by moving the number.**
+
 - **Refero MCP — connected, but the account has no active plan.** The server is registered and
   reachable; every tool call comes back `NO_SUBSCRIPTION` with
   `https://refero.design/mcp/upgrade`. That is a plan-level refusal rather than a rejected key, so
@@ -1375,6 +1403,45 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-22 (29)** — **Traits, and the design the harness refused.**
+  - **The first design was right about the hook and wrong for this engine.** `shoots_on_sight`
+    biased the chain's penetration skew, which is exactly where "he shoots the moment he sees goal"
+    belongs. The harness came back red: xG↔goals 0.881 against a 0.900 floor. Isolating the three
+    hooks over 30 seasons each settled it — weights 0.903, aerial 0.903, **distance 0.881** — and
+    shrinking the bias to a quarter still only reached 0.895. The hook is unshippable here, not
+    mis-sized, because `resolveShot` adds finishing in log-odds and a long shot is where that term
+    dominates. Recorded under "## Blocked" as a constraint on the **engine**, with the two honest
+    ways out and an explicit "do not move the number".
+  - **So the trait set was rebuilt around the hooks that survived.** `gets_into_the_box` takes more
+    of the central chances and fewer wide ones and works for it; `runs_the_channels` is the mirror —
+    more of the wide chances, which are worse, and it is work; `attacks_the_cross` gets on the end
+    of the ball into the box and heads far more of them, at −0.55 in the xG logit.
+  - **The two-sidedness is enforced, not asserted.** `costsOf()` reads the registry and the suite
+    fails a trait whose declared effects are all favourable. A probe that made one all-upside bites.
+  - **Two tests were passing for the wrong reason, and the probes found both.** The header test
+    compared a traited player with a plain one — but the trait also pulls him wide, and the wide
+    channels are where the ball already arrives in the air, so it passed with the aerial hook
+    deleted. It now measures against `runs_the_channels`, whose flank weight is *identical*, so the
+    only thing that differs is the hook under test. The first behavioural tests also gave the trait
+    to all three forwards, which redistributed the effect into its own denominator and measured
+    almost nothing; they now give it to one man. **The named anti-pattern, sixth and seventh
+    costumes.**
+  - **Determinism is tested, not assumed.** A counting `Rng` that follows forks proves the same
+    number of draws with traits and without. The first version did not follow forks and reported
+    zero — a probe that cannot bite, caught by the count being suspiciously round.
+  - **`preferredRoles`' lesson applied one tick later.** Traits are derived from the player's own
+    attributes — a facet standing five points clear of his own level, measured: at five, three
+    quarters of the league carries none and one in thirty carries two; at four, two in five do, and
+    a squad where everybody has one describes nobody. Regenerating moved **no attribute at all**.
+  - 765 tests across 51 files. Harness green at 100 seasons: goals 2.740, shots 24.780, home 0.334,
+    xG corr 0.904, champion 81.98, stronger side 0.624. `pnpm causes` unchanged.
+  - **For the next tick:** traits do not reach the **database** — `packages/db` has no trait column
+    and the seed drops them, so a career loaded from Postgres has players the chain reads as plain.
+    That is the next thing to fix if persistence is to mean anything, and it is a migration plus an
+    enum-agreement test in the shape of `role_code`. Traits also have **no phrasing** in
+    `@dakka/ai`: the moment a screen shows one it needs `Record<PlayerTrait, Record<Locale, …>>`
+    beside `PHRASINGS`, or ADR-003 is broken on the day the trait appears.
 
 - **2026-09-21 (28)** — **Role fit: can this player do this job?**
   - **The box's premise was wrong, and that was the finding.** It said "beyond the role fit the

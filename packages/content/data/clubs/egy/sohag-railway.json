@@ -70,7 +70,8 @@
         "aerialReach": 62,
         "distribution": 61,
         "oneOnOnes": 59
-      }
+      },
+      "traits": []
     },
     {
       "name": "طارق الشربيني",
@@ -120,7 +121,8 @@
         "aerialReach": 57,
         "distribution": 58,
         "oneOnOnes": 57
-      }
+      },
+      "traits": []
     },
     {
       "name": "إسلام سرحان",
@@ -170,7 +172,8 @@
         "aerialReach": 62,
         "distribution": 62,
         "oneOnOnes": 55
-      }
+      },
+      "traits": []
     },
     {
       "name": "فتحي رزق",
@@ -213,7 +216,8 @@
         "anticipation": 58,
         "teamwork": 52,
         "leadership": 51
-      }
+      },
+      "traits": []
     },
     {
       "name": "مينا خميس",
@@ -256,7 +260,8 @@
         "anticipation": 62,
         "teamwork": 55,
         "leadership": 54
-      }
+      },
+      "traits": []
     },
     {
       "name": "مروان شحاتة",
@@ -299,7 +304,8 @@
         "anticipation": 54,
         "teamwork": 57,
         "leadership": 52
-      }
+      },
+      "traits": []
     },
     {
       "name": "طارق منصور",
@@ -342,7 +348,10 @@
         "anticipation": 56,
         "teamwork": 53,
         "leadership": 54
-      }
+      },
+      "traits": [
+        "attacks_the_cross"
+      ]
     },
     {
       "name": "تامر عبدالعال",
@@ -385,7 +394,8 @@
         "anticipation": 56,
         "teamwork": 51,
         "leadership": 51
-      }
+      },
+      "traits": []
     },
     {
       "name": "مروان مطاوع",
@@ -428,7 +438,8 @@
         "anticipation": 55,
         "teamwork": 51,
         "leadership": 57
-      }
+      },
+      "traits": []
     },
     {
       "name": "عادل زهران",
@@ -471,7 +482,8 @@
         "anticipation": 59,
         "teamwork": 51,
         "leadership": 52
-      }
+      },
+      "traits": []
     },
     {
       "name": "نادر الجندي",
@@ -514,7 +526,8 @@
         "anticipation": 64,
         "teamwork": 62,
         "leadership": 54
-      }
+      },
+      "traits": []
     },
     {
       "name": "يوسف قابيل",
@@ -557,7 +570,10 @@
         "anticipation": 53,
         "teamwork": 54,
         "leadership": 54
-      }
+      },
+      "traits": [
+        "runs_the_channels"
+      ]
     },
     {
       "name": "أيمن سرحان",
@@ -600,7 +616,10 @@
         "anticipation": 47,
         "teamwork": 51,
         "leadership": 45
-      }
+      },
+      "traits": [
+        "runs_the_channels"
+      ]
     },
     {
       "name": "باسم بدوي",
@@ -643,7 +662,10 @@
         "anticipation": 53,
         "teamwork": 59,
         "leadership": 53
-      }
+      },
+      "traits": [
+        "runs_the_channels"
+      ]
     },
     {
       "name": "هشام الحلواني",
@@ -686,7 +708,8 @@
         "anticipation": 50,
         "teamwork": 56,
         "leadership": 50
-      }
+      },
+      "traits": []
     },
     {
       "name": "عصام عبدربه",
@@ -729,7 +752,10 @@
         "anticipation": 56,
         "teamwork": 46,
         "leadership": 46
-      }
+      },
+      "traits": [
+        "gets_into_the_box"
+      ]
     },
     {
       "name": "خالد الجندي",
@@ -772,7 +798,8 @@
         "anticipation": 57,
         "teamwork": 53,
         "leadership": 49
-      }
+      },
+      "traits": []
     },
     {
       "name": "بيشوي الشناوي",
@@ -815,7 +842,10 @@
         "anticipation": 49,
         "teamwork": 43,
         "leadership": 42
-      }
+      },
+      "traits": [
+        "runs_the_channels"
+      ]
     },
     {
       "name": "محمد العجمي",
@@ -858,7 +888,10 @@
         "anticipation": 50,
         "teamwork": 45,
         "leadership": 40
-      }
+      },
+      "traits": [
+        "runs_the_channels"
+      ]
     },
     {
       "name": "رجب رزق",
@@ -901,7 +934,10 @@
         "anticipation": 46,
         "teamwork": 42,
         "leadership": 41
-      }
+      },
+      "traits": [
+        "gets_into_the_box"
+      ]
     },
     {
       "name": "زياد عفيفي",
@@ -944,7 +980,10 @@
         "anticipation": 38,
         "teamwork": 41,
         "leadership": 43
-      }
+      },
+      "traits": [
+        "runs_the_channels"
+      ]
     }
   ]
 }

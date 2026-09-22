@@ -69,7 +69,8 @@
         "aerialReach": 65,
         "distribution": 61,
         "oneOnOnes": 62
-      }
+      },
+      "traits": []
     },
     {
       "name": "شريف سرحان",
@@ -119,7 +120,8 @@
         "aerialReach": 61,
         "distribution": 62,
         "oneOnOnes": 62
-      }
+      },
+      "traits": []
     },
     {
       "name": "زياد شلبي",
@@ -169,7 +171,8 @@
         "aerialReach": 65,
         "distribution": 70,
         "oneOnOnes": 66
-      }
+      },
+      "traits": []
     },
     {
       "name": "حسن الشناوي",
@@ -212,7 +215,8 @@
         "anticipation": 57,
         "teamwork": 54,
         "leadership": 59
-      }
+      },
+      "traits": []
     },
     {
       "name": "حسن سرحان",
@@ -255,7 +259,8 @@
         "anticipation": 49,
         "teamwork": 57,
         "leadership": 52
-      }
+      },
+      "traits": []
     },
     {
       "name": "ياسر النجار",
@@ -298,7 +303,8 @@
         "anticipation": 55,
         "teamwork": 55,
         "leadership": 53
-      }
+      },
+      "traits": []
     },
     {
       "name": "عصام مطاوع",
@@ -341,7 +347,8 @@
         "anticipation": 59,
         "teamwork": 65,
         "leadership": 59
-      }
+      },
+      "traits": []
     },
     {
       "name": "وليد سويلم",
@@ -384,7 +391,8 @@
         "anticipation": 60,
         "teamwork": 58,
         "leadership": 61
-      }
+      },
+      "traits": []
     },
     {
       "name": "خالد الجزار",
@@ -427,7 +435,8 @@
         "anticipation": 54,
         "teamwork": 60,
         "leadership": 58
-      }
+      },
+      "traits": []
     },
     {
       "name": "شريف زهران",
@@ -470,7 +479,8 @@
         "anticipation": 59,
         "teamwork": 54,
         "leadership": 58
-      }
+      },
+      "traits": []
     },
     {
       "name": "نادر عفيفي",
@@ -513,7 +523,8 @@
         "anticipation": 54,
         "teamwork": 55,
         "leadership": 53
-      }
+      },
+      "traits": []
     },
     {
       "name": "حسن مطاوع",
@@ -556,7 +567,8 @@
         "anticipation": 48,
         "teamwork": 55,
         "leadership": 50
-      }
+      },
+      "traits": []
     },
     {
       "name": "سامح بدوي",
@@ -600,7 +612,8 @@
         "teamwork": 58,
         "leadership": 53
       },
-      "nickname": "السد العالي"
+      "nickname": "السد العالي",
+      "traits": []
     },
     {
       "name": "عمرو خميس",
@@ -643,7 +656,8 @@
         "anticipation": 51,
         "teamwork": 60,
         "leadership": 52
-      }
+      },
+      "traits": []
     },
     {
       "name": "عماد قنديل",
@@ -686,7 +700,8 @@
         "anticipation": 56,
         "teamwork": 57,
         "leadership": 52
-      }
+      },
+      "traits": []
     },
     {
       "name": "مينا عوض",
@@ -729,7 +744,8 @@
         "anticipation": 51,
         "teamwork": 53,
         "leadership": 49
-      }
+      },
+      "traits": []
     },
     {
       "name": "عصام العجمي",
@@ -773,7 +789,8 @@
         "teamwork": 60,
         "leadership": 56
       },
-      "nickname": "الأخطبوط"
+      "nickname": "الأخطبوط",
+      "traits": []
     },
     {
       "name": "عادل بدوي",
@@ -816,7 +833,8 @@
         "anticipation": 54,
         "teamwork": 52,
         "leadership": 45
-      }
+      },
+      "traits": []
     },
     {
       "name": "شادي فرغلي",
@@ -860,7 +878,8 @@
         "teamwork": 42,
         "leadership": 46
       },
-      "nickname": "الفنان"
+      "nickname": "الفنان",
+      "traits": []
     },
     {
       "name": "إسلام شحاتة",
@@ -904,7 +923,8 @@
         "teamwork": 49,
         "leadership": 49
       },
-      "nickname": "القناص"
+      "nickname": "القناص",
+      "traits": []
     },
     {
       "name": "باسم الحلواني",
@@ -947,7 +967,8 @@
         "anticipation": 46,
         "teamwork": 48,
         "leadership": 45
-      }
+      },
+      "traits": []
     }
   ]
 }

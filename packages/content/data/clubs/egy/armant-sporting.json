@@ -69,7 +69,8 @@
         "aerialReach": 50,
         "distribution": 47,
         "oneOnOnes": 49
-      }
+      },
+      "traits": []
     },
     {
       "name": "ياسر سويلم",
@@ -119,7 +120,8 @@
         "aerialReach": 49,
         "distribution": 41,
         "oneOnOnes": 47
-      }
+      },
+      "traits": []
     },
     {
       "name": "فتحي سويلم",
@@ -170,7 +172,8 @@
         "aerialReach": 44,
         "distribution": 43,
         "oneOnOnes": 47
-      }
+      },
+      "traits": []
     },
     {
       "name": "إسلام منصور",
@@ -213,7 +216,10 @@
         "anticipation": 39,
         "teamwork": 35,
         "leadership": 36
-      }
+      },
+      "traits": [
+        "attacks_the_cross"
+      ]
     },
     {
       "name": "وليد قابيل",
@@ -256,7 +262,10 @@
         "anticipation": 49,
         "teamwork": 46,
         "leadership": 43
-      }
+      },
+      "traits": [
+        "attacks_the_cross"
+      ]
     },
     {
       "name": "شريف غنيم",
@@ -299,7 +308,8 @@
         "anticipation": 45,
         "teamwork": 42,
         "leadership": 43
-      }
+      },
+      "traits": []
     },
     {
       "name": "عمرو غنيم",
@@ -342,7 +352,10 @@
         "anticipation": 37,
         "teamwork": 35,
         "leadership": 42
-      }
+      },
+      "traits": [
+        "attacks_the_cross"
+      ]
     },
     {
       "name": "مروان قابيل",
@@ -385,7 +398,8 @@
         "anticipation": 38,
         "teamwork": 44,
         "leadership": 40
-      }
+      },
+      "traits": []
     },
     {
       "name": "عمر الشاذلي",
@@ -428,7 +442,10 @@
         "anticipation": 42,
         "teamwork": 40,
         "leadership": 40
-      }
+      },
+      "traits": [
+        "attacks_the_cross"
+      ]
     },
     {
       "name": "عمرو الفولي",
@@ -471,7 +488,10 @@
         "anticipation": 44,
         "teamwork": 37,
         "leadership": 37
-      }
+      },
+      "traits": [
+        "attacks_the_cross"
+      ]
     },
     {
       "name": "حسن عوض",
@@ -514,7 +534,10 @@
         "anticipation": 41,
         "teamwork": 42,
         "leadership": 43
-      }
+      },
+      "traits": [
+        "attacks_the_cross"
+      ]
     },
     {
       "name": "فارس عوض",
@@ -557,7 +580,8 @@
         "anticipation": 38,
         "teamwork": 40,
         "leadership": 36
-      }
+      },
+      "traits": []
     },
     {
       "name": "باسم سويلم",
@@ -600,7 +624,8 @@
         "anticipation": 29,
         "teamwork": 37,
         "leadership": 33
-      }
+      },
+      "traits": []
     },
     {
       "name": "محمود سرحان",
@@ -643,7 +668,8 @@
         "anticipation": 37,
         "teamwork": 38,
         "leadership": 37
-      }
+      },
+      "traits": []
     },
     {
       "name": "حسن خميس",
@@ -686,7 +712,8 @@
         "anticipation": 43,
         "teamwork": 42,
         "leadership": 36
-      }
+      },
+      "traits": []
     },
     {
       "name": "عصام منصور",
@@ -729,7 +756,8 @@
         "anticipation": 39,
         "teamwork": 43,
         "leadership": 42
-      }
+      },
+      "traits": []
     },
     {
       "name": "فتحي هلال",
@@ -772,7 +800,8 @@
         "anticipation": 34,
         "teamwork": 46,
         "leadership": 40
-      }
+      },
+      "traits": []
     },
     {
       "name": "ياسر دياب",
@@ -815,7 +844,8 @@
         "anticipation": 36,
         "teamwork": 32,
         "leadership": 35
-      }
+      },
+      "traits": []
     },
     {
       "name": "رجب بركات",
@@ -858,7 +888,10 @@
         "anticipation": 34,
         "teamwork": 36,
         "leadership": 36
-      }
+      },
+      "traits": [
+        "runs_the_channels"
+      ]
     },
     {
       "name": "ياسر العجمي",
@@ -901,7 +934,8 @@
         "anticipation": 25,
         "teamwork": 24,
         "leadership": 30
-      }
+      },
+      "traits": []
     },
     {
       "name": "رمضان الجزار",
@@ -944,7 +978,8 @@
         "anticipation": 33,
         "teamwork": 37,
         "leadership": 35
-      }
+      },
+      "traits": []
     }
   ]
 }

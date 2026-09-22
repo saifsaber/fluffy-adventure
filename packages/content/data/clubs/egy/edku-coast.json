@@ -70,7 +70,8 @@
         "aerialReach": 47,
         "distribution": 50,
         "oneOnOnes": 48
-      }
+      },
+      "traits": []
     },
     {
       "name": "بلال رزق",
@@ -120,7 +121,8 @@
         "aerialReach": 54,
         "distribution": 51,
         "oneOnOnes": 57
-      }
+      },
+      "traits": []
     },
     {
       "name": "بلال لطفي",
@@ -170,7 +172,8 @@
         "aerialReach": 47,
         "distribution": 47,
         "oneOnOnes": 48
-      }
+      },
+      "traits": []
     },
     {
       "name": "محمد سويلم",
@@ -213,7 +216,8 @@
         "anticipation": 44,
         "teamwork": 38,
         "leadership": 43
-      }
+      },
+      "traits": []
     },
     {
       "name": "حسن رزق",
@@ -256,7 +260,8 @@
         "anticipation": 47,
         "teamwork": 42,
         "leadership": 40
-      }
+      },
+      "traits": []
     },
     {
       "name": "بيشوي قابيل",
@@ -300,7 +305,8 @@
         "teamwork": 45,
         "leadership": 46
       },
-      "nickname": "السد العالي"
+      "nickname": "السد العالي",
+      "traits": []
     },
     {
       "name": "زياد نصار",
@@ -343,7 +349,8 @@
         "anticipation": 50,
         "teamwork": 38,
         "leadership": 37
-      }
+      },
+      "traits": []
     },
     {
       "name": "صلاح خميس",
@@ -386,7 +393,8 @@
         "anticipation": 39,
         "teamwork": 42,
         "leadership": 39
-      }
+      },
+      "traits": []
     },
     {
       "name": "عبدالله عفيفي",
@@ -429,7 +437,10 @@
         "anticipation": 47,
         "teamwork": 49,
         "leadership": 47
-      }
+      },
+      "traits": [
+        "runs_the_channels"
+      ]
     },
     {
       "name": "سيد الديب",
@@ -472,7 +483,8 @@
         "anticipation": 42,
         "teamwork": 44,
         "leadership": 44
-      }
+      },
+      "traits": []
     },
     {
       "name": "حسين بركات",
@@ -515,7 +527,8 @@
         "anticipation": 38,
         "teamwork": 37,
         "leadership": 38
-      }
+      },
+      "traits": []
     },
     {
       "name": "حسن الشربيني",
@@ -559,7 +572,10 @@
         "teamwork": 43,
         "leadership": 44
       },
-      "nickname": "البلدوزر"
+      "nickname": "البلدوزر",
+      "traits": [
+        "runs_the_channels"
+      ]
     },
     {
       "name": "عمر الشاذلي",
@@ -602,7 +618,8 @@
         "anticipation": 39,
         "teamwork": 45,
         "leadership": 36
-      }
+      },
+      "traits": []
     },
     {
       "name": "تامر الديب",
@@ -645,7 +662,10 @@
         "anticipation": 43,
         "teamwork": 42,
         "leadership": 35
-      }
+      },
+      "traits": [
+        "runs_the_channels"
+      ]
     },
     {
       "name": "مينا الجندي",
@@ -688,7 +708,8 @@
         "anticipation": 39,
         "teamwork": 40,
         "leadership": 37
-      }
+      },
+      "traits": []
     },
     {
       "name": "شادي رزق",
@@ -732,7 +753,8 @@
         "teamwork": 40,
         "leadership": 39
       },
-      "nickname": "الجدار"
+      "nickname": "الجدار",
+      "traits": []
     },
     {
       "name": "نادر الشناوي",
@@ -775,7 +797,10 @@
         "anticipation": 48,
         "teamwork": 46,
         "leadership": 45
-      }
+      },
+      "traits": [
+        "runs_the_channels"
+      ]
     },
     {
       "name": "تامر صادق",
@@ -819,7 +844,10 @@
         "teamwork": 45,
         "leadership": 36
       },
-      "nickname": "الدينامو"
+      "nickname": "الدينامو",
+      "traits": [
+        "runs_the_channels"
+      ]
     },
     {
       "name": "هيثم سرحان",
@@ -862,7 +890,11 @@
         "anticipation": 38,
         "teamwork": 28,
         "leadership": 31
-      }
+      },
+      "traits": [
+        "gets_into_the_box",
+        "runs_the_channels"
+      ]
     },
     {
       "name": "سيد رزق",
@@ -905,7 +937,11 @@
         "anticipation": 34,
         "teamwork": 34,
         "leadership": 30
-      }
+      },
+      "traits": [
+        "gets_into_the_box",
+        "runs_the_channels"
+      ]
     },
     {
       "name": "إسلام لطفي",
@@ -948,7 +984,10 @@
         "anticipation": 39,
         "teamwork": 33,
         "leadership": 34
-      }
+      },
+      "traits": [
+        "runs_the_channels"
+      ]
     }
   ]
 }
