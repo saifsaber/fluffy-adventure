@@ -1,5 +1,6 @@
 import { generateFixtures, distanceKm, type ClubData } from '@dakka/content';
 import {
+  baselineManager,
   competitionId,
   matchId,
   simulate,
@@ -109,8 +110,11 @@ export function playSeason(input: SeasonInput): SeasonResult {
     const result = simulate({
       id: matchId(`${input.seed}-r${fixture.round}-${home.slug}-${away.slug}`),
       seed: `${input.seed} ${fixture.round} ${home.slug} ${away.slug}`,
-      home: { club: home, tactics: homeTactics, decisions: [] },
-      away: { club: away, tactics: awayTactics, decisions: [] },
+      // Both sides have a man on the touchline. A harness where nobody reacts to the scoreboard is
+      // measuring a game nobody plays — and since the same manager runs both benches, whatever he
+      // is worth is worth it to both, so the thresholds still measure the engine.
+      home: { club: home, tactics: homeTactics, decisions: [], manager: baselineManager },
+      away: { club: away, tactics: awayTactics, decisions: [], manager: baselineManager },
       context: {
         competitionId: competition,
         awayTravelKm: travelKm,

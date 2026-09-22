@@ -62,6 +62,7 @@ const toChainSide = (side: MatchSide): ChainSide => ({
   tactics: side.tactics,
   players: indexSquad(side.club.squad),
   decisions: side.decisions,
+  ...(side.manager === undefined ? {} : { manager: side.manager }),
 });
 
 /** How long each player was on the pitch, from the events that took them on and off. */

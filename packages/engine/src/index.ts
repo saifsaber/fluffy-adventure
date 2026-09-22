@@ -98,6 +98,9 @@ export {
 } from './roles.js';
 export type { AttributeName } from './roles.js';
 
+export { TOUCHLINE, baselineManager } from './touchline.js';
+export type { OnField, TouchlineManager, TouchlineRules, TouchlineView } from './touchline.js';
+
 export { PENALTY_XG, XG_ANCHORS, expectedGoals, isOnTarget, resolveShot } from './xg.js';
 export type { XgAnchor } from './xg.js';
 export type {

@@ -123,7 +123,10 @@ export interface Messages {
   'setup.call.why': string;
   'setup.call.none': string;
   'setup.call.minute': string;
-  /** Said plainly: an opponent with invented instructions would make the result a fiction. */
+  /**
+   * What the opponent does, said plainly — including the one thing that matters about him, which
+   * is that he can see no more than the player can.
+   */
   'setup.opponent.baseline': string;
   'setup.attendance': string;
   'setup.sheet': string;

@@ -2,6 +2,7 @@ import type { Club } from './club.js';
 import type { ClubId, CompetitionId, MatchId, PlayerId } from './ids.js';
 import type { PlayerCondition } from './player.js';
 import type { InMatchDecision, Tactics } from './tactics.js';
+import type { TouchlineManager } from '../touchline.js';
 import type { MatchTrace } from './trace.js';
 
 export interface MatchSide {
@@ -9,6 +10,16 @@ export interface MatchSide {
   readonly tactics: Tactics;
   /** Decisions the manager makes during the match, ordered by minute. */
   readonly decisions: readonly InMatchDecision[];
+  /**
+   * A manager on the touchline, asked once a minute and answering through the same
+   * `InMatchDecision` union a human answers through.
+   *
+   * A function rather than data, on purpose: it is a **capability**, and capabilities never cross
+   * the wire. A client sends the choices it is entitled to make and the server attaches the
+   * opponent's manager from its own copy — the same rule that keeps a client from fielding an
+   * eleven it invented.
+   */
+  readonly manager?: TouchlineManager;
 }
 
 export interface MatchContext {

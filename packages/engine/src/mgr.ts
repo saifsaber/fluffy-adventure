@@ -137,7 +137,11 @@ export function baselineTactics(squad: readonly Player[]): Tactics {
  * that differs between the two arms is the decisions being priced.
  */
 export function neutralise(input: MatchInput, side: Side): MatchInput {
-  const managed = input[side];
+  // The manager comes off the bench as well as the decisions. A control arm that still had a man
+  // reacting to the scoreboard would not be a control — it would be a second managed side, and
+  // every "your decisions were worth this" measured against it would be measuring the wrong gap.
+  const managed = { ...input[side] };
+  delete (managed as { manager?: unknown }).manager;
   return {
     ...input,
     [side]: {

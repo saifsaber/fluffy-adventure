@@ -30,6 +30,7 @@ import {
   type Zone,
 } from './zones.js';
 import { traitEffect } from './traits.js';
+import type { OnField, TouchlineManager } from './touchline.js';
 import { bandCompetence, resolveBoth, type SideSetup, type SpaceMap } from './space.js';
 
 /**
@@ -139,6 +140,14 @@ export interface ChainResult {
 export interface ChainSide extends SideSetup {
   /** Ordered by minute. Anything the manager changes mid-match. */
   readonly decisions?: readonly InMatchDecision[];
+  /**
+   * A manager on the touchline, asked once a minute.
+   *
+   * What he returns is spliced into the same queue the pre-declared decisions sit in and applied by
+   * the same `applyDecisions`. There is no second path, which is what makes an opposing manager
+   * priceable by the counterfactual rather than an advantage nobody can measure.
+   */
+  readonly manager?: TouchlineManager;
 }
 
 export interface ChainInput {
@@ -628,7 +637,11 @@ const RECOMPUTE_EVERY_TICKS = 30;
 /** One side's mutable state for the duration of a match. */
 interface LiveSide {
   readonly base: ReadonlyMap<PlayerId, Player>;
-  readonly decisions: readonly InMatchDecision[];
+  /** Mutable: a touchline manager's answers are spliced in at the point still to be applied. */
+  decisions: InMatchDecision[];
+  readonly manager: TouchlineManager | undefined;
+  /** The last minute he was asked, so several possessions inside one minute ask him once. */
+  asked: number;
   tactics: Tactics;
   /** Live fitness by player id, drained tick by tick. */
   readonly fitness: Map<PlayerId, number>;
@@ -652,6 +665,8 @@ function liveSide(side: ChainSide, travel: number, crowd: number, unfamiliarity:
   return {
     base: side.players,
     decisions: [...(side.decisions ?? [])].sort((x, y) => x.minute - y.minute),
+    manager: side.manager,
+    asked: 0,
     tactics: side.tactics,
     fitness,
     yellows: new Map(),
@@ -728,6 +743,72 @@ function applyShapeChange(tactics: Tactics, decision: InMatchDecision): Tactics 
     default:
       return tactics;
   }
+}
+
+/**
+ * Ask the touchline what he wants to do, once per minute, and queue it where it will be applied.
+ *
+ * The view is rebuilt from the live match every time, which is the whole of "adaptive": he is not
+ * running a plan made before kickoff, he is looking at the scoreboard and at his own players. What
+ * he can look at is `TouchlineView` and nothing else — see `touchline.ts` for why that type is the
+ * anti-cheat rather than a promise.
+ *
+ * His answers are **spliced in at `applied`**, not appended: a human may already have a decision
+ * queued for a later minute, and a queue that fell out of order would apply it early.
+ */
+function askTouchline(
+  live: LiveSide,
+  other: LiveSide,
+  side: Side,
+  minute: number,
+  minutes: number,
+  score: Record<Side, number>,
+): void {
+  if (live.manager === undefined || minute <= live.asked) return;
+  live.asked = minute;
+
+  const onField: OnField[] = [];
+  for (const selection of live.tactics.startingXI) {
+    if (live.sentOff.has(selection.playerId)) continue;
+    onField.push({
+      playerId: selection.playerId,
+      position: selection.position,
+      role: selection.role,
+      fitness: live.fitness.get(selection.playerId) ?? 100,
+      booked: (live.yellows.get(selection.playerId) ?? 0) > 0,
+    });
+  }
+
+  const onPitch = new Set(live.tactics.startingXI.map((s) => s.playerId));
+  const bench: Player[] = [];
+  for (const id of live.tactics.bench) {
+    if (live.used.has(id) || onPitch.has(id) || live.sentOff.has(id)) continue;
+    const player = live.base.get(id);
+    if (player !== undefined) bench.push(player);
+  }
+
+  const theirs = other.tactics;
+  const wanted = live.manager({
+    side,
+    minute,
+    minutes,
+    score: { for: score[side], against: score[side === 'home' ? 'away' : 'home'] },
+    tactics: live.tactics,
+    onField,
+    bench,
+    substitutionsUsed: live.used.size,
+    opponent: {
+      formation: theirs.formation,
+      mentality: theirs.mentality,
+      lineHeight: theirs.lineHeight,
+      width: theirs.width,
+      compactness: theirs.compactness,
+      pressingIntensity: theirs.pressingIntensity,
+    },
+  });
+
+  if (wanted.length === 0) return;
+  live.decisions.splice(live.applied, 0, ...wanted);
 }
 
 /**
@@ -944,6 +1025,8 @@ export function simulateChain(input: ChainInput, rng: Rng): ChainResult {
     }
 
     const minute = Math.min(input.minutes, Math.floor(tick / TICKS_PER_MINUTE) + 1);
+    askTouchline(live.home, live.away, 'home', minute, input.minutes, score);
+    askTouchline(live.away, live.home, 'away', minute, input.minutes, score);
     applyDecisions(live.home, minute, 'home', events);
     applyDecisions(live.away, minute, 'away', events);
     live.home.urgency = urgencyFor('home', minute);

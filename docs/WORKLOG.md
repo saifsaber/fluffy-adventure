@@ -1015,9 +1015,25 @@ intents that would fix it. That is a persistence box, not a season box.
       bug that found.
       19 tests, one of them ten seasons of the real division to prove the league neither inflates
       nor empties, **11/11 sabotage probes bite**.
-- [ ] **⚠️ Adaptive opponent managers.** They must make decisions through the same `InMatchDecision`
-      path a human uses, and the counterfactual runner must be able to price those decisions. An
-      opponent that cheats is the fastest way to lose the product's whole claim.
+- [x] **⚠️ Adaptive opponent managers.** `packages/engine/src/touchline.ts`. He is asked once a
+      minute, answers through the **same `InMatchDecision` union** a human answers through, and the
+      chain applies both through the same `applyDecisions` — there is no second path, which is the
+      only reason `neutralise()` can take him off the bench and price what he did.
+      **The anti-cheat is a type, not a promise.** He is handed a `TouchlineView`: the clock, the
+      score, his own eleven with what is left of each man, who is booked, his bench, and the shape
+      the other side is playing. It carries no space map, no probability, no opponent condition and
+      no `Rng`, and a test reads the declaration to say so. He is a pure function — no randomness,
+      not even seeded, because a manager who rolled a die would make the counterfactual's two arms
+      differ for a reason that is not the decision being measured.
+      **He does not touch the defensive line, and the harness is the reason.** Isolated over fifty
+      seasons and 19,000 matches: substitutions alone 0.904 on the xG↔goals correlation, mentality
+      alone 0.904, both free. Adding the line: **0.883**, and goals a match to 2.802, past its own
+      ceiling. Delaying it to the 75th minute changed nothing. Third feature blocked by the same
+      standing constraint. `line_height` stays available to a **human**, whose call is priced.
+      **An idempotence test caught a real flaw**: stepping one rung from wherever he was made his
+      strength depend on how often he was asked, and he reached `ultra_attacking` within two minutes
+      of falling behind. The rules now name an absolute target.
+      18 tests, **11/11 sabotage probes bite**, harness green: goals 2.747, xG corr 0.904.
 
 ### Step 11 — polish (Week 5)
 
@@ -1383,6 +1399,16 @@ order — they are the same problem understood three times over, and later ones 
   - **What this blocks.** Any feature that moves shots along the distance spectrum: a `shoots_on_sight`
     trait, a long-shots instruction, a tempo setting that trades chance count for chance quality.
     All three are real football and none of them can ship while the margin is 0.003.
+  - **It has now blocked three features in three ticks**, which is what makes it the most valuable
+    thing left in the engine. Traits lost their distance hook; the opponent manager lost the
+    defensive line (0.904 → 0.883, and goals past their ceiling at 2.802); and both times *shrinking
+    the effect did not help*, because the mechanism is the spread of chance quality rather than the
+    size of the change. Anything that moves a shot along the distance axis costs the same 0.02.
+  - **A fourth thing it blocks, found while wiring the manager:** `MatchEvent` has no
+    `tactical_change` kind, so a shape change by **anybody** — human or machine — is invisible in a
+    finished `MatchResult`. The chain records it; the result drops it. That is part of why the
+    `decision` domain of the trace is empty, and it is cheap to fix (a kind on `MatchEvent`, a
+    matching `match_event_kind` label, and the enum-agreement test already in `db`).
   - **What would unblock it**, in order of honesty: (1) let `finishingEdge` read `longShots` at range
     rather than `finishing` everywhere, so conversion tracks xG better on the shots the feature
     creates — a change to `xg.ts` that needs its own paired run; (2) establish whether 0.900 is the
@@ -1441,6 +1467,42 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-22 (32)** — **The man on the other touchline, and the line he is not allowed to touch.**
+  - **The box's danger is the whole design.** *An opponent that cheats is the fastest way to lose the
+    product's whole claim* — so the answer is a type. `TouchlineView` is what a man standing on the
+    line can see, and a test reads the declaration for `SpaceMap`, `Rng`, `shotsPerMinute`, `xg` and
+    `momentum` and fails if any of them appears. He can see the other side's *shape*; he cannot see
+    their condition, and a probe that hands him their eleven bites.
+  - **One path, which is what makes him priceable.** His decisions are spliced into the same queue
+    the player's sit in and applied by the same `applyDecisions`, so `neutralise()` — the thing +MGR
+    builds its control arm with — takes him off the bench exactly the way it takes a human's
+    decisions away. A probe that leaves him on bites.
+  - **The harness refused the defensive line, for the third time in three ticks.** Isolated at fifty
+    seasons: nobody on the bench 0.902 · substitutions only 0.904 · mentality only 0.904 · with the
+    line **0.883**, and goals a match 2.802 against a ceiling of 2.8. Chasing from the 75th minute
+    instead of the 60th: still 0.883. **The mechanism is not the magnitude**, the same sentence the
+    traits tick ended on. So he ships with three rules and not four, and the blocker note now says
+    this constraint has blocked three features — which is what makes fixing it the highest-value
+    engine work left.
+  - **An idempotence test found a real flaw in my own rule.** He is asked every minute, and stepping
+    one rung from wherever he was meant a side that fell behind on the hour was `attacking` at 60
+    and `ultra_attacking` at 61 — a rule whose strength depended on how often it was asked, which is
+    not a thing a manager does. The rules now name an absolute target and compare it with the shape
+    he is currently playing, so asking him a hundred times changes nothing. The once-a-minute guard
+    in the chain is therefore a bound on **work**, not on correctness, and the test says so.
+  - **A gap found while wiring, recorded not patched:** `MatchEvent` has no `tactical_change` kind,
+    so a shape change by anybody is invisible in a finished `MatchResult`. The chain records it and
+    the result drops it — which is part of why the `decision` domain of the trace is empty.
+  - The setup screen's copy changed with the feature: it used to say the opponent had no manager.
+    It now says what he can see, because an opponent who could see more than the player is the thing
+    to be trusted about, and a screen that did not say so would be asking for that trust.
+  - 825 tests across 54 files. Harness green: goals 2.747, shots 24.789, xG corr 0.904, stronger
+    side 0.625. `pnpm causes` unchanged.
+  - **For the next tick:** Step 10 is complete. Step 11 opens with **RTL design system
+    consolidation** — promoting `DESIGN.md` from advisory to enforceable. Note that the opponent
+    manager is attached in `buildFixture`, so both the client and the API get him from the same
+    place and he never crosses the wire.
 
 - **2026-09-22 (31)** — **Development, and a rounding bug that made a whole cohort stand still.**
   - **The box named the failure, so the model refuses it structurally.** *A random walk with a

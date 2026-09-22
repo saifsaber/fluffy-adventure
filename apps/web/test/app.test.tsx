@@ -123,11 +123,14 @@ describe('picking tactics and playing', () => {
     ).toBe('true');
   });
 
-  it('says plainly that the eleven is picked for you and the opponent has no manager', () => {
-    // Both are true and both would otherwise read as finished features.
+  it('says plainly that the eleven is picked for you, and what the opponent’s manager can see', () => {
+    // The first is still an unfinished feature and says so. The second changed the day the
+    // opponent got a manager: the sentence that mattered became the one about what he can see,
+    // because an opponent who could see more than the player is the fastest way to lose the
+    // product's claim — and a screen that did not say so would be asking to be trusted.
     toSetup('en');
     expect(screen.getByText(/picks itself for now/)).toBeTruthy();
-    expect(screen.getByText(/no manager yet/)).toBeTruthy();
+    expect(screen.getByText(/nothing you cannot see/)).toBeTruthy();
   });
 
   it('plays the match and reports it', () => {

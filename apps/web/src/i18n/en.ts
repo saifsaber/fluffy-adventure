@@ -100,7 +100,7 @@ export const en: Dictionary = {
   'setup.call.none': 'No call',
   'setup.call.minute': 'Minute',
   'setup.opponent.baseline':
-    "The opponent has no manager yet: ordinary shape, every dial in the middle. When it gets decisions of its own, we'll say so.",
+    'They start on an ordinary shape with every dial in the middle, and there is a man on their touchline: he pushes when he is behind, sees it out when he is ahead, and takes off whoever is finished. He sees the score, the clock and his own players — nothing you cannot see.',
   'setup.attendance': 'Attendance',
   'setup.sheet': 'Team sheet',
   'setup.sheet.auto':

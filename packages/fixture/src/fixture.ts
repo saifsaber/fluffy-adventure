@@ -1,5 +1,6 @@
 import { estimatedRoadKm } from '@dakka/content/travel';
 import {
+  baselineManager,
   baselineTactics,
   competitionId,
   matchId,
@@ -95,13 +96,20 @@ export function buildFixture(
     lineHeight: setup.line,
     pressingIntensity: setup.press,
   };
-  // The opponent has no manager yet, so it gets the neutral baseline and the screen says so. An
-  // opponent with invented instructions would make every result a comparison against a fiction.
+  // The opponent sets up on the neutral baseline and then **manages**: `baselineManager` is asked
+  // once a minute and answers through the same `InMatchDecision` union the player does. He is
+  // attached here, server-side, and never travels — a manager is a capability, and capabilities do
+  // not cross the wire.
   const theirs = baselineTactics(clubBySlug(league, setup.opponentSlug).squad);
   const decisions: readonly InMatchDecision[] = withCall && setup.call !== null ? [setup.call] : [];
 
   const you = { club: clubBySlug(league, setup.yourSlug), tactics: yours, decisions };
-  const them = { club: clubBySlug(league, setup.opponentSlug), tactics: theirs, decisions: [] };
+  const them = {
+    club: clubBySlug(league, setup.opponentSlug),
+    tactics: theirs,
+    decisions: [],
+    manager: baselineManager,
+  };
 
   return {
     id: matchId(seedOf(setup)),
