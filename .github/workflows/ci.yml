@@ -20,6 +20,10 @@ jobs:
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test
+      # The client has to actually bundle. Everything above this line runs in Node, where `node:fs`
+      # resolves — so a package that drags the content barrel onto the browser's import path passes
+      # typecheck and test and then fails in rollup. That is exactly what happened, unnoticed.
+      - run: pnpm build
 
       # The balance gate. `CLAUDE.md` is explicit that failing it blocks the merge and that the
       # engine gets fixed rather than the thresholds lowered — so it has to actually run, not sit in

@@ -1526,6 +1526,36 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
 
 ## Log
 
+- **2026-09-26 (36)** — **The client had never been built. Asked to run the game, I found it would
+  not bundle.**
+  - **Not a box — the owner asked to play it.** `pnpm --filter @dakka/web build` failed in rollup:
+    `"readFileSync" is not exported by "__vite-browser-external"`. The chain is
+    `career.ts → @dakka/season → @dakka/content` (**the barrel**) `→ load.ts → node:fs`.
+    `season.ts` needed one function, `generateFixtures`, and took it from the barrel; the barrel
+    re-exports the file reader. Fixed by giving `fixtures.ts` its own subpath — `pure` and `travel`
+    already had one — so the calendar comes in without the loader.
+  - **Why nothing noticed, which matters more than the bug.** Five gates and not one of them built
+    the client. `typecheck` is happy because `node:fs` is a real module in Node; `test` is happy
+    because vitest runs in Node too; even `vite dev` *starts*, and I had checked exactly that and
+    reported the game "runs" on the strength of an HTTP 200 on `index.html` — which proves a server
+    answered, not that an app mounted. `pnpm build` is now the fifth gate and is in CI.
+  - **Then verified the way it should have been the first time:** the built bundle was served to
+    headless Chromium and driven over CDP through a full round — `dir="rtl"`, take the job, one
+    tile on day one, set up, play, full time **مطوبس 1 – دمياط الجديدة 0** with the manager's side
+    marked, record, back to a three-tile dashboard. No console errors, real content, real engine.
+    The jsdom suite could not have caught this: jsdom is Node, and `node:fs` resolves there.
+  - **A note for the E2E box's own claim.** `season.test.tsx` walks the loop honestly, but it walks
+    it in the environment where this bug is invisible. Nothing in the test suite renders a
+    *bundled* client, and the cheapest guard for that is the build step, not another test.
+  - **Publishing the bundle anywhere but a domain root needs `--base=./`.** `pnpm build` leaves
+    absolute `/assets/...` in `index.html`, which is right for a root deploy and broken under a
+    path. Left as it is, because which one is correct is a hosting decision the owner has not made;
+    the copy shared for play today was built with the flag.
+  - **Careful with `apps/web/dist`:** `tsc --build` writes `.js`/`.d.ts` there too (it is the
+    package's `outDir`), so it holds two unrelated kinds of output. Vite empties it first, so build
+    last — or `rm -rf` it — before shipping the contents anywhere.
+  - Gate green with the new step. The build is 656 kB of JS (156 kB gzipped) and 15 kB of CSS.
+
 - **2026-09-26 (35)** — **The client is not slow. I said it was, from a subtraction, and the
   profile says otherwise.**
   - **A correction to entry 34, first, because the next tick would have acted on it.** That entry

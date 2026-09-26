@@ -8,6 +8,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./pure": "./src/pure.ts",
+    "./fixtures": "./src/fixtures.ts",
     "./travel": "./src/travel.ts"
   },
   "dependencies": {

@@ -1,4 +1,8 @@
-import { generateFixtures, type Fixture, type LeagueData } from '@dakka/content';
+// The calendar comes in through a subpath, not the barrel. The barrel re-exports `load.ts`, which
+// reads the content files with `node:fs` — perfectly correct on a server and unbundlable in a
+// browser, and this package is on the client's import path. See the 2026-09-26 log entry.
+import { generateFixtures, type Fixture } from '@dakka/content/fixtures';
+import type { LeagueData } from '@dakka/content';
 import type { ClubId } from '@dakka/engine';
 
 /**

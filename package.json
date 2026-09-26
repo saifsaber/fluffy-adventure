@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "format": "prettier --check .",
     "typecheck": "tsc --build --force",
+    "build": "pnpm --filter @dakka/web build",
     "test": "vitest run",
     "harness": "pnpm --filter @dakka/harness harness",
     "harness:profile": "pnpm --filter @dakka/harness run harness:profile",
