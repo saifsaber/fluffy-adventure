@@ -1037,12 +1037,30 @@ intents that would fix it. That is a persistence box, not a season box.
 
 ### Step 11 — polish (Week 5)
 
-- [ ] **RTL design system consolidation** — promote what `DESIGN.md` describes into real tokens and
-      components. The file is the specification; by Week 5 it should be enforceable rather than
-      advisory (tokens in code, a lint rule for physical-direction properties, contrast checked in
-      CI, and the ADR-003 test that fails on any user-facing string outside a locale file).
-      Touchline, not SaaS — explicitly not the dark-slate-and-neon-emerald dashboard Modareb
-      already is.
+- [x] **RTL design system consolidation.** `apps/web/src/design/tokens.ts`, `test/design.test.ts`,
+      `test/scan-direction.ts`, plus a lint rule. **The audit found the codebase already obeying
+      `DESIGN.md` — not one physical-direction class or property anywhere** — so the box was never
+      about fixing the client. It was about the file being a *specification* rather than a habit,
+      and a habit is what the second person to touch this breaks.
+      **The contrast table is now arithmetic.** Every one of the thirteen pairs §8 tabulates is
+      recomputed from the palette on every test run and compared with the figure the document
+      prints. The two pairs that **fail** are in the table for that reason — `faint` on `news-deep`
+      at 4.39, paper on `gold` at 3.20 — and a test asserts they still fail and are still unused,
+      because a table listing only the passing pairs forgets why the rule exists.
+      **One palette, checked both ways.** `theme.css` and the TS constants are parsed and compared
+      in both directions, so neither can gain a colour the other has not. That test found the one
+      real drift in the client: two hex literals in `Pitch.tsx`, a second copy of the palette that
+      no palette change would ever have caught.
+      **Two scanners because there are two languages.** CSS properties and Tailwind class names are
+      different halves of the same rule, and enforcing one leaves it *looking* enforced. Comments
+      are blanked before scanning — the phrase "left-to-right" in a Matchday comment was the first
+      false positive. The ESLint half (`no-restricted-syntax` on `className`) is the one that
+      arrives while you are still typing; it was proved to bite by putting `ml-2` in the masthead.
+      Geometry is deliberately exempt: a pitch does not flip with the page.
+      The fourth ask — the ADR-003 test that fails on a user-facing string outside a locale file —
+      was already standing from Step 5; `test/strings.test.ts` is now one of four guards, not one.
+      16 tests, **9/9 sabotage probes bite**, including both scanners going blind and the
+      prose-stripping eating code.
 - [ ] **E2E tests** over the full loop: pick tactics → play → debrief → counterfactual → season end.
 - [ ] **Performance pass** on the client. `pnpm harness:profile` is the pattern: profile before
       touching anything, and measure paired.
@@ -1430,6 +1448,11 @@ order — they are the same problem understood three times over, and later ones 
 
 ## Note for whoever runs next
 
+> **Stale pointers below, left for their reasoning (as of tick 33).** Two paragraphs in this section
+> name "the next box" and both are long done — +MGR shipped in Step 10, and the crossing re-fit they
+> point at is **parked** by the owner's call. The first unchecked box under "Next up" is the only
+> thing that decides what runs next. Everything else here still holds.
+
 **Any test of the form "A differs from B only by X" needs a fixture where every field that is not
 X is off its default.** Three times now a guard has passed while the thing it guards was broken, for
 the same reason each time: the sabotage had nothing to change. The trace-polarity test passed under
@@ -1467,6 +1490,41 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-26 (33)** — **The design system was already obeyed. That is the problem it solves.**
+  - **The audit found nothing to fix, which changed what the box was.** I scanned every stylesheet
+    and every component for a physical direction and found zero. So this tick shipped no visual
+    change at all; it shipped the machine that notices. A rule kept by everyone who has touched the
+    client so far is not a rule, it is a coincidence with a good record — and the person who breaks
+    it will be reading in one direction and will not be able to see the bug they wrote.
+  - **The one real finding was a second copy of the palette.** `Pitch.tsx` computed shirt legibility
+    against two hex literals. Nothing was wrong on screen and nothing would have gone wrong until
+    somebody changed `theme.css` and the pitch quietly kept the old ink. That is the class of bug
+    the tokens file exists for: not a colour that is wrong, a colour that is *unreachable from the
+    place the palette is defined*.
+  - **DESIGN.md §8's contrast table is now executed rather than believed.** I recomputed all
+    thirteen pairs against `contrast()` before encoding them — every figure in the document was
+    exact, which is worth recording because it means the table was measured when it was written and
+    not estimated. Now it is recomputed on every run. **The two pairs that fail stay in**, with a
+    test asserting they still fail: `faint` on `news-deep` (4.39) and paper on `gold` (3.20), which
+    is the reason the keeper's disc takes ink. Delete the failing rows and the next person cannot
+    tell a floor from a preference.
+  - **Two scanners, because the rule speaks two languages.** A physical direction hides in a CSS
+    property *or* in a Tailwind class, and a linter that understands TypeScript sees the second as
+    an opaque string. Enforcing one half would be worse than enforcing neither, because it would
+    look complete. A probe for each going blind separately is in the nine.
+  - **A false positive worth keeping the fix for.** The scanner flagged the words "left-to-right"
+    inside a `Matchday.tsx` comment. Prose about direction is not direction, so comments are blanked
+    line-by-line before scanning — and there is a probe asserting the blanking does not eat code,
+    because a stripper that ate too much would make the whole scanner pass silently.
+  - **The ESLint rule was proved rather than assumed.** I put `ml-2` in the masthead and got
+    `30:20 error A physical direction in a class name (DESIGN.md §6)`, then took it out. A lint rule
+    nobody has seen fire is a comment.
+  - No engine change, so no harness run. 839 tests across 55 files, green.
+  - **Next box: E2E tests over the full loop** — tactics → play → debrief → counterfactual → season
+    end. Note for whoever takes it: `apps/web/src/career.ts` already drives that loop headlessly in
+    the browser build (`startCareer` → `setupFor` → `advance`), so the E2E work is about asserting
+    what the *screens* show, not about rebuilding the career.
 
 - **2026-09-22 (32)** — **The man on the other touchline, and the line he is not allowed to touch.**
   - **The box's danger is the whole design.** *An opponent that cheats is the fastest way to lose the

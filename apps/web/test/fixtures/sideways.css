@@ -1,0 +1,8 @@
+.wrong {
+  margin-left: 4px;
+  padding-right: 8px;
+  text-align: left;
+  border-right: 1px solid black;
+  right: 0;
+  float: left;
+}

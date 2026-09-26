@@ -1,4 +1,5 @@
 import type { Club, Selection } from '@dakka/engine';
+import { TOKENS } from '../design/tokens.js';
 import { readableOn, type Kit } from '@dakka/content/pure';
 import { placeXI } from '../pitch.js';
 
@@ -50,7 +51,10 @@ export function Pitch({
   const marks = placeXI(startingXI);
   const byId = new Map(club.squad.map((player) => [player.id, player]));
   const shirt = kit.primary;
-  const ink = readableOn(shirt, ['#17140f', '#efe7d6']);
+  // The two inks by name rather than by value. Spelled as hex here, they were a second copy of the
+  // palette that no palette change would have found — DESIGN.md's own rule is that a colour which
+  // is not a token does not exist.
+  const ink = readableOn(shirt, [TOKENS.ink, TOKENS.news]);
 
   return (
     <svg
