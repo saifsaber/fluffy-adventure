@@ -13,6 +13,7 @@
     "test": "vitest run",
     "harness": "pnpm --filter @dakka/harness harness",
     "harness:profile": "pnpm --filter @dakka/harness run harness:profile",
+    "profile:client": "pnpm --filter @dakka/harness run profile:client",
     "dominance": "pnpm --filter @dakka/harness run dominance",
     "causes": "pnpm --filter @dakka/harness run causes",
     "prompt-size": "pnpm --filter @dakka/harness run prompt-size",

@@ -8,6 +8,7 @@
   "scripts": {
     "harness": "tsx src/cli.ts",
     "harness:profile": "tsx src/profile.ts",
+    "profile:client": "tsx src/client-profile-main.ts",
     "dominance": "tsx src/dominance-main.ts",
     "causes": "tsx src/causes-main.ts",
     "prompt-size": "tsx src/prompt-size-main.ts"

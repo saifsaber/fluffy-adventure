@@ -1079,8 +1079,26 @@ intents that would fix it. That is a persistence box, not a season box.
       tiles stay, `Matches left` reads 0 and `You are` reads the position the model computes.
       9 tests-worth of sabotage: **9/9 probes bite**, one of them the recurring anti-pattern again
       (see the Log).
-- [ ] **Performance pass** on the client. `pnpm harness:profile` is the pattern: profile before
-      touching anything, and measure paired.
+- [x] **Performance pass** on the client. `pnpm profile:client` —
+      `packages/harness/src/client-profile.ts`, the engine profiler's pattern pointed at the
+      browser, with the season walk as its workload because a benchmark measures what its author
+      already suspected.
+      **The result is that there is nothing to optimise, and the measurement is the deliverable.**
+      Of a 38-round walk, the client's own code is **0.9%** and every other workspace package is
+      2.0%; the engine is **39.8%**. The rest is jsdom, vitest, Node and GC — which is why the
+      report groups by origin and marks the two groups that ship. A flat top-25 would have put
+      jsdom first and sent the next reader tuning the measuring equipment.
+      **The one real finding, by timing each interaction:** *Record it and carry on* costs **75ms**
+      against 13–19ms for every other click, because it simulates the round's other nine fixtures.
+      Split, that is `buildMatch` 3.1ms and `simulate` **61.3ms** — 95% engine, with no client-side
+      waste to trim. **That work is the product's central claim and cannot be removed**; the only
+      legitimate change is to schedule it differently, which is written up in the Log rather than
+      built, because no client latency budget exists yet to justify async machinery in the loop.
+      A measured non-finding, recorded so nobody re-does it: `standings()` costs 0.15ms and runs
+      about three times a dashboard, so memoising it wins ~1ms at a full 380-result season.
+      `apps/web/test/work.test.tsx` pins the shape rather than the timing — set up 0, play 1, skip
+      0, record 9 — because a count is the same number in every environment and a millisecond is
+      not. 27 tests, **6/6 sabotage probes bite**.
 
 ### Step 12 — distribution (Week 6)
 
@@ -1507,6 +1525,58 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-26 (35)** — **The client is not slow. I said it was, from a subtraction, and the
+  profile says otherwise.**
+  - **A correction to entry 34, first, because the next tick would have acted on it.** That entry
+    read a 204ms round against a 59ms headless round and concluded "roughly seven tenths of a round
+    is React and the DOM, and the engine is not where the client's time goes." **Both halves are
+    wrong.** React and react-dom together are **7.1%**; the missing time was jsdom (23.5%), GC
+    (16.7%) and Node (6.8%) — the instrument, not the product. And the engine is **39.8%**, which
+    is to say it is exactly where the client's time goes. A difference between two numbers is not a
+    measurement of what is in the gap. This is the second time this repo has learned that: the
+    engine profiler's own header records two "obvious" optimisations that measured at nothing.
+  - **So the report groups by origin, and that is the design rather than a nicety.** jsdom
+    implements the DOM in JavaScript where a browser implements it in C++; vitest and
+    testing-library ship to nobody. A flat top-25 would rank the measuring equipment first. Only
+    `client`, `engine` and `packages` are marked as shipping, and the tool prints what share of
+    itself is instrument so the reader can discount it.
+  - **The finding, from timing each interaction separately:** *Record it and carry on* is **75ms**
+    against 13–19ms for every other click. Inside it: `buildMatch` ×10 is 3.1ms and `simulate` ×10
+    is **61.3ms**. There is no waste — the click is slow because it plays nine real matches.
+  - **And that is where the pass stops, deliberately.** The nine cannot be faked and cannot be
+    skipped: they are the difference between a table that happened and a table somebody wrote down.
+    The only honest options are to make the engine faster (its own box, and the profile hands it a
+    lead — `tacticalPresence @ space.ts:211`, 4.2% of the whole walk and the largest single frame
+    *of ours*; no claim is made here about how that compares with the engine-only profile's old
+    `bandOf`/`channelOf` finding, because the two profiles have different scopes and comparing
+    their percentages directly would be the same mistake this entry opens by correcting), or to move
+    the work off the click. **Moving it is what determinism buys**: the other nine fixtures do not
+    depend on the manager's match, so computing them during the replay — in slices, one fixture a
+    tick — gives byte-identical results with no frame over ~7ms. I did not build it. Doing it
+    synchronously at kickoff only moves the freeze to a different click, and doing it properly
+    means async state and a race in the middle of the core loop, which is a lot of machinery to
+    buy against **no stated budget**: nothing in the blueprint or DESIGN.md gives a client latency
+    number, and 75ms on this machine may be fine or may be 400ms on a phone. **What unblocks it is
+    one measurement on a real device**, not more thinking here.
+  - **A measured non-finding, written down so it is not re-done:** `standings()` is 0.15ms and runs
+    about three times per `dashboard()`, so memoising it saves ~1ms on a completed 380-result
+    season. That is precisely the shape of optimisation this repo has already shipped twice for
+    nothing.
+  - **The guard counts instead of timing.** `work.test.tsx` pins set up 0 · play 1 · skip 0 ·
+    record 9. A timing assertion would be flaky on a shared runner *and* meaningless across
+    environments; a count is identical everywhere, and it catches the regression that actually
+    matters — a stray re-render simulating the round twice would silently double the slowest
+    interaction in the product, and nothing today would notice.
+  - 6/6 probes bite, including the two that matter: swapping the engine and packages rules (the
+    generic pattern also matches `/packages/engine/`, so the order is load-bearing and the finding
+    is unsayable without it), and dropping the report's filter, which puts jsdom back at the top of
+    a list headed "frames that ship".
+  - 869 tests across 58 files. No engine change, so no harness run.
+  - **Next box: ⚠️ the seeded daily challenge.** Note for it: `seedOf(setup)` in
+    `packages/fixture/src/fixture.ts` already derives the seed from the pairing and the dials
+    alone — no clock, no round, no client state — so "two devices, same match" is mostly a matter
+    of choosing the fixture from the date and pinning it, not of new engine work.
 
 - **2026-09-26 (34)** — **A season, played through the screens, and the comparison that could not
   see itself.**
