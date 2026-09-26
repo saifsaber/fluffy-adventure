@@ -9,9 +9,11 @@
 name: Heartbeat
 
 on:
-  schedule:
-    # 09:00 UTC daily. A missed day of building is worth knowing about; an hourly page is not.
-    - cron: '0 9 * * *'
+  # Paused 2026-09-26 at the owner's request, together with the build-loop routine. To resume,
+  # uncomment the schedule below and re-enable the routine; until then this only runs by hand.
+  # schedule:
+  #   # 09:00 UTC daily. A missed day of building is worth knowing about; an hourly page is not.
+  #   - cron: '0 9 * * *'
   workflow_dispatch:
 
 permissions:
