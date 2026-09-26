@@ -1061,7 +1061,24 @@ intents that would fix it. That is a persistence box, not a season box.
       was already standing from Step 5; `test/strings.test.ts` is now one of four guards, not one.
       16 tests, **9/9 sabotage probes bite**, including both scanners going blind and the
       prose-stripping eating code.
-- [ ] **E2E tests** over the full loop: pick tactics → play → debrief → counterfactual → season end.
+- [x] **E2E tests** over the full loop. `apps/web/test/season.test.tsx` walks **a whole season
+      through the real screens** — 38 rounds, 380 matches, take the job → dashboard → dials → play
+      → debrief → record, until the product stops offering a match. Measured at 204ms a round, so
+      the walk costs ~8s and there was no need to fake any of it.
+      **The three seams no per-screen test can reach.** (1) *The loop closes*: it consumes exactly
+      the number of rounds the calendar has — read from the league file, never written down, since
+      38 is a fact about a twenty-club double round-robin and not about this product. (2) *The
+      React layer adds nothing*: the same season is replayed headlessly and the two are compared
+      whole, seeds and scorelines in order. (3) *A decision does not outlive its match*: a call made
+      in one round is gone by the next, which nothing tested before.
+      **Its reach is stated in the file rather than implied.** The mirror calls the same
+      `setupFor`/`advance`/`buildMatch`, so a bug inside those is invisible to it and belongs to
+      their own packages. What it does reach is everything React owns — stale memo dependencies, a
+      reset that did not happen, a handler wired to the wrong value.
+      **The end of a season is a screen, and it was checked as one:** the action withdraws, the
+      tiles stay, `Matches left` reads 0 and `You are` reads the position the model computes.
+      9 tests-worth of sabotage: **9/9 probes bite**, one of them the recurring anti-pattern again
+      (see the Log).
 - [ ] **Performance pass** on the client. `pnpm harness:profile` is the pattern: profile before
       touching anything, and measure paired.
 
@@ -1490,6 +1507,44 @@ The engine (Step 3) is decomposed deliberately. Two rules for it:
    Step 4 exists to catch exactly that, but it is much cheaper to not write it in the first place.
 
 ## Log
+
+- **2026-09-26 (34)** — **A season, played through the screens, and the comparison that could not
+  see itself.**
+  - **Measured before deciding the shape.** A full headless season is 2.2s; a round through React
+    and jsdom is 204ms, so 38 of them is ~8s. That number is the whole design: it meant the test
+    could be an actual walk through the actual screens rather than a headless integration test
+    wearing the name "E2E". Nothing here is mocked and no shortcut is taken through the model.
+  - **The probe worth remembering.** Making `seedOf` return a constant — every match in the season
+    the same match — **passes** the headline assertion, because the walk and the mirror are then
+    equally wrong and still equal. Only the line asserting 38 *distinct* seeds catches it. This is
+    the same failure the "Note for whoever runs next" describes, in a new costume: a comparison is
+    blind to any fault its two sides share, exactly as a differs-only-by-X test is blind to a field
+    that was already at its default. The assertion is kept with the probe written into its comment,
+    because a reader will otherwise delete it as redundant.
+  - **9/9 probes bite**, and two of them found the guard was load-bearing rather than decorative:
+    removing the dashboard button's `view.decision.answered` condition walks the player into a
+    **blank screen** after the last round (the setup screen has no fixture to render), and stale
+    `useMemo` dependencies break the loop on the first click.
+  - **The honest limit is in the file.** The mirror calls the same `setupFor`/`advance`/
+    `buildMatch` the screens call, so it cannot see a bug inside them — writing "the screens add
+    nothing" would have been an overclaim. It reaches the React layer, which is the layer nothing
+    else in this repo drives for more than one round.
+  - **A real gap, found by walking to the end and recorded rather than patched:** `seasonEnd()` has
+    existed in `@dakka/season` since Step 6 — champion, promoted, playoff, relegated — and **the
+    client has never called it.** The season ends correctly and says nothing: the offer withdraws,
+    the dashboard reads `Matches left 0` and `You are 16`, and no screen states who went up or
+    down. That is a screen the MVP box needs, not a bug in this one, so it is written here instead
+    of being built on the way past.
+  - A smaller one, noted not removed: the `season_complete` silence in `decisionToday` is shadowed
+    by `no_fixture` — an empty round has no fixture either — so deleting the first guard would
+    still leave the screen correct. Belt and braces, and the belt is the one that fires.
+  - 842 tests across 56 files. No engine change, so no harness run.
+  - **Next box: the performance pass on the client.** `pnpm harness:profile` is the named pattern —
+    profile first, measure paired. Useful starting datum from this tick: a round costs 204ms in
+    jsdom, while the same round headless — ten matches simulated *and* recorded, the table
+    restanding — costs ~59ms (2.2s ÷ 38). So roughly **seven tenths of a round is React and the
+    DOM**, and the engine is not where the client's time goes. Profile it properly before believing
+    that, but it is the place to point the profiler first.
 
 - **2026-09-26 (33)** — **The design system was already obeyed. That is the problem it solves.**
   - **The audit found nothing to fix, which changed what the box was.** I scanned every stylesheet
